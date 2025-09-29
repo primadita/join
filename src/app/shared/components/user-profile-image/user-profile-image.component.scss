@@ -1,0 +1,7 @@
+@use './../../../../../public/assets/styles/all-styles.scss' as all;
+div{
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid all.$white;
+    color: all.$white;
+}

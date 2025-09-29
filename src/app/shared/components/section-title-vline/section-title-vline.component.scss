@@ -1,0 +1,9 @@
+@use './../../../../../public/assets/styles/all-styles.scss' as all;
+
+div{
+    .vl{
+        width: 0.1rem;
+        height: 6rem;
+        background: all.$lightblue2;
+    }
+}

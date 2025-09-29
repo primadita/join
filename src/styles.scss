@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+@use './../public/assets/styles/all-styles.scss' as all;
+// #region GENERAL
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  scroll-behavior: smooth;
+  list-style: none;
+  border-style: none;
+}
+.content{
+    width: 100%;
+    max-width: calc(1920px - 232px);
+}
+html{
+    font-size: 10px;
+}
+section{
+    width: 100%;
+    height: 100dvh;
+}
+header, section, footer{
+    display: flex;
+    justify-content: flex-start;
+}
+// #endregion
+// #region FONTS
+@font-face {
+  font-family: 'Inter';
+  src: url('./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
+}
+h1{
+  font-family: all.$font, sans-serif;
+  font-size: 6.1rem;
+  @include all.style-bold;
+}
+h2{
+  font-family: all.$font, sans-serif;
+  font-size: 4.7rem;
+  font-weight: 500;
+  font-style: medium;
+}
+h3{
+  font-family: all.$font, sans-serif;
+  font-size: 2.7rem;
+  @include all.style-bold;
+}
+h4{
+  font-family: all.$font, sans-serif;
+  font-size: 2.7rem;
+  @include all.style-regular;
+}
+h5{
+  font-family: all.$font, sans-serif;
+  font-size: 2.1rem;
+  @include all.style-bold;
+}
+h6{
+  font-family: all.$font, sans-serif;
+  font-size: 2rem;
+    @include all.style-regular;
+}
+p, span{
+  font-family: all.$font, sans-serif;
+  font-size: 1.6rem;
+  @include all.style-regular;
+}
+// #endregion
