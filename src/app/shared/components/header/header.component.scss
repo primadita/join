@@ -1,5 +1,5 @@
 @use "../../../../../public/assets/styles/all-styles.scss" as all;
 
 header {
-  @include all.fl($flexdir: row);
+  @include all.d-flex($flexdir: row);
 }
