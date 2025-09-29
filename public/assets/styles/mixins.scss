@@ -1,4 +1,4 @@
-@use "../styles/variables.scss" as color;
+@use "../styles/variables.scss" as var;
 
 @mixin style-bold{
   font-weight: 700;
@@ -20,18 +20,14 @@
   column-gap: $cgap;
 }
 
-@mixin box-shadow-style($shad: 4px 0px 6px 0px rgba(0, 0, 0, 0.08)) {
-  box-shadow: $shad;
-}
-
 // INFO: Beim erstellen des buttons im HTML das icon-image mit ins button-element legen, damit flex zentriert
 @mixin button-layout($width:35.2rem, $height: 5.6rem) {
   @include d-flex($flexdir: row, $jc: center, $alit: center, $gap: 3rem);
-  @include box-shadow-style();
+  box-shadow: var.$shadow;
   width: $width;
   height: $height;
-  background-color: color.$mainColor;
-  color: color.$white;
+  background-color: var.$mainColor;
+  color: var.$white;
   font-weight: bold;
   padding: 1.2rem;
   border-radius: 1rem;
@@ -41,7 +37,7 @@
 @mixin press-button-style() {
   @include button-layout();
   &:hover {
-    background-color: color.$lightblue;
+    background-color: var.$lightblue;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
   }
 }
