@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserProfileImageComponent } from '../user-profile-image/user-profile-image.component';
 
 @Component({
   selector: 'app-header',
