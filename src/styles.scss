@@ -14,16 +14,20 @@
     max-width: calc(1920px - 232px);
 }
 html{
-    font-size: 10px;
+    font-size: 62.5%;
+}
+body{
+  font-size: 16px;
+  font-family: all.$font;
 }
 section{
     width: 100%;
     height: 100dvh;
 }
-header, section, footer{
-    display: flex;
-    justify-content: flex-start;
-}
+// header, section, footer{
+//     display: flex;
+//     // justify-content: flex-start;
+// }
 // #endregion
 // #region FONTS
 @font-face {
@@ -31,38 +35,31 @@ header, section, footer{
   src: url('./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
 }
 h1{
-  font-family: all.$font, sans-serif;
   font-size: 6.1rem;
   @include all.style-bold;
 }
 h2{
-  font-family: all.$font, sans-serif;
   font-size: 4.7rem;
   font-weight: 500;
   font-style: medium;
 }
 h3{
-  font-family: all.$font, sans-serif;
   font-size: 2.7rem;
   @include all.style-bold;
 }
 h4{
-  font-family: all.$font, sans-serif;
   font-size: 2.7rem;
   @include all.style-regular;
 }
 h5{
-  font-family: all.$font, sans-serif;
   font-size: 2.1rem;
   @include all.style-bold;
 }
 h6{
-  font-family: all.$font, sans-serif;
   font-size: 2rem;
     @include all.style-regular;
 }
 p, span{
-  font-family: all.$font, sans-serif;
   font-size: 1.6rem;
   @include all.style-regular;
 }
