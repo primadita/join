@@ -4,6 +4,8 @@ section {
     height: 100dvh;
     width: 23.2rem;
     background-color: all.$mainColor;
+    backdrop-filter: opacity(0.2);
+
     @include all.d-flex($jc: space-between);
     padding: 4rem 0;
 
