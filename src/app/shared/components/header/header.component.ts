@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
-import { UserProfileImageComponent } from '../user-profile-image/user-profile-image.component';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  navActive:boolean = false;
 
+
+
+
+  toggleNavbar():void{
+    this.navActive = !this.navActive;
+  }
 }

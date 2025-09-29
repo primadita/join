@@ -29,6 +29,10 @@ header {
       height: 4rem;
       border: 2px solid black;
       border-radius: 100%;
+      cursor: pointer;
+      &:hover{
+        background-color: all.$lightgray;
+      }
     }
   }
   nav{
