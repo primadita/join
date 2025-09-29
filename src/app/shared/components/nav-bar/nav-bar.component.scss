@@ -1,0 +1,44 @@
+@use '../../../../../public/assets/styles/all-styles.scss' as all;
+
+section {
+    height: 100dvh;
+    width: 23.2rem;
+    background-color: all.$mainColor;
+    @include all.d-flex($jc: space-between);
+    padding: 4rem 0;
+
+    a {
+        color: all.$lightgray;
+        text-decoration: none;
+    }
+
+    nav {
+        @include all.d-flex($alit: flex-start);
+        gap: 1rem;
+        width: 100%;
+
+        a {
+            @include all.d-flex($flexdir: row, $jc: flex-start);
+            width: 100%;
+            gap: 0.8rem;
+            padding: 1.2rem 4rem;
+            transition: 125ms;
+
+            &:hover {
+                background-color: all.$lightblue;
+            }
+        }
+    }
+
+    >div {
+        @include all.d-flex($alit: flex-start);
+        gap: 2.4rem;
+
+        a {
+            &:hover {
+                color: all.$lightblue2;
+            }
+        }
+    }
+
+}
