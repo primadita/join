@@ -1,6 +1,10 @@
-app-contact-list{
-    width: 45.6rem;
-}
-app-contact-details{
-    width: calc(1920px - 45.6rem - 232px);
+@use './../../../../public/assets/styles/all-styles.scss' as all;
+div{
+    @include all.d-flex($flexdir: row, $alit: flex-start);
+    app-contact-list{
+        width: 45.6rem;
+    } 
+    app-contact-details{
+        width: calc(1920px - 45.6rem - 232px);
+    }
 }

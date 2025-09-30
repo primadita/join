@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SectionTitleVLineComponent } from '../../../shared/components/section-title-vline/section-title-vline.component';
 import { UserProfileImageComponent } from '../../../shared/components/user-profile-image/user-profile-image.component';
+import { SectionHeaderService } from '../../../shared/services/section-header.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -10,5 +11,18 @@ import { UserProfileImageComponent } from '../../../shared/components/user-profi
   styleUrl: './contact-details.component.scss'
 })
 export class ContactDetailsComponent {
+  // #region ATTRIBUTES
+  sectionHeaderList = inject(SectionHeaderService);
+  contacts = this.sectionHeaderList.sectionHeader.find(e => e.title === 'Contacts');
+  // #endregion
 
+  // #region METHODS
+  editContact(){
+
+  }
+
+  deleteContact(){
+    
+  }
+  // #endregion
 }

@@ -1,24 +1,26 @@
 <section>
-    <app-section-title-vline></app-section-title-vline>
-    <div class="contact-label-big">
-        <app-user-profile-image></app-user-profile-image>
-        <div class="edit-delete-option">
-            <h2>Anton Mayer</h2>
-            <div class="edit-delete-btn">
-                <button class="edit-btn">
-                    <img src="./assets/icons/edit.svg" alt="edit button">Edit
-                </button>
-                <button class="delete-btn">
-                    <img src="./assets/icons/delete.svg" alt="delete button">Delete
-                </button>
+    <div class="content">
+        <app-section-title-vline [sectHeader]="contacts!"></app-section-title-vline>
+        <div class="contact-label-big">
+            <app-user-profile-image></app-user-profile-image>
+            <div class="edit-delete-option">
+                <h2>Anton Mayer</h2>
+                <div class="edit-delete-btn">
+                    <button class="edit-btn" (click)="editContact()">
+                        <img src="./assets/icons/edit.svg" alt="edit button">Edit
+                    </button>
+                    <button class="delete-btn" (click)="deleteContact()">
+                        <img src="./assets/icons/delete.svg" alt="delete button">Delete
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <h6>Contact Information</h6>
-    <div class="email-phone-details">
-        <p class="bold">Email</p>
-        <p class="blue">anton&#64;gmail.com</p>
-        <p class="bold">Phone</p>
-        <p>+49 1111 1111 111</p>
+        <h6>Contact Information</h6>
+        <div class="email-phone-details">
+            <p class="bold">Email</p>
+            <p class="blue">anton&#64;gmail.com</p>
+            <p class="bold">Phone</p>
+            <p>+49 1111 1111 111</p>
+        </div>
     </div>
 </section>
