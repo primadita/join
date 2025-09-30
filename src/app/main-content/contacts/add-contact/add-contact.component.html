@@ -14,13 +14,20 @@
 
             <form action="">
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Name"><img src="assets/icons/person-gray.svg" alt="">
+                    <input #name="ngModel" [(ngModel)]="contactData.name" type="text" placeholder="Name" name="name"
+                        required [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img src="assets/icons/person-gray.svg" alt="">
+                    @if (!name.valid && name.touched){
+                    <span>Please enter a name!</span>
+                    }
                 </div>
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Email"><img src="assets/icons/mail.svg" alt="">
+                    <input #mail="ngModel" [(ngModel)]="contactData.email" type="text" placeholder="Email" name="email"
+                        required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" [ngStyle]="{'border-color': !mail.valid && mail.touched ? 'red' : '#D9D9D9'}"><img
+                        src="assets/icons/mail.svg" alt="">
                 </div>
                 <div class="input-wrapper">
-                    <input type="text" placeholder="Phone"><img src="assets/icons/phone.svg" alt="">
+                    <input #phone="ngModel" [(ngModel)]="contactData.phone" type="text" placeholder="Phone" name="phone"
+                        required [ngStyle]="{'border-color': !phone.valid && phone.touched ? 'red' : '#D9D9D9'}"><img src="assets/icons/phone.svg" alt="">
                 </div>
                 <div class="btn-wrapper">
                     <button class="cancel-btn">Cancel<img src="assets/icons/cancel.svg" alt="cancel-icon"></button>
@@ -28,9 +35,10 @@
                         <input type="submit" value="Create contact">
                         <img src="assets/icons/check.svg" alt="check-img">
                     </div>
-                    
+
                 </div>
             </form>
+            <!-- TODO: Form-Validation -->
         </div>
     </div>
 </div>
