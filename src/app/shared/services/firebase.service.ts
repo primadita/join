@@ -35,6 +35,8 @@ export class FirebaseServiceService {
       name: obj.name,
       mail: obj.mail,
       phone: obj.phone,
+      active: obj.active,
+      color: obj.bgcolor
     };
   }
 
