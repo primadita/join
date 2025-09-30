@@ -11,12 +11,19 @@
   .contact-label-box {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
+    gap: 2rem;
     width: 100%;
     padding: 1rem;
     border-radius: 1rem;
     cursor: pointer;
+
+    .initials {
+      span {
+        font-size: 1.2rem;
+      }
+    }
 
     .info {
       display: flex;
