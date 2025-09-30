@@ -30,13 +30,20 @@ export class FirebaseServiceService {
     this.unsubContacts();
   }
 
+  setActiveContact(id: string) {
+    for (const c of this.contactsList) {
+      c.active = c.id === id;
+    }
+  }
+
   setContactObject(obj: any, id: string): Contact {
     return {
+      id,
       name: obj.name,
       mail: obj.mail,
       phone: obj.phone,
       active: obj.active,
-      color: obj.bgcolor
+      color: obj.bgcolor,
     };
   }
 

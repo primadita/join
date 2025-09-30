@@ -70,4 +70,8 @@ export class ContactLabelComponent {
 
     return firName + lastName;
   }
+
+  onActice(contact: Contact) {
+    this.contactList.setActiveContact(contact.id);
+  }
 }

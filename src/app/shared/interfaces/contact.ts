@@ -1,9 +1,9 @@
 export interface Contact {
-    name: string;
-    mail: string;
-    phone: string;
-    id?: string;
-    initials?: string;
-    color?:string;
-    active: boolean;
+  name: string;
+  mail: string;
+  phone: string;
+  id: string;
+  initials?: string;
+  color?: string;
+  active: boolean;
 }
