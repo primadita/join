@@ -1,13 +1,18 @@
 <div class="contacts-label-box">
-  @for (contact of contactList.contactsList; track $index) {
+  @for (group of groupedContacts() | keyvalue; track group.key) {
+  <div class="key-box">
+    <span>{{ group.key }}</span>
+  </div>
+
+  @for (contact of $any(group.value); track $index) {
   <div class="contact-label-box">
-    <div class="initials">
-      <span>{{ getLetters(contact) }}</span>
-    </div>
+    <span class="initials" [style.backgroundColor]="contact.color">
+      {{ getLetters(contact) }}
+    </span>
     <div class="info">
       <span class="name">{{ contact.name }}</span>
       <span class="mail">{{ contact.mail }}</span>
     </div>
   </div>
-  }
+  } }
 </div>
