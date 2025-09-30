@@ -22,7 +22,7 @@ body{
 }
 section{
     width: 100%;
-    height: 100dvh;
+    height: calc(100dvh - all.$header-height);
 }
 // header, section, footer{
 //     display: flex;
