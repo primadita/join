@@ -3,8 +3,13 @@
 .contact-list-container {
   background-color: all.$white;
   width: fit-content;
-  height: 200px;
-  @include all.d-flex($flexdir: column, $alit: flex-start, $jc: center, $cgap: 5px);
+  height: auto;
+  @include all.d-flex(
+    $flexdir: column,
+    $alit: flex-start,
+    $jc: center,
+    $cgap: 5px
+  );
   box-shadow: all.$shadow;
   padding: 15px 30px;
   overflow-y: scroll;

@@ -4,7 +4,7 @@
       Add new contact <img src="assets/icons/person_add.svg" alt="" />
     </button>
   </div>
-  <div class="contact-list">
-    <app-contact-label></app-contact-label>
+  <div class="contact-list" *ngFor="let u of users">
+    <app-contact-label [user]="u"></app-contact-label>
   </div>
 </div>
