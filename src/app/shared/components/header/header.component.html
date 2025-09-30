@@ -2,6 +2,11 @@
     <span>Kanban Project Management Tool</span>
     <div>
         <a href="#" id="help-btn"></a>
-        <button></button>
+        <button (click)="toggleNavbar()">SM</button>
     </div>
+    <nav [ngStyle]="{'display': !navActive ? 'none': 'flex'}" >
+        <a href="">Legal Notice</a>
+        <a href="">Privacy Policy</a>
+        <a href="">Log out</a>
+    </nav>
 </header>

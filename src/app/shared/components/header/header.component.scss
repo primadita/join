@@ -1,5 +1,60 @@
 @use "../../../../../public/assets/styles/all-styles.scss" as all;
 
 header {
-  @include all.d-flex($flexdir: row);
+  @include all.d-flex($flexdir: row, $jc: space-between);
+  width: 100%;
+  padding: 0 3.2rem 0 10rem;
+  height: 6.4rem;
+
+  >div {
+    @include all.d-flex($flexdir: row);
+    gap: 1.6rem;
+    a {
+      display: inline-block;
+      background-image: url(../../../../../public/assets/icons/help.svg);
+      width: 2.4rem;
+      height: 2.4rem;
+      background-size: contain;
+      background-position: center;
+      transition: transform 0.3s ease;
+      &:hover{
+        transform: scale(1.2);
+      }
+    }
+    button{
+      background-color: all.$white;
+      color: all.$lightblue2;
+      font-weight: 600;
+      width: 4rem;
+      height: 4rem;
+      border: 2px solid black;
+      border-radius: 100%;
+      cursor: pointer;
+      transition: 125ms;
+      &:hover{
+        background-color: all.$lightgray;
+      }
+    }
+  }
+  nav{
+    position: absolute;
+    width: 17rem;
+    top: 6.4rem;
+    right: 1rem;
+    @include all.d-flex($alit: flex-start);
+    background-color: all.$mainColor;
+    padding: 2.4rem 0.8rem ;
+    border-radius: 1.6rem;
+    border-top-right-radius: 0;
+    z-index: 100;
+    a{
+      text-decoration: none;
+      color: all.$lightgray;
+      width: 100%;
+      padding: 0.8rem 1.6rem;
+      &:hover{
+        background-color: all.$lightblue
+      }
+    }
+  };
 }
