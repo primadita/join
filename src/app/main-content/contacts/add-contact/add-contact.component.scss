@@ -78,8 +78,11 @@
                         padding-left: 1.2rem;
                         width: 42.2rem;
                         border-radius: 0.8rem;
-                        color: #D9D9D9;
-                        &::placeholder{
+                        color: all.$black;
+                        font-size: 1.6rem;
+                        font-family: all.$font;
+
+                        &::placeholder {
                             font-size: 1.6rem;
                             font-family: all.$font;
                         }
@@ -99,7 +102,7 @@
                     width: 100%;
 
                     button {
-                        height: 5rem ;
+                        height: 5rem;
                         font-size: 1.6rem;
                         font-family: all.$font;
                         background: all.$white ;
