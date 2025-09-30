@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { users } from '../../../shared/userData';
 import { ContactLabelComponent } from './contact-label/contact-label.component';
+import { FirebaseServiceService } from '../../../shared/services/firebase.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -8,4 +9,8 @@ import { ContactLabelComponent } from './contact-label/contact-label.component';
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.scss',
 })
-export class ContactListComponent {}
+export class ContactListComponent {
+  contactList = inject(FirebaseServiceService);
+
+  constructor() {}
+}
