@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { users } from '../../../shared/userData';
 import { ContactLabelComponent } from './contact-label/contact-label.component';
 import { FirebaseServiceService } from '../../../shared/services/firebase.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-contact-list',
@@ -11,6 +12,4 @@ import { FirebaseServiceService } from '../../../shared/services/firebase.servic
 })
 export class ContactListComponent {
   contactList = inject(FirebaseServiceService);
-
-  constructor() {}
 }
