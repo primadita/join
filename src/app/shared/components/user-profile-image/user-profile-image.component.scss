@@ -1,7 +1,11 @@
 @use './../../../../../public/assets/styles/all-styles.scss' as all;
 div{
-    width: 4rem;
-    height: 4rem;
-    border: 1px solid all.$white;
+    width: 12rem;
+    height: 12rem;
+    border: 2px solid all.$white;
+    box-shadow: all.$shadow;
+    background-color: purple;
+    border-radius: 50%;
     color: all.$white;
+    @include all.d-flex($jc: center, $alit: center);
 }

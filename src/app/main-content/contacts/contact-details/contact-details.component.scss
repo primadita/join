@@ -2,5 +2,40 @@
 
 section{
     background: all.$lightgray;
-    @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 4rem);
+    overflow-y: auto;
+    .content{
+        padding-top: 10rem;
+        padding-left: 5rem; 
+        @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 4rem);
+        .contact-label-big{
+            @include all.d-flex($flexdir: row, $alit: center, $cgap: 5rem);
+            .edit-delete-option{
+                @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
+                .edit-delete-btn{
+                    @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 2rem);
+                    button{
+                        color: all.$mainColor;
+                        background: transparent;
+                        cursor: pointer;
+                        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 0.5rem);
+                        img{
+                            width: 2.4rem;
+                            height: 2.4rem;
+                        }
+                    }
+                }
+            }
+            
+        }
+        .email-phone-details{
+            @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 2.2rem);
+            .bold{
+                @include all.style-bold();
+            }
+            .blue{
+                color: all.$lightblue;
+            }
+        }
+    }
+    
 }
