@@ -12,8 +12,6 @@ export class HeaderComponent {
   navActive:boolean = false;
 
 
-
-
   toggleNavbar():void{
     this.navActive = !this.navActive;
   }

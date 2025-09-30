@@ -30,6 +30,7 @@ header {
       border: 2px solid black;
       border-radius: 100%;
       cursor: pointer;
+      transition: 125ms;
       &:hover{
         background-color: all.$lightgray;
       }
