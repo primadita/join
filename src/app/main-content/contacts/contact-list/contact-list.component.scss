@@ -2,13 +2,13 @@
 
 .contact-list-container {
   background-color: all.$white;
-  width: fit-content;
-  height: 100%;
+  width: 100%;
+
   @include all.d-flex(
     $flexdir: column,
-    $alit: flex-start,
+    $alit: center,
     $jc: center,
-    $cgap: 5px
+    $cgap: 0.5rem
   );
   box-shadow: all.$shadow;
   padding: 15px 30px;
@@ -22,5 +22,6 @@
 
   .contact-list {
     width: 100%;
+    height: calc(100dvh - 15.4rem);
   }
 }
