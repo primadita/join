@@ -1,1 +1,13 @@
-<p>contact-label works!</p>
+<div class="contacts-label-box">
+  @for (contact of contactList.contactsList; track $index) {
+  <div class="contact-label-box">
+    <div class="initials">
+      <span>{{ getLetters(contact) }}</span>
+    </div>
+    <div class="info">
+      <span class="name">{{ contact.name }}</span>
+      <span class="mail">{{ contact.mail }}</span>
+    </div>
+  </div>
+  }
+</div>
