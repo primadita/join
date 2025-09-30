@@ -5,4 +5,5 @@ export interface Contact {
     id?: string;
     initials?: string;
     color?:string;
+    active: boolean;
 }

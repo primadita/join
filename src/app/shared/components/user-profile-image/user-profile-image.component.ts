@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 // import { CommonModule, NgStyle } from "../../../../../node_modules/@angular/common/common_module.d-NEF7UaHr";
 import { FirebaseServiceService } from '../../services/firebase.service';
 import { UserProfileImageService } from '../../services/user-profile-image.service';
@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-profile-image.component.scss'
 })
 export class UserProfileImageComponent {
-  @Input() initial: string = '';
-  @Input() bgColor: string = '';
+  userProfImgService = inject(UserProfileImageService);
+  contactService = inject(FirebaseServiceService);
+  // @Input() initial: string = '';
+  // @Input() bgColor: string = '';
 }
