@@ -1,6 +1,6 @@
 @for (singlecontact of contactService.contactsList; track $index){
    @if(singlecontact.active){
-      <div [ngStyle]="{'background-color': singlecontact.color}">
+      <div [ngStyle]="{'background-color': singlecontact.bgColor}">
       <h2>{{userProfImgService.createInitial(singlecontact.name)}}</h2>
    </div>
    }

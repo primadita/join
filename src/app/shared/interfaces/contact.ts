@@ -4,6 +4,6 @@ export interface Contact {
   phone: string;
   id: string;
   initials?: string;
-  color?: string;
+  bgColor?: string;
   active: boolean;
 }
