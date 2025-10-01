@@ -16,6 +16,10 @@ export class AddContactComponent {
     phone: ""
   };
 
+  active:boolean = false;
 
+  toggleAddContact():void {
+    this.active = !this.active;
+  }
 
 }
