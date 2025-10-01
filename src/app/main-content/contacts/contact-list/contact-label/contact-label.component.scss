@@ -1,0 +1,60 @@
+@use "../../../../../../public/assets/styles/all-styles.scss" as all;
+
+.contacts-label-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  .key-box {
+    border-bottom: 0.3rem solid all.$lightgray;
+    width: 35.2rem;
+    padding: 1.5rem 2.5rem;
+
+    span {
+      font-size: 2rem;
+    }
+  }
+
+  .contact-label-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    width: 35.2rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    .initials {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 0.2rem solid all.$white;
+      padding: 1.5rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: all.$white;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      .name {
+        font-size: 2rem;
+      }
+
+      .mail {
+        color: all.$lightblue;
+      }
+    }
+  }
+
+  .contact-label-box:hover {
+    background-color: all.$lightgray;
+  }
+}

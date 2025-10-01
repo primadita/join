@@ -2,9 +2,14 @@
 
 .contact-list-container {
   background-color: all.$white;
-  width: fit-content;
-  height: 200px;
-  @include all.d-flex($flexdir: column, $alit: flex-start, $jc: center, $cgap: 5px);
+  width: 100%;
+
+  @include all.d-flex(
+    $flexdir: column,
+    $alit: center,
+    $jc: center,
+    $cgap: 0.5rem
+  );
   box-shadow: all.$shadow;
   padding: 15px 30px;
   overflow-y: scroll;
@@ -13,5 +18,10 @@
     .add-new-contact-btn {
       @include all.press-button-style();
     }
+  }
+
+  .contact-list {
+    width: 100%;
+    height: calc(100dvh - 15.4rem);
   }
 }
