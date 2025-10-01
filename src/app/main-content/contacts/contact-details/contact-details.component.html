@@ -1,4 +1,4 @@
-<section>
+<section id="normal-view">
     <div class="content">
         <app-section-title-vline [sectHeader]="contacts!"></app-section-title-vline>
         @for (singlecontact of contactFirebase.contactsList; track $index){
@@ -8,10 +8,10 @@
             <div class="edit-delete-option">
                 <h2>{{singlecontact.name}}</h2>
                 <div class="edit-delete-btn">
-                    <button class="edit-btn" (click)="editContact()">
+                    <button class="edit-btn" (click)="toggleEditContacWindow()">
                         <img src="./assets/icons/edit.svg" alt="edit button">Edit
                     </button>
-                    <button class="delete-btn" (click)="deleteContact()">
+                    <button class="delete-btn" (click)="deleteContact(singlecontact.id)">
                         <img src="./assets/icons/delete.svg" alt="delete button">Delete
                     </button>
                 </div>
@@ -24,8 +24,10 @@
             <p class="bold">Phone</p>
             <p>{{singlecontact.phone}}</p>
         </div>
-            }
         }
-        
+    }    
     </div>
+</section>
+<section *ngIf="edit" id="edit-window">
+    <app-edit-contact (close)="toggleEditContacWindow()"></app-edit-contact>
 </section>

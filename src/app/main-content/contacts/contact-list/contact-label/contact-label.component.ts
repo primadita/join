@@ -64,7 +64,7 @@ export class ContactLabelComponent {
    * - "Jean-Paul Sartre" -> "JS" (Bindestriche/Mehrfachnamen werden unterstützt)
    */
   getLetters(contact: Contact): string {
-    const splitNames = contact.name.trim().split(/[\s-]+/);
+    const splitNames = contact.name.trim().split(/[\s]+/);
     const firName = splitNames[0].charAt(0).toUpperCase();
     const lastName = splitNames[splitNames.length - 1].charAt(0).toUpperCase();
 
