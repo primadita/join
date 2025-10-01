@@ -1,5 +1,5 @@
 @if (addContactOpen) {
-  <app-add-contact></app-add-contact>
+  <app-add-contact (getActive)="toggleAddContact()"></app-add-contact>
 }
 <div class="contact-list-container" >
   <div class="add-new-contact-box">

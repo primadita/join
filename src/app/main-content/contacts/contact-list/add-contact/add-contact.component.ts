@@ -16,12 +16,12 @@ export class AddContactComponent {
     phone: ""
   };
 
-  active:boolean = false;
+  // active:boolean = false;
 
   @Output() getActive = new EventEmitter<boolean>()
 
   sendStatus(){
-    this.getActive.emit(this.active);
+    this.getActive.emit();
   }
 
   // toggleAddContact():void {
