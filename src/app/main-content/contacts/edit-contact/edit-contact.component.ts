@@ -9,8 +9,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './edit-contact.component.scss'
 })
 export class EditContactComponent {
-  // edit:boolean = false;
-  @Output() close = new EventEmitter();
+  @Output() close = new EventEmitter<boolean>();
 
   contactData = {
     name: "",
@@ -18,9 +17,6 @@ export class EditContactComponent {
     phone: ""
   }
   
-  // toggleEditContacWindow(){
-  //   this.edit= !this.edit;
-  // }
   closeEditWindow(){
     this.close.emit();
   }
