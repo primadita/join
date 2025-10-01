@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
+import { Contact } from '../../../../shared/interfaces/contact';
+import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -10,13 +13,17 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddContactComponent {
 
+  userProfileBackground = inject(UserProfileImageService);
+
     contactData = {
     name: "",
     email: "",
     phone: ""
   };
 
-  // active:boolean = false;
+  constructor(private contactService: FirebaseServiceService){
+
+  }
 
   @Output() getActive = new EventEmitter<boolean>()
 
@@ -24,8 +31,23 @@ export class AddContactComponent {
     this.getActive.emit();
   }
 
-  // toggleAddContact():void {
-  //   this.active = !this.active;
-  // }
+  addContact(){
+    let contact: Contact = {
+      name: this.contactData.name,
+      mail: this.contactData.email,
+      phone: this.contactData.phone,
+      id: '',
+      active: false,
+      bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength()) 
+    }
+    this.contactService.addContact(contact);
+    this.sendStatus();
+  }
+
+  getContactsLength(): number{
+    const arrayLength = this.contactService.contactsList.length
+      return arrayLength + 1
+  }
+
 
 }

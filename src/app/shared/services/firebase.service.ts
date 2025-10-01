@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, Firestore, onSnapshot, doc } from '@angular/fire/firestore';
+import { collection, deleteDoc, Firestore, onSnapshot, doc, addDoc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact';
 
 @Injectable({
@@ -43,7 +43,7 @@ export class FirebaseServiceService {
       mail: obj.mail,
       phone: obj.phone,
       active: obj.active,
-      color: obj.bgcolor,
+      bgColor: obj.bgColor || obj.bgcolor
     };
   }
 
@@ -61,4 +61,15 @@ export class FirebaseServiceService {
       console.error(err);
     })
   }
+
+  async addContact(item: Contact){
+    await addDoc(this.getContactsRef(), item).catch(
+      (err) => {console.error(err);
+      }
+    ).then(
+      (docRef) => {console.log("Document written with ID: ", docRef?.id)}
+    )
 }
+}
+
+
