@@ -1,4 +1,4 @@
-<section *ngIf="!edit" id="normal-view">
+<section id="normal-view">
     <div class="content">
         <app-section-title-vline [sectHeader]="contacts!"></app-section-title-vline>
         @for (singlecontact of contactFirebase.contactsList; track $index){
