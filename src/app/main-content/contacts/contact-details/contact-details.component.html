@@ -8,7 +8,7 @@
             <div class="edit-delete-option">
                 <h2>{{singlecontact.name}}</h2>
                 <div class="edit-delete-btn">
-                    <button class="edit-btn" (click)="editContact()">
+                    <button class="edit-btn" (click)="toggleEditContacWindow()">
                         <img src="./assets/icons/edit.svg" alt="edit button">Edit
                     </button>
                     <button class="delete-btn" (click)="deleteContact(singlecontact.id)">
@@ -29,9 +29,5 @@
     </div>
 </section>
 <section *ngIf="edit" id="edit-window">
-    <div  class="edit-sect">
-        <div class="edit-form">
-
-        </div>
-    </div>
+    <app-edit-contact (close)="toggleEditContacWindow()"></app-edit-contact>
 </section>

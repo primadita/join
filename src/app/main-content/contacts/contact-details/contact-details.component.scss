@@ -38,21 +38,21 @@
         }
     }
 }
-#edit-window{
-    .edit-sect{
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        z-index: 15;
-        background: rgba(0.8, 0.8, 0.8, 0.2);
-        width: calc(100% + 232px);
-        max-width: calc(1920px - 232px);
-        height: calc(100dvh - 64px);
-        @include all.d-flex($alit: center, $jc: center);
-        .edit-form{
-            width: 121rem;
-            height: 59.2rem;
-            background-color: all.$white;
-        }
-    }
-}
+// #edit-window{
+//     .edit-sect{
+//         position: absolute;
+//         right: 0;
+//         bottom: 0;
+//         z-index: 15;
+//         background: rgba(0.8, 0.8, 0.8, 0.2);
+//         width: calc(100% + 232px);
+//         max-width: calc(1920px - 232px);
+//         height: calc(100dvh - 64px);
+//         @include all.d-flex($alit: center, $jc: center);
+//         .edit-form{
+//             width: 121rem;
+//             height: 59.2rem;
+//             background-color: all.$white;
+//         }
+//     }
+// }
