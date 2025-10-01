@@ -1,6 +1,9 @@
-<div class="contact-list-container">
+@if (addContactOpen) {
+  <app-add-contact></app-add-contact>
+}
+<div class="contact-list-container" >
   <div class="add-new-contact-box">
-    <button class="add-new-contact-btn">
+    <button class="add-new-contact-btn" (click)="toggleAddContact()">
       Add new contact <img src="assets/icons/person_add.svg" alt="" />
     </button>
   </div>
@@ -8,3 +11,5 @@
     <app-contact-label></app-contact-label>
   </div>
 </div>
+
+

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -18,8 +18,14 @@ export class AddContactComponent {
 
   active:boolean = false;
 
-  toggleAddContact():void {
-    this.active = !this.active;
+  @Output() getActive = new EventEmitter<boolean>()
+
+  sendStatus(){
+    this.getActive.emit(this.active);
   }
+
+  // toggleAddContact():void {
+  //   this.active = !this.active;
+  // }
 
 }
