@@ -19,16 +19,16 @@ export class ContactDetailsComponent {
 
   contactFirebase = inject(FirebaseServiceService);
   userProfileService = inject(UserProfileImageService);
-
+  edit:boolean = false;
   // #endregion
 
   // #region METHODS
   editContact(){
-
+    this.edit= !this.edit;
   }
 
-  deleteContact(){
-    
+  deleteContact(id:string){
+    this.contactFirebase.deleteContact(id);
   }
   // #endregion
 }

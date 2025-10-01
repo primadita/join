@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { collection, deleteDoc, Firestore, onSnapshot, doc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact';
 
 @Injectable({
@@ -32,6 +32,7 @@ export class FirebaseServiceService {
 
   setContactObject(obj: any, id: string): Contact {
     return {
+      id: id,
       name: obj.name,
       mail: obj.mail,
       phone: obj.phone,
@@ -42,5 +43,16 @@ export class FirebaseServiceService {
 
   getContactsRef() {
     return collection(this.firestore, 'contacts');
+  }
+
+  getSingleDocRef(id: string) {
+    return doc(collection(this.firestore, 'contacts'), id);
+  }
+
+
+  async deleteContact(id: string) {
+    await deleteDoc(this.getSingleDocRef(id)).catch((err) => {
+      console.error(err);
+    })
   }
 }
