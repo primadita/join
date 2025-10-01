@@ -1,4 +1,4 @@
-<div class="overlay" [ngStyle]="{'display': active ? 'flex' : 'none'}">
+<div class="overlay">
     <div class="add-contact-popup">
         <div class="popup-head">
             <img src="assets/icons/join_logo.svg" alt="Join Logo">
@@ -7,7 +7,7 @@
             <div></div>
         </div>
         <div class="popup-form">
-            <button class="close-btn" (click)="toggleAddContact()"><img src="assets/icons/cancel.svg" alt=""></button>
+            <button class="close-btn" (click)="sendStatus()"><img src="assets/icons/cancel.svg" alt=""></button>
             <div class="person-img">
                 <img src="assets/icons/person.svg" alt="person">
             </div>
@@ -39,7 +39,7 @@
                     }
                 </div>
                 <div class="btn-wrapper">
-                    <button class="cancel-btn">Cancel<img src="assets/icons/cancel.svg" alt="cancel-icon"></button>
+                    <button class="cancel-btn" (click)="sendStatus()">Cancel<img src="assets/icons/cancel.svg" alt="cancel-icon"></button>
                     <div class="submit-wrapper">
                         <input type="submit" value="Create contact">
                         <img src="assets/icons/check.svg" alt="check-img">
