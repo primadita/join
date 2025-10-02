@@ -1,3 +1,9 @@
-.content-wrapper{
+.content-wrapper {
+  min-width: 0;
+}
+
+@media (max-width: 1300px) {
+  .content-wrapper {
     width: 100%;
+  }
 }

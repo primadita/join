@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { CommonModule, KeyValuePipe } from '@angular/common';
@@ -13,6 +13,13 @@ import { CommonModule, KeyValuePipe } from '@angular/common';
 export class ContactLabelComponent {
   contactList = inject(FirebaseServiceService);
 
+  @Output() select = new EventEmitter<Contact>();
+
+  activeContact(contact: Contact) {
+    this.contactList.setActiveContact(contact.id);
+    this.select.emit(contact);
+  }
+
   /**
    * Gruppiert alle Kontakte nach dem ersten Buchstaben des Namens (A, B, C, ...).
    *
@@ -23,10 +30,6 @@ export class ContactLabelComponent {
    *   ...
    * }
    *
-   * Zweck:
-   * - Erleichtert die Anzeige im UI nach Buchstaben-Abschnitten.
-   * - In der HTML-Vorlage kann dieses Objekt mit der `keyvalue`-Pipe
-   *   iteriert werden.
    */
   groupedContacts() {
     const groups: any = {};
@@ -73,5 +76,6 @@ export class ContactLabelComponent {
 
   onActice(contact: Contact) {
     this.contactList.setActiveContact(contact.id);
+    this.select.emit(contact);
   }
 }
