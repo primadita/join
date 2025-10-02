@@ -9,7 +9,8 @@
 
   .key-box {
     border-bottom: 0.3rem solid all.$lightgray;
-    width: 35.2rem;
+    width: 100%;
+    max-width: 35.2rem;
     padding: 1.5rem 2.5rem;
 
     span {
@@ -23,7 +24,8 @@
     justify-content: flex-start;
     align-items: center;
     gap: 2rem;
-    width: 35.2rem;
+    width: 100%;
+    max-width: 35.2rem;
     padding: 1.5rem;
     border-radius: 1rem;
     cursor: pointer;

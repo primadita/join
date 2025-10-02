@@ -73,21 +73,25 @@ export class FirebaseServiceService {
   }
 
   async updateContact(contact: Contact){
-    const docRef = this.getSingleDocRef(contact.id);
-    await updateDoc(docRef, this.getCleanJson(contact)).catch(
-      (err) => console.error(err)     
-    )
+    if(contact.id){
+      let contactRef = this.getSingleDocRef(contact.id);
+      await updateDoc(contactRef, this.getCleanJson(contact)).catch(
+        (err) => {
+          console.error(err);
+        }
+      )
+    }
   }
 
-  getCleanJson(contact: Contact):{} {
+  getCleanJson(contact: Contact){
     return {
       name: contact.name,
       mail: contact.mail,
       phone: contact.phone,
-      active: contact.active
+      id: contact.id,
+      active: true
     }
   }
-
 
 }
 

@@ -24,6 +24,9 @@ section{
     width: 100%;
     height: calc(100dvh - all.$header-height);
 }
+button{
+  cursor: pointer;
+}
 // header, section, footer{
 //     display: flex;
 //     // justify-content: flex-start;

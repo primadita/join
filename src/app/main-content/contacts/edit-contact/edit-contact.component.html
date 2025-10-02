@@ -7,37 +7,28 @@
         </div>
         <div class="popup-form">
             <button class="close-btn" (click)="closeEditWindow()"><img src="assets/icons/cancel.svg" alt=""></button>
-            <div class="person-img">
-                <img src="assets/icons/person.svg" alt="person">
-            </div>
+            <app-user-profile-image></app-user-profile-image>
 
-            <form action="">
+            <form (ngSubmit)="sendSaveInput()">
                 <div class="input-wrapper">
-                    <input #name="ngModel" [(ngModel)]="contactData.name" type="text" placeholder="Name" name="name"
-                        required [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img src="assets/icons/person-gray.svg" alt="">
-                    @if (!name.valid && name.touched){
-                    <span>Please enter a name!</span>
-                    }
+                    <input #name="ngModel" [(ngModel)]="contactData.name" type="text" name="name"
+                        required [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : 'all.$lightblue2'}"><img src="assets/icons/person-gray.svg" alt="">
+                    <span *ngIf="!name.valid && name.touched">Please enter a name!</span>
                 </div>
                 <div class="input-wrapper">
-                    <input #mail="ngModel" [(ngModel)]="contactData.email" type="text" placeholder="Email" name="email"
-                        required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" [ngStyle]="{'border-color': !mail.valid && mail.touched ? 'red' : '#D9D9D9'}"><img
+                    <input #mail="ngModel" [(ngModel)]="contactData.mail" type="text" name="email"
+                        required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" [ngStyle]="{'border-color': !mail.valid && mail.touched ? 'red' : 'all.$lightblue2'}"><img
                         src="assets/icons/mail.svg" alt="">
                 </div>
                 <div class="input-wrapper">
-                    <input #phone="ngModel" [(ngModel)]="contactData.phone" type="text" placeholder="Phone" name="phone"
-                        required [ngStyle]="{'border-color': !phone.valid && phone.touched ? 'red' : '#D9D9D9'}"><img src="assets/icons/phone.svg" alt="">
+                    <input #phone="ngModel" [(ngModel)]="contactData.phone" type="text" name="phone"
+                        required [ngStyle]="{'border-color': !phone.valid && phone.touched ? 'red' : 'all.$lightblue2'}"><img src="assets/icons/phone.svg" alt="">
                 </div>
                 <div class="btn-wrapper">
-                    <button class="cancel-btn">Cancel<img src="assets/icons/cancel.svg" alt="cancel-icon"></button>
-                    <div class="submit-wrapper">
-                        <input type="submit" value="Create contact">
-                        <img src="assets/icons/check.svg" alt="check-img">
-                    </div>
-
+                    <button class="delete-btn" (click)="sendDeleteInput()">Delete</button>
+                    <button class="submit-btn" type="submit">Save<img src="assets/icons/check.svg" alt="check-img"></button>
                 </div>
             </form>
-            <!-- TODO: Form-Validation -->
         </div>
     </div>
 </div>
