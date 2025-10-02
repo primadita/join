@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, deleteDoc, Firestore, onSnapshot, doc, addDoc } from '@angular/fire/firestore';
+import { collection, deleteDoc, Firestore, onSnapshot, doc, addDoc, updateDoc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact';
 
 @Injectable({
@@ -69,7 +69,28 @@ export class FirebaseServiceService {
     ).then(
       (docRef) => {console.log("Document written with ID: ", docRef?.id)}
     )
-}
+  }
+
+  async updateContact(contact: Contact){
+    if(contact.id){
+      let contactRef = this.getSingleDocRef(contact.id);
+      await updateDoc(contactRef, this.getCleanJson(contact)).catch(
+        (err) => {
+          console.error(err);
+        }
+      )
+    }
+  }
+
+  getCleanJson(contact: Contact){
+    return {
+      name: contact.name,
+      mail: contact.mail,
+      phone: contact.phone,
+      id: contact.id,
+      active: true
+    }
+  }
 }
 
 
