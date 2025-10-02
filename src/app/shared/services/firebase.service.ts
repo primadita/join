@@ -62,12 +62,13 @@ export class FirebaseServiceService {
     })
   }
 
-  async addContact(item: Contact){
+  async addContact(item: Contact) {
     await addDoc(this.getContactsRef(), item).catch(
-      (err) => {console.error(err);
+      (err) => {
+        console.error(err);
       }
     ).then(
-      (docRef) => {console.log("Document written with ID: ", docRef?.id)}
+      (docRef) => { console.log("Document written with ID: ", docRef?.id) }
     )
   }
 
