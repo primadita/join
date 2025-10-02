@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
+import { update } from '@angular/fire/database';
+import { updateDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-contact',
@@ -31,13 +33,20 @@ export class AddContactComponent {
     this.getActive.emit();
   }
 
-  addContact(){
+  async addContact(){
+
+    for (let i = 0; i < this.contactService.contactsList.length; i++) {
+      const contactId = this.contactService.contactsList[i].id;
+      const contactRef = this.contactService.getSingleDocRef(contactId);
+      await updateDoc(contactRef, {active: false});      
+    }
+
     let contact: Contact = {
       name: this.contactData.name,
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: false,
+      active: true,
       bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength()) 
     }
     this.contactService.addContact(contact);
