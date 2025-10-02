@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { SectionTitleVLineComponent } from '../../../shared/components/section-title-vline/section-title-vline.component';
 import { UserProfileImageComponent } from '../../../shared/components/user-profile-image/user-profile-image.component';
 import { SectionHeaderService } from '../../../shared/services/section-header.service';
@@ -12,50 +12,64 @@ import { update } from '@angular/fire/database';
 
 @Component({
   selector: 'app-contact-details',
-  imports: [CommonModule, SectionTitleVLineComponent, EditContactComponent, UserProfileImageComponent, FormsModule],
+  imports: [
+    CommonModule,
+    SectionTitleVLineComponent,
+    EditContactComponent,
+    UserProfileImageComponent,
+    FormsModule,
+  ],
   templateUrl: './contact-details.component.html',
-  styleUrl: './contact-details.component.scss'
+  styleUrl: './contact-details.component.scss',
 })
 export class ContactDetailsComponent {
   // #region ATTRIBUTES
   sectionHeaderList = inject(SectionHeaderService);
-  contacts = this.sectionHeaderList.sectionHeader.find(e => e.title === 'Contacts');
+  contacts = this.sectionHeaderList.sectionHeader.find(
+    (e) => e.title === 'Contacts'
+  );
 
   contactFirebase = inject(FirebaseServiceService);
   userProfileService = inject(UserProfileImageService);
-  edit:boolean = false;
-  selectedContact!:Contact;
+  edit: boolean = false;
+  selectedContact!: Contact;
 
+  @Input() contact: Contact | null = null;
+  @Output() back = new EventEmitter<void>();
   // #endregion
 
   // #region METHODS
-  toggleEditContactWindow(contact?: Contact){
-    if(contact){
+  toggleEditContactWindow(contact?: Contact) {
+    if (contact) {
       this.selectedContact = contact;
     }
-    this.edit= !this.edit;
+    this.edit = !this.edit;
   }
 
-  deleteContact(id:string){
+  deleteContact(id: string) {
     this.contactFirebase.deleteContact(id);
   }
-  
-  saveContact(updatedData: Partial<Contact>){
+  backToContactsList() {
+    this.back.emit();
+  }
+
+  saveContact(updatedData: Partial<Contact>) {
     this.selectedContact = {
       id: this.selectedContact.id,
       name: updatedData.name || this.selectedContact.name,
       mail: updatedData.mail || this.selectedContact.mail,
       phone: updatedData.phone || this.selectedContact.phone,
-      active: this.selectedContact.active
-    } 
+      active: this.selectedContact.active,
+    };
     this.contactFirebase.updateContact(this.selectedContact);
     this.edit = !this.edit;
   }
-  
-  deleteContactonEditWindow(contact: Contact){
-    if(this.selectedContact.id){
-      this.contactFirebase.deleteContact(this.selectedContact.id)
+
+  deleteContactonEditWindow(contact: Contact) {
+    if (this.selectedContact.id) {
+      this.contactFirebase.deleteContact(this.selectedContact.id);
     }
   }
+
   // #endregion
 }

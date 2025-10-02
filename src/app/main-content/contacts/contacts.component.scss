@@ -2,9 +2,17 @@
 div {
   @include all.d-flex($flexdir: row, $alit: flex-start);
   app-contact-list {
-    width: 45.6rem;
+    width: 100%;
+    max-width: 45.6rem;
   }
   app-contact-details {
     width: calc(1920px - 45.6rem - 232px);
+  }
+}
+
+@media (max-width: 1300px) {
+  div {
+    display: contents;
+    width: 100%;
   }
 }

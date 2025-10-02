@@ -1,15 +1,15 @@
 @if (addContactOpen) {
-  <app-add-contact (getActive)="toggleAddContact()"></app-add-contact>
+<app-add-contact (getActive)="toggleAddContact()"></app-add-contact>
 }
-<div class="contact-list-container" >
+<div class="contact-list-container">
   <div class="add-new-contact-box">
     <button class="add-new-contact-btn" (click)="toggleAddContact()">
       Add new contact <img src="assets/icons/person_add.svg" alt="" />
     </button>
   </div>
   <div class="contact-list">
-    <app-contact-label></app-contact-label>
+    <app-contact-label
+      (select)="contactSelected.emit($event)"
+    ></app-contact-label>
   </div>
 </div>
-
-

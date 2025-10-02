@@ -1,5 +1,21 @@
 <div>
-    <app-contact-list></app-contact-list>
-    <app-contact-details></app-contact-details>
-
+  <!-- contact-list + contact-details -->
+  @if(breakPoint()){
+  <app-contact-list (contactSelected)="selectContact($event)"></app-contact-list
+  ><app-contact-details
+    [contact]="selectedContact()"
+    (back)="backToContactsList()"
+  ></app-contact-details>
+  }@else {
+  <!-- entweder contact-list oder contact-details -->
+  @if (!selectedContact()){
+  <app-contact-list
+    (contactSelected)="selectContact($event)"
+  ></app-contact-list>
+  } @else {
+  <app-contact-details
+    [contact]="selectedContact()"
+    (back)="backToContactsList()"
+  ></app-contact-details
+  >} }
 </div>
