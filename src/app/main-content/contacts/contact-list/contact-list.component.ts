@@ -20,6 +20,5 @@ export class ContactListComponent {
 
   toggleAddContact(): void {
     this.addContactOpen = !this.addContactOpen;
-    console.log('isOpen');
   }
 }

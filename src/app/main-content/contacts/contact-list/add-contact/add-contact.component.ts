@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
-import { update } from '@angular/fire/database';
+
 import { updateDoc } from '@angular/fire/firestore';
 
 @Component({
@@ -28,17 +28,24 @@ export class AddContactComponent {
   }
 
   @Output() getActive = new EventEmitter<boolean>()
+  @Output() select = new EventEmitter<Contact>();
+
+  contactList = inject(FirebaseServiceService);
+
+  activeContact(contact: Contact) {
+    
+    this.select.emit(contact);
+  }
 
   sendStatus(){
     this.getActive.emit();
   }
 
-  async addContact(){
+  addContact(){
 
     for (let i = 0; i < this.contactService.contactsList.length; i++) {
-      const contactId = this.contactService.contactsList[i].id;
-      const contactRef = this.contactService.getSingleDocRef(contactId);
-      await updateDoc(contactRef, {active: false});      
+
+      this.contactList.contactsList[i].active = false;
     }
 
     let contact: Contact = {
@@ -50,13 +57,14 @@ export class AddContactComponent {
       bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength()) 
     }
     this.contactService.addContact(contact);
+    
     this.sendStatus();
+    this.select.emit(contact);
+
   }
 
   getContactsLength(): number{
     const arrayLength = this.contactService.contactsList.length
       return arrayLength + 1
   }
-
-
 }
