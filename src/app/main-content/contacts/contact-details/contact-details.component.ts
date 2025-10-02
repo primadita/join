@@ -9,10 +9,11 @@ import { Contact } from '../../../shared/interfaces/contact';
 import { FormsModule } from '@angular/forms';
 import { EditContactComponent } from '../edit-contact/edit-contact.component';
 import { update } from '@angular/fire/database';
+import { ToastMessageComponent } from '../../../shared/components/toast-message/toast-message.component';
 
 @Component({
   selector: 'app-contact-details',
-  imports: [CommonModule, SectionTitleVLineComponent, EditContactComponent, UserProfileImageComponent, FormsModule],
+  imports: [CommonModule, SectionTitleVLineComponent, EditContactComponent, UserProfileImageComponent, FormsModule, ToastMessageComponent],
   templateUrl: './contact-details.component.html',
   styleUrl: './contact-details.component.scss'
 })
@@ -25,6 +26,8 @@ export class ContactDetailsComponent {
   userProfileService = inject(UserProfileImageService);
   edit:boolean = false;
   selectedContact!:Contact;
+  saved: boolean = false;
+  deleted: boolean = false;
 
   // #endregion
 
@@ -50,12 +53,14 @@ export class ContactDetailsComponent {
     } 
     this.contactFirebase.updateContact(this.selectedContact);
     this.edit = !this.edit;
+    this.saved = true;
   }
   
   deleteContactonEditWindow(contact: Contact){
     if(this.selectedContact.id){
       this.contactFirebase.deleteContact(this.selectedContact.id)
     }
+    this.deleted = true;
   }
   // #endregion
 }
