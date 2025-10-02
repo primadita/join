@@ -35,4 +35,6 @@
     (save)="saveContact($event)"
     (delete)="deleteContactonEditWindow($event)"
   ></app-edit-contact>
+    <app-toast-message *ngIf="saved"></app-toast-message>
+    <app-toast-message *ngIf="deleted"></app-toast-message>
 </section>
