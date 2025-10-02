@@ -6,6 +6,7 @@ import { Contact } from '../../../../shared/interfaces/contact';
 import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
 
 import { updateDoc } from '@angular/fire/firestore';
+import { SelectContactService } from '../../../../shared/services/select-contact.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -16,6 +17,8 @@ import { updateDoc } from '@angular/fire/firestore';
 export class AddContactComponent {
 
   userProfileBackground = inject(UserProfileImageService);
+
+  selectService = inject(SelectContactService);
 
     contactData = {
     name: "",
@@ -53,15 +56,17 @@ export class AddContactComponent {
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: true,
+      active: false,
       bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength()) 
     }
     this.contactService.addContact(contact);
-    
+    const i = this.contactList.contactsList.length - 1;
+    this.contactList.contactsList[i].active = true;
     this.sendStatus();
-    this.select.emit(contact);
-
+    this.selectService.selectContact(contact);
   }
+
+  // TODO: hinzugefügter Kontakt muss auf lokal active gesetzt werden, damit er angezeigt wird 
 
   getContactsLength(): number{
     const arrayLength = this.contactService.contactsList.length
