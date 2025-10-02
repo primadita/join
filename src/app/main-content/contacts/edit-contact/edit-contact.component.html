@@ -25,7 +25,7 @@
                         required [ngStyle]="{'border-color': !phone.valid && phone.touched ? 'red' : 'all.$lightblue2'}"><img src="assets/icons/phone.svg" alt="">
                 </div>
                 <div class="btn-wrapper">
-                    <button class="delete-btn">Delete</button>
+                    <button class="delete-btn" (click)="sendDeleteInput()">Delete</button>
                     <button class="submit-btn" type="submit">Save<img src="assets/icons/check.svg" alt="check-img"></button>
                 </div>
             </form>

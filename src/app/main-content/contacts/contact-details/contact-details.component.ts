@@ -52,5 +52,10 @@ export class ContactDetailsComponent {
     this.edit = !this.edit;
   }
   
+  deleteContactonEditWindow(contact: Contact){
+    if(this.selectedContact.id){
+      this.contactFirebase.deleteContact(this.selectedContact.id)
+    }
+  }
   // #endregion
 }

@@ -29,6 +29,6 @@
     </div>
 </section>
 <section *ngIf="edit" id="edit-window">
-    <app-edit-contact [contactDetails]="selectedContact" (close)="toggleEditContactWindow()" (save)="saveContact($event)"></app-edit-contact>
+    <app-edit-contact [contactDetails]="selectedContact" (close)="toggleEditContactWindow()" (save)="saveContact($event)" (delete)="deleteContactonEditWindow($event)"></app-edit-contact>
 </section>
     

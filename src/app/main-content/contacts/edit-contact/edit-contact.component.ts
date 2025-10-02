@@ -13,7 +13,8 @@ import { FirebaseServiceService } from '../../../shared/services/firebase.servic
 })
 export class EditContactComponent {
   @Output() close = new EventEmitter<boolean>();
-  @Output() save = new EventEmitter();
+  @Output() save = new EventEmitter<Partial<Contact>>();
+  @Output() delete = new EventEmitter();
   @Input() contactDetails!: Contact;
   contactService = inject(FirebaseServiceService);
 
@@ -41,5 +42,7 @@ export class EditContactComponent {
     this.save.emit(this.contactData);
   }
 
-  
+  sendDeleteInput(){
+    this.delete.emit(this.contactData);
+  }
 }
