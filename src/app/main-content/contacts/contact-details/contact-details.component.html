@@ -9,7 +9,7 @@
       <div class="edit-delete-option">
         <h2>{{ singlecontact.name }}</h2>
         <div class="edit-delete-btn">
-          <button class="edit-btn" (click)="toggleEditContactWindow()">
+          <button class="edit-btn" (click)="toggleEditContactWindow(singlecontact)">
             <img src="./assets/icons/edit.svg" alt="edit button" />Edit
           </button>
           <button class="delete-btn" (click)="deleteContact(singlecontact.id)">
