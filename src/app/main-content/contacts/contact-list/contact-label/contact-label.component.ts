@@ -27,9 +27,7 @@ export class ContactLabelComponent {
    * {
    *   "A": [Contact, Contact, ...],
    *   "B": [Contact, ...],
-   *   ...
    * }
-   *
    */
   groupedContacts() {
     const groups: any = {};
