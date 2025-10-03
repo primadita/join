@@ -18,9 +18,16 @@
                         background: transparent;
                         cursor: pointer;
                         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 0.5rem);
-                        img{
-                            width: 2.4rem;
-                            height: 2.4rem;
+                        &:hover{
+                            color: all.$lightblue;
+                            font-weight: 700;
+                            svg{
+                                g{
+                                    path{
+                                        fill: all.$lightblue;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -36,23 +43,9 @@
                 color: all.$lightblue;
             }
         }
+        .toast-msg-div{
+            width: 100%;
+            @include all.d-flex($jc: center, $alit:center);
+        }
     }
 }
-// #edit-window{
-//     .edit-sect{
-//         position: absolute;
-//         right: 0;
-//         bottom: 0;
-//         z-index: 15;
-//         background: rgba(0.8, 0.8, 0.8, 0.2);
-//         width: calc(100% + 232px);
-//         max-width: calc(1920px - 232px);
-//         height: calc(100dvh - 64px);
-//         @include all.d-flex($alit: center, $jc: center);
-//         .edit-form{
-//             width: 121rem;
-//             height: 59.2rem;
-//             background-color: all.$white;
-//         }
-//     }
-// }

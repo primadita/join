@@ -9,13 +9,10 @@
     background-color: rgba(0, 0, 0, 0.212);
     @include all.d-flex();
 
-    .add-contact-popup {
+    .edit-contact-popup {
         @include all.d-flex($flexdir: row);
         height: 59.2rem;
         width: 121.2rem;
-
-        // background-color: white;
-
         .popup-head {
             background-color: all.$mainColor;
             height: 100%;
@@ -25,11 +22,9 @@
             padding: 0 4rem;
             color: all.$white;
             border-radius: 2.4rem 0 0 2.4rem;
-
             img {
                 width: 6.4rem;
             }
-
             div {
                 height: 0.2rem;
                 width: 8rem;
@@ -37,7 +32,6 @@
                 margin-top: 0.8rem;
             }
         }
-
         .popup-form {
             width: 74.5rem;
             height: 100%;
@@ -45,25 +39,20 @@
             gap: 8rem;
             background-color: all.$white;
             border-radius: 0 3rem 3rem 0;
-
             .close-btn {
                 position: absolute;
                 top: 4rem;
                 right: 4rem;
                 background-color: transparent;
             }
-
             app-user-profile-image {
                 height: 4rem;
                 width: 4rem;
                 bottom: 5rem;
                 right: 5rem;
             }
-
             form {
-                @include all.d-flex();
-                gap: 2.4rem;
-
+                @include all.d-flex($rgap: 2.4rem);
                 .input-wrapper {
                     >input {
                         height: 5rem;
@@ -72,14 +61,6 @@
                         width: 42.2rem;
                         border-radius: 0.8rem;
                         color: all.$black;
-                        font-size: 1.6rem;
-                        font-family: all.$font;
-
-                        &::placeholder {
-                            font-size: 1.6rem;
-                            font-family: all.$font;
-                        }
-
                         &:focus {
                             outline: none;
                             border: 1px solid all.$lightblue2;
@@ -100,7 +81,6 @@
                         color: red;
                     }
                 }
-
                 .btn-wrapper {
                     @include all.d-flex($flexdir: row, $jc: flex-start);
                     gap: 1.6rem;
@@ -108,19 +88,29 @@
 
                     button {
                         height: 5rem;
-                        font-size: 1.6rem;
-                        font-family: all.$font;
+                        // font-size: 1.6rem;
+                        // font-family: all.$font;
                         background: all.$white ;
                         border: 1px solid black;
                         @include all.d-flex($flexdir: row);
                         gap: 0.4rem;
                         padding: 0 1.6rem;
                         border-radius: 0.8rem;
+                        &:hover{
+                            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+                            border: 2px solid all.$lightblue2;
+                            color: all.$lightblue2;
+                        }
                     }
 
                     .submit-btn {
                         background-color: all.$mainColor;
                         color: all.$white;
+                        @include all.style-bold;
+                        &:hover{
+                            background-color: all.$lightblue2;
+                            color: all.$white;
+                        }
                     }
                 }
             }
