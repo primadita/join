@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { UserProfileImageComponent } from '../../../shared/components/user-profile-image/user-profile-image.component';
 import { Contact } from '../../../shared/interfaces/contact';
 import { FirebaseServiceService } from '../../../shared/services/firebase.service';
@@ -44,5 +44,10 @@ export class EditContactComponent {
 
   sendDeleteInput(){
     this.delete.emit(this.contactData);
+  }
+  onSubmit(ngForm: NgForm){
+    if(ngForm.form.valid && ngForm.submitted){
+      this.sendSaveInput();
+    }
   }
 }

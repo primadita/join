@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, deleteDoc, Firestore, onSnapshot, doc, addDoc, updateDoc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact';
+import { ToastMessagesService } from './toast-messages.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class FirebaseServiceService {
   contactsList: Contact[] = [];
   unsubContacts;
 
-  constructor() {
+  constructor(private toastService: ToastMessagesService) {
     this.unsubContacts = this.subContactsList();
   }
 
@@ -58,14 +59,16 @@ export class FirebaseServiceService {
 
   async deleteContact(id: string) {
     await deleteDoc(this.getSingleDocRef(id)).catch((err) => {
-      console.error(err);
+      // console.error(err);
+      this.toastService.show('Error: ' + (err || 'Unknown error'), 'error');
     })
   }
 
   async addContact(item: Contact) {
     await addDoc(this.getContactsRef(), item).catch(
       (err) => {
-        console.error(err);
+        // console.error(err);
+        this.toastService.show('Error: ' + (err || 'Unknown error'), 'error');
       }
     ).then(
       (docRef) => { console.log("Document written with ID: ", docRef?.id) }
@@ -77,7 +80,8 @@ export class FirebaseServiceService {
       let contactRef = this.getSingleDocRef(contact.id);
       await updateDoc(contactRef, this.getCleanJson(contact)).catch(
         (err) => {
-          console.error(err);
+          // console.error(err);
+          this.toastService.show('Error: ' + (err || 'Unknown error'), 'error');
         }
       )
     }

@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { EditContactComponent } from '../edit-contact/edit-contact.component';
 import { update } from '@angular/fire/database';
 import { ToastMessageComponent } from '../../../shared/components/toast-message/toast-message.component';
+import { ToastMessagesService } from '../../../shared/services/toast-messages.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -34,12 +35,12 @@ export class ContactDetailsComponent {
   userProfileService = inject(UserProfileImageService);
   edit: boolean = false;
   selectedContact!: Contact;
-  saved: boolean = false;
-  deleted: boolean = false;
 
   @Input() contact: Contact | null = null;
   @Output() back = new EventEmitter<void>();
   // #endregion
+
+  constructor(private toastService: ToastMessagesService){}
 
   // #region METHODS
   toggleEditContactWindow(contact?: Contact) {
@@ -65,15 +66,18 @@ export class ContactDetailsComponent {
       active: this.selectedContact.active,
     };
     this.contactFirebase.updateContact(this.selectedContact);
+    // this.contactFirebase.setActiveContact(this.selectedContact.id);
     this.edit = !this.edit;
-    this.saved = true;
+    this.toastService.show('Contact has been successfully changed!', 'success');
   }
 
   deleteContactonEditWindow(contact: Contact) {
     if (this.selectedContact.id) {
       this.contactFirebase.deleteContact(this.selectedContact.id);
+      this.selectedContact = undefined as any;
+      this.edit = false;
     }
-    this.deleted = true;
+    this.toastService.show('Contact has been deleted!','success');
   }
 
   // #endregion
