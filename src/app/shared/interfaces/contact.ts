@@ -9,5 +9,5 @@ export interface Contact {
   id: string;
   initials?: string;
   bgColor?: string;
-  active: boolean;
+  active?: boolean;
 }

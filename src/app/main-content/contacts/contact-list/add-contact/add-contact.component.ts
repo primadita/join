@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
-import { update } from '@angular/fire/database';
+
 import { updateDoc } from '@angular/fire/firestore';
+import { SelectContactService } from '../../../../shared/services/select-contact.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -17,28 +18,37 @@ export class AddContactComponent {
 
   userProfileBackground = inject(UserProfileImageService);
 
-    contactData = {
+  selectService = inject(SelectContactService);
+
+  contactData = {
     name: "",
     email: "",
     phone: ""
   };
 
-  constructor(private contactService: FirebaseServiceService){
+  constructor(private contactService: FirebaseServiceService) {
 
   }
 
   @Output() getActive = new EventEmitter<boolean>()
+  @Output() select = new EventEmitter<Contact>();
 
-  sendStatus(){
+  contactList = inject(FirebaseServiceService);
+
+  activeContact(contact: Contact) {
+
+    this.select.emit(contact);
+  }
+
+  sendStatus() {
     this.getActive.emit();
   }
 
-  async addContact(){
-
+  addContact() {
+    
     for (let i = 0; i < this.contactService.contactsList.length; i++) {
-      const contactId = this.contactService.contactsList[i].id;
-      const contactRef = this.contactService.getSingleDocRef(contactId);
-      await updateDoc(contactRef, {active: false});      
+
+      this.contactList.contactsList[i].active = false;
     }
 
     let contact: Contact = {
@@ -46,17 +56,34 @@ export class AddContactComponent {
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: true,
-      bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength()) 
+      active: false,
+      bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength())
     }
-    this.contactService.addContact(contact);
+    this.contactService.addContact(contact).then(() => {
+      const newContact = this.contactList.contactsList.find(c => {
+        c.id === contact.id
+      });
+      console.log(newContact);
+      
+      newContact!.active = true;
+    }
+
+    );
+
+
+
+    // const i = this.contactList.contactsList.length - 1;
+    // this.contactList.contactsList[i].active = true;
     this.sendStatus();
+    this.selectService.selectContact(contact);
+    console.log(this.contactList.contactsList);
+
   }
 
-  getContactsLength(): number{
+  // TODO: hinzugefügter Kontakt muss auf lokal active gesetzt werden, damit er angezeigt wird 
+
+  getContactsLength(): number {
     const arrayLength = this.contactService.contactsList.length
-      return arrayLength + 1
+    return arrayLength + 1
   }
-
-
 }
