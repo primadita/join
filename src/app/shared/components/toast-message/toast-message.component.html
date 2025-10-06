@@ -1,1 +1,3 @@
-<p>toast-message works!</p>
+<div *ngIf="message" ngClass="{{message.type}}">
+    <p>{{message.text}}</p>
+</div>
