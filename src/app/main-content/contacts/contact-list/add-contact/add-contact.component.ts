@@ -12,31 +12,27 @@ import { SelectContactService } from '../../../../shared/services/select-contact
   selector: 'app-add-contact',
   imports: [CommonModule, FormsModule],
   templateUrl: './add-contact.component.html',
-  styleUrl: './add-contact.component.scss'
+  styleUrl: './add-contact.component.scss',
 })
 export class AddContactComponent {
-
   userProfileBackground = inject(UserProfileImageService);
 
   selectService = inject(SelectContactService);
 
   contactData = {
-    name: "",
-    email: "",
-    phone: ""
+    name: '',
+    email: '',
+    phone: '',
   };
 
-  constructor(private contactService: FirebaseServiceService) {
+  constructor(private contactService: FirebaseServiceService) {}
 
-  }
-
-  @Output() getActive = new EventEmitter<boolean>()
+  @Output() getActive = new EventEmitter<boolean>();
   @Output() select = new EventEmitter<Contact>();
 
   contactList = inject(FirebaseServiceService);
 
   activeContact(contact: Contact) {
-
     this.select.emit(contact);
   }
 
@@ -44,10 +40,8 @@ export class AddContactComponent {
     this.getActive.emit();
   }
 
-  addContact() {
-    
+  async addContact() {
     for (let i = 0; i < this.contactService.contactsList.length; i++) {
-
       this.contactList.contactsList[i].active = false;
     }
 
@@ -57,33 +51,30 @@ export class AddContactComponent {
       phone: this.contactData.phone,
       id: '',
       active: false,
-      bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength())
-    }
-    this.contactService.addContact(contact).then(() => {
-      const newContact = this.contactList.contactsList.find(c => {
-        c.id === contact.id
-      });
-      console.log(newContact);
-      
-      newContact!.active = true;
-    }
-
+      bgColor: this.userProfileBackground.getBackgroundColor(
+        this.getContactsLength()
+      ),
+    };
+    const newContactId = await this.contactService.addContact(contact);
+    await Promise.all(
+      this.contactService.contactsList.map((c) =>
+        updateDoc(this.contactService.getSingleDocRef(c.id!), {
+          active: c.id === newContactId,
+        })
+      )
     );
-
-
 
     // const i = this.contactList.contactsList.length - 1;
     // this.contactList.contactsList[i].active = true;
     this.sendStatus();
     this.selectService.selectContact(contact);
     console.log(this.contactList.contactsList);
-
   }
 
-  // TODO: hinzugefügter Kontakt muss auf lokal active gesetzt werden, damit er angezeigt wird 
+  // TODO: hinzugefügter Kontakt muss auf lokal active gesetzt werden, damit er angezeigt wird
 
   getContactsLength(): number {
-    const arrayLength = this.contactService.contactsList.length
-    return arrayLength + 1
+    const arrayLength = this.contactService.contactsList.length;
+    return arrayLength + 1;
   }
 }
