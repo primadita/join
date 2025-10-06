@@ -1,46 +1,77 @@
-@use '../../../../../public/assets/styles/all-styles.scss' as all;
+@use "../../../../../public/assets/styles/all-styles.scss" as all;
 
 section {
-    height: 100dvh;
-    width: 23.2rem;
-    background-color: all.$mainColor;
-    backdrop-filter: opacity(0.2);
+  height: 100dvh;
+  width: 23.2rem;
+  background-color: all.$mainColor;
+  backdrop-filter: opacity(0.2);
 
-    @include all.d-flex($jc: space-between);
-    padding: 4rem 0;
+  @include all.d-flex($jc: space-between);
+  padding: 4rem 0;
+
+  a {
+    color: all.$lightgray;
+    text-decoration: none;
+  }
+
+  nav {
+    @include all.d-flex($alit: flex-start);
+    gap: 1rem;
+    width: 100%;
 
     a {
-        color: all.$lightgray;
-        text-decoration: none;
+      @include all.d-flex($flexdir: row, $jc: flex-start);
+      width: 100%;
+      gap: 0.8rem;
+      padding: 1.2rem 4rem;
+      transition: 125ms;
+
+      &:hover {
+        background-color: all.$lightblue;
+      }
     }
+  }
+
+  > div {
+    @include all.d-flex($alit: flex-start);
+    gap: 2.4rem;
+
+    a {
+      &:hover {
+        color: all.$lightblue2;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  section {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    padding: 0 1rem;
 
     nav {
-        @include all.d-flex($alit: flex-start);
-        gap: 1rem;
-        width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
 
-        a {
-            @include all.d-flex($flexdir: row, $jc: flex-start);
-            width: 100%;
-            gap: 0.8rem;
-            padding: 1.2rem 4rem;
-            transition: 125ms;
-
-            &:hover {
-                background-color: all.$lightblue;
-            }
+      a {
+        width: 12rem;
+        display: flex;
+        flex-direction: column;
+        border-radius: 1.6rem;
+        padding: 1.2rem 2rem;
+        &:hover {
+          background-color: #091931;
         }
+      }
     }
 
-    >div {
-        @include all.d-flex($alit: flex-start);
-        gap: 2.4rem;
-
-        a {
-            &:hover {
-                color: all.$lightblue2;
-            }
-        }
+    div {
+      display: none;
     }
-
+  }
 }

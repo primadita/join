@@ -1,4 +1,10 @@
-app-main-content{
+app-main-content {
+  display: flex;
+}
+@media (max-width: 800px) {
+  app-main-content {
+    height: 100vh;
     display: flex;
-    
+    flex-direction: column-reverse;
+  }
 }

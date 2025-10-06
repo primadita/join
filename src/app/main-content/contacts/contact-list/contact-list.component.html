@@ -7,6 +7,12 @@
       Add new contact <img src="assets/icons/person_add.svg" alt="" />
     </button>
   </div>
+  <!-- mobile-view -->
+  <div class="add-new-contact-box-mobile">
+    <button class="add-new-contact-btn" (click)="toggleAddContact()">
+      <img src="assets/icons/person_add.svg" alt="" />
+    </button>
+  </div>
   <div class="contact-list">
     <app-contact-label
       (select)="contactSelected.emit($event)"
