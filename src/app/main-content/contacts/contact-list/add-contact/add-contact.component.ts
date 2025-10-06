@@ -50,18 +50,22 @@ export class AddContactComponent {
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: false,
+      active: true,
       bgColor: this.userProfileBackground.getBackgroundColor(
         this.getContactsLength()
       ),
     };
+    // contact in firebase erstellen und id speichern
     const newContactId = await this.contactService.addContact(contact);
+    // alle anderen contacts auf false setzen außer den neuen
     await Promise.all(
-      this.contactService.contactsList.map((c) =>
-        updateDoc(this.contactService.getSingleDocRef(c.id!), {
-          active: c.id === newContactId,
-        })
-      )
+      this.contactService.contactsList
+        .filter((c) => c.id && c.id !== newContactId)
+        .map((c) =>
+          updateDoc(this.contactService.getSingleDocRef(c.id!), {
+            active: false,
+          })
+        )
     );
 
     // const i = this.contactList.contactsList.length - 1;
