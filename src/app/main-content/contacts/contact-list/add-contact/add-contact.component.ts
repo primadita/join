@@ -56,7 +56,7 @@ export class AddContactComponent {
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: false,
+      active: true,
       bgColor: this.userProfileBackground.getBackgroundColor(this.getContactsLength())
     }
     this.contactService.addContact(contact).then(() => {
