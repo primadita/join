@@ -24,10 +24,9 @@ section{
     width: 100%;
     height: calc(100dvh - all.$header-height);
 }
-// header, section, footer{
-//     display: flex;
-//     // justify-content: flex-start;
-// }
+button{
+  cursor: pointer;
+}
 // #endregion
 // #region FONTS
 @font-face {
@@ -59,7 +58,7 @@ h6{
   font-size: 2rem;
     @include all.style-regular;
 }
-p, span{
+p, span, input, button{
   font-size: 1.6rem;
   @include all.style-regular;
 }
