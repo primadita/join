@@ -59,7 +59,8 @@ section {
       justify-content: space-around;
 
       a {
-        width: 12rem;
+        width: 100%;
+        max-width: 12rem;
         display: flex;
         flex-direction: column;
         border-radius: 1.6rem;
