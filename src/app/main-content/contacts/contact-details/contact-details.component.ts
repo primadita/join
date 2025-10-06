@@ -52,6 +52,7 @@ export class ContactDetailsComponent {
 
   deleteContact(id: string) {
     this.contactFirebase.deleteContact(id);
+    this.toastService.show('Contact has been deleted!','success');
   }
   backToContactsList() {
     this.back.emit();
