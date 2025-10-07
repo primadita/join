@@ -46,12 +46,21 @@
     .info {
       display: flex;
       flex-direction: column;
+
       .name {
         font-size: 2rem;
+        width: 20rem;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
       }
 
       .mail {
         color: all.$lightblue;
+        width: 20rem;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
