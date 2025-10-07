@@ -3,14 +3,14 @@
 section {
     height: 100dvh;
     width: 23.2rem;
-    background-color: all.$mainColor;
-    backdrop-filter: opacity(0.2);
+    background: all.$mainColor;
 
     @include all.d-flex($jc: space-between);
     padding: 4rem 0;
 
-    a {
-        color: all.$lightgray;
+    button {
+        color: all.$lightgray2;
+        background: transparent;
         text-decoration: none;
     }
 
@@ -19,26 +19,31 @@ section {
         gap: 1rem;
         width: 100%;
 
-        a {
+        button {
             @include all.d-flex($flexdir: row, $jc: flex-start);
+            background: all.$mainColor;
             width: 100%;
             gap: 0.8rem;
             padding: 1.2rem 4rem;
             transition: 125ms;
+            color: all.$lightgray2;
 
             &:hover {
-                background-color: all.$lightblue;
+                background: all.$hoverMainColor;
             }
         }
     }
 
     >div {
         @include all.d-flex($alit: flex-start);
-        gap: 2.4rem;
+        gap: 1rem;
+        width: 100%;
 
-        a {
+        button {
+            width: 100%;
+            padding: 1.2rem 4rem;
             &:hover {
-                color: all.$lightblue2;
+                background: all.$hoverMainColor;
             }
         }
     }

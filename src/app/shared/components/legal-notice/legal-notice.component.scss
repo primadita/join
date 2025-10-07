@@ -2,8 +2,7 @@
 section{
     background-color: all.$lightgray;
     padding: 11rem 9.6rem;
-    height: 100dvh;
-    overflow-y: auto;
+    height: calc(100dvh - 64px);
     h1, h3{
         padding-bottom: 3rem;
     }

@@ -4,7 +4,7 @@ section{
     background-color: all.$lightgray;
     width: 100%;
     text-align: left;
-    min-height: 100dvh;
+    min-height: calc(100dvh - 64px);
     overflow-y: auto;
     @include all.d-flex( $jc: flex-start, $alit: flex-start);
     h1, h3{
