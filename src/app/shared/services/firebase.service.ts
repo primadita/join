@@ -134,6 +134,7 @@ export class FirebaseServiceService {
   // returnt die id des neu erstellten contacts
   async addContact(item: Contact) {
     const docRef = await addDoc(this.getContactsRef(), item);
+    
     return docRef.id;
   }
 

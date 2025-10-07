@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
 
 import { updateDoc } from '@angular/fire/firestore';
 import { SelectContactService } from '../../../../shared/services/select-contact.service';
+import { ToastMessagesService } from '../../../../shared/services/toast-messages.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -25,7 +26,9 @@ export class AddContactComponent {
     phone: '',
   };
 
-  constructor(private contactService: FirebaseServiceService) {}
+  loadingActive: boolean = false;
+
+  constructor(private contactService: FirebaseServiceService, private toastMessage: ToastMessagesService) { }
 
   @Output() getActive = new EventEmitter<boolean>();
   @Output() select = new EventEmitter<Contact>();
@@ -41,10 +44,22 @@ export class AddContactComponent {
   }
 
   async addContact() {
-    for (let i = 0; i < this.contactService.contactsList.length; i++) {
-      this.contactList.contactsList[i].active = false;
-    }
+    this.toggleLoadingScreen();
+    const contact = this.createContact();
+    const newContactId = await this.contactService.addContact(contact);
+    await Promise.all(
+      this.contactService.contactsList
+        .filter((c) => c.id && c.id !== newContactId)
+        .map((c) =>
+          updateDoc(this.contactService.getSingleDocRef(c.id!), {
+            active: false,
+          })
+        )
+    );
+    this.closePopUp(contact);
+  }
 
+  createContact() {
     let contact: Contact = {
       name: this.contactData.name,
       mail: this.contactData.email,
@@ -55,24 +70,30 @@ export class AddContactComponent {
         this.getContactsLength()
       ),
     };
-    // contact in firebase erstellen und id speichern
-    const newContactId = await this.contactService.addContact(contact);
-    // alle anderen contacts auf false setzen außer den neuen
-    await Promise.all(
-      this.contactService.contactsList
-        .filter((c) => c.id && c.id !== newContactId)
-        .map((c) =>
-          updateDoc(this.contactService.getSingleDocRef(c.id!), {
-            active: false,
-          })
-        )
-    );
+    return contact;
+  }
 
-    // const i = this.contactList.contactsList.length - 1;
-    // this.contactList.contactsList[i].active = true;
+  deactivateContacts() {
+    for (let i = 0; i < this.contactService.contactsList.length; i++) {
+      this.contactList.contactsList[i].active = false;
+    }
+  }
+
+  onSubmit(ngForm: NgForm) {
+    if (ngForm.valid && ngForm.submitted) {
+      this.addContact();
+    }
+  }
+
+  toggleLoadingScreen() {
+    this.loadingActive = !this.loadingActive;
+  }
+
+  closePopUp(contact: Contact) {
     this.sendStatus();
     this.selectService.selectContact(contact);
-    console.log(this.contactList.contactsList);
+    this.toggleLoadingScreen();
+    this.toastMessage.show("Contact has been succesfully created", "success");
   }
 
   // TODO: hinzugefügter Kontakt muss auf lokal active gesetzt werden, damit er angezeigt wird
