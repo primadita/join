@@ -27,7 +27,10 @@ body {
 
 section {
   width: 100%;
-  // height: calc(100dvh - all.$header-height - 6.4);
+  height: calc(100dvh - all.$header-height);
+  @media(max-width: 800px){
+    height: calc(100dvh - all.$header-height - all.$navbar-height-mobile);
+  }
 }
 
 button {
