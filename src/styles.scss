@@ -45,10 +45,10 @@ h1 {
   font-size: 6.1rem;
   @include all.style-bold;
   @include all.tablet{
-    font-size: 4rem;
+    font-size: 5.6rem;
   }
   @include all.mobile{
-    font-size: 3rem;
+    font-size: 4rem;
   }
 }
 
