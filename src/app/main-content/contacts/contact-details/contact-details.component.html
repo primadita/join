@@ -95,9 +95,9 @@
     <h6>Contact Information</h6>
     <div class="email-phone-details">
       <p class="bold">Email</p>
-      <p class="blue">{{ singlecontact.mail }}</p>
+      <a href="mailto:{{singlecontact.mail}}" class="blue">{{ singlecontact.mail }}</a>
       <p class="bold">Phone</p>
-      <p>{{ singlecontact.phone }}</p>
+      <a href="tel:{{singlecontact.phone}}">{{ singlecontact.phone }}</a>
     </div>
 
     <!-- #region edit-mobile-box -->
