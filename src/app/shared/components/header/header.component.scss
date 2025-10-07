@@ -8,6 +8,22 @@ header {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   z-index: 5;
 
+  @media(max-width: 800px){
+    padding: 0 3.2rem 0 3.2rem;
+  }
+
+  img{
+    @media(min-width: 800px){
+      display: none;
+    }
+  }
+
+  span{
+    @media(max-width: 800px){
+      display: none;
+    }
+  }
+
   > div {
     @include all.d-flex($flexdir: row);
     gap: 1.6rem;
@@ -69,6 +85,5 @@ header {
 @media (max-width: 800px) {
   header {
     width: 100%;
-    height: auto;
   }
 }
