@@ -13,7 +13,7 @@
                 <img src="assets/icons/person.svg" alt="person">
             </div>
 
-            <form action="">
+            <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
                 <div class="input-wrapper">
                     <input #name="ngModel" [(ngModel)]="contactData.name" type="text" placeholder="Name" name="name"
                         required [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img
@@ -42,7 +42,7 @@
                     <button class="cancel-btn" (click)="sendStatus()" (click)="getContactsLength()">Cancel<img
                             src="assets/icons/cancel.svg" alt="cancel-icon"></button>
                     <div class="submit-wrapper">
-                        <input type="submit" value="Create contact" (click)="addContact()">
+                        <input type="submit" value="Create contact" >
                         <img src="assets/icons/check.svg" alt="check-img">
                     </div>
                 </div>
@@ -50,3 +50,4 @@
         </div>
     </div>
 </div>
+<div class="loading-screen" [ngStyle]="{'display' : !loadingActive ? 'none' : 'block'}"></div>
