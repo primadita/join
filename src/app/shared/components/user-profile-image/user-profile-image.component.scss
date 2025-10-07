@@ -8,4 +8,13 @@ div{
     border-radius: 50%;
     color: all.$white;
     @include all.d-flex($jc: center, $alit: center);
+    h2{
+        @include all.tablet{
+            font-size: 4.7rem;
+        }
+        @include all.mobile{
+            font-size: 4.7rem;
+        }
+    }
+    
 }

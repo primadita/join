@@ -93,7 +93,11 @@ export class AddContactComponent {
     this.sendStatus();
     this.selectService.selectContact(contact);
     this.toggleLoadingScreen();
+    if (window.innerWidth < 640){
+      this.toastMessage.show("Contact successfully created", "success");
+    } else {
     this.toastMessage.show("Contact has been succesfully created", "success");
+    }
   }
 
   // TODO: hinzugefügter Kontakt muss auf lokal active gesetzt werden, damit er angezeigt wird

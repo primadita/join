@@ -1,12 +1,15 @@
 <div class="overlay">
     <div class="edit-contact-popup">
         <div class="popup-head">
+            <button class="close-btn-mobile" (click)="closeEditWindow()">
+                <img src="assets/icons/cancel-white.svg" alt="cancel button">
+            </button>
             <img src="assets/icons/join_logo.svg" alt="Join Logo">
             <h1>Edit contact</h1>
             <div></div>
         </div>
         <div class="popup-form">
-            <button class="close-btn" (click)="closeEditWindow()"><img src="assets/icons/cancel.svg" alt=""></button>
+            <button class="close-btn" (click)="closeEditWindow()"><img src="assets/icons/cancel.svg" alt="cancel button"></button>
             <app-user-profile-image></app-user-profile-image>
             <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
                 <div class="input-wrapper">
