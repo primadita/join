@@ -5,23 +5,28 @@ header {
   width: 100%;
   padding: 0 3.2rem 0 10rem;
   height: all.$header-height;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 5;
 
-  >div {
+  > div {
     @include all.d-flex($flexdir: row);
     gap: 1.6rem;
-    a {
+    #help-btn {
       display: inline-block;
-      background-image: url(../../../../../public/assets/icons/help.svg);
       width: 2.4rem;
       height: 2.4rem;
-      background-size: contain;
-      background-position: center;
+      border: 0;
+      padding: 0;
       transition: transform 0.3s ease;
+      img{
+        width: 2.4rem;
+        height: 2.4rem;
+      }
       &:hover{
         transform: scale(1.2);
       }
     }
-    button{
+    button {
       background-color: all.$white;
       color: all.$lightblue2;
       font-weight: 600;
@@ -31,30 +36,39 @@ header {
       border-radius: 100%;
       cursor: pointer;
       transition: 125ms;
-      &:hover{
+      &:hover {
         background-color: all.$lightgray;
       }
     }
   }
-  nav{
+  nav {
     position: absolute;
     width: 17rem;
     top: all.$header-height;
     right: 1rem;
     @include all.d-flex($alit: flex-start);
     background-color: all.$mainColor;
-    padding: 2.4rem 0.8rem ;
+    padding: 2.4rem 0.8rem;
     border-radius: 1.6rem;
     border-top-right-radius: 0;
     z-index: 100;
-    a{
+    button{
       text-decoration: none;
       color: all.$lightgray;
+      text-align: left;
+      background: transparent;
       width: 100%;
       padding: 0.8rem 1.6rem;
       &:hover{
-        background-color: all.$lightblue
+        background-color: #39475b;
       }
     }
-  };
+  }
+}
+
+@media (max-width: 800px) {
+  header {
+    width: 100%;
+    height: auto;
+  }
 }

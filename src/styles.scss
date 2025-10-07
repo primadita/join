@@ -1,4 +1,5 @@
 @use './../public/assets/styles/all-styles.scss' as all;
+
 // #region GENERAL
 * {
   padding: 0;
@@ -9,57 +10,104 @@
   list-style: none;
   border-style: none;
 }
-.content{
-    width: 100%;
-    max-width: calc(1920px - 232px);
+
+.content {
+  width: 100%;
+  max-width: calc(1920px - 232px);
 }
-html{
-    font-size: 62.5%;
+
+html {
+  font-size: 62.5%;
 }
-body{
+
+body {
   font-size: 16px;
   font-family: all.$font;
 }
-section{
-    width: 100%;
-    height: calc(100dvh - all.$header-height);
+
+section {
+  width: 100%;
+  height: calc(100dvh - all.$header-height);
 }
-button{
+
+button {
   cursor: pointer;
 }
+
 // #endregion
 // #region FONTS
 @font-face {
   font-family: 'Inter';
   src: url('./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
 }
-h1{
+
+h1 {
   font-size: 6.1rem;
   @include all.style-bold;
+  @include all.tablet{
+    font-size: 4rem;
+  }
+  @include all.mobile{
+    font-size: 3rem;
+  }
 }
-h2{
+
+h2 {
   font-size: 4.7rem;
   font-weight: 500;
   font-style: medium;
+    @include all.tablet{
+    font-size: 3.2rem;
+  }
+  @include all.mobile{
+    font-size: 2.5rem;
+  }
 }
-h3{
+
+h3 {
   font-size: 2.7rem;
   @include all.style-bold;
+    @include all.tablet{
+    font-size: 2.3rem;
+  }
+  @include all.mobile{
+    font-size: 2rem;
+  }
 }
-h4{
+
+h4 {
   font-size: 2.7rem;
   @include all.style-regular;
+  @include all.tablet{
+    font-size: 2.3rem;
+  }
+  @include all.mobile{
+    font-size: 2rem;
+  }
 }
-h5{
+h5, li{
   font-size: 2.1rem;
   @include all.style-bold;
+    @include all.tablet{
+    font-size: 1.9rem;
+  }
+  @include all.mobile{
+    font-size: 1.8rem;
+  }
 }
-h6{
+
+h6 {
   font-size: 2rem;
-    @include all.style-regular;
+  @include all.style-regular;
+
 }
-p, span, input, button{
+
+p,
+span,
+input,
+button {
   font-size: 1.6rem;
   @include all.style-regular;
 }
+
 // #endregion
