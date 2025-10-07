@@ -1,18 +1,24 @@
 @use './../../../../../public/assets/styles/all-styles.scss' as all;
 div{
-    width: auto;
+    width: 100%;
     max-width: 35rem; 
     text-align: center;
     position: fixed;
     bottom: 3rem;
-    // left: 55rem;
     box-shadow: rgba(0, 0, 0, 0.2) 1.95px 1.95px 2.6px;
     padding: 1.6rem;
     border-radius: 2rem;
     animation: slideInFromRight 1s forwards;
     animation-iteration-count: 1;
-    // background: all.$mainColor;
-    // color: all.$white;
+    @include all.tablet{
+        bottom: 10rem;
+        animation: slideInFromRight-tablet 1s forwards;
+    }   
+    @include all.mobile{
+        animation:slideInFromRight-mobile 1s forwards;
+        padding: 1.6rem;
+        width: auto;
+    }
 }
 .success{
     background: all.$mainColor;

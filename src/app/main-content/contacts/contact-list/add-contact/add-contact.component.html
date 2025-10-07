@@ -1,7 +1,8 @@
 <div class="overlay">
     <div class="add-contact-popup">
         <div class="popup-head">
-            <button class="close-btn-mobile" (click)="sendStatus()"><img src="assets/icons/cancel-white.svg" alt=""></button>
+            <button class="close-btn-mobile" (click)="sendStatus()"><img src="assets/icons/cancel-white.svg"
+                    alt=""></button>
             <img src="assets/icons/join_logo.svg" alt="Join Logo">
             <h1>Add contact</h1>
             <h4>Tasks are better with a team!</h4>
@@ -25,7 +26,9 @@
                 <div class="input-wrapper">
                     <input #mail="ngModel" [(ngModel)]="contactData.email"
                         [ngStyle]="{'border-color': !mail.valid && mail.touched ? 'red' : '#D9D9D9'}" type="email"
-                        placeholder="Email" name="email" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"><img src="assets/icons/mail.svg" alt="">
+                        placeholder="Email" name="email" required
+                        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"><img src="assets/icons/mail.svg"
+                        alt="">
                     @if (!mail.valid && mail.touched){
                     <span>Please enter a valid Email!</span>
                     }
@@ -39,10 +42,15 @@
                     }
                 </div>
                 <div class="btn-wrapper">
-                    <button class="cancel-btn" (click)="sendStatus()" (click)="getContactsLength()">Cancel<img
-                            src="assets/icons/cancel.svg" alt="cancel-icon"></button>
+                    <button class="cancel-btn" (click)="sendStatus()" (click)="getContactsLength()">Cancel
+
+                        <svg class="cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M6 6L18 18M6 18L18 6" />
+                        </svg>
+
+                    </button>
                     <div class="submit-wrapper">
-                        <input type="submit" value="Create contact" >
+                        <input type="submit" value="Create contact">
                         <img src="assets/icons/check.svg" alt="check-img">
                     </div>
                 </div>

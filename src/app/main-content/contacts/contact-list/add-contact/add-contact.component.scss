@@ -200,11 +200,30 @@
                         font-size: 1.6rem;
                         font-family: all.$font;
                         background: all.$white ;
-                        border: 1px solid black;
+                        border: 2px solid black;
                         @include all.d-flex($flexdir: row);
                         gap: 0.8rem;
                         padding: 0 1.6rem;
                         border-radius: 0.8rem;
+                        transition: 125ms;
+
+                        .cancel-icon {
+                            width: 20px;
+                            height: 20px;
+                            stroke: all.$black;
+                            stroke-width: 2;
+                            fill: none;
+                            transition: stroke 0.2s ease;
+                        }
+
+                        &:hover {
+                            border: 2px solid all.$lightblue2;
+                            color: all.$lightblue2;
+                            box-shadow: all.$shadow;
+                            .cancel-icon{
+                                stroke: all.$lightblue2;
+                            }
+                        }
 
                         @include all.mobile {
                             display: none;
@@ -222,6 +241,13 @@
                             font-size: 1.6rem;
                             font-family: all.$font;
                             border-radius: 0.8rem;
+                            transition: 125ms;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: all.$lightblue2;
+                                box-shadow: all.$shadow;
+                            }
                         }
 
                         img {
