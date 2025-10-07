@@ -1,53 +1,64 @@
 @use "../../../../../public/assets/styles/all-styles.scss" as all;
 
 section {
-    height: 100dvh;
-    width: 23.2rem;
-    background: all.$mainColor;
+  height: 100dvh;
+  width: 23.2rem;
+  background: all.$mainColor;
 
   @include all.d-flex($jc: space-between);
   padding: 4rem 0;
 
-    button {
-        color: all.$lightgray2;
-        background: transparent;
-        text-decoration: none;
-    }
+  button {
+    color: all.$lightgray2;
+    background: transparent;
+    text-decoration: none;
+  }
 
   nav {
     @include all.d-flex($alit: flex-start);
     gap: 1rem;
     width: 100%;
 
-        button {
-            @include all.d-flex($flexdir: row, $jc: flex-start);
-            background: all.$mainColor;
-            width: 100%;
-            gap: 0.8rem;
-            padding: 1.2rem 4rem;
-            transition: 125ms;
-            color: all.$lightgray2;
+    button {
+      @include all.d-flex($flexdir: row, $jc: flex-start);
+      background: all.$mainColor;
+      width: 100%;
+      gap: 0.8rem;
+      padding: 1.2rem 4rem;
+      transition: 125ms;
+      color: all.$lightgray2;
 
-            &:hover {
-                background: all.$hoverMainColor;
-            }
+
+
+      &:hover {
+        background: all.$hoverMainColor;
+
+      }
+
+      img {
+        @media(max-width: 500px) {
+          width: 2.4rem;
         }
+      }
     }
+  }
 
-    >div {
-        @include all.d-flex($alit: flex-start);
-        gap: 1rem;
-        width: 100%;
+  >div {
+    @include all.d-flex($alit: flex-start);
+    gap: 1rem;
+    width: 100%;
 
-        button {
-            width: 100%;
-            padding: 1.2rem 4rem;
-            &:hover {
-                background: all.$hoverMainColor;
-            }
-        }
+    button {
+      width: 100%;
+      padding: 1.2rem 4rem;
+
+      &:hover {
+        background: all.$hoverMainColor;
+      }
     }
+  }
 }
+
 @media (max-width: 800px) {
   section {
     width: 100%;
@@ -68,15 +79,29 @@ section {
         display: flex;
         flex-direction: column;
         border-radius: 1.6rem;
-        padding: 1.2rem 2rem;
+        padding: 0.4rem;
+
         &:hover {
           background-color: #091931;
         }
       }
+
+    }
+
+    >img {
+      display: none;
     }
 
     div {
       display: none;
+    }
+  }
+}
+
+@media(max-width: 350px){
+  nav{
+    button{
+      font-size: 1.4rem;
     }
   }
 }
