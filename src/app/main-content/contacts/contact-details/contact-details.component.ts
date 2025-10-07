@@ -8,7 +8,6 @@ import { UserProfileImageService } from '../../../shared/services/user-profile-i
 import { Contact } from '../../../shared/interfaces/contact';
 import { FormsModule } from '@angular/forms';
 import { EditContactComponent } from '../edit-contact/edit-contact.component';
-import { update } from '@angular/fire/database';
 import { ToastMessageComponent } from '../../../shared/components/toast-message/toast-message.component';
 import { ToastMessagesService } from '../../../shared/services/toast-messages.service';
 import { updateDoc } from '@angular/fire/firestore';
@@ -20,7 +19,7 @@ import { updateDoc } from '@angular/fire/firestore';
     SectionTitleVLineComponent,
     EditContactComponent,
     UserProfileImageComponent,
-    FormsModule, ToastMessageComponent
+    FormsModule
   ],
   templateUrl: './contact-details.component.html',
   styleUrl: './contact-details.component.scss',
@@ -145,7 +144,7 @@ export class ContactDetailsComponent {
 
     this.edit = !this.edit;
     if(window.innerWidth < 640){
-      this.toastService.show('Contact has been changed!', 'success');
+      this.toastService.show('Contact successfully changed!', 'success');
     } else{
       this.toastService.show('Contact has been successfully changed!', 'success');
     }

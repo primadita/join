@@ -4,10 +4,11 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
 import { Contact } from '../../shared/interfaces/contact';
 import { SelectContactService } from '../../shared/services/select-contact.service';
 import { CommonModule } from '@angular/common';
+import { ToastMessageComponent } from '../../shared/components/toast-message/toast-message.component';
 
 @Component({
   selector: 'app-contacts',
-  imports: [CommonModule, ContactListComponent, ContactDetailsComponent],
+  imports: [CommonModule, ContactListComponent, ContactDetailsComponent, ToastMessageComponent],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss',
 })
