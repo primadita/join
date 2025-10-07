@@ -1,14 +1,13 @@
 <section>
-  <div><img src="assets/icons/join_logo.svg" alt="" /></div>
-
-  <nav>
-    <a href="#"><img src="assets/icons/summary.svg" alt="" />Summary</a>
-    <a href="#"><img src="assets/icons/addtask.svg" alt="" />Add Task</a>
-    <a href="#"><img src="assets/icons/board.svg" alt="" />Board</a>
-    <a href="#"><img src="assets/icons/contact.svg" alt="" />Contacts</a>
-  </nav>
-  <div>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Legal Notice</a>
-  </div>
+    <img src="assets/icons/join_logo.svg" alt="">
+    <nav>
+        <button type="button" (click)="navigateToComponent($event,'summary')"><img src="assets/icons/summary.svg" alt="">Summary</button>
+        <button type="button" (click)="navigateToComponent($event,'add-task')"><img src="assets/icons/addtask.svg" alt="">Add Task</button>
+        <button type="button" (click)="navigateToComponent($event,'board')"><img src="assets/icons/board.svg" alt="">Board</button>
+        <button type="button" (click)="navigateToComponent($event,'contacts')"><img src="assets/icons/contact.svg" alt="">Contacts</button>
+    </nav>
+    <div>
+        <button (click)="navigateToComponent($event,'privacy-policy')">Privacy Policy</button>
+        <button (click)="navigateToComponent($event,'legal-notice')">Legal Notice</button>
+    </div>
 </section>

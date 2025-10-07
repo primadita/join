@@ -1,5 +1,6 @@
 .content-wrapper {
-  min-width: 0;
+  width: calc(100% - 232px);
+  max-width: calc(1920px - 232px);
 }
 
 @media (max-width: 1300px) {

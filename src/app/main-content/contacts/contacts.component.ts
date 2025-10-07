@@ -3,10 +3,11 @@ import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { Contact } from '../../shared/interfaces/contact';
 import { SelectContactService } from '../../shared/services/select-contact.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contacts',
-  imports: [ContactListComponent, ContactDetailsComponent],
+  imports: [CommonModule, ContactListComponent, ContactDetailsComponent],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss',
 })
