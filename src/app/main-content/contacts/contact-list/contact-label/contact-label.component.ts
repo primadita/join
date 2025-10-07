@@ -13,7 +13,7 @@ import { CommonModule, KeyValuePipe } from '@angular/common';
 
 /**
  * Component responsible for rendering and managing the list of contact labels.
- * 
+ *
  * Provides functionality to:
  * - Select an active contact.
  * - Group contacts alphabetically by their first name letter.
@@ -21,19 +21,18 @@ import { CommonModule, KeyValuePipe } from '@angular/common';
  * - Generate initials for contact avatars.
  */
 export class ContactLabelComponent {
-
-    /**
+  /**
    * Injected service that manages and provides access to contact data.
    */
   contactList = inject(FirebaseServiceService);
 
-    /**
+  /**
    * Event emitted when a contact is selected from the list.
    * @event
    */
   @Output() select = new EventEmitter<Contact>();
 
-    /**
+  /**
    * Sets the given contact as the active one and emits a `select` event.
    *
    * @param {Contact} contact - The contact to set as active.
@@ -45,7 +44,7 @@ export class ContactLabelComponent {
 
   /**
    * Groups all contacts by the first letter of their name (A, B, C, ...).
-   * 
+   *
    * @example
    * Returns an object like:
    * ```typescript
@@ -54,7 +53,7 @@ export class ContactLabelComponent {
    *   "B": [Contact, ...],
    * }
    * ```
-   * 
+   *
    * @returns {Record<string, Contact[]>} An object where each key is a letter and each value is an array of contacts.
    */
   groupedContacts() {
@@ -72,7 +71,7 @@ export class ContactLabelComponent {
 
   /**
    * Returns an alphabetically sorted copy of the contact list.
-   * 
+   *
    * - Sorting is case-insensitive.
    * - The original data in the service remains unchanged (due to use of `slice()`).
    *
@@ -91,7 +90,7 @@ export class ContactLabelComponent {
 
   /**
    * Generates initials from the full name of a contact.
-   * 
+   *
    * Examples:
    * - `"Anna Müller"` → `"AM"`
    * - `"Jean-Paul Sartre"` → `"JS"` (supports hyphenated and multi-part names)
@@ -100,14 +99,14 @@ export class ContactLabelComponent {
    * @returns {string} The generated initials in uppercase.
    */
   getLetters(contact: Contact): string {
-    const splitNames = contact.name.trim().split(/[\s]+/);
-    const firName = splitNames[0].charAt(0).toUpperCase();
-    const lastName = splitNames[splitNames.length - 1].charAt(0).toUpperCase();
-
-    return firName + lastName;
+    const parts = contact.name.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    const initials = (first + last).toUpperCase();
+    return initials;
   }
 
-    /**
+  /**
    * Marks a contact as active and emits a `select` event.
    * (Appears to be a duplicate of `activeContact()`; may serve as an alias.)
    *
