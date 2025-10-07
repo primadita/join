@@ -205,6 +205,13 @@
                         gap: 0.8rem;
                         padding: 0 1.6rem;
                         border-radius: 0.8rem;
+                        transition: 125ms;
+
+                        &:hover{
+                            border:2px solid all.$lightblue2;
+                            color: all.$lightblue2;
+                            box-shadow: all.$shadow;
+                        }
 
                         @include all.mobile {
                             display: none;
@@ -222,6 +229,13 @@
                             font-size: 1.6rem;
                             font-family: all.$font;
                             border-radius: 0.8rem;
+                            transition: 125ms;
+                            cursor: pointer;
+
+                            &:hover{
+                                background-color: all.$lightblue2;
+                                box-shadow: all.$shadow;
+                            }
                         }
 
                         img {
