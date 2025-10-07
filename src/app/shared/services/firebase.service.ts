@@ -163,7 +163,7 @@ export class FirebaseServiceService {
       mail: contact.mail,
       phone: contact.phone,
       id: contact.id,
-      active: true,
+      active: contact.active,
     };
   }
 }

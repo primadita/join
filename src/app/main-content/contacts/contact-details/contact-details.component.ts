@@ -11,6 +11,7 @@ import { EditContactComponent } from '../edit-contact/edit-contact.component';
 import { update } from '@angular/fire/database';
 import { ToastMessageComponent } from '../../../shared/components/toast-message/toast-message.component';
 import { ToastMessagesService } from '../../../shared/services/toast-messages.service';
+import { updateDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-contact-details',
@@ -121,7 +122,7 @@ export class ContactDetailsComponent {
  *
  * @param {Partial<Contact>} updatedData - The updated contact information.
  */
-  saveContact(updatedData: Partial<Contact>) {
+  async saveContact(updatedData: Partial<Contact>) {
     this.selectedContact = {
       id: this.selectedContact.id,
       name: updatedData.name || this.selectedContact.name,
@@ -130,7 +131,18 @@ export class ContactDetailsComponent {
       active: this.selectedContact.active,
     };
     this.contactFirebase.updateContact(this.selectedContact);
-    // this.contactFirebase.setActiveContact(this.selectedContact.id);
+    console.log(this.contactFirebase.contactsList);
+    await Promise.all(
+          this.contactFirebase.contactsList
+            .filter((c) => c.id && c.id !== this.selectedContact.id)
+            .map((c) =>
+              updateDoc(this.contactFirebase.getSingleDocRef(c.id!), {
+                active: false,
+              })
+            )
+        );
+    
+
     this.edit = !this.edit;
     this.toastService.show('Contact has been successfully changed!', 'success');
   }
