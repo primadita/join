@@ -62,7 +62,7 @@ section {
 @media (max-width: 800px) {
   section {
     width: 100%;
-    height: auto;
+    height: all.$navbar-height-mobile;
     display: flex;
     flex-direction: row;
     flex-shrink: 0;
