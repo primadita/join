@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  inject,
+  Input,
+  Output,
+} from '@angular/core';
 import { SectionTitleVLineComponent } from '../../../shared/components/section-title-vline/section-title-vline.component';
 import { UserProfileImageComponent } from '../../../shared/components/user-profile-image/user-profile-image.component';
 import { SectionHeaderService } from '../../../shared/services/section-header.service';
@@ -19,7 +26,7 @@ import { updateDoc } from '@angular/fire/firestore';
     SectionTitleVLineComponent,
     EditContactComponent,
     UserProfileImageComponent,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './contact-details.component.html',
   styleUrl: './contact-details.component.scss',
@@ -27,14 +34,13 @@ import { updateDoc } from '@angular/fire/firestore';
 
 /**
  * Component responsible for displaying and managing the details of a selected contact.
- * 
+ *
  * Provides features for editing, saving, and deleting contact information,
- * as well as navigating back to the contact list.  
+ * as well as navigating back to the contact list.
  * Also integrates with several services for Firestore access, UI updates, and user feedback.
  */
 export class ContactDetailsComponent {
   // #region ATTRIBUTES
-
 
   /**
    * Injected service providing section header data for various app sections.
@@ -45,50 +51,50 @@ export class ContactDetailsComponent {
   );
 
   /**
- * Injected service for performing Firestore operations on contacts.
- */
+   * Injected service for performing Firestore operations on contacts.
+   */
   contactFirebase = inject(FirebaseServiceService);
 
   /**
- * Injected service for generating user profile colors and initials.
- */
+   * Injected service for generating user profile colors and initials.
+   */
   userProfileService = inject(UserProfileImageService);
 
   /**
- * Indicates whether the edit contact window is currently open.
- * @default false
- */
+   * Indicates whether the edit contact window is currently open.
+   * @default false
+   */
   edit: boolean = false;
 
   /**
- * The currently selected contact being viewed or edited.
- */
+   * The currently selected contact being viewed or edited.
+   */
   selectedContact!: Contact;
 
   /**
- * The contact data passed from the parent component.
- * Can be `null` if no contact is currently selected.
- */
+   * The contact data passed from the parent component.
+   * Can be `null` if no contact is currently selected.
+   */
   @Input() contact: Contact | null = null;
 
   /**
- * Event emitted when the user navigates back to the contacts list view.
- * @event
- */
+   * Event emitted when the user navigates back to the contacts list view.
+   * @event
+   */
   @Output() back = new EventEmitter<void>();
   // #endregion
 
-  constructor(private toastService: ToastMessagesService) { }
+  constructor(private toastService: ToastMessagesService) {}
 
   // #region METHODS
 
   /**
- * Toggles the edit contact window.
- * 
- * If a contact is passed as a parameter, it becomes the selected contact for editing.
- *
- * @param {Contact} [contact] - Optional contact to edit.
- */
+   * Toggles the edit contact window.
+   *
+   * If a contact is passed as a parameter, it becomes the selected contact for editing.
+   *
+   * @param {Contact} [contact] - Optional contact to edit.
+   */
   toggleEditContactWindow(contact?: Contact) {
     if (contact) {
       this.selectedContact = contact;
@@ -97,30 +103,30 @@ export class ContactDetailsComponent {
   }
 
   /**
- * Deletes a contact by its ID and displays a success toast message.
- *
- * @param {string} id - The ID of the contact to delete.
- */
+   * Deletes a contact by its ID and displays a success toast message.
+   *
+   * @param {string} id - The ID of the contact to delete.
+   */
   deleteContact(id: string) {
     this.contactFirebase.deleteContact(id);
     this.toastService.show('Contact has been deleted!', 'success');
   }
 
   /**
- * Emits the `back` event to return to the contacts list view.
- */
+   * Emits the `back` event to return to the contacts list view.
+   */
   backToContactsList() {
     this.back.emit();
   }
 
   /**
- * Saves updates to the currently selected contact.
- * 
- * Merges form data (`updatedData`) with existing contact details,
- * updates the record in Firestore, and displays a success message.
- *
- * @param {Partial<Contact>} updatedData - The updated contact information.
- */
+   * Saves updates to the currently selected contact.
+   *
+   * Merges form data (`updatedData`) with existing contact details,
+   * updates the record in Firestore, and displays a success message.
+   *
+   * @param {Partial<Contact>} updatedData - The updated contact information.
+   */
   async saveContact(updatedData: Partial<Contact>) {
     this.selectedContact = {
       id: this.selectedContact.id,
@@ -132,31 +138,33 @@ export class ContactDetailsComponent {
     this.contactFirebase.updateContact(this.selectedContact);
     console.log(this.contactFirebase.contactsList);
     await Promise.all(
-          this.contactFirebase.contactsList
-            .filter((c) => c.id && c.id !== this.selectedContact.id)
-            .map((c) =>
-              updateDoc(this.contactFirebase.getSingleDocRef(c.id!), {
-                active: false,
-              })
-            )
-        );
-    
+      this.contactFirebase.contactsList
+        .filter((c) => c.id && c.id !== this.selectedContact.id)
+        .map((c) =>
+          updateDoc(this.contactFirebase.getSingleDocRef(c.id!), {
+            active: false,
+          })
+        )
+    );
 
     this.edit = !this.edit;
-    if(window.innerWidth < 640){
+    if (window.innerWidth < 640) {
       this.toastService.show('Contact successfully changed!', 'success');
-    } else{
-      this.toastService.show('Contact has been successfully changed!', 'success');
+    } else {
+      this.toastService.show(
+        'Contact has been successfully changed!',
+        'success'
+      );
     }
   }
 
   /**
- * Deletes a contact while in the edit window.
- * 
- * Closes the edit view and clears the selected contact afterward.
- *
- * @param {Contact} contact - The contact to delete.
- */
+   * Deletes a contact while in the edit window.
+   *
+   * Closes the edit view and clears the selected contact afterward.
+   *
+   * @param {Contact} contact - The contact to delete.
+   */
   deleteContactonEditWindow(contact: Contact) {
     if (this.selectedContact.id) {
       this.contactFirebase.deleteContact(this.selectedContact.id);
@@ -167,4 +175,11 @@ export class ContactDetailsComponent {
   }
 
   // #endregion
+
+  // toggle-state
+  isEditPoppUpOpen = false;
+
+  toggleEditPopup() {
+    this.isEditPoppUpOpen = !this.isEditPoppUpOpen;
+  }
 }
