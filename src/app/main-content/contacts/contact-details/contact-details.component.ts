@@ -144,7 +144,11 @@ export class ContactDetailsComponent {
     
 
     this.edit = !this.edit;
-    this.toastService.show('Contact has been successfully changed!', 'success');
+    if(window.innerWidth < 640){
+      this.toastService.show('Contact has been changed!', 'success');
+    } else{
+      this.toastService.show('Contact has been successfully changed!', 'success');
+    }
   }
 
   /**

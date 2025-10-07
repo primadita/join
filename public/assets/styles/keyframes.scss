@@ -1,4 +1,14 @@
 @keyframes slideInFromRight {
-    0% {right: 0};
-    100% {right: 20%}
+    0% {transform: translateX(100%)};
+    100% {transform:translateX(35%)}
+}
+
+@keyframes slideInFromRight-tablet {
+    0% {transform: translateX(100%)};
+    100% {transform:translateX(20%)}
+}
+
+@keyframes slideInFromRight-mobile {
+    0% {transform: translateX(80%)};
+    100% {transform:translateX(10%)}
 }
