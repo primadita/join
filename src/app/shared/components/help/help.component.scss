@@ -1,0 +1,29 @@
+@use './../../../../../public/assets/styles/all-styles.scss' as all;
+section{
+    padding: 11rem 9.6rem ;
+    background-color: all.$lightgray;
+    width: 100%;
+    text-align: left;
+    min-height: calc(100dvh - 64px);
+    overflow-y: auto;
+    @include all.d-flex( $jc: flex-start, $alit: flex-start);
+    h1, h3{
+        padding-bottom: 3rem;
+    }
+    p{
+        padding-bottom: 2.4rem;
+    }
+    ol{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 3rem;
+        li{
+            list-style-type: decimal;
+            padding-left: 2rem;
+        }
+    }
+}
+.blue{
+    color: all.$lightblue2;
+}

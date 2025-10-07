@@ -1,12 +1,14 @@
 <header>
     <span>Kanban Project Management Tool</span>
     <div>
-        <a href="#" id="help-btn"></a>
+        <button id="help-btn" (click)="navigateToComponent($event, 'help')">
+            <img src="./assets/icons/help.svg" alt="">
+        </button>
         <button (click)="toggleNavbar()">SM</button>
     </div>
     <nav [ngStyle]="{'display': !navActive ? 'none': 'flex'}" >
-        <a href="">Legal Notice</a>
-        <a href="">Privacy Policy</a>
-        <a href="">Log out</a>
+        <button (click)="navigateToComponent($event,'legal-notice')">Legal Notice</button>
+        <button (click)="navigateToComponent($event,'privacy-policy')">Privacy Policy</button>
+        <button (click)="navigateToComponent($event,'')">Log out</button>
     </nav>
 </header>
