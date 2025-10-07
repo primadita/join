@@ -182,4 +182,8 @@ export class ContactDetailsComponent {
   toggleEditPopup() {
     this.isEditPoppUpOpen = !this.isEditPoppUpOpen;
   }
+
+  closeEditPopup() {
+    this.isEditPoppUpOpen = false;
+  }
 }

@@ -101,6 +101,13 @@
     </div>
 
     <!-- #region edit-mobile-box -->
+
+    <div
+      class="overlay"
+      *ngIf="isEditPoppUpOpen"
+      (click)="closeEditPopup()"
+    ></div>
+
     <div class="edit-mobile-box">
       <div (click)="toggleEditPopup()">
         <svg
@@ -128,7 +135,7 @@
           <svg
             class="icon"
             viewBox="0 0 24 24"
-            fill="none"
+            fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
           >
             <mask
@@ -151,7 +158,7 @@
           <svg
             class="icon"
             viewBox="0 0 24 24"
-            fill="none"
+            fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
           >
             <mask
