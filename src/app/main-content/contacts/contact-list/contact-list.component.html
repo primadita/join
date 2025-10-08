@@ -7,7 +7,7 @@
       Add new contact <img src="assets/icons/person_add.svg" alt="" />
     </button>
   </div>
-  <!-- mobile-view -->
+  <!-- #region mobile-view -->
   <div class="add-new-contact-box-mobile">
     <button class="add-new-contact-btn" (click)="toggleAddContact()">
       <img src="assets/icons/person_add.svg" alt="" />
@@ -18,4 +18,5 @@
       (select)="contactSelected.emit($event)"
     ></app-contact-label>
   </div>
+  <!-- #endregion -->
 </section>

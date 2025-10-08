@@ -23,7 +23,7 @@ import { ToastMessagesService } from '../../../../shared/services/toast-messages
  * Automatically deactivates previously active contacts after adding a new one.
  */
 export class AddContactComponent {
-
+  // #region ATTRIBUTES
   /**
  * Injected service used to manage user profile visuals (background colors, initials, etc.).
  */
@@ -33,7 +33,6 @@ export class AddContactComponent {
  * Injected service used to manage selected contacts.
  */
   selectService = inject(SelectContactService);
-
 
   /**
    * Injected Firestore service for accessing and updating contact data.
@@ -66,6 +65,7 @@ export class AddContactComponent {
  * @default false
  */
   loadingActive: boolean = false;
+  // #endregion
 
   /**
  * Creates an instance of the component.
@@ -75,6 +75,7 @@ export class AddContactComponent {
  */
   constructor(private contactService: FirebaseServiceService, private toastMessage: ToastMessagesService) { }
 
+  // #region METHODS
   /**
    * Emits the selected contact via the `select` event.
    *
@@ -157,7 +158,6 @@ export class AddContactComponent {
     }
   }
 
-
   /**
    * Toggles the loading screen on or off.
    */
@@ -192,4 +192,5 @@ export class AddContactComponent {
     const arrayLength = this.contactService.contactsList.length;
     return arrayLength + 1;
   }
+  // #endregion
 }

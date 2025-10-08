@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-profile-image.component.scss'
 })
 export class UserProfileImageComponent {
+  // #region ATTRIBUTES
   userProfImgService = inject(UserProfileImageService);
   contactService = inject(FirebaseServiceService);
-  // @Input() initial: string = '';
-  // @Input() bgColor: string = '';
+  // #endregion
 }

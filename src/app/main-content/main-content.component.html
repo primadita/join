@@ -1,11 +1,14 @@
+<!-- #region FIX PART -->
 <app-nav-bar (selectedActiveComponent)="switchComponent($event)"></app-nav-bar>
 <div class="content-wrapper">
     <app-header (callHelpPage)="switchComponent($event)"></app-header>
+<!-- #endregion -->
+    <!-- #region SWITCHABLE PART -->
     <div>
         <app-contacts *ngIf="activeComponent === 'contacts'"></app-contacts>
         <app-help *ngIf="activeComponent === 'help'"></app-help>
         <app-legal-notice *ngIf="activeComponent === 'legal-notice'"></app-legal-notice>
         <app-privacy-policy *ngIf="activeComponent === 'privacy-policy'"></app-privacy-policy>
     </div>
-    
+    <!-- #endregion -->
 </div>

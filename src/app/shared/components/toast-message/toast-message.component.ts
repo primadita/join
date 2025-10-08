@@ -17,15 +17,17 @@ import { Messages } from '../../interfaces/messages';
  * automatically hides each message after a short duration.
  */
 export class ToastMessageComponent {
-
+  // #region ATTRIBUTES
   /**
  * The current toast message to display.
  * - `null` means no active message is being shown.
  */
   message: Messages | null = null;
+  // #endregion
 
   constructor(private toastService: ToastMessagesService) { }
 
+  // #region METHODS
   /**
  * Lifecycle hook that initializes the component.
  * 
@@ -39,4 +41,5 @@ export class ToastMessageComponent {
       setTimeout(() => this.message = null, 3000);
     });
   }
+  // #endregion
 }

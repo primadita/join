@@ -27,8 +27,6 @@
             width: 30rem;
         }
 
-        // background-color: white;
-
         .popup-head {
             background-color: all.$mainColor;
             height: 100%;
@@ -69,11 +67,9 @@
 
             >img {
                 width: 6.4rem;
-
                 @media(max-width: 1250px) {
                     display: none;
                 }
-
             }
 
             div {
@@ -157,11 +153,6 @@
                             width: 29rem;
                         }
 
-                        &::placeholder {
-                            font-size: 1.6rem;
-                            font-family: all.$font;
-                        }
-
                         &:focus {
                             outline: none;
                             border: 2px solid all.$lightblue;
@@ -199,8 +190,6 @@
 
                     button {
                         height: 5rem;
-                        font-size: 1.6rem;
-                        font-family: all.$font;
                         background: all.$white ;
                         border: 2px solid black;
                         @include all.d-flex($flexdir: row);

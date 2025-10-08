@@ -11,10 +11,14 @@ import {
 import { Contact } from '../interfaces/contact';
 import { ToastMessagesService } from './toast-messages.service';
 
+/**
+ * Service for managing contacts in Firestore.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseServiceService {
+  // #region ATTRIBUTES
   /** Firestore instance */
   firestore: Firestore = inject(Firestore);
 
@@ -23,11 +27,17 @@ export class FirebaseServiceService {
 
   /** Function to unsubscribe from Firestore listener */
   unsubContacts;
+  // #endregion
 
+  /**
+   * Creates an instance of FirebaseServiceService.
+   * @param {ToastMessagesService} toastService - Service for showing toast messages.
+   */
   constructor(private toastService: ToastMessagesService) {
     this.unsubContacts = this.subContactsList();
   }
 
+  // #region METHODS
   /**
    * Subscribes to the Firestore contacts collection and updates `contactsList` in real-time.
    * @returns {Function} Unsubscribe function to stop listening for changes.
@@ -81,7 +91,6 @@ export class FirebaseServiceService {
    * Gets a Firestore reference to the contacts collection.
    * @returns {CollectionReference} Firestore contacts collection reference.
    */
-
   getContactsRef() {
     return collection(this.firestore, 'contacts');
   }
@@ -102,7 +111,6 @@ export class FirebaseServiceService {
    */
   async deleteContact(id: string) {
     await deleteDoc(this.getSingleDocRef(id)).catch((err) => {
-      // console.error(err);
       this.toastService.show('Error: ' + (err || 'Unknown error'), 'error');
     });
   }
@@ -112,29 +120,8 @@ export class FirebaseServiceService {
    * @param {Contact} item - The contact object to add.
    * @returns {Promise<void>} Promise that resolves when the contact is added.
    */
-  // async addContact(item: Contact) {
-  //   await addDoc(this.getContactsRef(), item)
-  //     .catch((err) => {
-  //       // console.error(err);
-  //       this.toastService.show('Error: ' + (err || 'Unknown error'), 'error');
-  //     })
-  //     .then((docRef) => {
-  //       console.log('Document written with ID: ', docRef?.id);
-  //     });
-  // }
-
-  // async addContact(item: Contact) {
-  //   const docRef = await addDoc(this.getContactsRef(), {
-  //     ...item,
-  //     active: true,
-  //   });
-  //   return docRef.id;
-  // }
-
-  // returnt die id des neu erstellten contacts
   async addContact(item: Contact) {
     const docRef = await addDoc(this.getContactsRef(), item);
-    
     return docRef.id;
   }
 
@@ -147,7 +134,6 @@ export class FirebaseServiceService {
     if (contact.id) {
       let contactRef = this.getSingleDocRef(contact.id);
       await updateDoc(contactRef, this.getCleanJson(contact)).catch((err) => {
-        // console.error(err);
         this.toastService.show('Error: ' + (err || 'Unknown error'), 'error');
       });
     }
@@ -167,4 +153,5 @@ export class FirebaseServiceService {
       active: contact.active,
     };
   }
+  // #endregion
 }

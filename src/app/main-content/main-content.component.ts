@@ -14,10 +14,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent {
+  // #region ATTRIBUTES
+  /**
+   * Currently active component name.
+   * @default 'contacts'
+   */
   activeComponent:string = 'contacts' //default
+  // #endregion
 
-
+  // #region METHODS
+  /**
+   * Switches the active component.
+   * @param {string} component - The name of the component to activate.
+   */
   switchComponent(component: string){
     this.activeComponent = component;
   }
+  // #endregion
 }
