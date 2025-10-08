@@ -2,7 +2,7 @@
 
 .overlay {
     position: fixed;
-    z-index: 100;
+    z-index: 1000;
     top: 0;
     left: 0;
     height: 100dvh;
@@ -103,31 +103,27 @@
                 }
             }
 
-            app-user-profile-image {
-                height: 4rem;
-                width: 4rem;
-                bottom: 5rem;
-                right: 5rem;
+            .user-profile-image-wrapper {
 
                 @media(max-width: 1250px) {
+
                     transform: translateY(-50%);
+
                 }
 
-                @include all.mobile {
-                    transform: translateX(20%);
-                }
             }
+
 
             form {
                 @include all.d-flex($rgap: 2.4rem);
 
                 @media(max-width: 1250px) {
-                    padding: 5rem 2rem;
+                    padding-bottom: 2rem;
                 }
 
                 @include all.mobile {
                     gap: 1.6rem;
-                    padding: 5rem 2rem 2rem 2rem;
+                    padding-bottom: 2rem;
                 }
 
                 .input-wrapper {

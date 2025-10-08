@@ -7,9 +7,18 @@
     padding-top: 10rem;
     padding-left: 5rem;
     padding-right: 5rem;
+
+    @include all.mobile{
+      padding-top: 5rem;
+      padding-left: 3rem;
+    }
     @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 3.5rem);
     .contact-label-big {
       @include all.d-flex($flexdir: row, $alit: center, $cgap: 5rem);
+      @include all.mobile{
+        gap: 3rem;
+      }
+
       .edit-delete-option {
         @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
         .edit-delete-btn {
@@ -70,36 +79,30 @@
 
 @media (max-width: 1300px) {
   .content {
-    .back-btn-box {
-      position: relative;
-      margin-left: 85%;
-      bottom: -45px;
+
       .back-btn {
         display: block;
-
+        position: absolute;
+        top: 8rem;
+        right: 5rem;
         width: 5.7rem;
         height: 5.7rem;
         cursor: pointer;
       }
-    }
+    // }
   }
 }
 
 @media (max-width: 800px) {
   .content {
-    .back-btn-box {
-      display: block;
-      margin-left: 85%;
-      bottom: -55px;
 
       .back-btn {
-        display: block;
-
         width: 4.7rem;
         height: 4.7rem;
-        cursor: pointer;
+        right: 3rem;
+
       }
-    }
+    
 
     .edit-mobile-box {
       display: block;
@@ -137,12 +140,12 @@
 @media (max-width: 800px) {
   .content {
     .edit-mobile-box {
-      z-index: 1001;
+      z-index: 500;
       position: fixed;
       background-color: all.$hoverMainColor;
       right: 10%;
-      bottom: 10%;
-      border-radius: 5.6rem;
+      bottom: 8rem;
+      border-radius: 50%;
       padding: 2.2rem;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
       transition: background-color 0.4s ease;
@@ -155,7 +158,7 @@
       .edit-box-pop-up {
         position: absolute;
         right: -25%;
-        bottom: -20%;
+        bottom: -0.5rem;
         width: 11.6rem;
         height: 10rem;
         background: #fff;

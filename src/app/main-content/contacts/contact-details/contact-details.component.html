@@ -1,6 +1,6 @@
 <section id="normal-view">
   <div class="content">
-    <div class="back-btn-box">
+    <!-- <div class="back-btn-box"> -->
       <svg
         class="back-btn"
         (click)="backToContactsList()"
@@ -13,7 +13,7 @@
           fill="#29ABE2"
         />
       </svg>
-    </div>
+    <!-- </div> -->
 
     <app-section-title-vline [sectHeader]="contacts!"></app-section-title-vline>
 
@@ -108,8 +108,8 @@
       (click)="closeEditPopup()"
     ></div>
 
-    <div class="edit-mobile-box">
-      <div (click)="toggleEditPopup()">
+    <div class="edit-mobile-box" (click)="toggleEditPopup()">
+      <div >
         <svg
           class="edit-toggle-icon"
           viewBox="0 0 6 22"
