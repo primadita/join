@@ -32,6 +32,11 @@ export class ContactLabelComponent {
    * @event
    */
   @Output() select = new EventEmitter<Contact>();
+
+  /**
+   * ID of the currently active contact.
+   */
+  activeContactId?: string;
   // #endregion
 
   // #region METHODS
@@ -41,6 +46,7 @@ export class ContactLabelComponent {
    * @param {Contact} contact - The contact to set as active.
    */
   activeContact(contact: Contact) {
+    this.activeContactId = contact.id;
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
   }

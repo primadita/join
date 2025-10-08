@@ -71,7 +71,8 @@
     }
   }
 
-  .contact-label-box:hover {
-    background-color: all.$lightgray;
+  .contact-label-box:hover, .contact-label-box.active {
+    background-color: all.$mainColor;
+    color: all.$white;
   }
 }
