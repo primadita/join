@@ -7,10 +7,14 @@ div{
     background-color: #800080;
     border-radius: 50%;
     color: all.$white;
-    // transform: translateX(50%);
+
     @include all.mobile{
         width: 9rem;
         height: 9rem;
+    }
+    @media(max-width: 400px){
+        width: 7rem;
+        height: 7rem;
     }
     @include all.d-flex($jc: center, $alit: center);
 

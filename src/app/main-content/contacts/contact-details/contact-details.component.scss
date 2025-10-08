@@ -7,7 +7,7 @@
   .content {
     padding-top: 10rem;
     padding-left: 5rem;
-    padding-right: 5rem;
+    // padding-right: 5rem;
 
     @include all.mobile {
       padding-top: 5rem;
@@ -25,9 +25,29 @@
       @include all.mobile {
         gap: 3rem;
       }
+      @media(max-width: 400px){
+        gap: 1.6rem;
+      }
 
       .edit-delete-option {
         @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
+
+        h2 {
+          width: 34.5rem;
+          white-space: nowrap;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          @media(max-width: 570px){
+            width: 30rem;
+          }
+          @media(max-width: 450px){
+            width: 25rem;
+          }
+          @media(max-width: 370px){
+            width: 20rem;
+          }
+
+        }
 
         .edit-delete-btn {
           @include all.d-flex($flexdir: row,
@@ -79,6 +99,18 @@
 
       .blue {
         color: all.$lightblue;
+      }
+      a{
+        width: 40rem;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        @media(max-width: 450px){
+          width: 30rem;
+        }
+        @media(max-width: 350px){
+          width: 25rem;
+        }
       }
     }
   }
