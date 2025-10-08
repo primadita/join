@@ -1,4 +1,4 @@
-@use './../public/assets/styles/all-styles.scss' as all;
+@use "./../public/assets/styles/all-styles.scss" as all;
 
 // #region GENERAL
 * {
@@ -28,16 +28,16 @@ body {
 section {
   width: 100%;
   height: calc(100dvh - all.$header-height);
-  @media(max-width: 800px){
-    height: calc(100dvh - all.$header-height - all.$navbar-height-mobile);
-  }
+  // @media(max-width: 800px){
+  //   height: calc(100dvh - all.$header-height - all.$navbar-height-mobile);
+  // }
 }
 
 button {
   cursor: pointer;
 }
 
-a{
+a {
   text-decoration: none;
   color: all.$black;
 }
@@ -45,17 +45,17 @@ a{
 // #endregion
 // #region FONTS
 @font-face {
-  font-family: 'Inter';
-  src: url('./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
+  font-family: "Inter";
+  src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
 }
 
 h1 {
   font-size: 6.1rem;
   @include all.style-bold;
-  @include all.tablet{
+  @include all.tablet {
     font-size: 5.6rem;
   }
-  @include all.mobile{
+  @include all.mobile {
     font-size: 4rem;
   }
 }
@@ -64,10 +64,10 @@ h2 {
   font-size: 4.7rem;
   font-weight: 500;
   font-style: medium;
-    @include all.tablet{
+  @include all.tablet {
     font-size: 3.2rem;
   }
-  @include all.mobile{
+  @include all.mobile {
     font-size: 2.5rem;
   }
 }
@@ -75,10 +75,10 @@ h2 {
 h3 {
   font-size: 2.7rem;
   @include all.style-bold;
-    @include all.tablet{
+  @include all.tablet {
     font-size: 2.3rem;
   }
-  @include all.mobile{
+  @include all.mobile {
     font-size: 2rem;
   }
 }
@@ -86,20 +86,21 @@ h3 {
 h4 {
   font-size: 2.7rem;
   @include all.style-regular;
-  @include all.tablet{
+  @include all.tablet {
     font-size: 2.3rem;
   }
-  @include all.mobile{
+  @include all.mobile {
     font-size: 2rem;
   }
 }
-h5, li{
+h5,
+li {
   font-size: 2.1rem;
   @include all.style-bold;
-    @include all.tablet{
+  @include all.tablet {
     font-size: 1.9rem;
   }
-  @include all.mobile{
+  @include all.mobile {
     font-size: 1.8rem;
   }
 }
@@ -107,7 +108,6 @@ h5, li{
 h6 {
   font-size: 2rem;
   @include all.style-regular;
-
 }
 
 p,
