@@ -46,6 +46,9 @@ export class ContactDetailsComponent {
    * Injected service providing section header data for various app sections.
    */
   sectionHeaderList = inject(SectionHeaderService);
+  /**
+   * Section header for contacts.
+   */
   contacts = this.sectionHeaderList.sectionHeader.find(
     (e) => e.title === 'Contacts'
   );
@@ -82,8 +85,17 @@ export class ContactDetailsComponent {
    * @event
    */
   @Output() back = new EventEmitter<void>();
+
+  /**
+   * Indicates if the edit popup is open.
+   */
+  isEditPoppUpOpen = false;
   // #endregion
 
+  /**
+   * Creates an instance of ContactDetailsComponent.
+   * @param {ToastMessagesService} toastService - Service for showing toast messages.
+   */
   constructor(private toastService: ToastMessagesService) {}
 
   // #region METHODS
@@ -174,16 +186,18 @@ export class ContactDetailsComponent {
     this.toastService.show('Contact has been deleted!', 'success');
   }
 
-  // #endregion
-
-  // toggle-state
-  isEditPoppUpOpen = false;
-
+  /**
+   * Toggles the edit popup window.
+   */
   toggleEditPopup() {
     this.isEditPoppUpOpen = !this.isEditPoppUpOpen;
   }
 
+  /**
+   * Closes the edit popup window.
+   */
   closeEditPopup() {
     this.isEditPoppUpOpen = false;
   }
+  // #endregion
 }

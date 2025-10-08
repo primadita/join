@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
-
 /**
  * Service to handle user profile images, including background color assignment
  * and generation of initials based on a user's name.
  */
+@Injectable({
+  providedIn: 'root'
+})
 export class UserProfileImageService {
-
-    /**
+  // #region ATTRIBUTES
+  /**
    * Predefined list of background colors to assign to user profile images.
    */
   bgColorList: string[] = [
@@ -46,17 +45,19 @@ export class UserProfileImageService {
     '#FF8247'
   ]
 
-    /**
+  /**
    * The initials generated from the user's name.
    */
   initial!: string;
 
-    /**
+  /**
    * The background color assigned to the profile.
    */
   bgColor!: string;
+  // #endregion
 
-    /**
+  // #region METHODS
+  /**
    * Creates initials based on the provided full name.
    * - Uses the first letter of the first name and the first letter of the last name.
    * - If only one name is provided, only the first letter will be used.
@@ -72,7 +73,7 @@ export class UserProfileImageService {
     return initial.toUpperCase();
   }
 
-    /**
+  /**
    * Selects a background color from the predefined list based on an index.
    * - Uses modulo operation to ensure the index stays within the available colors.
    *
@@ -83,6 +84,7 @@ export class UserProfileImageService {
     const colorId = index % this.bgColorList.length;
     return this.bgColor = this.bgColorList[colorId];
   }
+  // #endregion
 }
 
 

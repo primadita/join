@@ -10,6 +10,9 @@ div{
     border-radius: 2rem;
     animation: slideInFromRight 1s forwards;
     animation-iteration-count: 1;
+    @include all.desktop{
+        animation: slideInFromRight-bigscreen 1s forwards;
+    }
     @include all.tablet{
         bottom: 10rem;
         animation: slideInFromRight-tablet 1s forwards;

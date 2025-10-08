@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { ContactsComponent } from './contacts/contacts.component';
 import { NavBarComponent } from '../shared/components/nav-bar/nav-bar.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
@@ -14,10 +14,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent {
+  // #region ATTRIBUTES
+  /**
+   * Currently active component name.
+   * @default 'contacts'
+   */
   activeComponent:string = 'contacts' //default
+  // #endregion
 
-
+  // #region METHODS
+  /**
+   * Switches the active component.
+   * @param {string} component - The name of the component to activate.
+   */
   switchComponent(component: string){
     this.activeComponent = component;
   }
+  // #endregion
 }

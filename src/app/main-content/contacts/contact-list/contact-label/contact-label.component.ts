@@ -21,6 +21,7 @@ import { CommonModule, KeyValuePipe } from '@angular/common';
  * - Generate initials for contact avatars.
  */
 export class ContactLabelComponent {
+  // #region ATTRIBUTES
   /**
    * Injected service that manages and provides access to contact data.
    */
@@ -33,11 +34,19 @@ export class ContactLabelComponent {
   @Output() select = new EventEmitter<Contact>();
 
   /**
+   * ID of the currently active contact.
+   */
+  activeContactId?: string;
+  // #endregion
+
+  // #region METHODS
+  /**
    * Sets the given contact as the active one and emits a `select` event.
    *
    * @param {Contact} contact - The contact to set as active.
    */
   activeContact(contact: Contact) {
+    this.activeContactId = contact.id;
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
   }
@@ -116,4 +125,5 @@ export class ContactLabelComponent {
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
   }
+  // #endregion
 }
