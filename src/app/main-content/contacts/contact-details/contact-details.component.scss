@@ -7,7 +7,6 @@
   .content {
     padding-top: 10rem;
     padding-left: 5rem;
-    // padding-right: 5rem;
 
     @include all.mobile {
       padding-top: 5rem;
@@ -20,12 +19,17 @@
       width: 100%;
       animation: slideInPopUp 500ms forwards;
       animation-iteration-count: 1;
-      @include all.d-flex($flexdir: row, $alit: center, $cgap: 5rem, $jc: flex-start);
+      @include all.d-flex(
+        $flexdir: row,
+        $alit: center,
+        $cgap: 5rem,
+        $jc: flex-start
+      );
 
       @include all.mobile {
         gap: 3rem;
       }
-      @media(max-width: 400px){
+      @media (max-width: 400px) {
         gap: 1.6rem;
       }
 
@@ -37,32 +41,35 @@
           white-space: nowrap;
           overflow-x: hidden;
           text-overflow: ellipsis;
-          @media(max-width: 570px){
+          @media (max-width: 570px) {
             width: 30rem;
           }
-          @media(max-width: 450px){
+          @media (max-width: 450px) {
             width: 25rem;
           }
-          @media(max-width: 370px){
+          @media (max-width: 370px) {
             width: 20rem;
           }
-
         }
 
         .edit-delete-btn {
-          @include all.d-flex($flexdir: row,
+          @include all.d-flex(
+            $flexdir: row,
             $jc: flex-start,
             $alit: center,
-            $cgap: 2rem);
+            $cgap: 2rem
+          );
 
           button {
             color: all.$mainColor;
             background: transparent;
             cursor: pointer;
-            @include all.d-flex($flexdir: row,
+            @include all.d-flex(
+              $flexdir: row,
               $jc: flex-start,
               $alit: center,
-              $cgap: 0.5rem);
+              $cgap: 0.5rem
+            );
 
             &:hover {
               color: all.$lightblue;
@@ -100,20 +107,30 @@
       .blue {
         color: all.$lightblue;
       }
-      a{
+      a {
         width: 40rem;
         white-space: nowrap;
         overflow-x: hidden;
         text-overflow: ellipsis;
-        @media(max-width: 450px){
+        @media (max-width: 450px) {
           width: 30rem;
         }
-        @media(max-width: 350px){
+        @media (max-width: 350px) {
           width: 25rem;
         }
       }
     }
   }
+}
+
+.edit-view {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0);
+  overflow: auto; /* eigenes Scrollen im Modal */
 }
 
 @media (max-width: 3840px) {
@@ -130,7 +147,6 @@
 
 @media (max-width: 1300px) {
   .content {
-
     .back-btn {
       display: block;
       position: absolute;
@@ -147,14 +163,11 @@
 
 @media (max-width: 800px) {
   .content {
-
     .back-btn {
       width: 4.7rem;
       height: 4.7rem;
       right: 3rem;
-
     }
-
 
     .edit-mobile-box {
       display: block;
