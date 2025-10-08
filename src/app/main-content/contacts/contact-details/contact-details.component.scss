@@ -1,47 +1,220 @@
-@use './../../../../../public/assets/styles/all-styles.scss' as all;
+@use "./../../../../../public/assets/styles/all-styles.scss" as all;
 
-#normal-view{
-    background: all.$lightgray;
-    overflow-y: auto;
-    .content{
-        padding-top: 10rem;
-        padding-left: 5rem; 
-        @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 4rem);
-        .contact-label-big{
-            @include all.d-flex($flexdir: row, $alit: center, $cgap: 5rem);
-            .edit-delete-option{
-                @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
-                .edit-delete-btn{
-                    @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 2rem);
-                    button{
-                        color: all.$mainColor;
-                        background: transparent;
-                        cursor: pointer;
-                        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 0.5rem);
-                        &:hover{
-                            color: all.$lightblue;
-                            font-weight: 700;
-                            svg{
-                                g{
-                                    path{
-                                        fill: all.$lightblue;
-                                    }
-                                }
-                            }
-                        }
-                    }
+#normal-view {
+  background: all.$lightgray;
+  overflow-y: auto;
+  .content {
+    padding-top: 10rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 3.5rem);
+    .contact-label-big {
+      @include all.d-flex($flexdir: row, $alit: center, $cgap: 5rem);
+      .edit-delete-option {
+        @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
+        .edit-delete-btn {
+          @include all.d-flex(
+            $flexdir: row,
+            $jc: flex-start,
+            $alit: center,
+            $cgap: 2rem
+          );
+          button {
+            color: all.$mainColor;
+            background: transparent;
+            cursor: pointer;
+            @include all.d-flex(
+              $flexdir: row,
+              $jc: flex-start,
+              $alit: center,
+              $cgap: 0.5rem
+            );
+            &:hover {
+              color: all.$lightblue;
+              font-weight: 700;
+              svg {
+                g {
+                  path {
+                    fill: all.$lightblue;
+                  }
                 }
+              }
             }
-            
+          }
         }
-        .email-phone-details{
-            @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 2.2rem);
-            .bold{
-                @include all.style-bold();
-            }
-            .blue{
-                color: all.$lightblue;
-            }
-        }
+      }
     }
+    .email-phone-details {
+      @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 2.2rem);
+      .bold {
+        @include all.style-bold();
+      }
+      .blue {
+        color: all.$lightblue;
+      }
+    }
+  }
+}
+
+@media (max-width: 3840px) {
+  .content {
+    .back-btn {
+      display: none;
+    }
+
+    .edit-mobile-box {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .content {
+    .back-btn-box {
+      position: relative;
+      margin-left: 85%;
+      bottom: -45px;
+      .back-btn {
+        display: block;
+
+        width: 5.7rem;
+        height: 5.7rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .content {
+    .back-btn-box {
+      display: block;
+      margin-left: 85%;
+      bottom: -55px;
+
+      .back-btn {
+        display: block;
+
+        width: 4.7rem;
+        height: 4.7rem;
+        cursor: pointer;
+      }
+    }
+
+    .edit-mobile-box {
+      display: block;
+    }
+  }
+
+  .content {
+    .contact-label-big {
+      .edit-delete-option {
+        h2 {
+          font-size: 3.6rem;
+          font-weight: bold;
+        }
+        .edit-delete-btn {
+          display: none !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .content {
+    .contact-label-big {
+      .edit-delete-option {
+        h2 {
+          font-size: 2.2rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .content {
+    .edit-mobile-box {
+      z-index: 1001;
+      position: fixed;
+      background-color: all.$hoverMainColor;
+      right: 10%;
+      bottom: 10%;
+      border-radius: 5.6rem;
+      padding: 2.2rem;
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.4s ease;
+      cursor: pointer;
+      .edit-toggle-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+
+      .edit-box-pop-up {
+        position: absolute;
+        right: -25%;
+        bottom: -20%;
+        width: 11.6rem;
+        height: 10rem;
+        background: #fff;
+        border-radius: 10px 10px 1px 26px;
+        padding: 1rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        transform: translateX(100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .edit-btn,
+        .delete-btn {
+          background-color: #fff;
+          font-size: 2rem;
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+
+          .icon {
+            width: 3rem;
+            height: 3rem;
+          }
+        }
+
+        .edit-btn:focus,
+        .delete-btn:focus {
+          color: all.$lightblue2;
+
+          .icon {
+            color: all.$lightblue2;
+          }
+        }
+
+        .edit-btn:focus .icon path,
+        .delete-btn:focus .icon path {
+          fill: all.$lightblue2;
+        }
+
+        &.open {
+          transform: translateX(0);
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+    }
+    .edit-mobile-box:hover {
+      background-color: all.$lightblue2;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 5;
 }

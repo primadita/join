@@ -5,7 +5,7 @@
   </div>
 
   @for (contact of $any(group.value); track $index) {
-  <div class="contact-label-box" (click)="activeContact(contact)">
+  <div class="contact-label-box" [class.active]="contact.id === activeContactId" (click)="activeContact(contact)">
     <span class="initials" [style.backgroundColor]="contact.bgColor">
       {{ getLetters(contact) }}
     </span>

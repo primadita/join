@@ -4,9 +4,15 @@ section{
     background-color: all.$lightgray;
     width: 100%;
     text-align: left;
-    min-height: calc(100dvh - 64px);
     overflow-y: auto;
     @include all.d-flex( $jc: flex-start, $alit: flex-start);
+    @media (max-width: 800px) {
+        padding: 4.8rem 2.4rem 2.4rem 2.4rem;
+    }
+    div{
+        width: 100%;
+        @include all.d-flex($flexdir: row, $jc: space-between);
+    }
     h1, h3{
         padding-bottom: 3rem;
     }

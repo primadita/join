@@ -19,7 +19,7 @@ import { FirebaseServiceService } from '../../../shared/services/firebase.servic
  * the contact edit window. Emits corresponding events to the parent component.
  */
 export class EditContactComponent {
-
+  // #region ATTRIBUTES
   /**
  * Event emitted when the edit window should be closed.
  * @event
@@ -57,7 +57,9 @@ export class EditContactComponent {
     mail: "",
     phone: ""
   }
+  // #endregion
 
+  // #region METHODS
   /**
  * Lifecycle hook that initializes the component.
  * 
@@ -107,4 +109,5 @@ export class EditContactComponent {
       this.sendSaveInput();
     }
   }
+  // #endregion
 }

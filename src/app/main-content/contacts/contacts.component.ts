@@ -20,23 +20,29 @@ import { ToastMessageComponent } from '../../shared/components/toast-message/toa
  * through the `SelectContactService`.
  */
 export class ContactsComponent {
-
+  // #region ATTRIBUTES
   /**
- * Reactive signal indicating whether the current layout
- * should display in desktop or mobile mode.
- * 
- * - `true` → desktop layout (width > 1300px)
- * - `false` → mobile layout (width ≤ 1300px)
- */
+   * Reactive signal indicating whether the current layout
+   * should display in desktop or mobile mode.
+   *
+   * - `true` → desktop layout (width > 1300px)
+   * - `false` → mobile layout (width ≤ 1300px)
+   */
   breakPoint = signal(window.innerWidth > 1300);
 
   /**
- * Injected service used to manage and track the currently selected contact.
- */
+   * Injected service used to manage and track the currently selected contact.
+   */
   selectService = inject(SelectContactService);
+  // #endregion
 
+  // #region METHODS
+  /**
+   * Updates the breakpoint signal on window resize.
+   */
   @HostListener('window:resize')
   resize() {
     this.breakPoint.set(window.innerWidth > 1300);
   }
+  // #endregion
 }

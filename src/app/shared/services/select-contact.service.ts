@@ -12,17 +12,17 @@ import { Contact } from '../interfaces/contact';
  * allowing components to subscribe to changes in the selected contact.
  */
 export class SelectContactService {
-
+  // #region ATTRIBUTES
   /**
  * Reactive signal holding the currently selected contact.
  * - `null` indicates that no contact is currently selected.
  */
   selectedContact = signal<Contact | null>(null);
-
-
+  // #endregion
 
   constructor() { }
 
+  // #region METHODS
     /**
    * Sets the given contact as the currently selected contact.
    *
@@ -32,7 +32,6 @@ export class SelectContactService {
     this.selectedContact.set(c);
   }
 
-
     /**
    * Resets the selected contact to `null`,
    * typically used to navigate back to the contacts list.
@@ -40,4 +39,5 @@ export class SelectContactService {
   backToContactsList() {
     this.selectedContact.set(null);
   }
+  // #endregion
 }

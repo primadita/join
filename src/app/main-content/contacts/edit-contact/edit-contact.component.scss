@@ -14,14 +14,16 @@
         @include all.d-flex($flexdir: row);
         height: 59.2rem;
         width: 121.2rem;
+        animation: slideInPopUp 500ms forwards;
+        animation-iteration-count: 1;
 
         @media(max-width: 1250px) {
             flex-direction: column;
             height: auto;
             width: 50rem;
         }
-        
-        @media(max-width: 530px){
+
+        @media(max-width: 530px) {
             width: 30rem;
         }
 
@@ -51,14 +53,15 @@
                 top: 4rem;
                 right: 4rem;
                 background-color: transparent;
-                
-                @media(min-width: 1250px){
+
+                @media(min-width: 1250px) {
                     display: none;
                 }
             }
 
             >img {
                 width: 6.4rem;
+
                 @media(max-width: 1250px) {
                     display: none;
                 }
@@ -71,8 +74,9 @@
                 margin-top: 0.8rem;
             }
 
-            
+
         }
+
         .popup-form {
             width: 74.5rem;
             height: 100%;
@@ -93,31 +97,39 @@
                 top: 4rem;
                 right: 4rem;
                 background-color: transparent;
-                @media(max-width: 1250px){
+
+                @media(max-width: 1250px) {
                     display: none;
                 }
             }
+
             app-user-profile-image {
                 height: 4rem;
                 width: 4rem;
                 bottom: 5rem;
                 right: 5rem;
+
                 @media(max-width: 1250px) {
                     transform: translateY(-50%);
                 }
+
                 @include all.mobile {
                     transform: translateX(20%);
                 }
             }
+
             form {
                 @include all.d-flex($rgap: 2.4rem);
-                @media(max-width: 1250px){
+
+                @media(max-width: 1250px) {
                     padding: 5rem 2rem;
                 }
+
                 @include all.mobile {
                     gap: 1.6rem;
                     padding: 5rem 2rem 2rem 2rem;
                 }
+
                 .input-wrapper {
                     >input {
                         height: 5rem;
@@ -126,13 +138,16 @@
                         width: 42.2rem;
                         border-radius: 0.8rem;
                         color: all.$black;
+
                         &:focus {
                             outline: none;
                             border: 1px solid all.$lightblue2;
                         }
+
                         @media (max-width: 1250px) {
                             font-size: 2rem;
                         }
+
                         @include all.mobile {
                             height: 3.2rem;
                             width: 27rem;
@@ -146,11 +161,13 @@
                         right: 1.6rem;
                         width: 2rem;
                         transform: translateY(-50%);
+
                         @include all.mobile {
                             width: 1.8rem;
                         }
                     }
-                    span{
+
+                    span {
                         position: absolute;
                         top: 5rem;
                         left: 1.6rem;
@@ -158,10 +175,12 @@
                         color: red;
                     }
                 }
+
                 .btn-wrapper {
                     @include all.d-flex($flexdir: row, $jc: flex-start);
                     gap: 1.6rem;
                     width: 100%;
+
                     @media (max-width: 1250px) {
                         @include all.d-flex($flexdir: row, $jc: center, $alit: center, $cgap: 2rem);
                     }
@@ -174,15 +193,18 @@
                         gap: 0.4rem;
                         padding: 0 1.6rem;
                         border-radius: 0.8rem;
+
                         @media (max-width: 1250px) {
                             font-size: 2rem;
                         }
-                        @include all.mobile{
+
+                        @include all.mobile {
                             font-size: 1.8rem;
                         }
                     }
-                    .delete-btn{
-                        &:hover{
+
+                    .delete-btn {
+                        &:hover {
                             box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
                             border: 2px solid all.$lightblue2;
                             color: all.$lightblue2;
@@ -192,15 +214,18 @@
                     #submit-btn {
                         color: all.$white;
                         @include all.style-bold;
-                        &.btn-disabled{
+
+                        &.btn-disabled {
                             cursor: not-allowed;
                             background-color: all.$iconColor;
                             border: 2px solid all.$iconColor;
                         }
-                        &.btn-enabled{
+
+                        &.btn-enabled {
                             background-color: all.$mainColor;
                             cursor: pointer;
-                            &:hover{
+
+                            &:hover {
                                 background-color: all.$lightblue2;
                                 border: 2px solid all.$lightblue2;
                                 color: all.$white;
