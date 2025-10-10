@@ -5,7 +5,7 @@
             <div class="form-input-left">
                 <div class="input-wrapper">
                     <h6>Title</h6>
-                    <input type="text">
+                    <input class="form-field" type="text">
                 </div>
                 <div class="input-wrapper">
                     <h6>Description</h6>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="input-wrapper">
                     <h6>Due date*</h6>
-                    <input type="text">
+                    <input class="form-field" type="text">
                 </div>
             </div>
             <div class="dividing-line"></div>
@@ -22,7 +22,7 @@
                     <h6>Priority</h6>
                     <div class="priority-btn-wrapper">
                         <button>Urgent
-                            <svg  width="21" height="16" viewBox="0 0 21 16" fill="none"
+                            <svg width="21" height="16" viewBox="0 0 21 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_379835_5802)">
                                     <path
@@ -78,15 +78,29 @@
                 </div>
                 <div class="input-wrapper">
                     <h6>Assigned to</h6>
-                    <input type="text">
+                    <select class="form-field" name="" id="">
+                        <div class="rp-selection">
+                            @for (contact of sortedContacts(); track $index){
+                            <option value="">
+                                <span class="initials" [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
+                                <span>{{contact.name}}</span>
+                            </option>
+                            }
+
+                        </div>
+
+                    </select>
                 </div>
                 <div class="input-wrapper">
                     <h6>Category</h6>
-                    <input type="text">
+                    <select class="form-field" name="" id="">
+                        <option value="">User Story</option>
+                        <option value="">Technical Task</option>
+                    </select>
                 </div>
                 <div class="input-wrapper">
                     <h6>Subtasks</h6>
-                    <input type="text">
+                    <input class="form-field" class="form-field" type="text">
                 </div>
             </div>
         </div>
