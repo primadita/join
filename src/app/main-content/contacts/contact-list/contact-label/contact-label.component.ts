@@ -13,25 +13,28 @@ import { SelectContactService } from '../../../../shared/services/select-contact
 })
 
 /**
- * Component responsible for rendering and managing the list of contact labels.
+ * Component for rendering and managing the list of contact labels.
  *
- * Provides functionality to:
- * - Select an active contact.
- * - Group contacts alphabetically by their first name letter.
- * - Sort contacts alphabetically.
- * - Generate initials for contact avatars.
+ * Features:
+ * - Selects an active contact.
+ * - Groups contacts alphabetically by the first letter of their name.
+ * - Sorts contacts alphabetically.
+ * - Generates initials for contact avatars.
  */
 export class ContactLabelComponent {
   // #region ATTRIBUTES
   /**
-   * Injected service that manages and provides access to contact data.
+   * Service for managing and accessing contact data.
    */
   contactList = inject(FirebaseServiceService);
+
+  /**
+   * Service for selecting contacts.
+   */
   selectService = inject(SelectContactService);
 
   /**
-   * Event emitted when a contact is selected from the list.
-   * @event
+   * Emits when a contact is selected from the list.
    */
   @Output() select = new EventEmitter<Contact>();
 
@@ -43,9 +46,8 @@ export class ContactLabelComponent {
 
   // #region METHODS
   /**
-   * Sets the given contact as the active one and emits a `select` event.
-   *
-   * @param {Contact} contact - The contact to set as active.
+   * Sets the given contact as active and emits a select event.
+   * @param contact The contact to set as active.
    */
   activeContact(contact: Contact) {
     this.activeContactId = contact.id;
@@ -54,18 +56,8 @@ export class ContactLabelComponent {
   }
 
   /**
-   * Groups all contacts by the first letter of their name (A, B, C, ...).
-   *
-   * @example
-   * Returns an object like:
-   * ```typescript
-   * {
-   *   "A": [Contact, Contact, ...],
-   *   "B": [Contact, ...],
-   * }
-   * ```
-   *
-   * @returns {Record<string, Contact[]>} An object where each key is a letter and each value is an array of contacts.
+   * Groups contacts by the first letter of their name.
+   * @returns An object where each key is a letter and each value is an array of contacts.
    */
   groupedContacts() {
     const groups: any = {};
@@ -81,12 +73,8 @@ export class ContactLabelComponent {
   }
 
   /**
-   * Returns an alphabetically sorted copy of the contact list.
-   *
-   * - Sorting is case-insensitive.
-   * - The original data in the service remains unchanged (due to use of `slice()`).
-   *
-   * @returns {Contact[]} A new array containing contacts sorted by name.
+   * Returns a copy of the contact list sorted alphabetically by name (case-insensitive).
+   * @returns Array of contacts sorted by name.
    */
   sortedContacts(): Contact[] {
     return this.contactList.contactsList.slice().sort((a, b) => {
@@ -100,14 +88,12 @@ export class ContactLabelComponent {
   }
 
   /**
-   * Generates initials from the full name of a contact.
-   *
+   * Generates initials from the contact's full name.
    * Examples:
-   * - `"Anna Müller"` → `"AM"`
-   * - `"Jean-Paul Sartre"` → `"JS"` (supports hyphenated and multi-part names)
-   *
-   * @param {Contact} contact - The contact whose initials should be generated.
-   * @returns {string} The generated initials in uppercase.
+   * - "Anna Müller" → "AM"
+   * - "Jean-Paul Sartre" → "JS"
+   * @param contact The contact whose initials are generated.
+   * @returns The initials in uppercase.
    */
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -118,16 +104,19 @@ export class ContactLabelComponent {
   }
 
   /**
-   * Marks a contact as active and emits a `select` event.
-   * (Appears to be a duplicate of `activeContact()`; may serve as an alias.)
-   *
-   * @param {Contact} contact - The contact to activate and emit.
+   * Marks a contact as active and emits a select event.
+   * Alias for activeContact().
+   * @param contact The contact to activate and emit.
    */
   onActice(contact: Contact) {
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
   }
 
+  /**
+   * Selects a contact using the selection service.
+   * @param contact The contact to select.
+   */
   selectContact(contact: Contact){
     this.selectService.selectContact(contact);
   }

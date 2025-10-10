@@ -32,27 +32,22 @@
     cursor: pointer;
 
     .initials {
-      width: 3rem;
-      height: 3rem;
       border-radius: 50%;
       border: 0.2rem solid all.$white;
       padding: 1.5rem;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: all.$white;
+      @include all.square($length: 4.5rem);
+      @include all.d-flex();
     }
 
     .info {
-      display: flex;
-      flex-direction: column;
+      @include all.d-flex();
 
       .name {
         font-size: 2rem;
         width: 25rem;
         @media(max-width: 450px){
-          width: 20rem;
+          width: 16rem;
         }
         white-space: nowrap;
         overflow-x: hidden;
@@ -62,8 +57,8 @@
       .mail {
         color: all.$lightblue;
         width: 25rem;
-                @media(max-width: 450px){
-          width: 20rem;
+        @media(max-width: 450px){
+          width: 16rem;
         }
         white-space: nowrap;
         overflow-x: hidden;
