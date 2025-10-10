@@ -18,6 +18,7 @@ import { EditContactComponent } from '../edit-contact/edit-contact.component';
 import { ToastMessageComponent } from '../../../shared/components/toast-message/toast-message.component';
 import { ToastMessagesService } from '../../../shared/services/toast-messages.service';
 import { updateDoc } from '@angular/fire/firestore';
+import { SelectContactService } from '../../../shared/services/select-contact.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -57,6 +58,7 @@ export class ContactDetailsComponent {
    * Injected service for performing Firestore operations on contacts.
    */
   contactFirebase = inject(FirebaseServiceService);
+  selectService = inject(SelectContactService);
 
   /**
    * Injected service for generating user profile colors and initials.
@@ -72,7 +74,7 @@ export class ContactDetailsComponent {
   /**
    * The currently selected contact being viewed or edited.
    */
-  selectedContact!: Contact;
+  selectedContact: Contact | null = null;
 
   /**
    * The contact data passed from the parent component.
@@ -99,7 +101,9 @@ export class ContactDetailsComponent {
   constructor(private toastService: ToastMessagesService) {}
 
   // #region METHODS
-
+  get singlecontact(): Contact | null{
+    return this.selectService.selectedContact()
+  }
   /**
    * Toggles the edit contact window.
    *
@@ -119,8 +123,10 @@ export class ContactDetailsComponent {
    *
    * @param {string} id - The ID of the contact to delete.
    */
-  deleteContact(id: string) {
+  deleteContact(id?: string) {
+    if(!id) return;
     this.contactFirebase.deleteContact(id);
+    this.selectService.backToContactsList();
     this.toastService.show('Contact has been deleted!', 'success');
   }
 
@@ -140,25 +146,18 @@ export class ContactDetailsComponent {
    * @param {Partial<Contact>} updatedData - The updated contact information.
    */
   async saveContact(updatedData: Partial<Contact>) {
-    this.selectedContact = {
+    if(this.selectedContact){
+      const updatedContact:Contact = {
       id: this.selectedContact.id,
       name: updatedData.name || this.selectedContact.name,
       mail: updatedData.mail || this.selectedContact.mail,
       phone: updatedData.phone || this.selectedContact.phone,
-      active: this.selectedContact.active,
     };
-    this.contactFirebase.updateContact(this.selectedContact);
-    console.log(this.contactFirebase.contactsList);
-    await Promise.all(
-      this.contactFirebase.contactsList
-        .filter((c) => c.id && c.id !== this.selectedContact.id)
-        .map((c) =>
-          updateDoc(this.contactFirebase.getSingleDocRef(c.id!), {
-            active: false,
-          })
-        )
-    );
-
+    await this.contactFirebase.updateContact(updatedContact);
+     const fresh = this.contactFirebase.contactsList.find(
+    c => c.id === updatedContact.id
+  );
+    this.selectService.selectContact(fresh || updatedContact);
     this.edit = !this.edit;
     if (window.innerWidth < 640) {
       this.toastService.show('Contact successfully changed!', 'success');
@@ -167,6 +166,11 @@ export class ContactDetailsComponent {
         'Contact has been successfully changed!',
         'success'
       );
+    }
+    
+    
+
+    
     }
   }
 
@@ -178,12 +182,16 @@ export class ContactDetailsComponent {
    * @param {Contact} contact - The contact to delete.
    */
   deleteContactonEditWindow(contact: Contact) {
-    if (this.selectedContact.id) {
+    if(this.selectedContact){
+      if (this.selectedContact.id) {
       this.contactFirebase.deleteContact(this.selectedContact.id);
       this.selectedContact = undefined as any;
+      this.selectService.backToContactsList();
       this.edit = false;
     }
     this.toastService.show('Contact has been deleted!', 'success');
+    }
+    
   }
 
   /**

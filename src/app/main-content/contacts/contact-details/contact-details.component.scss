@@ -14,7 +14,7 @@
     }
 
     @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 3.5rem);
-
+    #contact-details-div{
     .contact-label-big {
       width: 100%;
       animation: slideInPopUp 500ms forwards;
@@ -87,8 +87,11 @@
         }
       }
     }
+    }
 
     h6 {
+      padding-top: 5rem;
+      padding-bottom: 3rem;
       width: 100%;
       animation: slideInPopUp 500ms forwards;
       animation-iteration-count: 1;

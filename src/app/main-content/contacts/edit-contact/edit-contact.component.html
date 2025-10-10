@@ -14,7 +14,7 @@
         <div class="popup-form">
             <button class="close-btn" (click)="closeEditWindow()"><img src="assets/icons/cancel.svg" alt="cancel button"></button>
             <div class="user-profile-image-wrapper">
-                <app-user-profile-image></app-user-profile-image>
+                <app-user-profile-image [contact]="contact"></app-user-profile-image>
             </div>
             
             <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">

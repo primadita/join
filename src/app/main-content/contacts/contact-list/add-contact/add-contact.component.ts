@@ -104,16 +104,19 @@ export class AddContactComponent {
   async addContact() {
     this.toggleLoadingScreen();
     const contact = this.createContact();
-    const newContactId = await this.contactService.addContact(contact);
-    await Promise.all(
-      this.contactService.contactsList
-        .filter((c) => c.id && c.id !== newContactId)
-        .map((c) =>
-          updateDoc(this.contactService.getSingleDocRef(c.id!), {
-            active: false,
-          })
-        )
-    );
+    
+    const newContact = await this.contactService.addContact(contact);
+    this.selectService.selectContact(newContact);
+    // const newContactId = await this.contactService.addContact(contact);
+    // await Promise.all(
+    //   this.contactService.contactsList
+    //     .filter((c) => c.id && c.id !== newContactId)
+    //     .map((c) =>
+    //       updateDoc(this.contactService.getSingleDocRef(c.id!), {
+    //         active: false,
+    //       })
+    //     )
+    // );
     this.closePopUp(contact);
   }
 
@@ -128,7 +131,7 @@ export class AddContactComponent {
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: true,
+      // active: true,
       bgColor: this.userProfileBackground.getBackgroundColor(
         this.getContactsLength()
       ),
@@ -172,7 +175,7 @@ export class AddContactComponent {
  */
   closePopUp(contact: Contact) {
     this.sendStatus();
-    this.selectService.selectContact(contact);
+    // this.selectService.selectContact(contact);
     this.toggleLoadingScreen();
     if (window.innerWidth < 640) {
       this.toastMessage.show("Contact successfully created", "success");

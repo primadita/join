@@ -80,9 +80,9 @@ export class FirebaseServiceService {
     return {
       id: id,
       name: obj.name,
-      mail: obj.mail,
-      phone: obj.phone,
-      active: obj.active,
+      mail: obj.mail ,
+      phone: obj.phone ,
+      // active: obj.active ,
       bgColor: obj.bgColor || obj.bgcolor,
     };
   }
@@ -122,7 +122,15 @@ export class FirebaseServiceService {
    */
   async addContact(item: Contact) {
     const docRef = await addDoc(this.getContactsRef(), item);
-    return docRef.id;
+    const newContact: Contact = {
+      id: docRef.id,
+      name: item.name,
+      mail: item.mail,
+      phone: item.phone,
+      bgColor: item.bgColor
+    }
+    // this.contactsList.push(newContact);
+    return newContact;
   }
 
   /**
@@ -150,7 +158,7 @@ export class FirebaseServiceService {
       mail: contact.mail,
       phone: contact.phone,
       id: contact.id,
-      active: contact.active,
+      // active: contact.active,
     };
   }
   // #endregion

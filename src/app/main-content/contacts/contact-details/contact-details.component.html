@@ -20,11 +20,12 @@
     <!-- <button class="back-btn" (click)="backToContactsList()"> -->
 
     <!-- </button> -->
-    @for (singlecontact of contactFirebase.contactsList; track $index){
-    @if(singlecontact.active){
+    <!-- @for (singlecontact of contactFirebase.contactsList; track $index){
+    @if(singlecontact.active){ -->
 
+    <div id="contact-details-div" *ngIf="singlecontact" [class.active]="selectService.selectedContact()?.id">
     <div class="contact-label-big">
-      <app-user-profile-image></app-user-profile-image>
+      <app-user-profile-image [contact]="singlecontact"></app-user-profile-image>
       <div class="edit-delete-option">
         <h2>{{ singlecontact.name }}</h2>
 
@@ -96,11 +97,11 @@
     <h6>Contact Information</h6>
     <div class="email-phone-details">
       <p class="bold">Email</p>
-      <a href="mailto:{{ singlecontact.mail }}" class="blue">{{
-        singlecontact.mail
+      <a href="mailto:{{ singlecontact?.mail}}" class="blue">{{
+        singlecontact?.mail
       }}</a>
       <p class="bold">Phone</p>
-      <a href="tel:{{ singlecontact.phone }}">{{ singlecontact.phone }}</a>
+      <a href="tel:{{ singlecontact?.phone }}">{{ singlecontact?.phone }}</a>
     </div>
 
     <!-- #region edit-mobile-box -->
@@ -133,7 +134,7 @@
       >
         <button
           class="edit-btn"
-          (click)="toggleEditContactWindow(singlecontact)"
+          (click)="singlecontact && toggleEditContactWindow(singlecontact)"
         >
           <svg
             class="icon"
@@ -157,7 +158,7 @@
           </svg>
           Edit
         </button>
-        <button class="delete-btn" (click)="deleteContact(singlecontact.id)">
+        <button class="delete-btn" (click)="deleteContact(singlecontact?.id)">
           <svg
             class="icon"
             viewBox="0 0 24 24"
@@ -182,7 +183,8 @@
         </button>
       </div>
     </div>
-    } }
+    </div>
+    <!-- } } -->
   </div>
   <!-- <div class="toast-msg-div">
     <app-toast-message></app-toast-message>
@@ -190,7 +192,7 @@
 </section>
 <section class="edit-view" *ngIf="edit" id="edit-window">
   <app-edit-contact
-    [contactDetails]="selectedContact"
+    [contact]="selectedContact!"
     (close)="toggleEditContactWindow()"
     (save)="saveContact($event)"
     (delete)="deleteContactonEditWindow($event)"

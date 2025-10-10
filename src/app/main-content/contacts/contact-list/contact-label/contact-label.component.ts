@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { CommonModule, KeyValuePipe } from '@angular/common';
+import { SelectContactService } from '../../../../shared/services/select-contact.service';
 
 @Component({
   selector: 'app-contact-label',
@@ -26,6 +27,7 @@ export class ContactLabelComponent {
    * Injected service that manages and provides access to contact data.
    */
   contactList = inject(FirebaseServiceService);
+  selectService = inject(SelectContactService);
 
   /**
    * Event emitted when a contact is selected from the list.
@@ -124,6 +126,10 @@ export class ContactLabelComponent {
   onActice(contact: Contact) {
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
+  }
+
+  selectContact(contact: Contact){
+    this.selectService.selectContact(contact);
   }
   // #endregion
 }
