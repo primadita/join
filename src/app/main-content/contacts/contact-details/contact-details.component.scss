@@ -19,12 +19,7 @@
       width: 100%;
       animation: slideInPopUp 500ms forwards;
       animation-iteration-count: 1;
-      @include all.d-flex(
-        $flexdir: row,
-        $alit: center,
-        $cgap: 5rem,
-        $jc: flex-start
-      );
+      @include all.d-flex($flexdir: row, $alit: center, $cgap: 5rem, $jc: flex-start);
 
       @include all.mobile {
         gap: 3rem;
@@ -37,13 +32,43 @@
         @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
 
         h2 {
-          width: 34.5rem;
-          white-space: nowrap;
-          overflow-x: hidden;
-          text-overflow: ellipsis;
+            width: 80rem;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            @media (max-width: 1750px) {
+              width: 50rem; 
+            }
+          @media (max-width: 1410px) {
+            width: 34.5rem;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+          }
+
+          @media (max-width: 1300px ) {
+            width: 60rem;
+          }
+
+          @media (max-width: 1100px) {
+            width: 35rem;
+            font-weight: 500;
+          }
+
+          @media (max-width: 800px) {
+            width: 40rem;
+            font-weight: 500;
+          }
           @media (max-width: 570px) {
             width: 30rem;
+            font-weight: 500;
           }
+          // @media (max-width: 900px) {
+          //   width: 30rem;
+            // white-space: nowrap;
+            // overflow-x: hidden;
+            // text-overflow: ellipsis;
+          // }
           @media (max-width: 450px) {
             width: 25rem;
           }
@@ -53,23 +78,14 @@
         }
 
         .edit-delete-btn {
-          @include all.d-flex(
-            $flexdir: row,
-            $jc: flex-start,
-            $alit: center,
-            $cgap: 2rem
+          @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 2rem
           );
 
           button {
             color: all.$mainColor;
             background: transparent;
             cursor: pointer;
-            @include all.d-flex(
-              $flexdir: row,
-              $jc: flex-start,
-              $alit: center,
-              $cgap: 0.5rem
-            );
+            @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center, $cgap: 0.5rem);
 
             &:hover {
               color: all.$lightblue;
@@ -154,21 +170,17 @@
       position: absolute;
       top: 8rem;
       right: 5rem;
-      width: 5.7rem;
-      height: 5.7rem;
       cursor: pointer;
+      @include all.square($length: 5.7rem);
     }
-
-    // }
   }
 }
 
 @media (max-width: 800px) {
   .content {
     .back-btn {
-      width: 4.7rem;
-      height: 4.7rem;
       right: 3rem;
+      @include all.square($length: 4.7rem);
     }
 
     .edit-mobile-box {
@@ -218,10 +230,10 @@
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
       transition: background-color 0.4s ease;
       cursor: pointer;
+      @include all.square($length: 7rem);
 
       .edit-toggle-icon {
-        width: 2.5rem;
-        height: 2.5rem;
+        @include all.square($length: 2.5rem);
       }
 
       .edit-box-pop-up {
@@ -238,10 +250,10 @@
         opacity: 0;
         pointer-events: none;
         transition: transform 0.25s ease, opacity 0.25s ease;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        @include all.d-flex($flexdir: column, $jc: center);
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
 
         .edit-btn,
         .delete-btn {
@@ -252,8 +264,7 @@
           align-items: center;
 
           .icon {
-            width: 3rem;
-            height: 3rem;
+            @include all.square($length: 3rem);
           }
         }
 

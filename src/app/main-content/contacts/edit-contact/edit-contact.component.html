@@ -25,7 +25,7 @@
                     <span *ngIf="!name.valid && name.touched">Please enter a name!</span>
                 </div>
                 <!-- #endregion -->
-                 <!-- #region EMAIL -->
+                <!-- #region EMAIL -->
                 <div class="input-wrapper">
                     <input #mail="ngModel" [(ngModel)]="contactData.mail" type="email" name="email" placeholder="Email"
                         required [ngStyle]="{'border-color': !mail.valid && mail.touched ? 'red' : 'all.$lightblue2'}"><img
