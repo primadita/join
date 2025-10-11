@@ -29,32 +29,28 @@ header {
     gap: 1.6rem;
     #help-btn {
       display: inline-block;
-      width: 2.4rem;
-      height: 2.4rem;
+      @include all.square($length: 2.4rem);
+      background: transparent;
       border: 0;
       padding: 0;
       transition: transform 0.3s ease;
       img{
-        width: 2.4rem;
-        height: 2.4rem;
+        @include all.square($length: 2.4rem);
       }
       &:hover{
         transform: scale(1.2);
       }
     }
-    >button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    #user-btn {
       background-color: all.$white;
       color: all.$lightblue2;
       font-weight: 600;
-      width: 4rem;
-      height: 4rem;
       border: 2px solid black;
       border-radius: 50%;
       cursor: pointer;
       transition: 125ms;
+      @include all.d-flex();
+      @include all.square($length: 4rem);
       &:hover {
         background-color: all.$lightgray;
       }

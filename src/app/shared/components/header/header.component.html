@@ -5,7 +5,7 @@
         <button id="help-btn" (click)="navigateToComponent($event, 'help')">
             <img src="./assets/icons/help.svg" alt="help button">
         </button>
-        <button (click)="toggleNavbar()">SM</button>
+        <button id="user-btn" (click)="toggleNavbar()">SM</button>
     </div>
     <div class="overlay-nav" [ngStyle]="{'display': !navActive ? 'none': 'flex'}" (click)="toggleNavbar()">
         <nav>
