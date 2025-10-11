@@ -35,11 +35,16 @@ section {
 
       }
 
-      img {
-        @media(max-width: 500px) {
-          width: 2.4rem;
+      span{
+        @media (max-width: 350px) {
+          display: none;
         }
       }
+      // img {
+      //   @media(max-width: 500px) {
+      //     width: 2.4rem;
+      //   }
+      // }
     }
   }
 
@@ -63,29 +68,25 @@ section {
   section {
     width: 100%;
     height: all.$navbar-height-mobile;
-    display: flex;
-    flex-direction: row;
+    @include all.d-flex($flexdir: row);
     flex-shrink: 0;
     padding: 0 1rem;
 
     nav {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
+      @include all.d-flex($flexdir: row, $jc: space-around);
 
       button {
         width: 100%;
+        height: all.$navbar-height-mobile;
         max-width: 12rem;
-        display: flex;
-        flex-direction: column;
         border-radius: 1.6rem;
         padding: 0.4rem;
+        @include all.d-flex($flexdir:column, $rgap: 0.8rem);
 
         &:hover {
           background-color: #091931;
         }
       }
-
     }
 
     >img {
@@ -98,10 +99,12 @@ section {
   }
 }
 
-@media(max-width: 350px){
-  nav{
-    button{
-      font-size: 1.4rem;
-    }
-  }
-}
+// @media(max-width: 350px){
+//   nav{
+//     button{
+//       span{
+//         display: none;
+//       }
+//     }
+//   }
+// }
