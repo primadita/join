@@ -21,9 +21,12 @@ export class MainContentComponent {
    * @default 'contacts'
    */
   activeComponent:string = 'contacts' //default
+
+  private componentHistory: string = 'summary'  //default;
   // #endregion
 
   constructor (private selectService: SelectContactService){}
+
   // #region METHODS
   /**
    * Switches the active component in the main content area.
@@ -32,7 +35,8 @@ export class MainContentComponent {
    * @param component The name of the component to activate.
    */
   switchComponent(component: string){
-    
+    this.componentHistory = this.activeComponent;
+
     if(component === 'contacts'){
       this.selectService.backToContactsList();
     }
@@ -44,6 +48,14 @@ export class MainContentComponent {
       this.activeComponent = component;
     }
     
+  }
+
+  backToPreviousComponent(){
+    if(this.componentHistory){
+      this.activeComponent = this.componentHistory;
+    } else {
+      this.activeComponent = 'summary';
+    }
   }
   // #endregion
 }

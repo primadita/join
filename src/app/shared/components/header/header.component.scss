@@ -40,6 +40,9 @@ header {
       &:hover{
         transform: scale(1.2);
       }
+      @include all.mobile{
+        display: none;
+      }
     }
     #user-btn {
       background-color: all.$white;
@@ -82,6 +85,12 @@ header {
       padding: 0.8rem 1.6rem;
       &:hover{
         background-color: #39475b;
+      }
+    }
+    .mobile{
+      display: none;
+      @include all.mobile{
+        display: flex;
       }
     }
   }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-legal-notice',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './legal-notice.component.scss'
 })
 export class LegalNoticeComponent {
-
+  @Output() back = new EventEmitter<void>;
 }

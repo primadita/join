@@ -3,15 +3,40 @@ section{
     background-color: all.$lightgray;
     padding: 11rem 9.6rem;
     overflow-y: auto;
+    @include all.notebook{
+        padding: 8rem;
+    }
     @include all.tablet{
         padding: 4rem;
     }
     @include all.mobile{
-        padding: 2.4rem;
+        padding: 2.2rem;
     }
-
+    div{
+        width: 100%;
+        padding-bottom: 3rem;
+        @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
+        @include all.mobile{
+            h1{
+                font-size: 3.4rem;
+            }
+        }
+        button{
+            background: transparent;
+            border-radius: 50%;
+            @include all.d-flex();
+            &:hover{
+                background: all.$lightgray2;
+            }
+            @include all.mobile{
+                img{
+                    @include all.square($length: 2.8rem);
+                }
+            }
+        } 
+    }
     
-    h1, h3{
+    h3{
         padding-bottom: 3rem;
     }
     h5{

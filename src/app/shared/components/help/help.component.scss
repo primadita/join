@@ -6,14 +6,34 @@ section{
     text-align: left;
     overflow-y: auto;
     @include all.d-flex( $jc: flex-start, $alit: flex-start);
-    @media (max-width: 800px) {
+    @include all.notebook{
+        padding: 8rem;
+    }
+    @include all.tablet {
         padding: 4.8rem 2.4rem 2.4rem 2.4rem;
+    }
+    @include all.mobile {
+        padding: 2.2rem;
     }
     div{
         width: 100%;
-        @include all.d-flex($flexdir: row, $jc: space-between);
+        @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
+        button{
+            background: transparent;
+            border-radius: 50%;
+            @include all.d-flex();
+            &:hover{
+                background: all.$lightgray2;
+            }
+            @include all.mobile{
+                img{
+                    @include all.square($length: 2.8rem);
+                }
+            }
+        }
+        padding-bottom: 3rem;
     }
-    h1, h3{
+    h3{
         padding-bottom: 3rem;
     }
     p{
