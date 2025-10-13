@@ -1,0 +1,77 @@
+@use './../../../../public/assets/styles/all-styles.scss' as all;
+
+section{
+    background: all.$lightgray;
+    padding: 8rem 6.4rem;
+    .board-title-div{
+        @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
+        >div{
+            
+            @include all.d-flex($flexdir: row, $jc: space-between, $cgap: 3.2rem);
+            .search-div{
+                background: all.$white;
+                width: 31.2rem;
+                height: 4.8rem;
+                border: 1px solid all.$iconColor;
+                border-radius: 1rem;
+                padding: 0.4rem 0.8rem 0.4rem 1.6rem;
+                @include all.d-flex($flexdir: row, $jc: space-between);
+                input{
+                    color: all.$mainColor;
+                    font-size: 2rem;
+                    @include all.style-regular();
+                }
+                input::placeholder{
+                    color: all.$lightgray3;
+                }
+                .vline{
+                    width: 1px;
+                    height: 3.1rem;
+                    background: all.$lightgray3;
+                }
+            }
+            #add-task-global{
+                background: all.$mainColor;
+                box-shadow: all.$shadow;
+                border-radius: 1rem;
+                color: all.$white;
+                padding: 0.8rem 1.6rem ;
+                width: 16rem;
+                height: 4.8rem;
+                @include all.d-flex($flexdir: row, $jc:space-around);
+                @include all.notebook{
+                    width: auto;
+                    padding: 0.8rem;
+                    h5{
+                        display: none;
+                    }
+                }
+                img{
+                    width: 3.2rem;
+                    height: 3.2rem;
+                }
+            }
+        }
+    }
+    @include all.notebook{
+        padding: 8rem 4.5rem;
+        .board-title-div{
+            column-gap: 2rem;
+            >div{
+                column-gap: 2rem;
+            }
+            @media (max-width: 890px) {
+                display: none;
+            }
+        }
+    }
+    .board-title-div-mobile{
+        display: none;
+        @media (max-width: 890px) {
+            display: flex;
+            >div{
+                
+            }
+        }
+    }
+}
