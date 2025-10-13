@@ -5,18 +5,24 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideNativeDateAdapter, _MatInternalFormField } from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule,],
+  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss'
 })
 export class AddTaskComponent {
 
   contacts = inject(FirebaseServiceService);
+
+  subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"]
+
+
+
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');

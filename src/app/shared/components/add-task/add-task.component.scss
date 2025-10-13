@@ -34,36 +34,6 @@
                     color: all.$black;
                     font-size: 1.6rem;
                     font-family: all.$font;
-
-                    .rp-selection {
-                        height: 15rem;
-                        width: 100%;
-                        overflow-y: scroll;
-                        z-index: 100;
-
-                        option {
-                            width: 100%;
-                            height: 4rem;
-                            overflow-x: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-
-                            .initials {
-                                width: 3rem;
-                                height: 3rem;
-                                border-radius: 50%;
-                                border: 0.2rem solid black;
-                                padding: 1.5rem;
-                                font-size: 1.2rem;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                color: all.$white;
-                            }
-                        }
-
-
-                    }
                 }
 
                 textarea {
@@ -78,6 +48,8 @@
                     font-family: all.$font;
                     resize: none;
                 }
+
+
 
                 .priority-btn-wrapper {
                     width: 100%;
@@ -105,6 +77,87 @@
                 }
             }
 
+            #rp-wrapper {
+
+                height: 12rem;
+
+                .rp-selection {
+                    display: none;
+                    position: absolute;
+                    top: 4rem;
+                    height: 20rem;
+                    width: 100%;
+                    overflow-y: scroll;
+                    z-index: 100;
+                    background-color: all.$white;
+
+                    li {
+                        width: 100%;
+                        @include all.d-flex($flexdir: row, $jc: space-between);
+                        padding: 0.8rem 1.6rem;
+                        border-radius: 0.8rem;
+
+                        &:hover {
+                            background-color: all.$lightgray2;
+                        }
+
+                        .item-name-box {
+                            @include all.d-flex($flexdir: row, $jc: flex-start);
+
+                            // .initials {
+                            //     width: 4rem;
+                            //     height: 4rem;
+                            //     border-radius: 50%;
+                            //     border: 0.2rem solid all.$white;
+                            //     padding: 1.5rem;
+                            //     font-size: 1.6rem;
+                            //     font-weight: 300;
+                            //     font-family: 'Inter';
+                            //     display: flex;
+                            //     align-items: center;
+                            //     justify-content: center;
+                            //     color: all.$white;
+                            //     margin-right: 2.4rem;
+                            // }
+
+                            .item-name {
+                                width: 20rem;
+                                overflow-x: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                        }
+                    }
+                }
+
+                .rp-selected-box{
+                    @include all.d-flex($flexdir:row, $jc: flex-start);
+                    margin-top: 1.6rem;
+
+                    .test{
+                        background-color: teal;
+                        margin-right: 0.8rem;
+                    }
+                }
+
+                .initials {
+                    width: 4rem;
+                    height: 4rem;
+                    border-radius: 50%;
+                    border: 0.2rem solid all.$white;
+                    padding: 1.5rem;
+                    font-size: 1.6rem;
+                    font-weight: 300;
+                    font-family: 'Inter';
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: all.$white;
+                    margin-right: 2.4rem;
+                }
+            }
+
+
             .date-input-wrapper {
 
                 display: flex;
@@ -114,6 +167,7 @@
                 border: 1px solid #D9D9D9;
                 border-radius: 0.8rem;
                 padding-right: 40px;
+                background-color: white;
 
                 input {
                     border: none;
