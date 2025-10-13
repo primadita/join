@@ -20,6 +20,11 @@
   column-gap: $cgap;
 }
 
+@mixin square($length){
+  width: $length;
+  height: $length;
+}
+
 // INFO: Beim erstellen des buttons im HTML das icon-image mit ins button-element legen, damit flex zentriert
 @mixin button-layout($width:35.2rem, $height: 5.6rem) {
   @include d-flex($flexdir: row, $jc: center, $alit: center, $gap: 3rem);

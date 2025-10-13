@@ -5,10 +5,11 @@
         <button id="help-btn" (click)="navigateToComponent($event, 'help')">
             <img src="./assets/icons/help.svg" alt="help button">
         </button>
-        <button (click)="toggleNavbar()">SM</button>
+        <button id="user-btn" (click)="toggleNavbar()">SM</button>
     </div>
     <div class="overlay-nav" [ngStyle]="{'display': !navActive ? 'none': 'flex'}" (click)="toggleNavbar()">
         <nav>
+            <button class="nav-link mobile" (click)="navigateToComponent($event,'help')">Help</button>
             <button class="nav-link" (click)="navigateToComponent($event,'legal-notice')">Legal Notice</button>
             <button class="nav-link" (click)="navigateToComponent($event,'privacy-policy')">Privacy Policy</button>
             <button class="nav-link" (click)="navigateToComponent($event,'')">Log out</button>
