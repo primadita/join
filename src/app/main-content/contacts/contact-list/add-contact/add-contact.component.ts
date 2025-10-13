@@ -17,31 +17,32 @@ import { ToastMessagesService } from '../../../../shared/services/toast-messages
 })
 
 /**
- * Component responsible for adding a new contact to the Firestore database.
+ * Component for adding a new contact to Firestore.
  * 
- * Handles form submission, user feedback, and UI updates such as loading state and success messages.
+ * Handles form submission, user feedback, loading state, and success messages.
  * Automatically deactivates previously active contacts after adding a new one.
  */
 export class AddContactComponent {
   // #region ATTRIBUTES
+
   /**
- * Injected service used to manage user profile visuals (background colors, initials, etc.).
- */
+   * Service for managing user profile visuals (background colors, initials, etc.).
+   */
   userProfileBackground = inject(UserProfileImageService);
 
   /**
- * Injected service used to manage selected contacts.
- */
+   * Service for managing selected contacts.
+   */
   selectService = inject(SelectContactService);
 
   /**
-   * Injected Firestore service for accessing and updating contact data.
+   * Firestore service for accessing and updating contact data.
    */
   contactList = inject(FirebaseServiceService);
 
   /**
- * Holds user input data for creating a new contact.
- */
+   * Holds user input data for creating a new contact.
+   */
   contactData = {
     name: '',
     email: '',
@@ -49,86 +50,72 @@ export class AddContactComponent {
   };
 
   /**
- * Event emitted to toggle the visibility of the add-contact popup.
- * @event
- */
+   * Emits to toggle the visibility of the add-contact popup.
+   */
   @Output() getActive = new EventEmitter<boolean>();
 
   /**
- * Event emitted when a newly created contact should be selected.
- * @event
- */
+   * Emits when a newly created contact should be selected.
+   */
   @Output() select = new EventEmitter<Contact>();
 
   /**
- * Indicates whether the loading screen is currently active.
- * @default false
- */
+   * Indicates whether the loading screen is currently active.
+   */
   loadingActive: boolean = false;
   // #endregion
 
   /**
- * Creates an instance of the component.
- *
- * @param {FirebaseServiceService} contactService - Service responsible for Firestore contact operations.
- * @param {ToastMessagesService} toastMessage - Service for displaying success or error messages as toast notifications.
- */
+   * Creates an instance of AddContactComponent.
+   * @param contactService Service for Firestore contact operations.
+   * @param toastMessage Service for displaying toast notifications.
+   */
   constructor(private contactService: FirebaseServiceService, private toastMessage: ToastMessagesService) { }
 
   // #region METHODS
+
   /**
-   * Emits the selected contact via the `select` event.
-   *
-   * @param {Contact} contact - The contact that has been selected.
+   * Emits the selected contact via the select event.
+   * @param contact The contact that has been selected.
    */
   activeContact(contact: Contact) {
     this.select.emit(contact);
   }
 
   /**
- * Emits the `getActive` event to toggle the popup state.
- */
+   * Emits the getActive event to toggle the popup state.
+   */
   sendStatus() {
     this.getActive.emit();
   }
 
   /**
- * Adds a new contact to Firestore.
- * 
- * - Activates the loading screen.
- * - Creates a new contact object.
- * - Adds it to Firestore.
- * - Deactivates all other contacts.
- * - Closes the popup and shows a success message.
- */
+   * Adds a new contact to Firestore.
+   * - Activates the loading screen.
+   * - Creates a new contact object.
+   * - Adds it to Firestore.
+   * - Selects the new contact.
+   * - Closes the popup and shows a success message.
+   */
   async addContact() {
     this.toggleLoadingScreen();
     const contact = this.createContact();
-    const newContactId = await this.contactService.addContact(contact);
-    await Promise.all(
-      this.contactService.contactsList
-        .filter((c) => c.id && c.id !== newContactId)
-        .map((c) =>
-          updateDoc(this.contactService.getSingleDocRef(c.id!), {
-            active: false,
-          })
-        )
-    );
+    const newContact = await this.contactService.addContact(contact);
+    this.selectService.selectContact(newContact);
     this.closePopUp(contact);
   }
 
   /**
- * Creates a new contact object using form data and automatically assigns a background color.
- *
- * @returns {Contact} The newly created contact object.
- */
+   * Creates a new contact object using form data and assigns a background color.
+   * @returns The newly created contact object.
+   */
   createContact(): Contact {
     let contact: Contact = {
       name: this.contactData.name,
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      active: true,
+      // active: true,
       bgColor: this.userProfileBackground.getBackgroundColor(
         this.getContactsLength()
       ),
@@ -137,8 +124,8 @@ export class AddContactComponent {
   }
 
   /**
- * Deactivates all contacts in the local contact list.
- */
+   * Deactivates all contacts in the local contact list.
+   */
   deactivateContacts() {
     for (let i = 0; i < this.contactService.contactsList.length; i++) {
       this.contactList.contactsList[i].active = false;
@@ -146,12 +133,10 @@ export class AddContactComponent {
   }
 
   /**
- * Handles form submission.
- * 
- * When the form is valid and submitted, triggers the `addContact()` method.
- *
- * @param {NgForm} ngForm - The Angular form reference.
- */
+   * Handles form submission.
+   * If the form is valid and submitted, triggers addContact().
+   * @param ngForm The Angular form reference.
+   */
   onSubmit(ngForm: NgForm) {
     if (ngForm.valid && ngForm.submitted) {
       this.addContact();
@@ -166,13 +151,11 @@ export class AddContactComponent {
   }
 
   /**
- * Closes the "Add Contact" popup, updates the selected contact, and shows a success message.
- *
- * @param {Contact} contact - The contact that was just created.
- */
+   * Closes the "Add Contact" popup, updates the selected contact, and shows a success message.
+   * @param contact The contact that was just created.
+   */
   closePopUp(contact: Contact) {
     this.sendStatus();
-    this.selectService.selectContact(contact);
     this.toggleLoadingScreen();
     if (window.innerWidth < 640) {
       this.toastMessage.show("Contact successfully created", "success");
@@ -182,15 +165,14 @@ export class AddContactComponent {
   }
 
   /**
- * Returns the current number of contacts plus one.
- * 
- * This value is typically used to determine which background color to assign to a new contact.
- *
- * @returns {number} The new contact index (existing contacts + 1).
- */
+   * Returns the current number of contacts plus one.
+   * Used to determine which background color to assign to a new contact.
+   * @returns The new contact index (existing contacts + 1).
+   */
   getContactsLength(): number {
     const arrayLength = this.contactService.contactsList.length;
     return arrayLength + 1;
   }
   // #endregion
 }
+

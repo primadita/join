@@ -5,6 +5,7 @@ import { FirebaseServiceService } from '../../../shared/services/firebase.servic
 import { CommonModule, NgFor } from '@angular/common';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { Contact } from '../../../shared/interfaces/contact';
+import { SelectContactService } from '../../../shared/services/select-contact.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -25,6 +26,7 @@ export class ContactListComponent {
    * Injected service that manages Firestore contact operations and data retrieval.
    */
   contactList = inject(FirebaseServiceService);
+  
 
   /**
  * Event emitted when a contact from the list is selected.
@@ -46,4 +48,6 @@ export class ContactListComponent {
   toggleAddContact(): void {
     this.addContactOpen = !this.addContactOpen;
   }
+
+  
 }

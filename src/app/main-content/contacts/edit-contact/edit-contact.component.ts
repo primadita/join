@@ -42,7 +42,8 @@ export class EditContactComponent {
   /**
  * The contact details provided as input for editing.
  */
-  @Input() contactDetails!: Contact;
+  // @Input() contactDetails: Contact | null = null;
+  @Input() contact!: Contact;
 
   /**
  * Service injected to handle Firestore contact operations.
@@ -66,11 +67,11 @@ export class EditContactComponent {
  * Pre-fills the form fields with the provided contact details (if available).
  */
   ngOnInit() {
-    if (this.contactDetails) {
+    if (this.contact) {
       this.contactData = {
-        name: this.contactDetails.name,
-        mail: this.contactDetails.mail,
-        phone: this.contactDetails.phone
+        name: this.contact.name,
+        mail: this.contact.mail,
+        phone: this.contact.phone
       }
     }
   }

@@ -15,5 +15,6 @@ export class UserProfileImageComponent {
   // #region ATTRIBUTES
   userProfImgService = inject(UserProfileImageService);
   contactService = inject(FirebaseServiceService);
+  @Input() contact!:Contact;
   // #endregion
 }

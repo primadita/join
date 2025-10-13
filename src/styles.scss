@@ -114,6 +114,7 @@ p,
 span,
 input,
 button {
+  font-family: all.$font;
   font-size: 1.6rem;
   @include all.style-regular;
 }

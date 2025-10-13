@@ -7,81 +7,115 @@
   .content {
     padding-top: 10rem;
     padding-left: 5rem;
-
+    @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 3.5rem);
     @include all.mobile {
-      padding-top: 5rem;
+      padding-top: 3rem;
       padding-left: 3rem;
     }
-
-    @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 3.5rem);
-
-    .contact-label-big {
-      width: 100%;
-      animation: slideInPopUp 500ms forwards;
-      animation-iteration-count: 1;
-      @include all.d-flex(
-        $flexdir: row,
-        $alit: center,
-        $cgap: 5rem,
-        $jc: flex-start
-      );
-
-      @include all.mobile {
-        gap: 3rem;
+    .back-btn {
+      display: none;
+      @media (max-width: 1300px) {
+        display: block;
+        position: absolute;
+        top: 8rem;
+        right: 5rem;
+        cursor: pointer;
+        @include all.square($length: 5.7rem);
+        @include all.tablet {
+          right: 3rem;
+          @include all.square($length: 4.7rem);
+        }
       }
-      @media (max-width: 400px) {
-        gap: 1.6rem;
-      }
+    }
+    #contact-details-div {
+      .contact-label-big {
+        width: 100%;
+        animation: slideInPopUp 500ms forwards;
+        animation-iteration-count: 1;
+        @include all.d-flex(
+          $flexdir: row,
+          $alit: center,
+          $cgap: 5rem,
+          $jc: flex-start
+        );
 
-      .edit-delete-option {
-        @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 0.5rem);
-
-        h2 {
-          width: 34.5rem;
-          white-space: nowrap;
-          overflow-x: hidden;
-          text-overflow: ellipsis;
-          @media (max-width: 570px) {
-            width: 30rem;
-          }
-          @media (max-width: 450px) {
-            width: 25rem;
-          }
-          @media (max-width: 370px) {
-            width: 20rem;
-          }
+        @include all.mobile {
+          gap: 3rem;
+        }
+        @media (max-width: 400px) {
+          gap: 1.6rem;
         }
 
-        .edit-delete-btn {
+        .edit-delete-option {
           @include all.d-flex(
-            $flexdir: row,
-            $jc: flex-start,
-            $alit: center,
-            $cgap: 2rem
+            $flexdir: column,
+            $alit: flex-start,
+            $rgap: 0.5rem
           );
 
-          button {
-            color: all.$mainColor;
-            background: transparent;
-            cursor: pointer;
+          h2 {
+            width: 80rem;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            @media (max-width: 1750px) {
+              width: 50rem;
+            }
+            @media (max-width: 1410px) {
+              width: 34.5rem;
+            }
+            @media (max-width: 1300px) {
+              width: 60rem;
+            }
+            @media (max-width: 1100px) {
+              width: 35rem;
+              font-weight: 500;
+            }
+            @media (max-width: 570px) {
+              width: 30rem;
+            }
+            @media (max-width: 450px) {
+              width: 25rem;
+            }
+            @media (max-width: 370px) {
+              width: 18rem;
+            }
+          }
+
+          .edit-delete-btn {
             @include all.d-flex(
               $flexdir: row,
               $jc: flex-start,
               $alit: center,
-              $cgap: 0.5rem
+              $cgap: 2rem
             );
-
-            &:hover {
-              color: all.$lightblue;
-              font-weight: 700;
-
-              svg {
-                g {
-                  path {
-                    fill: all.$lightblue;
+            button {
+              color: all.$mainColor;
+              background: transparent;
+              cursor: pointer;
+              @include all.d-flex(
+                $flexdir: row,
+                $jc: flex-start,
+                $alit: center,
+                $cgap: 0.5rem
+              );
+              &:hover {
+                color: all.$lightblue;
+                font-weight: 700;
+                svg {
+                  g {
+                    path {
+                      fill: all.$lightblue;
+                    }
                   }
                 }
               }
+              @include all.tablet {
+                display: none;
+              }
+            }
+            .edit-btn {
+              width: 6rem;
             }
           }
         }
@@ -89,9 +123,14 @@
     }
 
     h6 {
+      padding-top: 5rem;
+      padding-bottom: 3rem;
       width: 100%;
       animation: slideInPopUp 500ms forwards;
       animation-iteration-count: 1;
+      @include all.mobile {
+        padding-top: 3rem;
+      }
     }
 
     .email-phone-details {
@@ -99,6 +138,9 @@
       animation: slideInPopUp 500ms forwards;
       animation-iteration-count: 1;
       @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 2.2rem);
+      @include all.mobile{
+        gap: 1.5rem;
+      }
 
       .bold {
         @include all.style-bold();
@@ -122,7 +164,7 @@
     }
   }
 }
-
+// #region EDIT CONTACT WINDOW
 .edit-view {
   position: fixed;
   inset: 0;
@@ -131,160 +173,79 @@
   z-index: 1000;
   background: rgba(0, 0, 0, 0);
 }
-
-@media (max-width: 3840px) {
-  .content {
-    .back-btn {
-      display: none;
-    }
-
-    .edit-mobile-box {
-      display: none;
-    }
-  }
-}
-
-@media (max-width: 1300px) {
-  .content {
-    .back-btn {
-      display: block;
-      position: absolute;
-      top: 8rem;
-      right: 5rem;
-      width: 5.7rem;
-      height: 5.7rem;
-      cursor: pointer;
-    }
-
-    // }
-  }
-}
-
-@media (max-width: 800px) {
-  .content {
-    .back-btn {
-      width: 4.7rem;
-      height: 4.7rem;
-      right: 3rem;
-    }
-
-    .edit-mobile-box {
-      display: block;
-    }
-  }
-
-  .content {
-    .contact-label-big {
-      .edit-delete-option {
-        h2 {
-          font-size: 3.6rem;
-          font-weight: bold;
-        }
-
-        .edit-delete-btn {
-          display: none !important;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 500px) {
-  .content {
-    .contact-label-big {
-      .edit-delete-option {
-        h2 {
-          font-size: 2.2rem;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 800px) {
-  .content {
-    .edit-mobile-box {
-      z-index: 500;
-      position: fixed;
-      background-color: all.$hoverMainColor;
-      right: 10%;
-      bottom: 8rem;
-      border-radius: 50%;
-      padding: 2.2rem;
-      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
-      transition: background-color 0.4s ease;
-      cursor: pointer;
-
-      .edit-toggle-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-      }
-
-      .edit-box-pop-up {
-        position: absolute;
-        right: -25%;
-        bottom: -0.5rem;
-        width: 11.6rem;
-        height: 10rem;
-        background: #fff;
-        border-radius: 10px 10px 1px 26px;
-        padding: 1rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-        transform: translateX(100%);
-        opacity: 0;
-        pointer-events: none;
-        transition: transform 0.25s ease, opacity 0.25s ease;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        .edit-btn,
-        .delete-btn {
-          background-color: #fff;
-          font-size: 2rem;
-          display: flex;
-          gap: 1rem;
-          align-items: center;
-
-          .icon {
-            width: 3rem;
-            height: 3rem;
-          }
-        }
-
-        .edit-btn:focus,
-        .delete-btn:focus {
-          color: all.$lightblue2;
-
-          .icon {
-            color: all.$lightblue2;
-          }
-        }
-
-        .edit-btn:focus .icon path,
-        .delete-btn:focus .icon path {
-          fill: all.$lightblue2;
-        }
-
-        &.open {
-          transform: translateX(0);
-          opacity: 1;
-          pointer-events: auto;
-        }
-      }
-    }
-
-    .edit-mobile-box:hover {
-      background-color: all.$lightblue2;
-    }
-  }
-}
-
+// #endregion
+// #region EDIT-MOBILE-BOX
 .overlay {
   position: fixed;
   inset: 0;
   background: transparent;
   z-index: 5;
+}
+.edit-mobile-box {
+  display: none;
+  @include all.tablet {
+    z-index: 500;
+    position: fixed;
+    background-color: all.$hoverMainColor;
+    right: 10%;
+    bottom: 8rem;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.4s ease;
+    cursor: pointer;
+    @include all.square($length: 5.6rem);
+    @include all.d-flex();
+    &:hover {
+      background-color: all.$lightblue2;
+    }
+    .edit-toggle-icon {
+      @include all.square($length: 2.5rem);
+    }
+
+    .edit-box-pop-up {
+      position: absolute;
+      right: -25%;
+      bottom: -0.5rem;
+      width: 11.6rem;
+      height: 10rem;
+      background: #fff;
+      border-radius: 20px 20px 0 20px;
+      padding: 1rem 1rem 1rem 1.5rem;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      @include all.d-flex(
+        $flexdir: column,
+        $jc: space-around,
+        $alit: flex-start
+      );
+      .edit-btn,
+      .delete-btn {
+        background-color: #fff;
+        font-size: 1.8rem;
+        @include all.d-flex($flexdir: row, $cgap: 1rem);
+        .icon {
+          @include all.square($length: 2.4rem);
+        }
+      }
+      .edit-btn:focus,
+      .delete-btn:focus {
+        color: all.$lightblue2;
+        .icon {
+          color: all.$lightblue2;
+        }
+      }
+      .edit-btn:focus .icon path,
+      .delete-btn:focus .icon path {
+        fill: all.$lightblue2;
+      }
+      &.open {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
 }

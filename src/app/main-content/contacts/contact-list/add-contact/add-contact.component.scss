@@ -119,8 +119,7 @@
                 }
 
                 img {
-                    height: 4rem;
-                    width: 4rem;
+                    @include all.square($length: 4rem);
                 }
             }
 
@@ -199,8 +198,7 @@
                         transition: 125ms;
 
                         .cancel-icon {
-                            width: 20px;
-                            height: 20px;
+                            @include all.square($length: 2rem);
                             stroke: all.$black;
                             stroke-width: 2;
                             fill: none;

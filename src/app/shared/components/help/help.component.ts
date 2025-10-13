@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { OutletContext } from '@angular/router';
 
 @Component({
   selector: 'app-help',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './help.component.scss'
 })
 export class HelpComponent {
-
+  @Output() back = new EventEmitter<void>;
 }
