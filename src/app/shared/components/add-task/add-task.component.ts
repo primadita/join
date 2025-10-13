@@ -2,10 +2,15 @@ import { Component, inject } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase.service';
 import { Contact } from '../../interfaces/contact';
 import { CommonModule } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-add-task',
-  imports: [CommonModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [CommonModule, MatDatepickerModule, MatInputModule,],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss'
 })
@@ -21,14 +26,14 @@ export class AddTaskComponent {
     return initials;
   }
 
-    /**
-   * Returns an alphabetically sorted copy of the contact list.
-   *
-   * - Sorting is case-insensitive.
-   * - The original data in the service remains unchanged (due to use of `slice()`).
-   *
-   * @returns {Contact[]} A new array containing contacts sorted by name.
-   */
+  /**
+ * Returns an alphabetically sorted copy of the contact list.
+ *
+ * - Sorting is case-insensitive.
+ * - The original data in the service remains unchanged (due to use of `slice()`).
+ *
+ * @returns {Contact[]} A new array containing contacts sorted by name.
+ */
   sortedContacts(): Contact[] {
     return this.contacts.contactsList.slice().sort((a, b) => {
       const nameA = a.name.toLowerCase();

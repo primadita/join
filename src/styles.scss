@@ -2,6 +2,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use "./../public/assets/styles/all-styles.scss" as all;
 
 html {
   @include mat.theme((
@@ -10,10 +11,11 @@ html {
       primary: mat.$azure-palette,
       tertiary: mat.$blue-palette,
     ),
-    typography: Roboto,
+    typography: "Inter",
     density: 0,
   ));
-}@use "./../public/assets/styles/all-styles.scss" as all;
+}
+
 
 // #region GENERAL
 * {
