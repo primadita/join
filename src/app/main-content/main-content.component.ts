@@ -6,10 +6,11 @@ import { LegalNoticeComponent } from '../shared/components/legal-notice/legal-no
 import { PrivacyPolicyComponent } from '../shared/components/privacy-policy/privacy-policy.component';
 import { HelpComponent } from '../shared/components/help/help.component';
 import { CommonModule } from '@angular/common';
+import { BoardComponent } from './board/board.component';
 
 @Component({
   selector: 'app-main-content',
-  imports: [CommonModule, ContactsComponent, NavBarComponent, HeaderComponent, LegalNoticeComponent, PrivacyPolicyComponent, HelpComponent],
+  imports: [CommonModule, ContactsComponent, NavBarComponent, HeaderComponent, LegalNoticeComponent, PrivacyPolicyComponent, HelpComponent, BoardComponent],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })

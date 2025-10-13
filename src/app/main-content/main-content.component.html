@@ -5,6 +5,7 @@
 <!-- #endregion -->
     <!-- #region SWITCHABLE PART -->
     <div>
+        <app-board *ngIf="activeComponent === 'board'"></app-board>
         <app-contacts *ngIf="activeComponent === 'contacts'"></app-contacts>
         <app-help *ngIf="activeComponent === 'help'"></app-help>
         <app-legal-notice *ngIf="activeComponent === 'legal-notice'"></app-legal-notice>
