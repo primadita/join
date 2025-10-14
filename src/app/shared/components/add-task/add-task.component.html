@@ -115,9 +115,21 @@
                     </select>
                     <!-- TODO: Category list stylen -->
                 </div>
-                <div class="input-wrapper">
+                <div class="input-wrapper" id="subtask-wrapper">
                     <h6>Subtasks</h6>
-                    <input class="form-field" class="form-field" type="text">
+                    <div class="subtask-input-wrapper">
+                        <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask">
+                        <div class="subtask-btn-wrapper">
+                            <button class="clear-btn"></button>
+                            <div class="btn-divide"></div>
+                            <button class="add-btn" (click)="addSubtask()"></button>
+                        </div>
+                    </div>
+                    <ul>
+                        @for (subtask of subtasks ; track $index) {
+                            <li class="single-subtask">{{subtask}} <button class="del-subtask"></button></li>
+                        }
+                    </ul>
                 </div>
                 <!-- TODO: Subtasks liste erstellen und buttons hinzufügen -->
             </div>
