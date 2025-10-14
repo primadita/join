@@ -8,7 +8,7 @@ export interface Task {
   title: string;
   description: string;
   date: string;
-  priority: 'urgent' | 'medium' | 'low';
+  priority: 'urgent' | 'medium' | 'low' | null;
   assignedTo: any[];
   category: 'User Story' | 'Technical Task';
   subtasks: Subtask[];
