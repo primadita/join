@@ -3,10 +3,11 @@
 section{
     background: all.$lightgray;
     padding: 8rem 6.4rem;
+    // #region TITLE & SEARCH & GLOBAL ADD TASK BUTTON
     .board-title-div{
         @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
+        padding-bottom: 4rem;
         >div{
-            
             @include all.d-flex($flexdir: row, $jc: space-between, $cgap: 3.2rem);
             .search-div{
                 background: all.$white;
@@ -14,9 +15,10 @@ section{
                 height: 4.8rem;
                 border: 1px solid all.$iconColor;
                 border-radius: 1rem;
-                padding: 0.4rem 0.8rem 0.4rem 1.6rem;
+                padding: 0.4rem 0.4rem 0.4rem 1.6rem;
                 @include all.d-flex($flexdir: row, $jc: space-between);
                 input{
+                    width: 25rem;
                     color: all.$mainColor;
                     font-size: 2rem;
                     @include all.style-regular();
@@ -28,6 +30,9 @@ section{
                     width: 1px;
                     height: 3.1rem;
                     background: all.$lightgray3;
+                }
+                img{
+                    @include all.square($length: 3.2rem);
                 }
             }
             #add-task-global{
@@ -47,14 +52,13 @@ section{
                     }
                 }
                 img{
-                    width: 3.2rem;
-                    height: 3.2rem;
+                    @include all.square($length: 3.2rem);
                 }
             }
         }
     }
     @include all.notebook{
-        padding: 8rem 4.5rem;
+        padding: 6rem 4.5rem;
         .board-title-div{
             column-gap: 2rem;
             >div{
@@ -68,10 +72,90 @@ section{
     .board-title-div-mobile{
         display: none;
         @media (max-width: 890px) {
-            display: flex;
+            @include all.d-flex($alit: flex-start, $rgap: 4rem);
+            width: 100%;
             >div{
-                
+                @include all.d-flex($flexdir: row, $jc: space-between);
+                width: 100%;
+                button{
+                    background: all.$mainColor;
+                    box-shadow: all.$shadow;
+                    border-radius: 1rem;
+                    color: all.$white;
+                    padding: 0.8rem ;
+                    @include all.square($length: 4.8rem);
+                    @include all.d-flex($flexdir: row, $jc:space-around);
+                }
+            }
+            .search-div{
+                background: all.$white;
+                width: 100%;
+                height: 4.8rem;
+                border: 1px solid all.$iconColor;
+                border-radius: 1rem;
+                padding: 0.4rem 0.4rem 0.4rem 1.6rem;
+                @include all.d-flex($flexdir: row, $jc: flex-end);
+                input{
+                    width: calc(100% - 1px - 3.2rem);
+                    color: all.$mainColor;
+                    font-size: 2rem;
+                    text-align: left;
+                    @include all.style-regular();
+                }
+                input::placeholder{
+                    color: all.$lightgray3;
+                }
+                .vline{
+                    width: 1px;
+                    height: 3.1rem;
+                    background: all.$lightgray3;
+                }
+                img{
+                    @include all.square($length: 3.2rem);
+                }
             }
         }
     }
+    @include all.mobile{
+        padding: 4.5rem 3rem;
+    }
+    // #endregion
+    // #region Progress board
+    .progress-board{
+        width: 100%;
+        @include all.d-flex($flexdir: row, $jc: space-between);
+        .progress-container{
+            width: 22%;
+            @include all.d-flex($jc: flex-start);
+            .progress-title{
+                width: 100%;
+                padding-bottom: 1.2rem;
+                @include all.d-flex($flexdir: row, $jc: space-between);
+                h5{
+                    color: all.$menuColor;
+                }
+                .add-specific-btn{
+                    background: transparent;
+                    border-radius: 0.8rem;
+                    border: 2px solid all.$mainColor ;
+                    @include all.square($length: 2.4rem);
+                    @include all.d-flex();
+                    svg{
+                        @include all.square($length: 1.8rem);
+                        g{
+                            path{
+                                fill: all.$mainColor;
+                            }
+                        }
+                    }
+                }
+            }
+            .progress-list{
+                width: 100%;
+                height: auto;
+                max-height: 23rem;
+            }
+        }
+    }
+    // #endregion
 }
