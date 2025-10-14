@@ -114,6 +114,9 @@ section{
                 img{
                     @include all.square($length: 3.2rem);
                 }
+                @media (max-width: 800px) {
+                    margin-bottom: 3rem;
+                }
             }
         }
     }
@@ -175,6 +178,12 @@ section{
             @include all.notebook {
                 max-width: calc(100dvw - 23.2rem - 9rem);
             }
+            @media (max-width: 800px) {
+                max-width: calc(100dvw - 9rem);
+            }
+            @include all.mobile{
+                max-width: calc(100dvw - 6rem);
+            }
             height: auto;
             max-height: calc(100dvh - 8rem - 30rem);
             overflow-y: auto ;
@@ -193,9 +202,6 @@ section{
                     }
                 }
             }
-        }
-        @include all.tablet{
-            padding-top: 3rem;
         }
     }
     // #endregion
