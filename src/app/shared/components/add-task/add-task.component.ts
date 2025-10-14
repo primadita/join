@@ -7,11 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter, _MatInternalFormField } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField],
+  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss'
 })
@@ -19,7 +20,11 @@ export class AddTaskComponent {
 
   contacts = inject(FirebaseServiceService);
 
-  subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"]
+  
+
+  subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"];
+
+  singleSubtask:string = "";
 
 
 
@@ -49,6 +54,11 @@ export class AddTaskComponent {
       if (nameA > nameB) return 1;
       return 0;
     });
+  }
+
+  addSubtask(){
+    const _subtask = this.singleSubtask
+    this.subtasks.push(_subtask);
   }
 
 }
