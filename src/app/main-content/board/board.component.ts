@@ -9,8 +9,10 @@ import { TaskCardComponent } from './task-card/task-card.component';
   styleUrl: './board.component.scss'
 })
 export class BoardComponent {
-  todo = [];
-  inprogress = [];
+  todo = ['to do 1', 'to do 2'];
+  inprogress = ['in progress 1', 'in progress 2'];
+  awaitfeedback =  ['await 1'];
+  done = ['await'];
   
   drop(event: CdkDragDrop<string[]>){
     if(event.previousContainer === event.container){

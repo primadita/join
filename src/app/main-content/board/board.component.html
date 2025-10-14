@@ -30,7 +30,8 @@
         </div>
     </div>
     <!-- #endregion -->
-     <div class="progress-board">
+    <!-- #region PROGRESS BOARD -->
+    <div class="progress-board" cdkDropListGroup>
         <div class="progress-container">
             <div class="progress-title">
                 <h5>To do</h5>
@@ -48,12 +49,16 @@
             <div cdkDropList 
                 #toDoList = "cdkDropList"
                 [cdkDropListData]="todo"
-                [cdkDropListConnectedTo]="[inProgressList]"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                 @for (item of todo; track item){
-                    <app-task-card></app-task-card>
-                 }
+                @if(todo.length === 0){
+                    <div *ngIf="todo.length === 0" class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (item of todo; track item){
+                    <app-task-card cdkDrag></app-task-card>
+                }
             </div>
         </div>
 
@@ -74,12 +79,16 @@
             <div cdkDropList 
                 #inProgressList = "cdkDropList"
                 [cdkDropListData]="inprogress"
-                [cdkDropListConnectedTo]="[toDoList]"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                 @for (item of todo; track item){
-                    <app-task-card></app-task-card>
-                 }
+                @if(inprogress.length === 0){
+                    <div *ngIf="inprogress.length === 0" class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (item of inprogress; track item){
+                    <app-task-card cdkDrag></app-task-card>
+                }
             </div>
         </div>
 
@@ -97,43 +106,45 @@
                     </svg>
                 </button>
             </div>
-            <div class="progress-list">task</div>
+            <div cdkDropList 
+                #awaitFeedbackList = "cdkDropList"
+                [cdkDropListData]="awaitfeedback"
+                (cdkDropListDropped)="drop($event)"
+                class="progress-list">
+                @if(awaitfeedback.length === 0){
+                    <div *ngIf="awaitfeedback.length === 0" class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (item of awaitfeedback; track item){
+                    <!-- <div class="example-item" cdkDrag>{{item}}</div> -->
+                    <app-task-card cdkDrag></app-task-card>
+                }
+            </div>
         </div>
 
         <div class="progress-container">
             <div class="progress-title">
                 <h5>Done</h5>
             </div>
-            <div class="progress-list">task</div>
+            <div cdkDropList 
+                #doneList = "cdkDropList"
+                [cdkDropListData]="done"
+                (cdkDropListDropped)="drop($event)"
+                class="progress-list">
+                @if(done.length === 0){
+                    <div *ngIf="done.length === 0" class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (item of done; track item){
+                    <!-- <div class="example-item" cdkDrag>{{item}}</div> -->
+                    <app-task-card cdkDrag></app-task-card>
+                    
+                }
+            </div>
         </div>
-     </div>
-  <div class="board-title-div">
-    <h1>Board</h1>
-    <div>
-      <div class="search-div">
-        <input type="text" id="search-input" placeholder="Find Task" />
-        <div class="vline"></div>
-        <img src="./assets/icons/search.svg" alt="search for" />
-      </div>
-      <button id="add-task-global">
-        <h5>Add task</h5>
-        <img src="./assets/icons/add.svg" alt="add button" />
-      </button>
     </div>
-  </div>
-  <div class="board-title-div-mobile">
-    <div>
-      <h1>Board</h1>
-      <button id="add-task-global">
-        <h5>Add task</h5>
-        <img src="./assets/icons/add.svg" alt="add button" />
-      </button>
-    </div>
-    <div class="search-div">
-      <input type="text" id="search-input" placeholder="Find Task" />
-      <div class="vline"></div>
-      <img src="./assets/icons/search.svg" alt="search for" />
-    </div>
-  </div>
-  <app-task-card></app-task-card>
+    <!-- #endregion -->
+  <!-- <app-task-card></app-task-card> -->
 </section>
