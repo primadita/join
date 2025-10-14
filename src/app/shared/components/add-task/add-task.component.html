@@ -5,16 +5,16 @@
             <div class="form-input-left">
                 <div class="input-wrapper">
                     <h6>Title</h6>
-                    <input class="form-field" type="text">
+                    <input class="form-field" type="text" name="title" [(ngModel)]="newTask.title">
                 </div>
                 <div class="input-wrapper">
                     <h6>Description</h6>
-                    <textarea name="" id=""></textarea>
+                    <textarea name="description" id="" [(ngModel)]="newTask.description"></textarea>
                 </div>
                 <div class="input-wrapper">
                     <h6>Due date*</h6>
                     <div class="date-input-wrapper">
-                        <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" />
+                        <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date" [(ngModel)]="newTask.date" />
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker [yPosition]="'below'" [xPosition]="'start'"></mat-datepicker>
                     </div>
@@ -27,7 +27,7 @@
                 <div class="input-wrapper">
                     <h6>Priority</h6>
                     <div class="priority-btn-wrapper">
-                        <button>Urgent
+                        <button (click)="setPriorityUrgent()">Urgent
                             <svg width="21" height="16" viewBox="0 0 21 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_379835_5802)">
@@ -109,15 +109,27 @@
                 </div>
                 <div class="input-wrapper">
                     <h6>Category</h6>
-                    <select class="form-field" name="" id="">
-                        <option value="">User Story</option>
-                        <option value="">Technical Task</option>
+                    <select class="form-field" name="category" [(ngModel)]="newTask.category">
+                        <option value="User Story">User Story</option>
+                        <option value="Technical Task">Technical Task</option>
                     </select>
                     <!-- TODO: Category list stylen -->
                 </div>
-                <div class="input-wrapper">
+                <div class="input-wrapper" id="subtask-wrapper">
                     <h6>Subtasks</h6>
-                    <input class="form-field" class="form-field" type="text">
+                    <div class="subtask-input-wrapper">
+                        <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask">
+                        <div class="subtask-btn-wrapper">
+                            <button class="clear-btn"></button>
+                            <div class="btn-divide"></div>
+                            <button class="add-btn" (click)="addSubtask()"></button>
+                        </div>
+                    </div>
+                    <ul>
+                        @for (subtask of newTask.subtasks ; track $index) {
+                            <li class="single-subtask">{{subtask.title}} <button class="del-subtask"></button></li>
+                        }
+                    </ul>
                 </div>
                 <!-- TODO: Subtasks liste erstellen und buttons hinzufügen -->
             </div>
@@ -134,7 +146,7 @@
 
                 </button>
                 <div class="submit-wrapper">
-                    <input type="submit" value="Create Task">
+                    <input type="submit" value="Create Task" (click)="addNewTask()">
                     <img src="assets/icons/check.svg" alt="check-img">
                 </div>
             </div>

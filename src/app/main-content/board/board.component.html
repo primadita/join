@@ -57,7 +57,9 @@
                     </div>
                 }
                 @for (item of todo; track item){
-                    <app-task-card cdkDrag></app-task-card>
+                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
+                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
+                    </app-task-details>
                 }
             </div>
         </div>
@@ -87,7 +89,9 @@
                     </div>
                 }
                 @for (item of inprogress; track item){
-                    <app-task-card cdkDrag></app-task-card>
+                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
+                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
+                    </app-task-details>
                 }
             </div>
         </div>
@@ -118,7 +122,9 @@
                 }
                 @for (item of awaitfeedback; track item){
                     <!-- <div class="example-item" cdkDrag>{{item}}</div> -->
-                    <app-task-card cdkDrag></app-task-card>
+                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
+                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
+                    </app-task-details>
                 }
             </div>
         </div>
@@ -139,12 +145,18 @@
                 }
                 @for (item of done; track item){
                     <!-- <div class="example-item" cdkDrag>{{item}}</div> -->
-                    <app-task-card cdkDrag></app-task-card>
-                    
+                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
+                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
+                    </app-task-details> 
                 }
             </div>
         </div>
     </div>
+
+  <!-- App-task-card und app-task-details -->
     <!-- #endregion -->
-  <!-- <app-task-card></app-task-card> -->
+  <!-- <app-task-card (openTask)="openTask()"></app-task-card> -->
+
+  <!-- <app-task-details *ngIf="showDetail" (close)="closeTask()">
+    </app-task-details> -->
 </section>

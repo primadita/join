@@ -6,12 +6,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter, _MatInternalFormField } from '@angular/material/core';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormsModule } from "@angular/forms";
+import { Subtask, Task } from '../../interfaces/task';
 
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField],
+  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss'
 })
@@ -19,7 +21,28 @@ export class AddTaskComponent {
 
   contacts = inject(FirebaseServiceService);
 
-  subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"]
+  newTask: Task = {
+    id: '',
+    title: '',
+    description: '',
+    date: "",
+    priority: null,
+    assignedTo: [],
+    category: 'User Story',
+    subtasks: [],
+    status: 'to do'
+  };
+
+  priorityFlag = {
+    urgent: false,
+    medium: false,
+    low: false
+  }
+
+
+  subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"];
+
+  singleSubtask:string = ""
 
 
 
@@ -49,6 +72,52 @@ export class AddTaskComponent {
       if (nameA > nameB) return 1;
       return 0;
     });
+  }
+
+  addSubtask() {
+    const subtaskTitle = this.singleSubtask;
+    const newSubtask: Subtask = {
+      title: subtaskTitle,
+      done: false
+    }
+    this.newTask.subtasks.push(newSubtask);
+    this.singleSubtask = "";
+  }
+
+// #region prioritySetting
+  setPriorityUrgent(){
+    this.priorityFlag.urgent = !this.priorityFlag.urgent;
+    console.log(this.priorityFlag.urgent);    
+  }
+  setPrioritymedium(){
+    this.priorityFlag.medium = !this.priorityFlag.medium;
+    console.log(this.priorityFlag.medium);    
+  }
+  setPriorityLow(){
+    this.priorityFlag.low = !this.priorityFlag.low;
+    console.log(this.priorityFlag.low);    
+  }
+
+  // #endregion
+
+  getPriority(){
+    if(this.priorityFlag.urgent){
+      return "urgent"
+    }
+    if(this.priorityFlag.medium){
+      return "medium"
+    }
+    if(this.priorityFlag.low){
+      return "low"
+    }else{
+      return null
+    }
+  }
+
+  addNewTask(){
+    const newTask = this.newTask;
+    console.log(newTask);
+    
   }
 
 }

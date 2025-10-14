@@ -1,1 +1,158 @@
-<p>task-details works!</p>
+<div class="overlay" (click)="onClose()">
+  <div
+    class="task-details"
+    [class.closing]="closing"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- here category -->
+    <div class="categoryAndClosebtn">
+      <span class="category">User story</span>
+      <button (click)="onClose()">X</button>
+    </div>
+    <!-- here title-->
+    <div class="category-title">
+      <h2 class="task-title">Kochwelt Page & Recipe Recommender</h2>
+    </div>
+    <!-- here description -->
+    <div class="description">
+      <span class="descrip"
+        >Build start page with recipe recommendation asd sad
+      </span>
+    </div>
+    <!-- here due date -->
+    <div class="due-date">
+      <span>Due date:</span>
+      <span class="date">10/05/2023</span>
+    </div>
+    <!-- here priority-->
+    <div class="priority">
+      <span>Priority:</span>
+
+      <div class="prio">
+        <span>Urgent</span>
+        <svg
+          width="21"
+          height="16"
+          viewBox="0 0 21 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_379835_5802)">
+            <path
+              d="M19.6528 15.2547C19.4182 15.2551 19.1896 15.1803 19.0007 15.0412L10.7487 8.958L2.49663 15.0412C2.38078 15.1267 2.24919 15.1887 2.10939 15.2234C1.96959 15.2582 1.82431 15.2651 1.68184 15.2437C1.53937 15.2223 1.40251 15.1732 1.27906 15.099C1.15562 15.0247 1.04801 14.927 0.96238 14.8112C0.876751 14.6954 0.814779 14.5639 0.780002 14.4243C0.745226 14.2846 0.738325 14.1394 0.759696 13.997C0.802855 13.7095 0.958545 13.4509 1.19252 13.2781L10.0966 6.70761C10.2853 6.56802 10.5139 6.49268 10.7487 6.49268C10.9835 6.49268 11.212 6.56802 11.4007 6.70761L20.3048 13.2781C20.4908 13.415 20.6286 13.6071 20.6988 13.827C20.7689 14.0469 20.7678 14.2833 20.6955 14.5025C20.6232 14.7216 20.4834 14.9124 20.2962 15.0475C20.1089 15.1826 19.8837 15.2551 19.6528 15.2547Z"
+              fill="#FF3D00"
+            />
+            <path
+              d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z"
+              fill="#FF3D00"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_379835_5802">
+              <rect
+                width="20"
+                height="14.5098"
+                fill="white"
+                transform="translate(0.748535 0.745117)"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+    </div>
+    <!-- here assigned to -->
+    <div class="assigned-to">
+      <span>Assigned To:</span>
+      <ul>
+        <li>
+          <span>Sofia Müller</span>
+          <span>Anton Mayer</span>
+          <span>Marcel Bauer</span>
+          <span>Sofia Müller</span>
+          <span>Anton Mayer</span>
+          <span>Marcel Bauer</span>
+        </li>
+      </ul>
+    </div>
+    <!-- here subtasks -->
+
+    <!-- here subtasks -->
+    <div class="subtasks">
+      <label for="">Subtasks</label>
+      <ul>
+        <li>
+          <input type="checkbox" name="" id="" />
+          <span>Implement Recipe Recommendation</span>
+        </li>
+        <li>
+          <input type="checkbox" name="" id="" />
+          <span>Start Page Layout</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- delete & edit btns -->
+    <div class="deleAndEditBtn">
+      <button>
+        <svg
+          class="icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <mask
+            id="mask0_373733_4535"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="24"
+            height="24"
+          >
+            <rect width="24" height="24" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_373733_4535)">
+            <path
+              d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6C4.71667 6 4.47917 5.90417 4.2875 5.7125C4.09583 5.52083 4 5.28333 4 5C4 4.71667 4.09583 4.47917 4.2875 4.2875C4.47917 4.09583 4.71667 4 5 4H9C9 3.71667 9.09583 3.47917 9.2875 3.2875C9.47917 3.09583 9.71667 3 10 3H14C14.2833 3 14.5208 3.09583 14.7125 3.2875C14.9042 3.47917 15 3.71667 15 4H19C19.2833 4 19.5208 4.09583 19.7125 4.2875C19.9042 4.47917 20 4.71667 20 5C20 5.28333 19.9042 5.52083 19.7125 5.7125C19.5208 5.90417 19.2833 6 19 6V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM7 6V19H17V6H7ZM9 16C9 16.2833 9.09583 16.5208 9.2875 16.7125C9.47917 16.9042 9.71667 17 10 17C10.2833 17 10.5208 16.9042 10.7125 16.7125C10.9042 16.5208 11 16.2833 11 16V9C11 8.71667 10.9042 8.47917 10.7125 8.2875C10.5208 8.09583 10.2833 8 10 8C9.71667 8 9.47917 8.09583 9.2875 8.2875C9.09583 8.47917 9 8.71667 9 9V16ZM13 16C13 16.2833 13.0958 16.5208 13.2875 16.7125C13.4792 16.9042 13.7167 17 14 17C14.2833 17 14.5208 16.9042 14.7125 16.7125C14.9042 16.5208 15 16.2833 15 16V9C15 8.71667 14.9042 8.47917 14.7125 8.2875C14.5208 8.09583 14.2833 8 14 8C13.7167 8 13.4792 8.09583 13.2875 8.2875C13.0958 8.47917 13 8.71667 13 9V16Z"
+              fill="currentColor"
+            />
+          </g>
+        </svg>
+
+        Delete
+      </button>
+      <button>
+        <svg
+          class="icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <mask
+            id="mask0_373733_4305"
+            style="mask-type: alpha"
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="24"
+            height="24"
+          >
+            <rect width="24" height="24" fill="#D9D9D9" />
+          </mask>
+          <g mask="url(#mask0_373733_4305)">
+            <path
+              d="M5 19H6.4L15.025 10.375L13.625 8.975L5 17.6V19ZM19.3 8.925L15.05 4.725L16.45 3.325C16.8333 2.94167 17.3042 2.75 17.8625 2.75C18.4208 2.75 18.8917 2.94167 19.275 3.325L20.675 4.725C21.0583 5.10833 21.2583 5.57083 21.275 6.1125C21.2917 6.65417 21.1083 7.11667 20.725 7.5L19.3 8.925ZM17.85 10.4L7.25 21H3V16.75L13.6 6.15L17.85 10.4Z"
+              fill="currentColor"
+            />
+          </g>
+        </svg>
+
+        Edit
+      </button>
+    </div>
+  </div>
+</div>
