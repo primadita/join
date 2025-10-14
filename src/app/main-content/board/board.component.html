@@ -27,5 +27,11 @@
       <img src="./assets/icons/search.svg" alt="search for" />
     </div>
   </div>
-  <app-task-card></app-task-card>
+
+  <!-- App-task-card und app-task-details -->
+  <app-task-card (openTask)="openTask()"></app-task-card>
+
+  <app-task-details *ngIf="showDetail" (close)="closeTask()"
+    >></app-task-details
+  >
 </section>
