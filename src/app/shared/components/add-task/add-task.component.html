@@ -82,21 +82,30 @@
                     </div>
 
                 </div>
-                <div class="input-wrapper">
+                <div class="input-wrapper" id="rp-wrapper">
                     <h6>Assigned to</h6>
-                    <select class="form-field" name="" id="">
-                        <div class="rp-selection">
+                    <div>
+                        <input type="text" class="form-field" name="" placeholder="Select Contacts to assign">
+                        <ul class="rp-selection">
                             @for (contact of sortedContacts(); track $index){
-                            <option value="">
-                                <span class="initials"
-                                    [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
-                                <span>{{contact.name}}</span>
-                            </option>
+                            <li>
+                                <div class="item-name-box">
+                                    <span class="initials"
+                                        [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
+                                    <span class="item-name">{{contact.name}}</span>
+                                </div>
+                                <input type="checkbox">
+                            </li>
                             }
+                        </ul>
+                    </div>
+                    <div class="rp-selected-box">
+                        <span class="initials test">HW</span>
+                        <span class="initials test">FT</span>
+                        <span class="initials test">NA</span>
+                    </div>
 
-                        </div>
 
-                    </select>
                 </div>
                 <div class="input-wrapper">
                     <h6>Category</h6>
@@ -104,11 +113,13 @@
                         <option value="">User Story</option>
                         <option value="">Technical Task</option>
                     </select>
+                    <!-- TODO: Category list stylen -->
                 </div>
                 <div class="input-wrapper">
                     <h6>Subtasks</h6>
                     <input class="form-field" class="form-field" type="text">
                 </div>
+                <!-- TODO: Subtasks liste erstellen und buttons hinzufügen -->
             </div>
         </div>
 
