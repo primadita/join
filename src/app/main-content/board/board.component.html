@@ -51,12 +51,12 @@
                 [cdkDropListData]="todo"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(todo.length === 0){
-                    <div *ngIf="todo.length === 0" class="empty-list">
+                @if(getToDoList().length === 0){
+                    <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (item of todo; track item){
+                @for (task of getToDoList(); track task){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details>
@@ -83,12 +83,12 @@
                 [cdkDropListData]="inprogress"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(inprogress.length === 0){
-                    <div *ngIf="inprogress.length === 0" class="empty-list">
+                @if(getInProgressList.length === 0){
+                    <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (item of inprogress; track item){
+                @for (task of getInProgressList(); track task){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details>
@@ -115,13 +115,12 @@
                 [cdkDropListData]="awaitfeedback"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(awaitfeedback.length === 0){
-                    <div *ngIf="awaitfeedback.length === 0" class="empty-list">
+                @if(getAwaitFeedbackList().length === 0){
+                    <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (item of awaitfeedback; track item){
-                    <!-- <div class="example-item" cdkDrag>{{item}}</div> -->
+                @for (task of getAwaitFeedbackList(); track task){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details>
@@ -138,13 +137,12 @@
                 [cdkDropListData]="done"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(done.length === 0){
-                    <div *ngIf="done.length === 0" class="empty-list">
+                @if( getDoneList().length === 0){
+                    <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (item of done; track item){
-                    <!-- <div class="example-item" cdkDrag>{{item}}</div> -->
+                @for (task of getDoneList(); track task){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details> 

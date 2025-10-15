@@ -22,7 +22,7 @@ export class TaskService {
   }
 
   // cleans up Firestore subscriptions when the component destroyed
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubTasks && this.unsubTasks();
   }
 
@@ -47,7 +47,7 @@ export class TaskService {
       priority: obj.priority, // urgent,medium, low
       assignedTo: obj.assignedTo, // Array
       category: obj.category, // User Story | Technical Task
-      subtasks: obj.subtaks.map((sub: any) => ({
+      subtasks: obj.subtasks.map((sub: any) => ({
         // Array with title and done
         title: sub.title,
         done: sub.done,
@@ -75,7 +75,7 @@ export class TaskService {
       assignedTo: task.assignedTo,
       category: task.category,
       subtasks: task.subtasks,
-      status: task.subtasks,
+      status: task.status,
     };
   }
 
