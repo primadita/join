@@ -47,6 +47,7 @@
                 </button>
             </div>
             <div cdkDropList 
+                id="toDoList"
                 #toDoList = "cdkDropList"
                 [cdkDropListData]="todo"
                 (cdkDropListDropped)="drop($event)"
@@ -78,12 +79,13 @@
                     </svg>
                 </button>
             </div>
-            <div cdkDropList 
+            <div cdkDropList
+                id="inProgressList" 
                 #inProgressList = "cdkDropList"
                 [cdkDropListData]="inprogress"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(getInProgressList.length === 0){
+                @if(getInProgressList().length === 0){
                     <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
@@ -111,6 +113,7 @@
                 </button>
             </div>
             <div cdkDropList 
+                id="awaitFeedbackList"
                 #awaitFeedbackList = "cdkDropList"
                 [cdkDropListData]="awaitfeedback"
                 (cdkDropListDropped)="drop($event)"
@@ -133,6 +136,7 @@
                 <h5>Done</h5>
             </div>
             <div cdkDropList 
+                id="doneList"
                 #doneList = "cdkDropList"
                 [cdkDropListData]="done"
                 (cdkDropListDropped)="drop($event)"

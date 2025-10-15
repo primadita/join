@@ -37,6 +37,21 @@ export class BoardComponent {
     }else{
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
+
+    const movedTask = event.container.data[event.currentIndex];
+    if(event.container.id === "toDoList"){
+      movedTask.status = "to do"
+    }
+    if(event.container.id === "inProgressList"){
+      movedTask.status = "in progress"
+    }
+    if(event.container.id === "awaitFeedbackList"){
+      movedTask.status = "await feedback"
+    }
+    if(event.container.id === "doneList"){
+      movedTask.status = "done"
+    }
+    this.taskService.updateTask(movedTask);
   }
 
   getTasksList(): Task[]{
