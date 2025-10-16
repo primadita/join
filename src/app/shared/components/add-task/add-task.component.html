@@ -28,7 +28,7 @@
                 <div class="input-wrapper">
                     <h6>Priority</h6>
                     <div class="priority-btn-wrapper">
-                        <button (click)="setPriorityUrgent()">Urgent
+                        <button (click)="setPriorityUrgent()" [ngClass]="{'active-urgent': priorityFlag.urgent}">Urgent
                             <svg width="21" height="16" viewBox="0 0 21 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_379835_5802)">
@@ -48,7 +48,7 @@
                             </svg>
 
                         </button>
-                        <button (click)="setPriorityMedium()">Medium
+                        <button (click)="setPriorityMedium()" [ngClass]="{'active-medium': priorityFlag.medium}">Medium
                             <svg width="21" height="8" viewBox="0 0 21 8" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_379835_5809)">
@@ -68,7 +68,7 @@
                             </svg>
 
                         </button>
-                        <button (click)="setPriorityLow()">Low
+                        <button (click)="setPriorityLow()" [ngClass]="{'active-low': priorityFlag.low}">Low
                             <svg width="21" height="16" viewBox="0 0 21 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -137,14 +137,13 @@
                         }
                     </ul>
                 </div>
-                <!-- TODO: Subtasks liste erstellen und buttons hinzufügen -->
             </div>
         </div>
 
         <div class="form-submit">
             <span>*This field is required</span>
             <div class="btn-wrapper">
-                <button class="cancel-btn">Clear
+                <button class="cancel-btn" (click)="clearInputs()">Clear
 
                     <svg class="cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d="M6 6L18 18M6 18L18 6" />
@@ -158,5 +157,4 @@
             </div>
         </div>
     </form>
-
 </div>
