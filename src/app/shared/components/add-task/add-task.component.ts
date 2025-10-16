@@ -11,10 +11,11 @@ import { FormsModule } from "@angular/forms";
 import { Subtask, Task } from '../../interfaces/task';
 
 
+
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule],
+  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule,],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss'
 })
@@ -88,15 +89,34 @@ export class AddTaskComponent {
   // #region prioritySetting
   setPriorityUrgent() {
     this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    console.log(this.priorityFlag.urgent);
+    this.priorityFlag.medium = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority("urgent");
+    console.log(this.priorityFlag);
+    console.log(this.newTask.priority);
   }
-  setPrioritymedium() {
+  setPriorityMedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
-    console.log(this.priorityFlag.medium);
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority("medium");
+    console.log(this.priorityFlag);
   }
   setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
-    console.log(this.priorityFlag.low);
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.medium = false;
+    this.unsetPriority("low");
+    console.log(this.priorityFlag);
+  }
+
+  unsetPriority(priority: "urgent" | "medium" | "low") {
+    if(priority == this.newTask.priority){
+      this.newTask.priority = null;
+    }else{
+      this.newTask.priority = priority;
+    }
+    console.log(this.newTask.priority);  
   }
 
   // #endregion
@@ -126,13 +146,11 @@ export class AddTaskComponent {
     if (!test) {
       array.push(contact);
       console.log(array);
-    }else if(test){
+    } else if (test) {
       const index = array.indexOf(contact);
       array.splice(index, 1);
       console.log(array);
     }
   }
-
-
 
 }
