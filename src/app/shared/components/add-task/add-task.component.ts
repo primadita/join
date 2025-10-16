@@ -35,7 +35,7 @@ export class AddTaskComponent {
     id: '',
     title: '',
     description: '',
-    date: new Date(),
+    date: '',
     priority: null,
     assignedTo: [],
     category: 'User Story',
