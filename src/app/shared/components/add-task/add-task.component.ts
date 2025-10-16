@@ -13,8 +13,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { Subtask, Task } from '../../interfaces/task';
 
-
-
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
@@ -27,7 +25,7 @@ import { Subtask, Task } from '../../interfaces/task';
     _MatInternalFormField,
     FormsModule,
   ],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule,],
+
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -50,17 +48,12 @@ export class AddTaskComponent {
     medium: false,
     low: false,
   };
-    low: false
-  }
 
-  rpSearch: string = "";
-
+  rpSearch: string = '';
 
   subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
 
   singleSubtask: string = '';
-  singleSubtask: string = ""
-
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -105,17 +98,17 @@ export class AddTaskComponent {
     console.log(this.priorityFlag.urgent);
     this.priorityFlag.medium = false;
     this.priorityFlag.low = false;
-    this.unsetPriority("urgent");
+    this.unsetPriority('urgent');
     console.log(this.priorityFlag);
     console.log(this.newTask.priority);
   }
-  setPrioritymedium() {
+
   setPriorityMedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
     console.log(this.priorityFlag.medium);
     this.priorityFlag.urgent = false;
     this.priorityFlag.low = false;
-    this.unsetPriority("medium");
+    this.unsetPriority('medium');
     console.log(this.priorityFlag);
   }
   setPriorityLow() {
@@ -123,17 +116,17 @@ export class AddTaskComponent {
     console.log(this.priorityFlag.low);
     this.priorityFlag.urgent = false;
     this.priorityFlag.medium = false;
-    this.unsetPriority("low");
+    this.unsetPriority('low');
     console.log(this.priorityFlag);
   }
 
-  unsetPriority(priority: "urgent" | "medium" | "low") {
-    if(priority == this.newTask.priority){
+  unsetPriority(priority: 'urgent' | 'medium' | 'low') {
+    if (priority == this.newTask.priority) {
       this.newTask.priority = null;
-    }else{
+    } else {
       this.newTask.priority = priority;
     }
-    console.log(this.newTask.priority);  
+    console.log(this.newTask.priority);
   }
 
   // #endregion
@@ -141,23 +134,14 @@ export class AddTaskComponent {
   getPriority() {
     if (this.priorityFlag.urgent) {
       return 'urgent';
-  getPriority() {
-    if (this.priorityFlag.urgent) {
-      return "urgent"
     }
     if (this.priorityFlag.medium) {
       return 'medium';
-    if (this.priorityFlag.medium) {
-      return "medium"
     }
     if (this.priorityFlag.low) {
       return 'low';
     } else {
       return null;
-    if (this.priorityFlag.low) {
-      return "low"
-    } else {
-      return null
     }
   }
 
@@ -167,8 +151,8 @@ export class AddTaskComponent {
   }
 
   addRpToArray(contact: Contact) {
-    const array = this.newTask.assignedTo
-    const test = array.includes(contact)
+    const array = this.newTask.assignedTo;
+    const test = array.includes(contact);
     if (!test) {
       array.push(contact);
       console.log(array);
