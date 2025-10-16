@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @use '../../../../../public/assets/styles/all-styles.scss' as all;
 
 .content {
@@ -143,11 +144,15 @@
 
                 height: 12rem;
 
-                .rp-selection {
+                :focus-within #rpSelection{
+                    display: block;
+                }
+
+                #rpSelection {
                     display: none;
                     position: absolute;
                     top: 4rem;
-                    height: 20rem;
+                    height: 25rem;
                     width: 100%;
                     overflow-y: scroll;
                     z-index: 100;
@@ -231,7 +236,6 @@
                     transform: translateY(-50%);
                     color: #666;
                 }
-
             }
 
             .dividing-line {

@@ -10,10 +10,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from "@angular/forms";
 import { Subtask, Task } from '../../interfaces/task';
 
+
+
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule],
+  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule,],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss'
 })
@@ -39,12 +41,12 @@ export class AddTaskComponent {
     low: false
   }
 
+  rpSearch: string = "";
+
 
   subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"];
 
-  singleSubtask:string = ""
-
-
+  singleSubtask: string = ""
 
 
   getLetters(contact: Contact): string {
@@ -84,40 +86,71 @@ export class AddTaskComponent {
     this.singleSubtask = "";
   }
 
-// #region prioritySetting
-  setPriorityUrgent(){
+  // #region prioritySetting
+  setPriorityUrgent() {
     this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    console.log(this.priorityFlag.urgent);    
+    this.priorityFlag.medium = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority("urgent");
+    console.log(this.priorityFlag);
+    console.log(this.newTask.priority);
   }
-  setPrioritymedium(){
+  setPriorityMedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
-    console.log(this.priorityFlag.medium);    
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority("medium");
+    console.log(this.priorityFlag);
   }
-  setPriorityLow(){
+  setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
-    console.log(this.priorityFlag.low);    
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.medium = false;
+    this.unsetPriority("low");
+    console.log(this.priorityFlag);
+  }
+
+  unsetPriority(priority: "urgent" | "medium" | "low") {
+    if(priority == this.newTask.priority){
+      this.newTask.priority = null;
+    }else{
+      this.newTask.priority = priority;
+    }
+    console.log(this.newTask.priority);  
   }
 
   // #endregion
 
-  getPriority(){
-    if(this.priorityFlag.urgent){
+  getPriority() {
+    if (this.priorityFlag.urgent) {
       return "urgent"
     }
-    if(this.priorityFlag.medium){
+    if (this.priorityFlag.medium) {
       return "medium"
     }
-    if(this.priorityFlag.low){
+    if (this.priorityFlag.low) {
       return "low"
-    }else{
+    } else {
       return null
     }
   }
 
-  addNewTask(){
+  addNewTask() {
     const newTask = this.newTask;
     console.log(newTask);
-    
+  }
+
+  addRpToArray(contact: Contact) {
+    const array = this.newTask.assignedTo
+    const test = array.includes(contact)
+    if (!test) {
+      array.push(contact);
+      console.log(array);
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+      console.log(array);
+    }
   }
 
 }
