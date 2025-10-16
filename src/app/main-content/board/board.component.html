@@ -58,9 +58,8 @@
                     </div>
                 }
                 @for (task of getToDoList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
-                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
-                    </app-task-details>
+                    <app-task-card cdkDrag (openTask)="openTask($event)"
+          [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -91,9 +90,7 @@
                     </div>
                 }
                 @for (task of getInProgressList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
-                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
-                    </app-task-details>
+                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -124,9 +121,7 @@
                     </div>
                 }
                 @for (task of getAwaitFeedbackList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
-                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
-                    </app-task-details>
+                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -147,18 +142,13 @@
                     </div>
                 }
                 @for (task of getDoneList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
-                    <app-task-details *ngIf="showDetail" (close)="closeTask()">
-                    </app-task-details> 
+                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
     </div>
 
-  <!-- App-task-card und app-task-details -->
-    <!-- #endregion -->
-  <!-- <app-task-card (openTask)="openTask()"></app-task-card> -->
-
-  <!-- <app-task-details *ngIf="showDetail" (close)="closeTask()">
-    </app-task-details> -->
+  <ng-container *ngIf="showDetail && selectedTask as task">
+    <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>
+  </ng-container>
 </section>

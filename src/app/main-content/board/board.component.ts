@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop' ;
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailsComponent } from './task-card/task-details/task-details.component';
 import { TaskService } from '../../shared/services/task.service';
@@ -9,45 +16,64 @@ import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-board',
-  imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent, CdkDropList, CdkDrag],
+  imports: [
+    CommonModule,
+    DragDropModule,
+    TaskCardComponent,
+    TaskDetailsComponent,
+    CdkDropList,
+    CdkDrag,
+  ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent {
   // #region ATTRIBUTES
+  selectedTask: Task | null = null;
   showDetail = false;
   taskService = inject(TaskService);
   cdr = inject(ChangeDetectorRef);
   // #endregion
 
   // #region METHODS
-  openTask() {
+  openTask(task: Task) {
+    this.selectedTask = task;
     this.showDetail = true;
   }
 
   closeTask() {
     this.showDetail = false;
+    this.selectedTask = null;
   }
 
-  drop(event: CdkDragDrop<Task[]>){
-    if(event.previousContainer === event.container){
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    }else{
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+  drop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
 
     const movedTask = event.container.data[event.currentIndex];
-    if(event.container.id === "toDoList"){
-      movedTask.status = "to do"
+    if (event.container.id === 'toDoList') {
+      movedTask.status = 'to do';
     }
-    if(event.container.id === "inProgressList"){
-      movedTask.status = "in progress"
+    if (event.container.id === 'inProgressList') {
+      movedTask.status = 'in progress';
     }
-    if(event.container.id === "awaitFeedbackList"){
-      movedTask.status = "await feedback"
+    if (event.container.id === 'awaitFeedbackList') {
+      movedTask.status = 'await feedback';
     }
-    if(event.container.id === "doneList"){
-      movedTask.status = "done"
+    if (event.container.id === 'doneList') {
+      movedTask.status = 'done';
     }
     this.taskService.updateTask(movedTask);
     this.cdr.detectChanges();
@@ -57,8 +83,8 @@ export class BoardComponent {
     return this.taskService.tasksList;
   }
 
-  getTasksListByStatus(status:string): Task[]{
-    return this.getTasksList().filter(arr => arr.status === status);
+  getTasksListByStatus(status: string): Task[] {
+    return this.getTasksList().filter((arr) => arr.status === status);
   }
   
   getToDoList(): Task[]{
