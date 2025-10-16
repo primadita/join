@@ -162,4 +162,24 @@ export class AddTaskComponent {
       console.log(array);
     }
   }
+
+  clearInputs() {
+    this.newTask = {
+      id: '',
+      title: '',
+      description: '',
+      date: new Date(),
+      priority: null,
+      assignedTo: [],
+      category: 'User Story',
+      subtasks: [],
+      status: 'to do',
+    };
+
+    this.priorityFlag = {
+    urgent: false,
+    medium: false,
+    low: false,
+  };
+  }
 }
