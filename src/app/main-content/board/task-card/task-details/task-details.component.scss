@@ -111,6 +111,8 @@
     @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
     gap: 0.5rem;
     ul {
+      @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
+      gap: 0.5rem;
       width: 95%;
       height: 11.6rem;
       margin-left: 2rem;
@@ -119,13 +121,19 @@
       border-bottom: 0.1rem solid all.$lightgray;
       padding: 0.5rem 0;
       li {
-        @include all.d-flex(
-          $flexdir: column,
-          $jc: flex-start,
-          $alit: flex-start
-        );
-        gap: 0.5rem;
+        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
+        gap: 2.5rem;
         margin: 0.5rem 0;
+
+        .avatar {
+          width: 3.2rem;
+          height: 3.2rem;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          color: all.$white;
+        }
       }
     }
   }

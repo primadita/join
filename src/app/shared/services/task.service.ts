@@ -1,39 +1,45 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import {
   collection,
   doc,
   Firestore,
   onSnapshot,
+  Unsubscribe,
   updateDoc,
 } from '@angular/fire/firestore';
 import { Title } from '@angular/platform-browser';
 import { Task } from '../interfaces/task';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskService {
+export class TaskService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
+
+  tasksSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
+  unsubTasks?: Unsubscribe;
+
   tasksList: Task[] = [];
-  unsubTasks;
 
   constructor() {
     this.unsubTasks = this.subTasksList();
   }
 
   // cleans up Firestore subscriptions when the component destroyed
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubTasks && this.unsubTasks();
   }
 
   // Subscribes real-time updates from the Firebase tasks collection
   // updates the local tasks list whenever changes occur
-  subTasksList() {
+  private subTasksList(): Unsubscribe {
     return onSnapshot(this.getTasksRef(), (list) => {
-      this.tasksList = [];
-      list.forEach((doc) => {
-        this.tasksList.push(this.setTaskObject(doc.data(), doc.id));
-      });
+      const next: Task[] = [];
+      list.forEach((d) => next.push(this.setTaskObject(d.data(), d.id)));
+      this.tasksList = next;
+      this.tasksSubject.next(next);
     });
   }
 
@@ -47,7 +53,7 @@ export class TaskService {
       priority: obj.priority, // urgent,medium, low
       assignedTo: obj.assignedTo, // Array
       category: obj.category, // User Story | Technical Task
-      subtasks: obj.subtaks.map((sub: any) => ({
+      subtasks: obj.subtasks.map((sub: any) => ({
         // Array with title and done
         title: sub.title,
         done: sub.done,
@@ -75,7 +81,7 @@ export class TaskService {
       assignedTo: task.assignedTo,
       category: task.category,
       subtasks: task.subtasks,
-      status: task.subtasks,
+      status: task.status,
     };
   }
 
