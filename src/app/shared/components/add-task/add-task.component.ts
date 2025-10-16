@@ -10,6 +10,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from "@angular/forms";
 import { Subtask, Task } from '../../interfaces/task';
 
+
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
@@ -39,12 +40,12 @@ export class AddTaskComponent {
     low: false
   }
 
+  rpSearch:string = "";
+
 
   subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"];
 
   singleSubtask:string = ""
-
-
 
 
   getLetters(contact: Contact): string {
@@ -117,7 +118,7 @@ export class AddTaskComponent {
   addNewTask(){
     const newTask = this.newTask;
     console.log(newTask);
-    
-  }
+}
+
 
 }

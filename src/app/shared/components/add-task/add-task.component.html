@@ -14,7 +14,8 @@
                 <div class="input-wrapper">
                     <h6>Due date*</h6>
                     <div class="date-input-wrapper">
-                        <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date" [(ngModel)]="newTask.date" />
+                        <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date"
+                            [(ngModel)]="newTask.date" />
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker [yPosition]="'below'" [xPosition]="'start'"></mat-datepicker>
                     </div>
@@ -85,8 +86,10 @@
                 <div class="input-wrapper" id="rp-wrapper">
                     <h6>Assigned to</h6>
                     <div>
-                        <input type="text" class="form-field" name="" placeholder="Select Contacts to assign">
-                        <ul class="rp-selection">
+                        <input #rpSearch="ngModel" [(ngModel)]="rpSearch" type="text" class="form-field" name="rpSearch"
+                            placeholder="Select Contacts to assign" >
+                        
+                        <ul id="rpSelection">
                             @for (contact of sortedContacts(); track $index){
                             <li>
                                 <div class="item-name-box">
@@ -94,10 +97,11 @@
                                         [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
                                     <span class="item-name">{{contact.name}}</span>
                                 </div>
-                                <input type="checkbox">
+                                <input type="checkbox" >
                             </li>
                             }
-                        </ul>
+                        </ul>                       
+
                     </div>
                     <div class="rp-selected-box">
                         <span class="initials test">HW</span>
@@ -118,7 +122,8 @@
                 <div class="input-wrapper" id="subtask-wrapper">
                     <h6>Subtasks</h6>
                     <div class="subtask-input-wrapper">
-                        <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask">
+                        <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask"
+                            name="subtask">
                         <div class="subtask-btn-wrapper">
                             <button class="clear-btn"></button>
                             <div class="btn-divide"></div>
@@ -127,7 +132,7 @@
                     </div>
                     <ul>
                         @for (subtask of newTask.subtasks ; track $index) {
-                            <li class="single-subtask">{{subtask.title}} <button class="del-subtask"></button></li>
+                        <li class="single-subtask">{{subtask.title}} <button class="del-subtask"></button></li>
                         }
                     </ul>
                 </div>
