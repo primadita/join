@@ -14,7 +14,8 @@
                 <div class="input-wrapper">
                     <h6>Due date*</h6>
                     <div class="date-input-wrapper">
-                        <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date" [(ngModel)]="newTask.date" />
+                        <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date"
+                            [(ngModel)]="newTask.date" />
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker [yPosition]="'below'" [xPosition]="'start'"></mat-datepicker>
                     </div>
@@ -47,7 +48,7 @@
                             </svg>
 
                         </button>
-                        <button>Medium
+                        <button (click)="setPriorityMedium()">Medium
                             <svg width="21" height="8" viewBox="0 0 21 8" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_379835_5809)">
@@ -67,7 +68,7 @@
                             </svg>
 
                         </button>
-                        <button>Low
+                        <button (click)="setPriorityLow()">Low
                             <svg width="21" height="16" viewBox="0 0 21 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -85,24 +86,28 @@
                 <div class="input-wrapper" id="rp-wrapper">
                     <h6>Assigned to</h6>
                     <div>
-                        <input type="text" class="form-field" name="" placeholder="Select Contacts to assign">
-                        <ul class="rp-selection">
+                        <input #rpSearch="ngModel" [(ngModel)]="rpSearch" type="text" class="form-field" name="rpSearch"
+                            placeholder="Select Contacts to assign" >
+                        
+                        <ul id="rpSelection">
                             @for (contact of sortedContacts(); track $index){
-                            <li>
+                            <li (click)="addRpToArray(contact)">
                                 <div class="item-name-box">
                                     <span class="initials"
                                         [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
                                     <span class="item-name">{{contact.name}}</span>
                                 </div>
-                                <input type="checkbox">
+                                <input type="checkbox" >
                             </li>
                             }
-                        </ul>
+                        </ul>                       
+
                     </div>
                     <div class="rp-selected-box">
-                        <span class="initials test">HW</span>
-                        <span class="initials test">FT</span>
-                        <span class="initials test">NA</span>
+
+                        @for (contact of newTask.assignedTo; track $index){
+                            <span class="initials" [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
+                        }
                     </div>
 
 
@@ -118,7 +123,8 @@
                 <div class="input-wrapper" id="subtask-wrapper">
                     <h6>Subtasks</h6>
                     <div class="subtask-input-wrapper">
-                        <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask">
+                        <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask"
+                            name="subtask">
                         <div class="subtask-btn-wrapper">
                             <button class="clear-btn"></button>
                             <div class="btn-divide"></div>
@@ -127,7 +133,7 @@
                     </div>
                     <ul>
                         @for (subtask of newTask.subtasks ; track $index) {
-                            <li class="single-subtask">{{subtask.title}} <button class="del-subtask"></button></li>
+                        <li class="single-subtask">{{subtask.title}} <button class="del-subtask"></button></li>
                         }
                     </ul>
                 </div>

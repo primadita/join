@@ -5,47 +5,55 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { provideNativeDateAdapter, _MatInternalFormField } from '@angular/material/core';
+import {
+  provideNativeDateAdapter,
+  _MatInternalFormField,
+} from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 import { Subtask, Task } from '../../interfaces/task';
 
 @Component({
   selector: 'app-add-task',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, MatAutocompleteModule, _MatInternalFormField, FormsModule],
+  imports: [
+    CommonModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    _MatInternalFormField,
+    FormsModule,
+  ],
+
   templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.scss'
+  styleUrl: './add-task.component.scss',
 })
 export class AddTaskComponent {
-
   contacts = inject(FirebaseServiceService);
-
   newTask: Task = {
     id: '',
     title: '',
     description: '',
-    date: "",
+    date: new Date(),
     priority: null,
     assignedTo: [],
     category: 'User Story',
     subtasks: [],
-    status: 'to do'
+    status: 'to do',
   };
 
   priorityFlag = {
     urgent: false,
     medium: false,
-    low: false
-  }
+    low: false,
+  };
 
+  rpSearch: string = '';
 
-  subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"];
+  subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
 
-  singleSubtask:string = ""
-
-
-
+  singleSubtask: string = '';
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -56,13 +64,13 @@ export class AddTaskComponent {
   }
 
   /**
- * Returns an alphabetically sorted copy of the contact list.
- *
- * - Sorting is case-insensitive.
- * - The original data in the service remains unchanged (due to use of `slice()`).
- *
- * @returns {Contact[]} A new array containing contacts sorted by name.
- */
+   * Returns an alphabetically sorted copy of the contact list.
+   *
+   * - Sorting is case-insensitive.
+   * - The original data in the service remains unchanged (due to use of `slice()`).
+   *
+   * @returns {Contact[]} A new array containing contacts sorted by name.
+   */
   sortedContacts(): Contact[] {
     return this.contacts.contactsList.slice().sort((a, b) => {
       const nameA = a.name.toLowerCase();
@@ -78,46 +86,80 @@ export class AddTaskComponent {
     const subtaskTitle = this.singleSubtask;
     const newSubtask: Subtask = {
       title: subtaskTitle,
-      done: false
-    }
+      done: false,
+    };
     this.newTask.subtasks.push(newSubtask);
-    this.singleSubtask = "";
+    this.singleSubtask = '';
   }
 
-// #region prioritySetting
-  setPriorityUrgent(){
+  // #region prioritySetting
+  setPriorityUrgent() {
     this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    console.log(this.priorityFlag.urgent);    
+    console.log(this.priorityFlag.urgent);
+    this.priorityFlag.medium = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority('urgent');
+    console.log(this.priorityFlag);
+    console.log(this.newTask.priority);
   }
-  setPrioritymedium(){
+
+  setPriorityMedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
-    console.log(this.priorityFlag.medium);    
+    console.log(this.priorityFlag.medium);
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority('medium');
+    console.log(this.priorityFlag);
   }
-  setPriorityLow(){
+  setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
-    console.log(this.priorityFlag.low);    
+    console.log(this.priorityFlag.low);
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.medium = false;
+    this.unsetPriority('low');
+    console.log(this.priorityFlag);
+  }
+
+  unsetPriority(priority: 'urgent' | 'medium' | 'low') {
+    if (priority == this.newTask.priority) {
+      this.newTask.priority = null;
+    } else {
+      this.newTask.priority = priority;
+    }
+    console.log(this.newTask.priority);
   }
 
   // #endregion
 
-  getPriority(){
-    if(this.priorityFlag.urgent){
-      return "urgent"
+  getPriority() {
+    if (this.priorityFlag.urgent) {
+      return 'urgent';
     }
-    if(this.priorityFlag.medium){
-      return "medium"
+    if (this.priorityFlag.medium) {
+      return 'medium';
     }
-    if(this.priorityFlag.low){
-      return "low"
-    }else{
-      return null
+    if (this.priorityFlag.low) {
+      return 'low';
+    } else {
+      return null;
     }
   }
 
-  addNewTask(){
+  addNewTask() {
     const newTask = this.newTask;
     console.log(newTask);
-    
   }
 
+  addRpToArray(contact: Contact) {
+    const array = this.newTask.assignedTo;
+    const test = array.includes(contact);
+    if (!test) {
+      array.push(contact);
+      console.log(array);
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+      console.log(array);
+    }
+  }
 }
