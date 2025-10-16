@@ -91,7 +91,7 @@
                         
                         <ul id="rpSelection">
                             @for (contact of sortedContacts(); track $index){
-                            <li>
+                            <li (click)="addRpToArray(contact)">
                                 <div class="item-name-box">
                                     <span class="initials"
                                         [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
@@ -104,9 +104,10 @@
 
                     </div>
                     <div class="rp-selected-box">
-                        <span class="initials test">HW</span>
-                        <span class="initials test">FT</span>
-                        <span class="initials test">NA</span>
+
+                        @for (contact of newTask.assignedTo; track $index){
+                            <span class="initials" [style.backgroundColor]="contact.bgColor">{{getLetters(contact)}}</span>
+                        }
                     </div>
 
 

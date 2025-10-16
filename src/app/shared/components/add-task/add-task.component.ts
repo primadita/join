@@ -40,12 +40,12 @@ export class AddTaskComponent {
     low: false
   }
 
-  rpSearch:string = "";
+  rpSearch: string = "";
 
 
   subtasks: Array<string> = ["Wäsche waschen", "Fenster putzen"];
 
-  singleSubtask:string = ""
+  singleSubtask: string = ""
 
 
   getLetters(contact: Contact): string {
@@ -85,40 +85,54 @@ export class AddTaskComponent {
     this.singleSubtask = "";
   }
 
-// #region prioritySetting
-  setPriorityUrgent(){
+  // #region prioritySetting
+  setPriorityUrgent() {
     this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    console.log(this.priorityFlag.urgent);    
+    console.log(this.priorityFlag.urgent);
   }
-  setPrioritymedium(){
+  setPrioritymedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
-    console.log(this.priorityFlag.medium);    
+    console.log(this.priorityFlag.medium);
   }
-  setPriorityLow(){
+  setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
-    console.log(this.priorityFlag.low);    
+    console.log(this.priorityFlag.low);
   }
 
   // #endregion
 
-  getPriority(){
-    if(this.priorityFlag.urgent){
+  getPriority() {
+    if (this.priorityFlag.urgent) {
       return "urgent"
     }
-    if(this.priorityFlag.medium){
+    if (this.priorityFlag.medium) {
       return "medium"
     }
-    if(this.priorityFlag.low){
+    if (this.priorityFlag.low) {
       return "low"
-    }else{
+    } else {
       return null
     }
   }
 
-  addNewTask(){
+  addNewTask() {
     const newTask = this.newTask;
     console.log(newTask);
-}
+  }
+
+  addRpToArray(contact: Contact) {
+    const array = this.newTask.assignedTo
+    const test = array.includes(contact)
+    if (!test) {
+      array.push(contact);
+      console.log(array);
+    }else if(test){
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+      console.log(array);
+    }
+  }
+
 
 
 }
