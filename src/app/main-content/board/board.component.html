@@ -1,226 +1,152 @@
 <section>
-  <!-- #region TITLE  & SEARCH & GLOBAL ADD TASK BUTTON -->
-  <!-- desktop view -->
-  <div class="board-title-div">
-    <h1>Board</h1>
-    <div>
-      <div class="search-div">
-        <input type="text" id="search-input" placeholder="Find Task" />
-        <div class="vline"></div>
-        <img src="./assets/icons/search.svg" alt="search for" />
-      </div>
-      <button id="add-task-global">
-        <h5>Add task</h5>
-        <img src="./assets/icons/add.svg" alt="add button" />
-      </button>
-    </div>
-  </div>
-  <!-- mobile view -->
-  <div class="board-title-div-mobile">
-    <div>
-      <h1>Board</h1>
-      <button id="add-task-global">
-        <img src="./assets/icons/add.svg" alt="add button" />
-      </button>
-    </div>
-    <div class="search-div">
-      <input type="text" id="search-input" placeholder="Find Task" />
-      <div class="vline"></div>
-      <img src="./assets/icons/search.svg" alt="search for" />
-    </div>
-  </div>
-  <!-- #endregion -->
-  <!-- #region PROGRESS BOARD -->
-  <div class="progress-board" cdkDropListGroup>
-    <div class="progress-container">
-      <div class="progress-title">
-        <h5>To do</h5>
-        <button class="add-specific-btn">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <mask
-              id="mask0_373733_4377"
-              style="mask-type: alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="32"
-              height="32"
-            >
-              <rect width="32" height="32" fill="#D9D9D9" />
-            </mask>
-            <g mask="url(#mask0_373733_4377)">
-              <path
-                d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z"
-                fill="white"
-              />
-            </g>
-          </svg>
-        </button>
-      </div>
-      <div
-        cdkDropList
-        id="toDoList"
-        #toDoList="cdkDropList"
-        [cdkDropListData]="todo"
-        (cdkDropListDropped)="drop($event)"
-        class="progress-list"
-      >
-        @if(getToDoList().length === 0){
-        <div class="empty-list">
-          <span>No tasks in this list</span>
+    <!-- #region TITLE  & SEARCH & GLOBAL ADD TASK BUTTON -->
+    <!-- desktop view -->
+    <div class="board-title-div">
+        <h1>Board</h1>
+        <div>
+            <div class="search-div">
+                <input type="text" id="search-input" placeholder="Find Task">
+                <div class="vline"></div>
+                <img src="./assets/icons/search.svg" alt="search for">
+            </div>
+            <button id="add-task-global">
+                <h5>Add task</h5>
+                <img src="./assets/icons/add.svg" alt="add button">
+            </button>
         </div>
-        } @for (task of getToDoList(); track task){
-        <app-task-card
-          cdkDrag
-          (openTask)="openTask($event)"
-          [task]="task"
-        ></app-task-card>
-
-        }
-      </div>
     </div>
-
-    <div class="progress-container">
-      <div class="progress-title">
-        <h5>In progress</h5>
-        <button class="add-specific-btn">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <mask
-              id="mask0_373733_4377"
-              style="mask-type: alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="32"
-              height="32"
-            >
-              <rect width="32" height="32" fill="#D9D9D9" />
-            </mask>
-            <g mask="url(#mask0_373733_4377)">
-              <path
-                d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z"
-                fill="white"
-              />
-            </g>
-          </svg>
-        </button>
-      </div>
-      <div
-        cdkDropList
-        id="inProgressList"
-        #inProgressList="cdkDropList"
-        [cdkDropListData]="inprogress"
-        (cdkDropListDropped)="drop($event)"
-        class="progress-list"
-      >
-        @if(getInProgressList().length === 0){
-        <div class="empty-list">
-          <span>No tasks in this list</span>
+    <!-- mobile view -->
+    <div class="board-title-div-mobile">
+        <div>
+            <h1>Board</h1>
+            <button id="add-task-global">
+                <img src="./assets/icons/add.svg" alt="add button">
+            </button>
         </div>
-        } @for (task of getInProgressList(); track task.id){
-        <app-task-card
-          cdkDrag
-          (openTask)="openTask($event)"
-          [task]="task"
-        ></app-task-card>
-
-        }
-      </div>
-    </div>
-
-    <div class="progress-container">
-      <div class="progress-title">
-        <h5>Await feedback</h5>
-        <button class="add-specific-btn">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <mask
-              id="mask0_373733_4377"
-              style="mask-type: alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="32"
-              height="32"
-            >
-              <rect width="32" height="32" fill="#D9D9D9" />
-            </mask>
-            <g mask="url(#mask0_373733_4377)">
-              <path
-                d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z"
-                fill="white"
-              />
-            </g>
-          </svg>
-        </button>
-      </div>
-      <div
-        cdkDropList
-        id="awaitFeedbackList"
-        #awaitFeedbackList="cdkDropList"
-        [cdkDropListData]="awaitfeedback"
-        (cdkDropListDropped)="drop($event)"
-        class="progress-list"
-      >
-        @if(getAwaitFeedbackList().length === 0){
-        <div class="empty-list">
-          <span>No tasks in this list</span>
+        <div class="search-div">
+            <input type="text" id="search-input" placeholder="Find Task">
+            <div class="vline"></div>
+            <img src="./assets/icons/search.svg" alt="search for">
         </div>
-        } @for (task of getAwaitFeedbackList(); track task.id){
-        <app-task-card
-          cdkDrag
-          (openTask)="openTask($event)"
-          [task]="task"
-        ></app-task-card>
-
-        }
-      </div>
     </div>
-
-    <div class="progress-container">
-      <div class="progress-title">
-        <h5>Done</h5>
-      </div>
-      <div
-        cdkDropList
-        id="doneList"
-        #doneList="cdkDropList"
-        [cdkDropListData]="done"
-        (cdkDropListDropped)="drop($event)"
-        class="progress-list"
-      >
-        @if( getDoneList().length === 0){
-        <div class="empty-list">
-          <span>No tasks in this list</span>
+    <!-- #endregion -->
+    <!-- #region PROGRESS BOARD -->
+    <div class="progress-board" cdkDropListGroup>
+        <div class="progress-container">
+            <div class="progress-title">
+                <h5>To do</h5>
+                <button class="add-specific-btn">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
+                            <rect width="32" height="32" fill="#D9D9D9"/>
+                        </mask>
+                        <g mask="url(#mask0_373733_4377)">
+                            <path d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z" fill="white"/>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div cdkDropList 
+                id="toDoList"
+                #toDoList = "cdkDropList"
+                [cdkDropListData]="getToDoList()"
+                (cdkDropListDropped)="drop($event)"
+                class="progress-list">
+                @if(getToDoList().length === 0){
+                    <div class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (task of getToDoList(); track task.id){
+                    <app-task-card cdkDrag (openTask)="openTask($event)"
+          [task]="task"></app-task-card>
+                }
+            </div>
         </div>
-        } @for (task of getDoneList(); track task.id){
-        <app-task-card
-          cdkDrag
-          (openTask)="openTask($event)"
-          [task]="task"
-        ></app-task-card>
 
-        }
-      </div>
+        <div class="progress-container">
+            <div class="progress-title">
+                <h5>In progress</h5>
+                <button class="add-specific-btn">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
+                            <rect width="32" height="32" fill="#D9D9D9"/>
+                        </mask>
+                        <g mask="url(#mask0_373733_4377)">
+                            <path d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z" fill="white"/>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div cdkDropList
+                id="inProgressList" 
+                #inProgressList = "cdkDropList"
+                [cdkDropListData]="getInProgressList()"
+                (cdkDropListDropped)="drop($event)"
+                class="progress-list">
+                @if(getInProgressList().length === 0){
+                    <div class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (task of getInProgressList(); track task.id){
+                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
+                }
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-title">
+                <h5>Await feedback</h5>
+                <button class="add-specific-btn">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
+                            <rect width="32" height="32" fill="#D9D9D9"/>
+                        </mask>
+                        <g mask="url(#mask0_373733_4377)">
+                            <path d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z" fill="white"/>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div cdkDropList 
+                id="awaitFeedbackList"
+                #awaitFeedbackList = "cdkDropList"
+                [cdkDropListData]="getAwaitFeedbackList()"
+                (cdkDropListDropped)="drop($event)"
+                class="progress-list">
+                @if(getAwaitFeedbackList().length === 0){
+                    <div class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (task of getAwaitFeedbackList(); track task.id){
+                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
+                }
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-title">
+                <h5>Done</h5>
+            </div>
+            <div cdkDropList 
+                id="doneList"
+                #doneList = "cdkDropList"
+                [cdkDropListData]="getDoneList()"
+                (cdkDropListDropped)="drop($event)"
+                class="progress-list">
+                @if( getDoneList().length === 0){
+                    <div class="empty-list">
+                        <span>No tasks in this list</span>
+                    </div>
+                }
+                @for (task of getDoneList(); track task.id){
+                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
+                }
+            </div>
+        </div>
     </div>
-  </div>
 
   <ng-container *ngIf="showDetail && selectedTask as task">
     <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>

@@ -12,6 +12,7 @@ import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailsComponent } from './task-card/task-details/task-details.component';
 import { TaskService } from '../../shared/services/task.service';
 import { Task } from '../../shared/interfaces/task';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-board',
@@ -31,10 +32,7 @@ export class BoardComponent {
   selectedTask: Task | null = null;
   showDetail = false;
   taskService = inject(TaskService);
-  todo: Task[] = [];
-  inprogress: Task[] = [];
-  awaitfeedback: Task[] = [];
-  done: Task[] = [];
+  cdr = inject(ChangeDetectorRef);
   // #endregion
 
   // #region METHODS
@@ -78,34 +76,30 @@ export class BoardComponent {
       movedTask.status = 'done';
     }
     this.taskService.updateTask(movedTask);
+    this.cdr.detectChanges();
   }
 
-  getTasksList(): Task[] {
-    // console.log(this.taskService.tasksList);
+  getTasksList(): Task[]{
     return this.taskService.tasksList;
   }
 
   getTasksListByStatus(status: string): Task[] {
     return this.getTasksList().filter((arr) => arr.status === status);
   }
-
-  getToDoList(): Task[] {
-    this.todo = this.getTasksListByStatus('to do');
-    return this.todo;
+  
+  getToDoList(): Task[]{
+    return this.getTasksListByStatus("to do");
+  }
+  
+  getInProgressList(): Task[]{
+    return this.getTasksListByStatus("in progress");
   }
 
-  getInProgressList(): Task[] {
-    this.inprogress = this.getTasksListByStatus('in progress');
-    return this.inprogress;
-  }
-
-  getAwaitFeedbackList(): Task[] {
-    this.awaitfeedback = this.getTasksListByStatus('await feedback');
-    return this.awaitfeedback;
+  getAwaitFeedbackList(): Task[]{
+    return this.getTasksListByStatus("await feedback");
   }
   getDoneList(): Task[] {
-    this.done = this.getTasksListByStatus('done');
-    return this.done;
+    return this.getTasksListByStatus("done");
   }
   // getLength(status: string): number{
   //   const taskByStatus = this.getTasksListByStatus(status);
