@@ -1,4 +1,4 @@
 export enum Category {
-    "User Story",
-    "Technical Task"
+    USERSTORY = "User Story",
+    TECHNICALTASK = "Technical Task"
 }
