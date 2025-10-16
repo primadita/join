@@ -71,6 +71,30 @@
                             width: 1.6rem;
                         }
                     }
+                    .active-urgent{
+                        background-color: #FF3D00;
+                        color: all.$white;
+                        
+                        path{   
+                            fill: all.$white;
+                        }                        
+                    }
+                    .active-medium{
+                        background-color: #FFA800 ;
+                        color: all.$white;
+
+                        path{
+                            fill: all.$white;
+                        }
+                    }
+                    .active-low{
+                        background-color: #7AE229;
+                        color: all.$white;
+
+                        path{
+                            fill: all.$white;
+                        }
+                    }
                 }
             }
 
@@ -208,9 +232,6 @@
                 }
             }
 
-
-
-
             .date-input-wrapper {
 
                 display: flex;
@@ -244,9 +265,6 @@
 
                 background-color: #D9D9D9;
             }
-
-
-
         }
 
         .form-submit {
@@ -320,7 +338,5 @@
                 }
             }
         }
-
-
     }
 }
