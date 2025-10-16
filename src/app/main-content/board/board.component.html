@@ -49,7 +49,7 @@
             <div cdkDropList 
                 id="toDoList"
                 #toDoList = "cdkDropList"
-                [cdkDropListData]="todo"
+                [cdkDropListData]="getToDoList()"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if(getToDoList().length === 0){
@@ -57,7 +57,7 @@
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (task of getToDoList(); track task){
+                @for (task of getToDoList(); track task.id){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details>
@@ -82,7 +82,7 @@
             <div cdkDropList
                 id="inProgressList" 
                 #inProgressList = "cdkDropList"
-                [cdkDropListData]="inprogress"
+                [cdkDropListData]="getInProgressList()"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if(getInProgressList().length === 0){
@@ -90,7 +90,7 @@
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (task of getInProgressList(); track task){
+                @for (task of getInProgressList(); track task.id){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details>
@@ -115,7 +115,7 @@
             <div cdkDropList 
                 id="awaitFeedbackList"
                 #awaitFeedbackList = "cdkDropList"
-                [cdkDropListData]="awaitfeedback"
+                [cdkDropListData]="getAwaitFeedbackList()"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if(getAwaitFeedbackList().length === 0){
@@ -123,7 +123,7 @@
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (task of getAwaitFeedbackList(); track task){
+                @for (task of getAwaitFeedbackList(); track task.id){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details>
@@ -138,7 +138,7 @@
             <div cdkDropList 
                 id="doneList"
                 #doneList = "cdkDropList"
-                [cdkDropListData]="done"
+                [cdkDropListData]="getDoneList()"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if( getDoneList().length === 0){
@@ -146,7 +146,7 @@
                         <span>No tasks in this list</span>
                     </div>
                 }
-                @for (task of getDoneList(); track task){
+                @for (task of getDoneList(); track task.id){
                     <app-task-card cdkDrag (openTask)="openTask()"></app-task-card>
                     <app-task-details *ngIf="showDetail" (close)="closeTask()">
                     </app-task-details> 
