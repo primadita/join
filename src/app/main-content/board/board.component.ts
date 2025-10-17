@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgModule } from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -14,6 +14,9 @@ import { TaskService } from '../../shared/services/task.service';
 import { Task } from '../../shared/interfaces/task';
 import { map } from 'rxjs';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
+import { ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AddTaskComponent } from '../../shared/components/add-task/add-task.component';
 
 /*
   -------------------------------------------------------------------------------------------------------------------------
@@ -59,22 +62,17 @@ const ListIdToStatus: Record<ListId, Status> = {
   doneList: 'done',
 };
 
+
 @Component({
   selector: 'app-board',
-  imports: [
-    CommonModule,
-    DragDropModule,
-    TaskCardComponent,
-    TaskDetailsComponent,
-    CdkDropList,
-    CdkDrag,
-  ],
+  imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
+    CdkDropList, CdkDrag, FormsModule, AddTaskComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent {
+  // #region ATTRIBUTES
   taskService = inject(TaskService);
-
   /*
   board$ leitet aus tasks$ die vier Spalten ab
   - taks$ ist ein Observable aus dem Task-Service
@@ -97,15 +95,22 @@ export class BoardComponent {
     )
   );
 
-  selectedTask: Task | null = null;
-  showDetail = false;
+  selectedTask: Task | null = null; // Variable für TaskCard, die gewählt ist
+  showDetail = false; //Defaultzustand von Taskcard, wenn true, dann wird Task Details angezeigt
+  cdr = inject(ChangeDetectorRef); //Extra Feature für Firestore, das beim Detektieren bei der Änderung in Firestore hilft
+  searchInput: string = ''; // Variable für Input in Suchfeld
+  searchResult: Task[] = []; // Array für alle Ergebnisse von dem Suchen
+  noResults: boolean = true; //Flag für no-result-div. Wenn true, wird die Nachricht "no results were found" nicht angezeigt
+  addTaskWindow: boolean = false; // Flag für add task overlay oder Window
+  // #endregion
 
-  openTask(task: Task) {
+  // #region METHODS
+  openTask(task: Task) { // Zum Öffnen von Task Details
     this.selectedTask = task;
     this.showDetail = true;
   }
 
-  closeTask() {
+  closeTask() { // Zum Schließen der Task Details
     this.showDetail = false;
     this.selectedTask = null;
   }
@@ -163,4 +168,43 @@ export class BoardComponent {
       this.taskService.updateTask(updated);
     }
   }
+
+  getTasksList(): Task[]{
+    if(this.searchResult.length > 0){
+      return this.searchResult;
+    } else {
+      return this.board$;
+    }
+  }
+  
+  searchInTitleAndDesc(){
+    // Ändern searchInput in lower case
+    const query = this.searchInput.toLowerCase();
+    if(!query){ //Bedingung wenn keine Input eingetragen ist
+      this.searchResult = [];
+      this.noResults = true;
+      return;
+    } else { //wenn Input eingetragen ist
+      this.searchResult = this.getTasksList().filter(task => task.title.toLowerCase().includes(query) || task.description.toLowerCase().includes(query));
+      if(this.searchResult.length === 0){
+        this.noResults = false;
+      } else {
+        this.noResults = true;
+      }
+    }
+  }
+
+  // getLength(status: string): number{
+  //   const taskByStatus = this.getTasksListByStatus(status);
+  //   return taskByStatus.length;
+  // }
+  toggleAddTask(){
+    this.addTaskWindow = !this.addTaskWindow;
+  }
+
+  closeAddTaskPopup() {
+    this.addTaskWindow = false;
+  }
+
+  // #endregion
 }
