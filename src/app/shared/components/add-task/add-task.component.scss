@@ -38,8 +38,7 @@
                 textarea {
                     height: 12rem;
                     border: solid 1px #D9D9D9;
-                    padding-left: 1.2rem;
-                    padding-right: 1.2rem;
+                    padding: 0.8rem 1.2rem;
                     width: 100%;
                     border-radius: 0.8rem;
                     color: all.$black;
@@ -69,6 +68,30 @@
                         svg {
                             height: 1.6rem;
                             width: 1.6rem;
+                        }
+                    }
+                    .active-urgent{
+                        background-color: #FF3D00;
+                        color: all.$white;
+                        
+                        path{   
+                            fill: all.$white;
+                        }                        
+                    }
+                    .active-medium{
+                        background-color: #FFA800 ;
+                        color: all.$white;
+
+                        path{
+                            fill: all.$white;
+                        }
+                    }
+                    .active-low{
+                        background-color: #7AE229;
+                        color: all.$white;
+
+                        path{
+                            fill: all.$white;
                         }
                     }
                 }
@@ -208,9 +231,6 @@
                 }
             }
 
-
-
-
             .date-input-wrapper {
 
                 display: flex;
@@ -244,9 +264,6 @@
 
                 background-color: #D9D9D9;
             }
-
-
-
         }
 
         .form-submit {
@@ -320,7 +337,5 @@
                 }
             }
         }
-
-
     }
 }

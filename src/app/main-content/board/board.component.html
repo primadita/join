@@ -35,6 +35,12 @@
     <!-- #endregion -->
     <!-- #region PROGRESS BOARD -->
     <div class="progress-board" cdkDropListGroup>
+    <!--################## OBSERVABLE ######################-->
+    <!-- Durch async abonniert Angular das Observable board$ und gibt das aktuelle BoardColumns Objekt -->
+    <!-- Wenn board$ neu emittiert, render Angular die Listen neu -->
+    <!-- Beim destroy der Komponente beendet | async das Abo automatisch -->
+    <!-- dadurch ist ngOnDestroy() nicht mehr nötig -->
+    @let board = board$ | async;
         <div class="progress-container">
             <div class="progress-title">
                 <h5>To do</h5>
@@ -52,20 +58,25 @@
             <div cdkDropList 
                 id="toDoList"
                 #toDoList = "cdkDropList"
-                [cdkDropListData]="getToDoList()"
+                [cdkDropListData]="board?.todo ?? []"
                 (cdkDropListDropped)="drop($event)"
+                [cdkDropListConnectedTo]="[
+                    'inProgressList',
+                    'awaitFeedbackList',
+                    'doneList'
+                ]"
                 class="progress-list">
                 @if(noResults){
-                  @if(!searchInput && getToDoList().length === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
-                  }
-                  @for (task of getToDoList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
-                  }
+                    @if(!searchInput && (board?.todo?.length ?? 0)=== 0){
+                        <div class="empty-list">
+                            <span>No tasks in this list</span>
+                        </div>
+                    }
+                    @for (task of board?.todo; track task.id){
+                        <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task">
+                        </app-task-card>
+                    }
                 }
-                
             </div>
         </div>
 
@@ -86,18 +97,19 @@
             <div cdkDropList
                 id="inProgressList" 
                 #inProgressList = "cdkDropList"
-                [cdkDropListData]="getInProgressList()"
+                [cdkDropListData]="board?.inprogress ?? []"
                 (cdkDropListDropped)="drop($event)"
+                [cdkDropListConnectedTo]="['toDoList', 'awaitFeedbackList', 'doneList']"
                 class="progress-list">
                 @if(noResults){
-                  @if(!searchInput && getInProgressList().length === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
-                  }
-                  @for (task of getInProgressList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
-                  }
+                    @if(!searchInput && (board?.inprogress?.length ?? 0) === 0){
+                        <div class="empty-list">
+                            <span>No tasks in this list</span>
+                        </div>
+                    }
+                    @for (task of board?.inprogress; track task.id){
+                        <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    }
                 }
                 
             </div>
@@ -120,18 +132,19 @@
             <div cdkDropList 
                 id="awaitFeedbackList"
                 #awaitFeedbackList = "cdkDropList"
-                [cdkDropListData]="getAwaitFeedbackList()"
+                [cdkDropListData]="board?.awaitfeedback ?? []"
+                [cdkDropListConnectedTo]="['toDoList', 'inProgressList', 'doneList']"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if(noResults){
-                  @if(!searchInput && getAwaitFeedbackList().length === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
-                  }
-                  @for (task of getAwaitFeedbackList(); track task.id){
-                    <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
-                  }
+                    @if(!searchInput && (board?.awaitfeedback?.length ?? 0)  === 0){
+                        <div class="empty-list">
+                            <span>No tasks in this list</span>
+                        </div>
+                    }
+                    @for (task of board?.awaitfeedback; track task.id){
+                        <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    }
                 }
             </div>
         </div>
@@ -143,18 +156,19 @@
             <div cdkDropList 
                 id="doneList"
                 #doneList = "cdkDropList"
-                [cdkDropListData]="getDoneList()"
+                [cdkDropListData]="board?.done ?? []"
+                [cdkDropListConnectedTo]="['toDoList', 'inProgressList', 'awaitFeedbackList']"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if (noResults) {
-                  @if(!searchInput && getDoneList().length === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
-                  }
-                  @for (task of getDoneList(); track task.id){
-                      <app-task-card cdkDrag (openTask)="openTask($event)" [task]="task"></app-task-card>
-                  }
+                    @if( !searchInput && (board?.done?.length ?? 0) === 0){
+                        <div class="empty-list">
+                            <span>No tasks in this list</span>
+                        </div>
+                    }
+                    @for (task of board?.done; track task.id){
+                        <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    }
                 }
             </div>
         </div>

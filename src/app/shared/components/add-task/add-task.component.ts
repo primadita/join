@@ -5,13 +5,11 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {
-  provideNativeDateAdapter,
-  _MatInternalFormField,
-} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { Subtask, Task } from '../../interfaces/task';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-add-task',
@@ -22,7 +20,6 @@ import { Subtask, Task } from '../../interfaces/task';
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    _MatInternalFormField,
     FormsModule,
   ],
 
@@ -31,6 +28,8 @@ import { Subtask, Task } from '../../interfaces/task';
 })
 export class AddTaskComponent {
   contacts = inject(FirebaseServiceService);
+  taskService = inject(TaskService);
+
   newTask: Task = {
     id: '',
     title: '',
@@ -161,5 +160,25 @@ export class AddTaskComponent {
       array.splice(index, 1);
       console.log(array);
     }
+  }
+
+  clearInputs() {
+    this.newTask = {
+      id: '',
+      title: '',
+      description: '',
+      date: new Date(),
+      priority: null,
+      assignedTo: [],
+      category: 'User Story',
+      subtasks: [],
+      status: 'to do',
+    };
+
+    this.priorityFlag = {
+      urgent: false,
+      medium: false,
+      low: false,
+    };
   }
 }
