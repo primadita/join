@@ -5,11 +5,11 @@
       <div class="form-input-left">
         <div class="input-wrapper">
           <h6>Title</h6>
-          <input class="form-field" type="text" name="title" [(ngModel)]="newTask.title" />
+          <input class="form-field" type="text" name="title" [(ngModel)]="newTask.title" placeholder="Enter a title" />
         </div>
         <div class="input-wrapper">
           <h6>Description</h6>
-          <textarea name="description" id="" [(ngModel)]="newTask.description"></textarea>
+          <textarea name="description" id="" [(ngModel)]="newTask.description" placeholder="Enter a description"></textarea>
         </div>
         <div class="input-wrapper">
           <h6>Due date*</h6>
@@ -100,7 +100,7 @@
         </div>
         <div class="input-wrapper">
           <h6>Category</h6>
-          <select class="form-field" name="category" [(ngModel)]="newTask.category">
+          <select class="form-field" name="category" [(ngModel)]="newTask.category" aria-placeholder="Select Category">
             <option value="User Story">User Story</option>
             <option value="Technical Task">Technical Task</option>
           </select>
@@ -109,7 +109,7 @@
         <div class="input-wrapper" id="subtask-wrapper">
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
-            <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask" />
+            <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask" placeholder="Add new Subtask" />
             <div class="subtask-btn-wrapper">
               <button class="clear-btn"></button>
               <div class="btn-divide"></div>
