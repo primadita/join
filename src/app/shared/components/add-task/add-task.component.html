@@ -142,7 +142,7 @@
         </div>
         <div class="input-wrapper" id="rp-wrapper">
           <h6>Assigned to</h6>
-          <app-rp-search></app-rp-search>
+          <app-rp-search (changeAssignedArray)="updateAssignedTo($event)" ></app-rp-search>
 
           <div class="rp-selected-box">
             @for (contact of newTask.assignedTo; track $index){

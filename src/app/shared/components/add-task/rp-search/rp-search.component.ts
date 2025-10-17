@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, output, signal } from '@angular/core';
 import { FirebaseServiceService } from '../../../services/firebase.service';
 import { Contact } from '../../../interfaces/contact';
 import { FormsModule } from '@angular/forms';
@@ -14,39 +14,57 @@ export class RpSearchComponent {
 
   contacts = inject(FirebaseServiceService);
 
-  searchInput:string = "";
+  rpArray:Array<Contact> = [];
 
-  constructor(private el: ElementRef){}
+  changeAssignedArray = output<Array<Contact>>();
 
-    getLetters(contact: Contact): string {
-      const parts = contact.name.trim().split(' ');
-      const first = parts[0]?.[0] || '';
-      const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
-      const initials = (first + last).toUpperCase();
-      return initials;
+  searchInput: string = "";
+
+  constructor(private el: ElementRef) { }
+
+  getLetters(contact: Contact): string {
+    const parts = contact.name.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    const initials = (first + last).toUpperCase();
+    return initials;
+  }
+
+  /**
+   * Returns an alphabetically sorted copy of the contact list.
+   *
+   * - Sorting is case-insensitive.
+   * - The original data in the service remains unchanged (due to use of `slice()`).
+   *
+   * @returns {Contact[]} A new array containing contacts sorted by name.
+   */
+  sortedContacts(): Contact[] {
+    return this.contacts.contactsList.slice().sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    });
+  }
+
+  addRpToArray(contact: Contact) {
+    const array = this.rpArray;
+    const test = array.includes(contact);
+    if (!test) {
+      array.push(contact);
+
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+
     }
-  
-    /**
-     * Returns an alphabetically sorted copy of the contact list.
-     *
-     * - Sorting is case-insensitive.
-     * - The original data in the service remains unchanged (due to use of `slice()`).
-     *
-     * @returns {Contact[]} A new array containing contacts sorted by name.
-     */
-    sortedContacts(): Contact[] {
-      return this.contacts.contactsList.slice().sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-  
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
-        return 0;
-      });
-    }
+    this.changeAssignedArray.emit(array);
+  }
 
 
-    // #region Input-Signal
+  // #region Input-Signal
 
   isListOpen = signal(false);
 
@@ -55,8 +73,8 @@ export class RpSearchComponent {
   }
 
   @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent){
-    if(!this.el.nativeElement.contains(event.target)){
+  handleClickOutside(event: MouseEvent) {
+    if (!this.el.nativeElement.contains(event.target)) {
       this.isListOpen.set(false);
     }
   }

@@ -137,17 +137,23 @@ export class AddTaskComponent {
     console.log(newTask);
   }
 
-  addRpToArray(contact: Contact) {
-    const array = this.newTask.assignedTo;
-    const test = array.includes(contact);
-    if (!test) {
-      array.push(contact);
-      console.log(array);
-    } else if (test) {
-      const index = array.indexOf(contact);
-      array.splice(index, 1);
-      console.log(array);
-    }
+  // addRpToArray(contact: Contact) {
+  //   const array = this.newTask.assignedTo;
+  //   const test = array.includes(contact);
+  //   if (!test) {
+  //     array.push(contact);
+  //     console.log(array);
+  //   } else if (test) {
+  //     const index = array.indexOf(contact);
+  //     array.splice(index, 1);
+  //     console.log(array);
+  //   }
+  // }
+
+  updateAssignedTo(array:Array<Contact>){
+    this.newTask.assignedTo = array;
+    console.log(this.newTask.assignedTo);
+    
   }
 
   clearInputs() {
