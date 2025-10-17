@@ -123,6 +123,24 @@ section{
     @include all.mobile{
         padding: 4.5rem 3rem;
     }
+    .no-result-div{
+        padding: 2rem 2rem 4rem 2rem;
+        @include all.d-flex();
+        @include all.mobile{
+            padding: 1rem 1rem 3rem 1rem;
+        }
+        span{
+            font-size: 3rem;
+            color: all.$iconColor;
+            @include all.tablet{
+                font-size: 2.2rem;
+            }
+            @include all.mobile{
+                font-size: 1.8rem;
+            }
+        }
+    }
+    
     // #endregion
     // #region Progress board
     .progress-board{
