@@ -44,6 +44,11 @@
                     white-space: nowrap;
                 }
             }
+            .checkbox{
+                height: 2rem;
+                width: 2rem;
+                cursor: pointer;
+            }
         }
         .active-contact{
             color: white;

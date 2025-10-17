@@ -1,5 +1,5 @@
 <div>
-    <input #searchInput="ngModel" [(ngModel)]="searchInput" type="text" class="form-field" name="searchInput"
+    <input #searchInputModel="ngModel" [(ngModel)]="searchInput" type="text" class="form-field" name="searchInput"
         placeholder="Select Contacts to assign" (focus)="onFocus()" />
     @if(isListOpen()){
     <ul id="rpSelection">
@@ -9,10 +9,19 @@
                 <span class="initials" [style.backgroundColor]="contact.bgColor">{{ getLetters(contact) }}</span>
                 <span class="item-name">{{ contact.name }}</span>
             </div>
-            <input type="checkbox" />
+            @if (checkSelectedRp(contact)) {
+            <svg class="checkbox" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                <path
+                    d="m424-312 282-282-56-56-226 226-114-114-56 56 170 170ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+            </svg>
+            }@else {
+            <svg class="checkbox" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+                <path
+                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Z" />
+            </svg>
+            }
         </li>
         }
     </ul>
     }
-
 </div>
