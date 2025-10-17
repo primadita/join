@@ -137,19 +137,6 @@ export class AddTaskComponent {
     console.log(newTask);
   }
 
-  // addRpToArray(contact: Contact) {
-  //   const array = this.newTask.assignedTo;
-  //   const test = array.includes(contact);
-  //   if (!test) {
-  //     array.push(contact);
-  //     console.log(array);
-  //   } else if (test) {
-  //     const index = array.indexOf(contact);
-  //     array.splice(index, 1);
-  //     console.log(array);
-  //   }
-  // }
-
   updateAssignedTo(array:Array<Contact>){
     this.newTask.assignedTo = array;
     console.log(this.newTask.assignedTo);
@@ -174,6 +161,16 @@ export class AddTaskComponent {
       medium: false,
       low: false,
     };
+  }
+
+  getThreeRP(): Contact[]{
+      const array = this.newTask.assignedTo;
+      const newArray = [array[0],array[1],array[2]]
+      return newArray
+  }
+
+  valueRp(): number{
+    return this.newTask.assignedTo.length - 3
   }
 
 }

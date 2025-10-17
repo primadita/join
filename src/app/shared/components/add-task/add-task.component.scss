@@ -70,27 +70,30 @@
                             width: 1.6rem;
                         }
                     }
-                    .active-urgent{
+
+                    .active-urgent {
                         background-color: #FF3D00;
                         color: all.$white;
-                        
-                        path{   
-                            fill: all.$white;
-                        }                        
-                    }
-                    .active-medium{
-                        background-color: #FFA800 ;
-                        color: all.$white;
 
-                        path{
+                        path {
                             fill: all.$white;
                         }
                     }
-                    .active-low{
+
+                    .active-medium {
+                        background-color: #FFA800;
+                        color: all.$white;
+
+                        path {
+                            fill: all.$white;
+                        }
+                    }
+
+                    .active-low {
                         background-color: #7AE229;
                         color: all.$white;
 
-                        path{
+                        path {
                             fill: all.$white;
                         }
                     }
@@ -155,7 +158,8 @@
                         font-weight: 400;
                         font-family: 'Inter';
                         padding: 0.4rem 1.6rem;
-                        .del-subtask{
+
+                        .del-subtask {
                             background-image: url(../../../../../public/assets/icons/delete.svg);
                             background-size: 1.7rem;
                         }
@@ -167,6 +171,26 @@
 
                 height: 12rem;
 
+                .rp-selected-box {
+                    @include all.d-flex($flexdir: row, $jc: flex-start);
+                    margin-top: 1.6rem;
+                }
+
+                .initials {
+                    width: 4rem;
+                    height: 4rem;
+                    border-radius: 50%;
+                    border: 0.2rem solid all.$white;
+                    padding: 1.5rem;
+                    font-size: 1.6rem;
+                    font-weight: 300;
+                    font-family: 'Inter';
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: all.$white;
+                    margin-right: 2.4rem;
+                }
             }
 
             .date-input-wrapper {
