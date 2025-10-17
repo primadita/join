@@ -71,6 +71,14 @@ export class RpSearchComponent {
     }
   }
 
+  searchContact(){
+    const lowerSearch = this.searchInput.toLowerCase();
+    const foundContacts = this.sortedContacts().filter(contact =>
+      contact.name.toLowerCase().includes(lowerSearch)
+    )
+    return foundContacts
+  }
+
 
   // #region Input-Signal
 

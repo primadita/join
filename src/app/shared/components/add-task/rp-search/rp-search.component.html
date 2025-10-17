@@ -3,7 +3,7 @@
         placeholder="Select Contacts to assign" (focus)="onFocus()" />
     @if(isListOpen()){
     <ul id="rpSelection">
-        @for (contact of sortedContacts(); track $index){
+        @for (contact of searchContact(); track $index){
         <li (click)="addRpToArray(contact)" [ngClass]="{'active-contact': checkSelectedRp(contact)}">
             <div class="item-name-box">
                 <span class="initials" [style.backgroundColor]="contact.bgColor">{{ getLetters(contact) }}</span>
