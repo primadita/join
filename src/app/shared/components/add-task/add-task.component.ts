@@ -9,6 +9,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { Subtask, Task } from '../../interfaces/task';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-add-task',
@@ -27,6 +28,8 @@ import { Subtask, Task } from '../../interfaces/task';
 })
 export class AddTaskComponent {
   contacts = inject(FirebaseServiceService);
+  taskService = inject(TaskService);
+
   newTask: Task = {
     id: '',
     title: '',
@@ -173,9 +176,9 @@ export class AddTaskComponent {
     };
 
     this.priorityFlag = {
-    urgent: false,
-    medium: false,
-    low: false,
-  };
+      urgent: false,
+      medium: false,
+      low: false,
+    };
   }
 }
