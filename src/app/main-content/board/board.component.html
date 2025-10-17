@@ -32,7 +32,11 @@
   <!-- #endregion -->
   <!-- #region PROGRESS BOARD -->
   <div class="progress-board" cdkDropListGroup>
-    <!-- Observable -->
+    <!--################## OBSERVABLE ######################-->
+    <!-- Durch async abonniert Angular das Observable board$ und gibt das aktuelle BoardColumns Objekt -->
+    <!-- Wenn board$ neu emittiert, render Angular die Listen neu -->
+    <!-- Beim destroy der Komponente beendet | async das Abo automatisch -->
+    <!-- dadurch ist ngOnDestroy() nicht mehr nötig -->
     @let board = board$ | async;
     <div class="progress-container">
       <div class="progress-title">
