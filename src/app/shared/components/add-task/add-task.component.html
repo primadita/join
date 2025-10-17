@@ -142,7 +142,9 @@
         </div>
         <div class="input-wrapper" id="rp-wrapper">
           <h6>Assigned to</h6>
-          <div>
+          <app-rp-search></app-rp-search>
+
+          <!-- <div>
             <input
               #rpSearch="ngModel"
               [(ngModel)]="rpSearch"
@@ -150,8 +152,9 @@
               class="form-field"
               name="rpSearch"
               placeholder="Select Contacts to assign"
+              (focus)="onFocus()"
             />
-
+            @if(isListOpen()){
             <ul id="rpSelection">
               @for (contact of sortedContacts(); track $index){
               <li (click)="addRpToArray(contact)">
@@ -167,7 +170,9 @@
               </li>
               }
             </ul>
-          </div>
+            }
+
+          </div> -->
           <div class="rp-selected-box">
             @for (contact of newTask.assignedTo; track $index){
             <span class="initials" [style.backgroundColor]="contact.bgColor">{{

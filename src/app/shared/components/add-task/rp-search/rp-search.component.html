@@ -1,0 +1,18 @@
+<div>
+    <input #searchInput="ngModel" [(ngModel)]="searchInput" type="text" class="form-field" name="searchInput"
+        placeholder="Select Contacts to assign" (focus)="onFocus()" />
+    @if(isListOpen()){
+    <ul id="rpSelection">
+        @for (contact of sortedContacts(); track $index){
+        <li>
+            <div class="item-name-box">
+                <span class="initials" [style.backgroundColor]="contact.bgColor">{{ getLetters(contact) }}</span>
+                <span class="item-name">{{ contact.name }}</span>
+            </div>
+            <input type="checkbox" />
+        </li>
+        }
+    </ul>
+    }
+
+</div>
