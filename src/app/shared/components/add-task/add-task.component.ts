@@ -131,19 +131,6 @@ export class AddTaskComponent {
 
   // #endregion
 
-  // getPriority() {
-  //   if (this.priorityFlag.urgent) {
-  //     return 'urgent';
-  //   }
-  //   if (this.priorityFlag.medium) {
-  //     return 'medium';
-  //   }
-  //   if (this.priorityFlag.low) {
-  //     return 'low';
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   addNewTask() {
     const newTask = this.newTask;
@@ -182,23 +169,5 @@ export class AddTaskComponent {
       low: false,
     };
   }
-
-
-  // // #region Input-Signal
-
-  // isListOpen = signal(false);
-
-  // onFocus() {
-  //   this.isListOpen.set(true);
-  // }
-
-  // @HostListener('document:click', ['$event'])
-  // handleClickOutside(event: MouseEvent){
-  //   if(!this.el.nativeElement.contains(event.target)){
-  //     this.isListOpen.set(false);
-  //   }
-  // }
-
-
 
 }
