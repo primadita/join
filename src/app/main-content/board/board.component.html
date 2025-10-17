@@ -9,7 +9,7 @@
                 <div class="vline"></div>
                 <img src="./assets/icons/search.svg" alt="search for">
             </div>
-            <button id="add-task-global">
+            <button id="add-task-global" (click)="toggleAddTask()">
                 <h5>Add task</h5>
                 <img src="./assets/icons/add.svg" alt="add button">
             </button>
@@ -162,5 +162,14 @@
 
   <ng-container *ngIf="showDetail && selectedTask as task">
     <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>
+  </ng-container>
+
+  <ng-container *ngIf="addTaskWindow">
+    <div class="overlay" (click)="closeAddTaskPopup()">
+        <div class="task-details">
+            <app-add-task></app-add-task>
+        </div>
+    </div>
+
   </ng-container>
 </section>

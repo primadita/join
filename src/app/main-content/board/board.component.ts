@@ -14,11 +14,12 @@ import { TaskService } from '../../shared/services/task.service';
 import { Task } from '../../shared/interfaces/task';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AddTaskComponent } from '../../shared/components/add-task/add-task.component';
 
 @Component({
   selector: 'app-board',
   imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
-    CdkDropList, CdkDrag, FormsModule],
+    CdkDropList, CdkDrag, FormsModule, AddTaskComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
@@ -31,6 +32,7 @@ export class BoardComponent {
   searchInput: string = ''; // Variable für Input in Suchfeld
   searchResult: Task[] = []; // Array für alle Ergebnisse von dem Suchen
   noResults: boolean = true; //Flag für no-result-div. Wenn true, wird die Nachricht "no results were found" nicht angezeigt
+  addTaskWindow: boolean = false; // Flag für add task overlay oder Window
   // #endregion
 
   // #region METHODS
@@ -128,5 +130,12 @@ export class BoardComponent {
   //   const taskByStatus = this.getTasksListByStatus(status);
   //   return taskByStatus.length;
   // }
+
+  toggleAddTask(){
+    this.addTaskWindow = !this.addTaskWindow;
+  }
+  closeAddTaskPopup() {
+    this.addTaskWindow = false;
+  }
   // #endregion
 }

@@ -223,4 +223,73 @@ section{
         }
     }
     // #endregion
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.2s ease-out forwards;
+        z-index: 100;
+    }
+
+    .task-details {
+        width: 52.5rem;
+        background: all.$white;
+        border-radius: 3rem;
+        padding: 4.8rem 4rem;
+        box-shadow: all.$shadow;
+        @include all.d-flex(
+            $flexdir: column,
+            $jc: space-between,
+            $alit: space-between
+        );
+        gap: 2rem;
+
+        transform: translateX(100%);
+        animation: slideIn 0.28s ease-out forwards;
+        @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+    }
+    // #region closing-animation
+    .task-details.closing {
+        animation: slideOut 0.22s ease-in forwards;
+    }
+    @keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+    }
+    .overlay.closing {
+    animation: fadeOut 0.28s ease-in forwards;
+    }
+    @keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+    }
+    // #endregion closing-animation
 }
+
+
