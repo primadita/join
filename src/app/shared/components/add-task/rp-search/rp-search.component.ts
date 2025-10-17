@@ -63,6 +63,14 @@ export class RpSearchComponent {
     this.changeAssignedArray.emit(array);
   }
 
+  checkSelectedRp(contact: Contact):boolean{
+    if(this.rpArray.includes(contact)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   // #region Input-Signal
 

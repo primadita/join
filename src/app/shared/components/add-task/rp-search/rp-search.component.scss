@@ -28,6 +28,7 @@
             @include all.d-flex($flexdir: row, $jc: space-between);
             padding: 0.8rem 1.6rem;
             border-radius: 0.8rem;
+            margin-bottom: 1px;
 
             &:hover {
                 background-color: all.$lightgray2;
@@ -42,6 +43,14 @@
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
+            }
+        }
+        .active-contact{
+            color: white;
+            background-color: all.$mainColor;
+
+            &:hover{
+                background-color: all.$hoverMainColor;
             }
         }
     }
