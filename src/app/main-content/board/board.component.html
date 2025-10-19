@@ -5,7 +5,7 @@
         <h1>Board</h1>
         <div>
             <div class="search-div">
-                <input type="text" id="search-input" placeholder="Find Task" [(ngModel)]="searchInput" (input)="searchInTitleAndDesc()">
+                <input [formControl]="searchControl" type="text" id="search-input" placeholder="Find Task">
                 <div class="vline"></div>
                 <img src="./assets/icons/search.svg" alt="search for">
             </div>
@@ -24,7 +24,7 @@
             </button>
         </div>
         <div class="search-div">
-            <input type="text" id="search-input" placeholder="Find Task" [(ngModel)]="searchInput" (input)="searchInTitleAndDesc()">
+            <input [formControl]="searchControl" type="text" id="search-input" placeholder="Find Task" >
             <div class="vline"></div>
             <img src="./assets/icons/search.svg" alt="search for">
         </div>
@@ -67,7 +67,7 @@
                 ]"
                 class="progress-list">
                 @if(noResults){
-                    @if(!searchInput && (board?.todo?.length ?? 0)=== 0){
+                    @if((board?.todo?.length ?? 0)=== 0){
                         <div class="empty-list">
                             <span>No tasks in this list</span>
                         </div>
@@ -102,7 +102,7 @@
                 [cdkDropListConnectedTo]="['toDoList', 'awaitFeedbackList', 'doneList']"
                 class="progress-list">
                 @if(noResults){
-                    @if(!searchInput && (board?.inprogress?.length ?? 0) === 0){
+                    @if((board?.inprogress?.length ?? 0) === 0){
                         <div class="empty-list">
                             <span>No tasks in this list</span>
                         </div>
@@ -137,7 +137,7 @@
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if(noResults){
-                    @if(!searchInput && (board?.awaitfeedback?.length ?? 0)  === 0){
+                    @if( (board?.awaitfeedback?.length ?? 0)  === 0){
                         <div class="empty-list">
                             <span>No tasks in this list</span>
                         </div>
@@ -161,7 +161,7 @@
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
                 @if (noResults) {
-                    @if( !searchInput && (board?.done?.length ?? 0) === 0){
+                    @if( (board?.done?.length ?? 0) === 0){
                         <div class="empty-list">
                             <span>No tasks in this list</span>
                         </div>

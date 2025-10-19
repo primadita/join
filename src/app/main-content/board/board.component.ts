@@ -11,11 +11,11 @@ import {
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailsComponent } from './task-card/task-details/task-details.component';
 import { TaskService } from '../../shared/services/task.service';
-import { Task } from '../../shared/interfaces/task';
-import { map } from 'rxjs';
+import { Task, TASK_STATUS } from '../../shared/interfaces/task';
+import { combineLatest, filter, map, startWith } from 'rxjs';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
 import { ChangeDetectorRef } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskComponent } from '../../shared/components/add-task/add-task.component';
 
 /*
@@ -66,13 +66,19 @@ const ListIdToStatus: Record<ListId, Status> = {
 @Component({
   selector: 'app-board',
   imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
-    CdkDropList, CdkDrag, FormsModule, AddTaskComponent],
+    CdkDropList, CdkDrag, FormsModule, AddTaskComponent, ReactiveFormsModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
 export class BoardComponent {
   // #region ATTRIBUTES
   taskService = inject(TaskService);
+  searchControl = new FormControl(''); // es ist eine bessere Alternative als ngModel, da FormControl schon Observable-Strom hat, der bei jeder Änderung getriggert wird.
+  searchInput$= this.searchControl.valueChanges.pipe(startWith(''),
+    map(e => e ? e.toLowerCase():'')); // Variable für Input in Suchfeld
+  filteredTasks = combineLatest([this.taskService.tasks$, this.searchInput$]).pipe(
+    map(
+      ([alltasks, search]) => search ? alltasks.filter(a => a.title.toLowerCase().includes(search)|| a.description.toLowerCase().includes(search)): alltasks));
   /*
   board$ leitet aus tasks$ die vier Spalten ab
   - taks$ ist ein Observable aus dem Task-Service
@@ -81,24 +87,35 @@ export class BoardComponent {
   - Durch map wird bei jeder Änderung der Task die Board-Struktur neu berechnet - reaktiv 
   - Wenn Firestore pusht, rechnet map neu, board$ emittiert neu, UI-Aktualisiert sich
   */
-  board$ = this.taskService.tasks$.pipe(
-    map(
-      (tasks) =>
-        ({
-          //jede Zeile sagt klar, was in die Spalte gehört
-          todo: tasks.filter((t) => t.status === 'to do'),
-          inprogress: tasks.filter((t) => t.status === 'in progress'),
-          awaitfeedback: tasks.filter((t) => t.status === 'await feedback'),
-          done: tasks.filter((t) => t.status === 'done'),
-          // hiermit hat das Objekt exakt die Felder todo, inprogress usw. exakt dem Interface BoardColumns
-        } as BoardColumns)
-    )
-  );
+  // board$ = this.taskService.tasks$.pipe(
+  //   map(
+  //     (tasks) =>
+  //       ({
+  //         //jede Zeile sagt klar, was in die Spalte gehört
+  //         todo: tasks.filter((t) => t.status === 'to do'),
+  //         inprogress: tasks.filter((t) => t.status === 'in progress'),
+  //         awaitfeedback: tasks.filter((t) => t.status === 'await feedback'),
+  //         done: tasks.filter((t) => t.status === 'done'),
+  //         // hiermit hat das Objekt exakt die Felder todo, inprogress usw. exakt dem Interface BoardColumns
+  //       } as BoardColumns)
+  //   )
+  // );
 
+  
+  board$ = this.filteredTasks.pipe(
+    map((filtered) =>
+    ({
+      todo: filtered.filter( task => task.status === TASK_STATUS.TO_DO),
+      inprogress: filtered.filter( task => task.status === TASK_STATUS.IN_PROGRESS),
+      awaitfeedback: filtered.filter(task => task.status === TASK_STATUS.AWAIT_FEEDBACK),
+      done: filtered.filter(task => task.status === TASK_STATUS.DONE)
+    }))
+  );
+  
   selectedTask: Task | null = null; // Variable für TaskCard, die gewählt ist
   showDetail = false; //Defaultzustand von Taskcard, wenn true, dann wird Task Details angezeigt
   cdr = inject(ChangeDetectorRef); //Extra Feature für Firestore, das beim Detektieren bei der Änderung in Firestore hilft
-  searchInput: string = ''; // Variable für Input in Suchfeld
+  
   searchResult: Task[] = []; // Array für alle Ergebnisse von dem Suchen
   noResults: boolean = true; //Flag für no-result-div. Wenn true, wird die Nachricht "no results were found" nicht angezeigt
   addTaskWindow: boolean = false; // Flag für add task overlay oder Window
@@ -169,30 +186,30 @@ export class BoardComponent {
     }
   }
 
-  getTasksList(): Task[]{
-    if(this.searchResult.length > 0){
-      return this.searchResult;
-    } else {
-      return this.board$;
-    }
-  }
+  // getTasksList(): Task[]{
+  //   if(this.searchResult.length > 0){
+  //     return this.searchResult;
+  //   } else {
+  //     return this.taskService.tasksList;
+  //   }
+  // }
   
-  searchInTitleAndDesc(){
-    // Ändern searchInput in lower case
-    const query = this.searchInput.toLowerCase();
-    if(!query){ //Bedingung wenn keine Input eingetragen ist
-      this.searchResult = [];
-      this.noResults = true;
-      return;
-    } else { //wenn Input eingetragen ist
-      this.searchResult = this.getTasksList().filter(task => task.title.toLowerCase().includes(query) || task.description.toLowerCase().includes(query));
-      if(this.searchResult.length === 0){
-        this.noResults = false;
-      } else {
-        this.noResults = true;
-      }
-    }
-  }
+  // searchInTitleAndDesc(){
+  //   // Ändern searchInput in lower case
+  //   const query = this.searchInput.toLowerCase();
+  //   if(!query){ //Bedingung wenn keine Input eingetragen ist
+  //     this.searchResult = [];
+  //     this.noResults = true;
+  //     return;
+  //   } else { //wenn Input eingetragen ist
+  //     this.searchResult = this.getTasksList().filter(task => task.title.toLowerCase().includes(query) || task.description.toLowerCase().includes(query));
+  //     if(this.searchResult.length === 0){
+  //       this.noResults = false;
+  //     } else {
+  //       this.noResults = true;
+  //     }
+  //   }
+  // }
 
   // getLength(status: string): number{
   //   const taskByStatus = this.getTasksListByStatus(status);

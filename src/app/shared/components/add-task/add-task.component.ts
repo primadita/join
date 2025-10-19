@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { Subtask, Task } from '../../interfaces/task';
+import { Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 
 @Component({
@@ -37,9 +37,9 @@ export class AddTaskComponent {
     date: new Date(),
     priority: null,
     assignedTo: [],
-    category: 'User Story',
+    category: TASK_CATEGORY.USER_STORY,
     subtasks: [],
-    status: 'to do',
+    status: TASK_STATUS.TO_DO,
   };
 
   priorityFlag = {
@@ -170,9 +170,9 @@ export class AddTaskComponent {
       date: new Date(),
       priority: null,
       assignedTo: [],
-      category: 'User Story',
+      category: TASK_CATEGORY.USER_STORY,
       subtasks: [],
-      status: 'to do',
+      status: TASK_STATUS.TO_DO,
     };
 
     this.priorityFlag = {
