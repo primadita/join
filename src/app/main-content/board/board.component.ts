@@ -116,8 +116,10 @@ export class BoardComponent {
   showDetail = false; //Defaultzustand von Taskcard, wenn true, dann wird Task Details angezeigt
   cdr = inject(ChangeDetectorRef); //Extra Feature für Firestore, das beim Detektieren bei der Änderung in Firestore hilft
   
-  searchResult: Task[] = []; // Array für alle Ergebnisse von dem Suchen
+  // searchResult: Task[] = []; // Array für alle Ergebnisse von dem Suchen
   noResults: boolean = true; //Flag für no-result-div. Wenn true, wird die Nachricht "no results were found" nicht angezeigt
+  // showNoResult$ = this.filteredTasks.pipe(map((task) => task.length === 0));
+  showNoResult$ = combineLatest([this.searchInput$, this.filteredTasks]).pipe(map(([i, t]) => i.trim().length > 0 && t.length === 0));
   addTaskWindow: boolean = false; // Flag für add task overlay oder Window
   // #endregion
 
