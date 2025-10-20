@@ -1,3 +1,4 @@
-<div *ngIf="message" ngClass="{{message.type}}">
+<div *ngIf="message" [ngClass]="[message.type, context]">
     <p>{{message.text}}</p>
+    <img *ngIf="message.imgUrl" [src]="message.imgUrl" alt="">
 </div>

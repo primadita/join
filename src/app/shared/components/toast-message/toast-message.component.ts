@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ToastMessagesService } from '../../services/toast-messages.service';
 import { CommonModule } from '@angular/common';
 import { Messages } from '../../interfaces/messages';
@@ -23,6 +23,7 @@ export class ToastMessageComponent {
  * - `null` means no active message is being shown.
  */
   message: Messages | null = null;
+  @Input() context: 'contacts'|'addtask' | 'board' = 'contacts';
   // #endregion
 
   constructor(private toastService: ToastMessagesService) { }

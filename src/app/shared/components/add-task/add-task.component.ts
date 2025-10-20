@@ -12,6 +12,7 @@ import { Category, Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../inter
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
+import { ToastMessagesService } from '../../services/toast-messages.service';
 
 @Component({
   selector: 'app-add-task',
@@ -66,7 +67,7 @@ export class AddTaskComponent {
   @Output() createTask = new EventEmitter<Task>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -182,7 +183,8 @@ export class AddTaskComponent {
     if (this.parentContext === 'board') {
       this.createTask.emit(this.newTask);
     }
-
+    const message = 
+    this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
   }
   getThreeRP(): Contact[] {
     const array = this.newTask.assignedTo;
