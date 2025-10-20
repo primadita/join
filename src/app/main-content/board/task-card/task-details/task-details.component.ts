@@ -1,6 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Subtask, Task } from '../../../../shared/interfaces/task';
+import {
+  Category,
+  Subtask,
+  Task,
+  TASK_CATEGORY,
+} from '../../../../shared/interfaces/task';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { UserProfileImageService } from '../../../../shared/services/user-profile-image.service';
@@ -8,6 +13,8 @@ import {
   MAT_DATE_LOCALE,
   provideNativeDateAdapter,
 } from '@angular/material/core';
+import { Timestamp } from '@angular/fire/firestore';
+import { TaskService } from '../../../../shared/services/task.service';
 
 @Component({
   selector: 'app-task-details',
@@ -15,7 +22,7 @@ import {
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss',
 })
@@ -24,11 +31,27 @@ export class TaskDetailsComponent {
   @Output() close = new EventEmitter<void>();
 
   constructor(
+    private taskSvc: TaskService,
     private contactsSvc: FirebaseServiceService,
     private profilService: UserProfileImageService
   ) {}
 
   closing = false;
+
+  getCategoryColor(task: Task) {
+    if (task.category === TASK_CATEGORY.USER_STORY) {
+      return '#0038ff';
+    }
+    if (task.category === TASK_CATEGORY.TECHNICAL_TASK) {
+      return '#1fd7c1';
+    }
+    return '#ffffff';
+  }
+
+  getdate(date: any) {
+    const newDate = (date as Timestamp).toDate();
+    return newDate;
+  }
 
   onClose() {
     this.closing = true;
@@ -58,5 +81,19 @@ export class TaskDetailsComponent {
 
   get subtasks(): Subtask[] {
     return this.task.subtasks;
+  }
+
+  onToggleSubtask(index: number, checked: boolean) {
+    const updatedSubtasks = this.task.subtasks.map((subt, i) => {
+      if (i === index) {
+        return { ...subt, done: checked };
+      }
+      return subt;
+    });
+
+    const updatedTask = { ...this.task, subtasks: updatedSubtasks };
+
+    this.task = updatedTask;
+    this.taskSvc.updateTask(updatedTask);
   }
 }

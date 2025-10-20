@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Task } from '../../../shared/interfaces/task';
+import { Task, TASK_CATEGORY } from '../../../shared/interfaces/task';
 import { CommonModule } from '@angular/common';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { Contact } from '../../../shared/interfaces/contact';
@@ -56,5 +56,15 @@ export class TaskCardComponent {
 
   bgColorOf(c: Contact) {
     return c.bgColor;
+  }
+
+  getCategoryColor(task: Task) {
+    if (task.category === TASK_CATEGORY.USER_STORY) {
+      return '#0038ff';
+    }
+    if (task.category === TASK_CATEGORY.TECHNICAL_TASK) {
+      return '#1fd7c1';
+    }
+    return '#ffffff';
   }
 }
