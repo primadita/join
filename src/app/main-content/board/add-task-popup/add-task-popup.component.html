@@ -1,1 +1,6 @@
-<p>add-task-popup works!</p>
+<div *ngIf="isOpen" class="overlay" (click)="closeWindow($event)">
+  <div class="task-details">
+    <button (click)="closeWindow()">X</button>
+    <app-add-task (clearTask)="clearForm()" (createTask)="createNewTask($event)"[parentContext]="'board'" ></app-add-task>
+  </div>
+</div>

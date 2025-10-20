@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, signal } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase.service';
 import { Contact } from '../../interfaces/contact';
 import { CommonModule } from '@angular/common';
@@ -8,8 +8,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { Subtask, Task } from '../../interfaces/task';
+import { Category, Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
+import { RpSearchComponent } from './rp-search/rp-search.component';
+import { CategoryComponent } from './category/category.component';
 
 @Component({
   selector: 'app-add-task',
@@ -21,6 +23,8 @@ import { TaskService } from '../../services/task.service';
     MatFormFieldModule,
     MatAutocompleteModule,
     FormsModule,
+    RpSearchComponent,
+    CategoryComponent
   ],
 
   templateUrl: './add-task.component.html',
@@ -37,9 +41,9 @@ export class AddTaskComponent {
     date: new Date(),
     priority: null,
     assignedTo: [],
-    category: 'User Story',
+    category: TASK_CATEGORY.DEFAULT,
     subtasks: [],
-    status: 'to do',
+    status: TASK_STATUS.TO_DO,
   };
 
   priorityFlag = {
@@ -53,6 +57,12 @@ export class AddTaskComponent {
   subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
 
   singleSubtask: string = '';
+
+  @Output() clearTask = new EventEmitter<void>();
+  @Output() createTask = new EventEmitter<Task>();
+  @Input() parentContext: 'board' | 'addtask' = 'addtask';
+
+  constructor(private el: ElementRef){}
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -94,29 +104,27 @@ export class AddTaskComponent {
   // #region prioritySetting
   setPriorityUrgent() {
     this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    console.log(this.priorityFlag.urgent);
     this.priorityFlag.medium = false;
     this.priorityFlag.low = false;
     this.unsetPriority('urgent');
-    console.log(this.priorityFlag);
-    console.log(this.newTask.priority);
+
   }
 
   setPriorityMedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
-    console.log(this.priorityFlag.medium);
+
     this.priorityFlag.urgent = false;
     this.priorityFlag.low = false;
     this.unsetPriority('medium');
-    console.log(this.priorityFlag);
+
   }
   setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
-    console.log(this.priorityFlag.low);
+
     this.priorityFlag.urgent = false;
     this.priorityFlag.medium = false;
     this.unsetPriority('low');
-    console.log(this.priorityFlag);
+
   }
 
   unsetPriority(priority: 'urgent' | 'medium' | 'low') {
@@ -125,44 +133,23 @@ export class AddTaskComponent {
     } else {
       this.newTask.priority = priority;
     }
-    console.log(this.newTask.priority);
   }
 
   // #endregion
 
-  getPriority() {
-    if (this.priorityFlag.urgent) {
-      return 'urgent';
-    }
-    if (this.priorityFlag.medium) {
-      return 'medium';
-    }
-    if (this.priorityFlag.low) {
-      return 'low';
-    } else {
-      return null;
-    }
-  }
 
   addNewTask() {
     const newTask = this.newTask;
-    console.log(newTask);
+    // console.log(newTask);
   }
 
-  addRpToArray(contact: Contact) {
-    const array = this.newTask.assignedTo;
-    const test = array.includes(contact);
-    if (!test) {
-      array.push(contact);
-      console.log(array);
-    } else if (test) {
-      const index = array.indexOf(contact);
-      array.splice(index, 1);
-      console.log(array);
-    }
+  updateAssignedTo(array:Array<Contact>){
+    this.newTask.assignedTo = array;
+    // console.log(this.newTask.assignedTo);
+    
   }
 
-  clearInputs() {
+  onClearInputs() {
     this.newTask = {
       id: '',
       title: '',
@@ -170,9 +157,9 @@ export class AddTaskComponent {
       date: new Date(),
       priority: null,
       assignedTo: [],
-      category: 'User Story',
+      category: TASK_CATEGORY.DEFAULT,
       subtasks: [],
-      status: 'to do',
+      status: TASK_STATUS.TO_DO,
     };
 
     this.priorityFlag = {
@@ -180,5 +167,33 @@ export class AddTaskComponent {
       medium: false,
       low: false,
     };
+    this.clearTask.emit();
   }
+
+  onCreateTask(){
+    if(this.parentContext === 'addtask'){
+      this.taskService.addTask(this.newTask);
+    }
+
+    if(this.parentContext === 'board'){
+      this.createTask.emit(this.newTask);
+    }
+    
+  }
+  getThreeRP(): Contact[]{
+      const array = this.newTask.assignedTo;
+      const newArray = [array[0],array[1],array[2]]
+      return newArray
+  }
+
+  valueRp(): number{
+    return this.newTask.assignedTo.length - 3
+  }
+
+  setCategory(value: Category){
+    this.newTask.category = value;
+    console.log(this.newTask.category);
+    
+  }
+
 }

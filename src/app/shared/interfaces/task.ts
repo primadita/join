@@ -8,7 +8,7 @@ export interface Task {
   date: Date;
   priority: Priority | null;
   assignedTo: Array<Contact>;
-  category: 'User Story' | 'Technical Task';
+  category: Category;
   subtasks: Subtask[];
   /*
     enums sind nicht mehr notwendig
@@ -52,3 +52,12 @@ export const TASK_PRIORITY = {
 } as const;
 
 export type Priority = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
+
+//__________________________ CATEGORY _________________________________
+export const TASK_CATEGORY = {
+    DEFAULT: "Select Category",
+  USER_STORY: 'User Story',
+  TECHNICAL_TASK: 'Technical Task',
+} as const;
+
+export type Category = (typeof TASK_CATEGORY)[keyof typeof TASK_CATEGORY];
