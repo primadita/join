@@ -2,6 +2,6 @@
 <div class="overlay" (click)="closeWindow()">
   <div class="task-details" (click)="$event.stopPropagation()">
     <button (click)="closeWindow()">X</button>
-    <app-add-task></app-add-task>
+    <app-add-task (clearTask)="clearForm()" (createTask)="createNewTask($event)"[parentContext]="'board'" ></app-add-task>
   </div>
 </div>

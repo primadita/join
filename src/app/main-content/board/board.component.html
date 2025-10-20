@@ -47,7 +47,7 @@
         <div class="progress-container">
             <div class="progress-title">
                 <h5>To do</h5>
-                <button class="add-specific-btn">
+                <button class="specific-add-btn" (click)="toggleAddTask('to do')">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
                             <rect width="32" height="32" fill="#D9D9D9"/>
@@ -79,7 +79,7 @@
         <div class="progress-container">
             <div class="progress-title">
                 <h5>In progress</h5>
-                <button class="add-specific-btn">
+                <button class="specific-add-btn" (click)="toggleAddTask('in progress')">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
                             <rect width="32" height="32" fill="#D9D9D9"/>
@@ -110,7 +110,7 @@
         <div class="progress-container">
             <div class="progress-title">
                 <h5>Await feedback</h5>
-                <button class="add-specific-btn">
+                <button class="specific-add-btn" (click)="toggleAddTask('await feedback')">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
                             <rect width="32" height="32" fill="#D9D9D9"/>
@@ -165,7 +165,7 @@
   </ng-container>
 
   <ng-container *ngIf="addTaskWindow">
-    <app-add-task-popup (close)="onClosePopUp()"></app-add-task-popup>
+    <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
 
   </ng-container>
 </section>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, signal } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase.service';
 import { Contact } from '../../interfaces/contact';
 import { CommonModule } from '@angular/common';
@@ -55,6 +55,10 @@ export class AddTaskComponent {
   subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
 
   singleSubtask: string = '';
+
+  @Output() clearTask = new EventEmitter<void>();
+  @Output() createTask = new EventEmitter<Task>();
+  @Input() parentContext: 'board' | 'addtask' = 'addtask';
 
   constructor(private el: ElementRef){}
 
@@ -134,16 +138,16 @@ export class AddTaskComponent {
 
   addNewTask() {
     const newTask = this.newTask;
-    console.log(newTask);
+    // console.log(newTask);
   }
 
   updateAssignedTo(array:Array<Contact>){
     this.newTask.assignedTo = array;
-    console.log(this.newTask.assignedTo);
+    // console.log(this.newTask.assignedTo);
     
   }
 
-  clearInputs() {
+  onClearInputs() {
     this.newTask = {
       id: '',
       title: '',
@@ -161,8 +165,19 @@ export class AddTaskComponent {
       medium: false,
       low: false,
     };
+    this.clearTask.emit();
   }
 
+  onCreateTask(){
+    if(this.parentContext === 'addtask'){
+      this.taskService.addTask(this.newTask);
+    }
+
+    if(this.parentContext === 'board'){
+      this.createTask.emit(this.newTask);
+    }
+    
+  }
   getThreeRP(): Contact[]{
       const array = this.newTask.assignedTo;
       const newArray = [array[0],array[1],array[2]]

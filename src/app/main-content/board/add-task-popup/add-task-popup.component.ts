@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AddTaskComponent } from '../../../shared/components/add-task/add-task.component';
+import { Task } from '../../../shared/interfaces/task';
 
 @Component({
   selector: 'app-add-task-popup',
@@ -10,8 +11,18 @@ import { AddTaskComponent } from '../../../shared/components/add-task/add-task.c
 })
 export class AddTaskPopupComponent {
   @Output() close = new EventEmitter<void>;
+  @Output() clear = new EventEmitter<void>;
+  @Output() create = new EventEmitter<Task>;
 
   closeWindow(){
     this.close.emit();
+  }
+
+  clearForm(){
+    this.clear.emit();
+  }
+  
+  createNewTask(newTask: Task){
+    this.create.emit(newTask);
   }
 }
