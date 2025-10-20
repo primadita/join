@@ -128,7 +128,7 @@
     <div class="form-submit">
       <span>*This field is required</span>
       <div class="btn-wrapper">
-        <button class="cancel-btn" (click)="clearInputs()">
+        <button class="cancel-btn" (click)="onClearInputs()">
           Clear
 
           <svg class="cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -136,7 +136,7 @@
           </svg>
         </button>
         <div class="submit-wrapper">
-          <input type="submit" value="Create Task" (click)="taskService.addTask(newTask)" />
+          <input type="submit" value="Create Task" (click)="onCreateTask()" />
           <img src="assets/icons/check.svg" alt="check-img" />
         </div>
       </div>

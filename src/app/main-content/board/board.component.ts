@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject} from '@angular/core';
+import { Component, inject, Input} from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -102,7 +102,8 @@ export class BoardComponent {
   showNoResult$ = combineLatest([this.searchInput$, this.filteredTasks]).pipe(
     map(([i, t]) => i.trim().length > 0 && t.length === 0));
   addTaskWindow: boolean = false; // Flag für add task overlay oder Window
-  currentList:string = TASK_STATUS.TO_DO;
+  currentList:Status = TASK_STATUS.TO_DO;
+  @Input() initialList: string = '';
   // #endregion
 
   // #region METHODS
@@ -186,10 +187,6 @@ export class BoardComponent {
         this.currentList = TASK_STATUS.AWAIT_FEEDBACK;
         break;
       }
-      case 'done':{
-        this.currentList = TASK_STATUS.DONE;
-        break
-      }
     }
   }
 
@@ -197,5 +194,18 @@ export class BoardComponent {
     this.addTaskWindow = false;
   }
 
+  clearInputTask(){
+    this.addTaskWindow = true;
+  }
+
+  createNewTask(newTask: Task){
+    // console.log('received task:', newTask);
+    // console.log('current list',list);
+    
+    this.addTaskWindow = false;
+
+    newTask.status = this.currentList;
+    this.taskService.addTask(newTask);
+  }
   // #endregion
 }
