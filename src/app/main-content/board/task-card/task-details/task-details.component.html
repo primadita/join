@@ -4,6 +4,7 @@
     [class.closing]="closing"
     (click)="$event.stopPropagation()"
   >
+    @if(!isEditing){
     <!-- here category -->
     <div class="categoryAndClosebtn">
       <span class="category" [style.background-color]="getCategoryColor(task)"
@@ -152,7 +153,7 @@
 
     <!-- delete & edit btns -->
     <div class="deleAndEditBtn">
-      <button>
+      <button (click)="deleteTask(task.id)">
         <svg
           class="icon"
           width="24"
@@ -182,7 +183,7 @@
 
         Delete
       </button>
-      <button>
+      <button class="edit-task-btn" (click)="onEdit()">
         <svg
           class="icon"
           width="24"
@@ -213,5 +214,14 @@
         Edit
       </button>
     </div>
+
+    }@else {
+    <app-edit-task
+      [task]="task"
+      (close)="onEditClose()"
+      (save)="onTaskSaved($event)"
+    >
+    </app-edit-task>
+    }
   </div>
 </div>

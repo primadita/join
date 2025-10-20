@@ -15,6 +15,7 @@ import {
 } from '@angular/material/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { TaskService } from '../../../../shared/services/task.service';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 
 @Component({
   selector: 'app-task-details',
@@ -22,7 +23,7 @@ import { TaskService } from '../../../../shared/services/task.service';
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   ],
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, EditTaskComponent, DatePipe],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.scss',
 })
@@ -37,6 +38,22 @@ export class TaskDetailsComponent {
   ) {}
 
   closing = false;
+  isEditing = false;
+
+  onEdit() {
+    this.isEditing = true;
+  }
+
+  onEditClose() {
+    this.isEditing = false;
+  }
+
+  onTaskSaved(updated: Task) {
+    // optional: UI sofort aktualisieren + persistieren
+    this.task = updated;
+    this.taskSvc.updateTask(updated);
+    this.isEditing = false;
+  }
 
   getCategoryColor(task: Task) {
     if (task.category === TASK_CATEGORY.USER_STORY) {
@@ -95,5 +112,10 @@ export class TaskDetailsComponent {
 
     this.task = updatedTask;
     this.taskSvc.updateTask(updatedTask);
+  }
+
+  deleteTask(id: string) {
+    this.onClose();
+    this.taskSvc.deleteTask(id);
   }
 }
