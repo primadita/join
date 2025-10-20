@@ -12,7 +12,7 @@ import { Category } from '../../../interfaces/task';
 })
 export class CategoryComponent {
 
-  value = input<"Select Category" | Category>("Select Category")
+  value = input<"Select Category" | Category>()
 
   sendCategory = output<Category>();
 

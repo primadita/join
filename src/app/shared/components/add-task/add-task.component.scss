@@ -12,8 +12,30 @@
 
         .form-input {
             @include all.d-flex($flexdir: row, $alit: flex-start);
+
+            @media(max-width: 1140px) {
+                flex-direction: column;
+                gap: 0;
+                height: 70dvh;
+                overflow-y: scroll  ;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+            @media(max-height: 950px){
+                height: 65dvh;
+            }
+            @media(max-height: 870px){
+                height: 60dvh;
+            }
+            @media(max-height: 750px){
+                height: 55dvh;
+            }
+
             gap: 2.4rem;
             width: 100%;
+
 
             .input-wrapper {
                 width: 40rem;
@@ -149,7 +171,7 @@
 
                 ul {
                     list-style-type: disc;
-                    height: 8rem;
+                    max-height: 8rem;
                     overflow-x: auto;
 
                     li {
@@ -191,7 +213,8 @@
                     color: all.$white;
                     margin-right: 0.8rem;
                 }
-                span{
+
+                span {
                     font-weight: 600;
                 }
             }
@@ -226,14 +249,34 @@
             .dividing-line {
                 width: 1px;
                 height: 35rem;
-
                 background-color: #D9D9D9;
+
+                @media(max-width: 1140px) {
+                    display: none;
+                }
+            }
+
+            .required-text {
+                @media(min-width: 1139px) {
+                    display: none;
+                }
             }
         }
 
         .form-submit {
             @include all.d-flex($flexdir: row, $jc: space-between, $alit: flex-end);
+
+            @media(max-width:1140px) {
+                justify-content: center;
+            }
+
             width: 100%;
+
+            span {
+                @media(max-width:1140px) {
+                    display: none;
+                }
+            }
 
             .btn-wrapper {
                 @include all.d-flex($flexdir: row, $jc: flex-start);
@@ -268,9 +311,6 @@
                         }
                     }
 
-                    @include all.mobile {
-                        display: none;
-                    }
                 }
 
                 .submit-wrapper {
