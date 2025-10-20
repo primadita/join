@@ -52,6 +52,10 @@ export class AddTaskComponent {
     low: false,
   };
 
+  categorySelected = true;
+
+  actualDate = new Date();
+
   rpSearch: string = '';
 
   subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
@@ -62,7 +66,7 @@ export class AddTaskComponent {
   @Output() createTask = new EventEmitter<Task>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
 
-  constructor(private el: ElementRef){}
+  constructor(private el: ElementRef) { }
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -143,10 +147,10 @@ export class AddTaskComponent {
     // console.log(newTask);
   }
 
-  updateAssignedTo(array:Array<Contact>){
+  updateAssignedTo(array: Array<Contact>) {
     this.newTask.assignedTo = array;
     // console.log(this.newTask.assignedTo);
-    
+
   }
 
   onClearInputs() {
@@ -170,30 +174,50 @@ export class AddTaskComponent {
     this.clearTask.emit();
   }
 
-  onCreateTask(){
-    if(this.parentContext === 'addtask'){
+  onCreateTask() {
+    if (this.parentContext === 'addtask') {
       this.taskService.addTask(this.newTask);
     }
 
-    if(this.parentContext === 'board'){
+    if (this.parentContext === 'board') {
       this.createTask.emit(this.newTask);
     }
-    
+
   }
-  getThreeRP(): Contact[]{
-      const array = this.newTask.assignedTo;
-      const newArray = [array[0],array[1],array[2]]
-      return newArray
+  getThreeRP(): Contact[] {
+    const array = this.newTask.assignedTo;
+    const newArray = [array[0], array[1], array[2]]
+    return newArray
   }
 
-  valueRp(): number{
+  valueRp(): number {
     return this.newTask.assignedTo.length - 3
   }
 
-  setCategory(value: Category){
+  setCategory(value: Category) {
     this.newTask.category = value;
     console.log(this.newTask.category);
-    
+    this.categorySelected = true;
+
+  }
+
+  deleteSubtask(subtask: Subtask) {
+    const index = this.newTask.subtasks.indexOf(subtask);
+    this.newTask.subtasks.splice(index, 1);
+  }
+
+  checkValidation(){
+    if(this.newTask.title.length >= 1 &&
+      this.newTask.date >= this.actualDate &&
+      this.newTask.category != TASK_CATEGORY.DEFAULT){
+        this.onCreateTask();
+      }else if(this.newTask.category == TASK_CATEGORY.DEFAULT){
+
+        console.log('Task konnte nicht erstellt werden');
+        this.categorySelected = false;        
+      }else{
+        console.log('Task konnte nicht erstellt werden');
+      }
   }
 
 }

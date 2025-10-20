@@ -4,8 +4,11 @@
     <div class="form-input">
       <div class="form-input-left">
         <div class="input-wrapper">
-          <h6>Title</h6>
-          <input class="form-field" type="text" name="title" [(ngModel)]="newTask.title" placeholder="Enter a title" />
+          <h6>Title*</h6>
+          <input #title="ngModel" class="form-field" type="text" name="title" [(ngModel)]="newTask.title" placeholder="Enter a title" required/>
+          @if(!title.valid && title.touched){
+            <span class="warning">This field is required!</span>
+          }
         </div>
         <div class="input-wrapper">
           <h6>Description</h6>
@@ -14,12 +17,14 @@
         <div class="input-wrapper">
           <h6>Due date*</h6>
           <div class="date-input-wrapper">
-            <input matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date"
+            <input #date="ngModel" matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date"
               [(ngModel)]="newTask.date" />
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker [yPosition]="'below'" [xPosition]="'start'"></mat-datepicker>
+            @if(newTask.date < actualDate){
+              <span class="warning-date">Select an actual Date!</span>
+            }
           </div>
-          <!-- TODO: Angular-Material weiter studieren -->
         </div>
       </div>
       <div class="dividing-line"></div>
@@ -99,8 +104,11 @@
           </div>
         </div>
         <div class="input-wrapper">
-          <h6>Category</h6>
+          <h6>Category*</h6>
           <app-category (sendCategory)="setCategory($event)" [value]="newTask.category"></app-category>
+          @if(categorySelected === false){
+            <span class="warning">This field is required!</span>
+          }
 
         </div>
         <div class="input-wrapper" id="subtask-wrapper">
@@ -116,7 +124,7 @@
           <ul>
             @for (subtask of newTask.subtasks ; track $index) {
             <li class="single-subtask">
-              {{ subtask.title }} <button class="del-subtask"></button>
+              {{ subtask.title }} <button class="del-subtask" (click)="deleteSubtask(subtask)"></button>
             </li>
             }
           </ul>
@@ -136,7 +144,7 @@
           </svg>
         </button>
         <div class="submit-wrapper">
-          <input type="submit" value="Create Task" (click)="onCreateTask()" />
+          <input type="submit" value="Create Task" (click)="checkValidation()" />
           <img src="assets/icons/check.svg" alt="check-img" />
         </div>
       </div>
