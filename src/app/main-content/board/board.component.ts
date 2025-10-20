@@ -102,6 +102,7 @@ export class BoardComponent {
   showNoResult$ = combineLatest([this.searchInput$, this.filteredTasks]).pipe(
     map(([i, t]) => i.trim().length > 0 && t.length === 0));
   addTaskWindow: boolean = false; // Flag für add task overlay oder Window
+  currentList:string = TASK_STATUS.TO_DO;
   // #endregion
 
   // #region METHODS
@@ -169,8 +170,27 @@ export class BoardComponent {
     }
   }
 
-  toggleAddTask(){
+  toggleAddTask(list?:string){
     this.addTaskWindow = !this.addTaskWindow;
+    this.currentList = TASK_STATUS.TO_DO;
+    switch (list) {
+      case 'to do':{
+        this.currentList = TASK_STATUS.TO_DO;
+        break;
+      }
+      case 'in progress':{
+        this.currentList = TASK_STATUS.IN_PROGRESS;
+        break;
+      }
+      case 'await feedback':{
+        this.currentList = TASK_STATUS.AWAIT_FEEDBACK;
+        break;
+      }
+      case 'done':{
+        this.currentList = TASK_STATUS.DONE;
+        break
+      }
+    }
   }
 
   onClosePopUp(){
