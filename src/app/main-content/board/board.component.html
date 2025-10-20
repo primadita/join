@@ -5,7 +5,7 @@
         <h1>Board</h1>
         <div>
             <div class="search-div">
-                <input [formControl]="searchControl" type="text" id="search-input" placeholder="Find Task">
+                <input [formControl]="searchControl" type="text" id="search-input-field" placeholder="Find Task">
                 <div class="vline"></div>
                 <img src="./assets/icons/search.svg" alt="search for">
             </div>
@@ -182,11 +182,7 @@
   </ng-container>
 
   <ng-container *ngIf="addTaskWindow">
-    <div class="overlay" (click)="closeAddTaskPopup()">
-        <div class="task-details">
-            <app-add-task></app-add-task>
-        </div>
-    </div>
+    <app-add-task-popup (close)="onClosePopUp()"></app-add-task-popup>
 
   </ng-container>
 </section>

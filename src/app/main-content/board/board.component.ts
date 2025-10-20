@@ -17,6 +17,7 @@ import { BoardColumns } from '../../shared/interfaces/boardColumns';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskComponent } from '../../shared/components/add-task/add-task.component';
+import { AddTaskPopupComponent } from './add-task-popup/add-task-popup.component';
 
 /*
   -------------------------------------------------------------------------------------------------------------------------
@@ -66,7 +67,7 @@ const ListIdToStatus: Record<ListId, Status> = {
 @Component({
   selector: 'app-board',
   imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
-    CdkDropList, CdkDrag, FormsModule, AddTaskComponent, ReactiveFormsModule],
+    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
@@ -221,7 +222,7 @@ export class BoardComponent {
     this.addTaskWindow = !this.addTaskWindow;
   }
 
-  closeAddTaskPopup() {
+  onClosePopUp(){
     this.addTaskWindow = false;
   }
 
