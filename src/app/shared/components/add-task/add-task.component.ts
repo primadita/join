@@ -8,9 +8,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../interfaces/task';
+import { Category, Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
+import { CategoryComponent } from './category/category.component';
 
 @Component({
   selector: 'app-add-task',
@@ -22,7 +23,8 @@ import { RpSearchComponent } from './rp-search/rp-search.component';
     MatFormFieldModule,
     MatAutocompleteModule,
     FormsModule,
-    RpSearchComponent
+    RpSearchComponent,
+    CategoryComponent
   ],
 
   templateUrl: './add-task.component.html',
@@ -39,7 +41,7 @@ export class AddTaskComponent {
     date: new Date(),
     priority: null,
     assignedTo: [],
-    category: TASK_CATEGORY.USER_STORY,
+    category: TASK_CATEGORY.DEFAULT,
     subtasks: [],
     status: TASK_STATUS.TO_DO,
   };
@@ -151,7 +153,7 @@ export class AddTaskComponent {
       date: new Date(),
       priority: null,
       assignedTo: [],
-      category: TASK_CATEGORY.USER_STORY,
+      category: TASK_CATEGORY.DEFAULT,
       subtasks: [],
       status: TASK_STATUS.TO_DO,
     };
@@ -171,6 +173,12 @@ export class AddTaskComponent {
 
   valueRp(): number{
     return this.newTask.assignedTo.length - 3
+  }
+
+  setCategory(value: Category){
+    this.newTask.category = value;
+    console.log(this.newTask.category);
+    
   }
 
 }

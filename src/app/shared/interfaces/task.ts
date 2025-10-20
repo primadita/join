@@ -55,6 +55,7 @@ export type Priority = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
 
 //__________________________ CATEGORY _________________________________
 export const TASK_CATEGORY = {
+    DEFAULT: "Select Category",
   USER_STORY: 'User Story',
   TECHNICAL_TASK: 'Technical Task',
 } as const;
