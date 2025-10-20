@@ -1,0 +1,49 @@
+@use './../../../../../public/assets/styles/all-styles.scss' as all;
+
+.overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.2s ease-out forwards;
+        z-index: 100;
+    }
+
+    .task-details {
+        width: 111.6rem;
+        height: 80rem;
+        background: all.$white;
+        border-radius: 3rem;
+        box-shadow: all.$shadow;
+        @include all.d-flex();
+
+        transform: translateX(100%);
+        animation: slideIn 0.28s ease-out forwards;
+        button{
+            background: transparent;
+            position: absolute;
+            right: 13rem;
+            top: 7rem;
+            font-size: 2.4rem;
+            z-index: 5;
+            cursor: pointer;
+            @include all.square($length: 3rem);
+            @include all.d-flex();
+            &:hover{
+                background: all.$lightgray;
+                border-radius: 50%;
+            }
+        }
+    }
+    // #region closing-animation
+    .task-details.closing {
+        animation: slideOut 0.22s ease-in forwards;
+    }
+    
+    .overlay.closing {
+    animation: fadeOut 0.28s ease-in forwards;
+    }
+    
+    // #endregion closing-animation
