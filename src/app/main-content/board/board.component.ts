@@ -195,7 +195,7 @@ export class BoardComponent {
   }
 
   clearInputTask(){
-    this.addTaskWindow = false;
+    this.addTaskWindow = true;
   }
 
   createNewTask(newTask: Task){

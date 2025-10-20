@@ -1,6 +1,5 @@
-<!-- <div class="overlay" (click)="closeAddTaskPopup()"> -->
-<div class="overlay" (click)="closeWindow()">
-  <div class="task-details" (click)="$event.stopPropagation()">
+<div *ngIf="isOpen" class="overlay" (click)="closeWindow($event)">
+  <div class="task-details">
     <button (click)="closeWindow()">X</button>
     <app-add-task (clearTask)="clearForm()" (createTask)="createNewTask($event)"[parentContext]="'board'" ></app-add-task>
   </div>
