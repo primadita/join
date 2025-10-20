@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostListener, output, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, output, signal, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { Category } from '../../../interfaces/task';
 
 @Component({
   selector: 'app-category',
@@ -11,10 +12,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class CategoryComponent {
 
-  value:string = "Select Category"
+  value = input<"Select Category" | Category>("Select Category")
 
-  sendCategory = output<string>();
-  
+  sendCategory = output<Category>();
+
 
   constructor(private el: ElementRef) { }
 
@@ -22,7 +23,7 @@ export class CategoryComponent {
 
   isListOpen = signal(false)
 
-  setValue(_value: string){
+  setValue(_value: Category){
     this.sendCategory.emit(_value);
     this.isListOpen.set(false)
   }

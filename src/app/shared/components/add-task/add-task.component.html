@@ -104,7 +104,7 @@
             <option value="User Story">User Story</option>
             <option value="Technical Task">Technical Task</option>
           </select> -->
-          <app-category></app-category>
+          <app-category (sendCategory)="setCategory($event)" [value]="newTask.category"></app-category>
           <!-- TODO: Category list stylen -->
         </div>
         <div class="input-wrapper" id="subtask-wrapper">
