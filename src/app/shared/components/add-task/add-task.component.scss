@@ -70,27 +70,30 @@
                             width: 1.6rem;
                         }
                     }
-                    .active-urgent{
+
+                    .active-urgent {
                         background-color: #FF3D00;
                         color: all.$white;
-                        
-                        path{   
-                            fill: all.$white;
-                        }                        
-                    }
-                    .active-medium{
-                        background-color: #FFA800 ;
-                        color: all.$white;
 
-                        path{
+                        path {
                             fill: all.$white;
                         }
                     }
-                    .active-low{
+
+                    .active-medium {
+                        background-color: #FFA800;
+                        color: all.$white;
+
+                        path {
+                            fill: all.$white;
+                        }
+                    }
+
+                    .active-low {
                         background-color: #7AE229;
                         color: all.$white;
 
-                        path{
+                        path {
                             fill: all.$white;
                         }
                     }
@@ -155,7 +158,8 @@
                         font-weight: 400;
                         font-family: 'Inter';
                         padding: 0.4rem 1.6rem;
-                        .del-subtask{
+
+                        .del-subtask {
                             background-image: url(../../../../../public/assets/icons/delete.svg);
                             background-size: 1.7rem;
                         }
@@ -167,51 +171,9 @@
 
                 height: 12rem;
 
-                :focus-within #rpSelection{
-                    display: block;
-                }
-
-                #rpSelection {
-                    display: none;
-                    position: absolute;
-                    top: 4rem;
-                    height: 25rem;
-                    width: 100%;
-                    overflow-y: scroll;
-                    z-index: 100;
-                    background-color: all.$white;
-
-                    li {
-                        width: 100%;
-                        @include all.d-flex($flexdir: row, $jc: space-between);
-                        padding: 0.8rem 1.6rem;
-                        border-radius: 0.8rem;
-
-                        &:hover {
-                            background-color: all.$lightgray2;
-                        }
-
-                        .item-name-box {
-                            @include all.d-flex($flexdir: row, $jc: flex-start);
-
-                            .item-name {
-                                width: 20rem;
-                                overflow-x: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
-                            }
-                        }
-                    }
-                }
-
                 .rp-selected-box {
                     @include all.d-flex($flexdir: row, $jc: flex-start);
                     margin-top: 1.6rem;
-
-                    .test {
-                        background-color: teal;
-                        margin-right: 0.8rem;
-                    }
                 }
 
                 .initials {
@@ -227,7 +189,10 @@
                     align-items: center;
                     justify-content: center;
                     color: all.$white;
-                    margin-right: 2.4rem;
+                    margin-right: 0.8rem;
+                }
+                span{
+                    font-weight: 600;
                 }
             }
 
