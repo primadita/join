@@ -100,10 +100,11 @@
         </div>
         <div class="input-wrapper">
           <h6>Category</h6>
-          <select class="form-field" name="category" [(ngModel)]="newTask.category" aria-placeholder="Select Category">
+          <!-- <select class="form-field" name="category" [(ngModel)]="newTask.category" aria-placeholder="Select Category">
             <option value="User Story">User Story</option>
             <option value="Technical Task">Technical Task</option>
-          </select>
+          </select> -->
+          <app-category></app-category>
           <!-- TODO: Category list stylen -->
         </div>
         <div class="input-wrapper" id="subtask-wrapper">

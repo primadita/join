@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
+import { CategoryComponent } from './category/category.component';
 
 @Component({
   selector: 'app-add-task',
@@ -22,7 +23,8 @@ import { RpSearchComponent } from './rp-search/rp-search.component';
     MatFormFieldModule,
     MatAutocompleteModule,
     FormsModule,
-    RpSearchComponent
+    RpSearchComponent,
+    CategoryComponent
   ],
 
   templateUrl: './add-task.component.html',
