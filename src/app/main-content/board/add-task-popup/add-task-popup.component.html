@@ -1,1 +1,7 @@
-<p>add-task-popup works!</p>
+<!-- <div class="overlay" (click)="closeAddTaskPopup()"> -->
+<div class="overlay" (click)="closeWindow()">
+  <div class="task-details" (click)="$event.stopPropagation()">
+    <button (click)="closeWindow()">X</button>
+    <app-add-task></app-add-task>
+  </div>
+</div>
