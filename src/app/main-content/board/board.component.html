@@ -64,7 +64,7 @@
                 [cdkDropListData]="board?.todo ?? []"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(!(showNoResult$|async) && (board?.todo?.length ?? 0)=== 0){
+                @if(!(searchInput$ | async)?.trim()&& (board?.todo?.length ?? 0)=== 0){
                     <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
@@ -96,7 +96,7 @@
                 [cdkDropListData]="board?.inprogress ?? []"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(!(showNoResult$|async) && (board?.inprogress?.length ?? 0) === 0){
+                @if(!(searchInput$ | async)?.trim() && (board?.inprogress?.length ?? 0) === 0){
                     <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
@@ -127,7 +127,7 @@
                 [cdkDropListData]="board?.awaitfeedback ?? []"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(!(showNoResult$|async) && (board?.awaitfeedback?.length ?? 0)  === 0){
+                @if(!(searchInput$ | async)?.trim() && (board?.awaitfeedback?.length ?? 0)  === 0){
                     <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>
@@ -148,7 +148,7 @@
                 [cdkDropListData]="board?.done ?? []"
                 (cdkDropListDropped)="drop($event)"
                 class="progress-list">
-                @if(!(showNoResult$ | async) && (board?.done?.length ?? 0) === 0){
+                @if(!(searchInput$ | async)?.trim() && (board?.done?.length ?? 0) === 0){
                     <div class="empty-list">
                         <span>No tasks in this list</span>
                     </div>

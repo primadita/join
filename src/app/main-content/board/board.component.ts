@@ -188,7 +188,6 @@ export class BoardComponent {
         break;
       }
     }
-    console.log(this.currentList);
   }
 
   onClosePopUp(){
