@@ -12,6 +12,7 @@ import { Category, Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../inter
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
+import { ToastMessagesService } from '../../services/toast-messages.service';
 
 @Component({
   selector: 'app-add-task',
@@ -64,9 +65,10 @@ export class AddTaskComponent {
 
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
+  @Output() taskCreated = new EventEmitter<void>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -177,12 +179,15 @@ export class AddTaskComponent {
   onCreateTask() {
     if (this.parentContext === 'addtask') {
       this.taskService.addTask(this.newTask);
+      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
+      setTimeout(() => {this.taskCreated.emit()}, 3000);
     }
 
     if (this.parentContext === 'board') {
       this.createTask.emit(this.newTask);
+      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
     }
-
+    
   }
   getThreeRP(): Contact[] {
     const array = this.newTask.assignedTo;
@@ -219,5 +224,4 @@ export class AddTaskComponent {
         console.log('Task konnte nicht erstellt werden');
       }
   }
-
 }

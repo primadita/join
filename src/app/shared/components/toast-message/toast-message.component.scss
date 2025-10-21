@@ -8,9 +8,27 @@ div{
     box-shadow: rgba(0, 0, 0, 0.2) 1.95px 1.95px 2.6px;
     padding: 1.6rem;
     border-radius: 2rem;
+    @include all.d-flex($flexdir: row, $cgap: 1rem);
+    img{
+        @include all.square($length: 2.4rem);
+    }
+}
+.success{
+    background: all.$mainColor;
+    color: all.$white;
+}
+.error{
+    background: all.$lightgray;
+    color: red;
+}
+.contacts{
+    bottom: 3rem;
     animation: slideInFromRight 1s forwards;
-    animation-iteration-count: 1;
+    animation-iteration-count: 1; 
     @include all.desktop{
+        animation: slideInFromRight-bigscreen 1s forwards;
+    }
+    @include all.bigscreen{
         animation: slideInFromRight-bigscreen 1s forwards;
     }
     @include all.tablet{
@@ -23,11 +41,12 @@ div{
         width: auto;
     }
 }
-.success{
-    background: all.$mainColor;
-    color: all.$white;
+.addtask{
+    bottom: 50dvh;
+    animation: toast-addtask-slideInFromRight 1s forwards;
+    animation-iteration-count: 1; 
 }
-.error{
-    background: all.$lightgray;
-    color: red;
+.board{
+    bottom: 50dvh;
+    right: calc(50dvw - 25rem);
 }

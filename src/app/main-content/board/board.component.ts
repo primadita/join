@@ -16,6 +16,7 @@ import { combineLatest, filter, map, startWith } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskPopupComponent } from './add-task-popup/add-task-popup.component';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
+import { ToastMessageComponent } from '../../shared/components/toast-message/toast-message.component';
 
 /*
   -------------------------------------------------------------------------------------------------------------------------
@@ -65,7 +66,7 @@ const ListIdToStatus: Record<ListId, Status> = {
 @Component({
   selector: 'app-board',
   imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
-    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule],
+    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule, ToastMessageComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })

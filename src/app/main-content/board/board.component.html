@@ -19,12 +19,12 @@
     <div class="board-title-div-mobile">
         <div>
             <h1>Board</h1>
-            <button id="add-task-global">
+            <button id="add-task-global" (click)="toggleAddTask()">
                 <img src="./assets/icons/add.svg" alt="add button">
             </button>
         </div>
         <div class="search-div">
-            <input [formControl]="searchControl" type="text" id="search-input" placeholder="Find Task" >
+            <input [formControl]="searchControl" type="text" id="search-input-field" placeholder="Find Task" >
             <div class="vline"></div>
             <img src="./assets/icons/search.svg" alt="search for">
         </div>
@@ -166,6 +166,7 @@
 
   <ng-container *ngIf="addTaskWindow">
     <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
-
   </ng-container>
+
+  <app-toast-message [context]="'board'"></app-toast-message>
 </section>
