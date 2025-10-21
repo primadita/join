@@ -25,20 +25,17 @@ div{
     bottom: 3rem;
     animation: slideInFromRight 1s forwards;
     animation-iteration-count: 1; 
-    @include all.desktop{
-        // animation: slideInFromRight-bigscreen 1s forwards;
-    }
-    @include all.bigscreen{
-        // animation: slideInFromRight-bigscreen 1s forwards;
-    }
     @include all.tablet{
         bottom: 10rem;
-        // animation: slideInFromRight-tablet 1s forwards;
+        animation: slideInFromRight-tablet 1s forwards;
     }   
     @include all.mobile{
-        // animation:slideInFromRight-mobile 1s forwards;
+        animation:slideInFromRight-mobile 1s forwards;
         padding: 1.6rem;
         width: auto;
+    }
+    @media (max-width: 400px) {
+        animation:slideInFromRight-smartphone 1s forwards;
     }
 }
 .addtask{
