@@ -189,24 +189,36 @@
 
       ul {
         width: 100%;
+
         li {
-          display: list-item;
-          list-style: disc;
-          margin-left: 10%;
+          cursor: pointer;
+          padding: 0.5rem 1rem;
+          border-radius: 1rem;
 
           .list-content {
             @include all.d-flex(
-              $flexdir: center,
-              $jc: flex-start,
+              $flexdir: row,
+              $jc: space-between,
               $alit: center
             );
             gap: 2.5rem;
 
             span {
-              width: 100%;
               cursor: pointer;
             }
+
+            .edit-subtask {
+              @include all.d-flex(
+                $flexdir: row,
+                $jc: flex-start,
+                $alit: center
+              );
+            }
           }
+        }
+
+        li:hover {
+          background-color: all.$lightgray2;
         }
       }
     }
