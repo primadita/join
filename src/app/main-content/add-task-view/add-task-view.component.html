@@ -1,3 +1,4 @@
 <section>
-  <app-add-task></app-add-task>
+  <app-add-task [parentContext]="'addtask'" (taskCreated)="onTaskCreated()"></app-add-task>
+  <app-toast-message [context]="'addtask'"></app-toast-message>
 </section>

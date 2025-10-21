@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
 import { ContactsComponent } from './contacts/contacts.component';
 import { NavBarComponent } from '../shared/components/nav-bar/nav-bar.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
@@ -23,6 +23,7 @@ export class MainContentComponent {
    * @default 'contacts'
    */
   activeComponent:string = 'contacts' //default
+  @Output() SwitchAddTaskToBoard = new EventEmitter<string>();
 
   private componentHistory: string = 'summary'  //default;
   // #endregion

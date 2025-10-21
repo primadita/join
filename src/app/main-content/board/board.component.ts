@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject} from '@angular/core';
+import { Component, inject, Input} from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -16,6 +16,7 @@ import { combineLatest, filter, map, startWith } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskPopupComponent } from './add-task-popup/add-task-popup.component';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
+import { ToastMessageComponent } from '../../shared/components/toast-message/toast-message.component';
 
 /*
   -------------------------------------------------------------------------------------------------------------------------
@@ -65,7 +66,7 @@ const ListIdToStatus: Record<ListId, Status> = {
 @Component({
   selector: 'app-board',
   imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
-    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule],
+    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule, ToastMessageComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
@@ -102,7 +103,8 @@ export class BoardComponent {
   showNoResult$ = combineLatest([this.searchInput$, this.filteredTasks]).pipe(
     map(([i, t]) => i.trim().length > 0 && t.length === 0));
   addTaskWindow: boolean = false; // Flag für add task overlay oder Window
-  currentList:string = TASK_STATUS.TO_DO;
+  currentList:Status = TASK_STATUS.TO_DO;
+  @Input() initialList: string = '';
   // #endregion
 
   // #region METHODS
@@ -186,10 +188,6 @@ export class BoardComponent {
         this.currentList = TASK_STATUS.AWAIT_FEEDBACK;
         break;
       }
-      case 'done':{
-        this.currentList = TASK_STATUS.DONE;
-        break
-      }
     }
   }
 
@@ -197,5 +195,18 @@ export class BoardComponent {
     this.addTaskWindow = false;
   }
 
+  clearInputTask(){
+    this.addTaskWindow = true;
+  }
+
+  createNewTask(newTask: Task){
+    // console.log('received task:', newTask);
+    // console.log('current list',list);
+    
+    this.addTaskWindow = false;
+
+    newTask.status = this.currentList;
+    this.taskService.addTask(newTask);
+  }
   // #endregion
 }

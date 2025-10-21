@@ -4,9 +4,12 @@
     [class.closing]="closing"
     (click)="$event.stopPropagation()"
   >
+    @if(!isEditing){
     <!-- here category -->
     <div class="categoryAndClosebtn">
-      <span class="category">{{ task.category }}</span>
+      <span class="category" [style.background-color]="getCategoryColor(task)"
+        >{{ task.category }}
+      </span>
       <button (click)="onClose()">X</button>
     </div>
     <!-- here title-->
@@ -19,12 +22,12 @@
     </div>
     <!-- here due date -->
     <div class="due-date">
-      <span>Due date:</span>
-      <span class="date">{{ task.date }}</span>
+      <span class="date-label">Due date:</span>
+      <span class="date">{{ getdate(task.date) | date : "dd/MM/yyyy" }}</span>
     </div>
     <!-- here priority-->
     <div class="priority">
-      <span>Priority:</span>
+      <span class="prio-label">Priority:</span>
 
       <div class="prio" [ngSwitch]="task.priority">
         <span>{{ task.priority }}</span>
@@ -134,17 +137,23 @@
       <span class="empty">No subtasks</span>
       } @else {
       <ul>
-        <li *ngFor="let s of subtasks">
-          <input type="checkbox" />
-          <span>{{ s.title }}</span>
+        <li *ngFor="let s of subtasks; let i = index">
+          <input
+            type="checkbox"
+            #cb
+            [checked]="s.done"
+            (change)="onToggleSubtask(i, cb.checked)"
+          />
+          <span [class.done]="s.done">{{ s.title }}</span>
         </li>
       </ul>
+
       }
     </div>
 
     <!-- delete & edit btns -->
     <div class="deleAndEditBtn">
-      <button>
+      <button (click)="deleteTask(task.id)">
         <svg
           class="icon"
           width="24"
@@ -174,7 +183,7 @@
 
         Delete
       </button>
-      <button>
+      <button class="edit-task-btn" (click)="onEdit()">
         <svg
           class="icon"
           width="24"
@@ -205,5 +214,14 @@
         Edit
       </button>
     </div>
+
+    }@else {
+    <app-edit-task
+      [task]="task"
+      (close)="onEditClose()"
+      (save)="onTaskSaved($event)"
+    >
+    </app-edit-task>
+    }
   </div>
 </div>

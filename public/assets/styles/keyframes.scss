@@ -18,6 +18,11 @@
     100% {transform:translateX(-250%)}
 }
 
+@keyframes toast-addtask-slideInFromRight {
+    0% {transform: translateX(100%)};
+    100% {transform:translateX(-50%)}
+}
+
 @keyframes slideInPopUp {
     0% {transform: translateX(100%)};
     100% {transform:translateX(0%)}

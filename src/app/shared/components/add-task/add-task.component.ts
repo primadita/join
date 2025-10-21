@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, signal } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase.service';
 import { Contact } from '../../interfaces/contact';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { Category, Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../inter
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
+import { ToastMessagesService } from '../../services/toast-messages.service';
 
 @Component({
   selector: 'app-add-task',
@@ -52,13 +53,22 @@ export class AddTaskComponent {
     low: false,
   };
 
+  categorySelected = true;
+
+  actualDate = new Date();
+
   rpSearch: string = '';
 
   subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
 
   singleSubtask: string = '';
 
-  constructor(private el: ElementRef){}
+  @Output() clearTask = new EventEmitter<void>();
+  @Output() createTask = new EventEmitter<Task>();
+  @Output() taskCreated = new EventEmitter<void>();
+  @Input() parentContext: 'board' | 'addtask' = 'addtask';
+
+  constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -136,16 +146,16 @@ export class AddTaskComponent {
 
   addNewTask() {
     const newTask = this.newTask;
-    console.log(newTask);
+    // console.log(newTask);
   }
 
-  updateAssignedTo(array:Array<Contact>){
+  updateAssignedTo(array: Array<Contact>) {
     this.newTask.assignedTo = array;
-    console.log(this.newTask.assignedTo);
-    
+    // console.log(this.newTask.assignedTo);
+
   }
 
-  clearInputs() {
+  onClearInputs() {
     this.newTask = {
       id: '',
       title: '',
@@ -163,22 +173,55 @@ export class AddTaskComponent {
       medium: false,
       low: false,
     };
+    this.clearTask.emit();
   }
 
-  getThreeRP(): Contact[]{
-      const array = this.newTask.assignedTo;
-      const newArray = [array[0],array[1],array[2]]
-      return newArray
+  onCreateTask() {
+    if (this.parentContext === 'addtask') {
+      this.taskService.addTask(this.newTask);
+      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
+      setTimeout(() => {this.taskCreated.emit()}, 3000);
+    }
+
+    if (this.parentContext === 'board') {
+      this.createTask.emit(this.newTask);
+      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
+    }
+    
+  }
+  getThreeRP(): Contact[] {
+    const array = this.newTask.assignedTo;
+    const newArray = [array[0], array[1], array[2]]
+    return newArray
   }
 
-  valueRp(): number{
+  valueRp(): number {
     return this.newTask.assignedTo.length - 3
   }
 
-  setCategory(value: Category){
+  setCategory(value: Category) {
     this.newTask.category = value;
     console.log(this.newTask.category);
-    
+    this.categorySelected = true;
+
   }
 
+  deleteSubtask(subtask: Subtask) {
+    const index = this.newTask.subtasks.indexOf(subtask);
+    this.newTask.subtasks.splice(index, 1);
+  }
+
+  checkValidation(){
+    if(this.newTask.title.length >= 1 &&
+      this.newTask.date >= this.actualDate &&
+      this.newTask.category != TASK_CATEGORY.DEFAULT){
+        this.onCreateTask();
+      }else if(this.newTask.category == TASK_CATEGORY.DEFAULT){
+
+        console.log('Task konnte nicht erstellt werden');
+        this.categorySelected = false;        
+      }else{
+        console.log('Task konnte nicht erstellt werden');
+      }
+  }
 }
