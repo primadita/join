@@ -47,6 +47,11 @@
     }
   }
 
+  .category-title {
+    .task-title {
+    }
+  }
+
   // #region close-btn & priority
   .categoryAndClosebtn {
     width: 100%;
@@ -156,6 +161,8 @@
     gap: 0.5rem;
     ul {
       margin-left: 2rem;
+      height: 11rem;
+      overflow-y: auto;
       li {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 1rem;

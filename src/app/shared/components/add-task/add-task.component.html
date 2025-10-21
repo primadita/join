@@ -4,7 +4,7 @@
     <div class="form-input">
       <div class="form-input-left">
         <div class="input-wrapper">
-          <h6>Title*</h6>
+          <h6>Title<span class="red">*</span></h6>
           <input #title="ngModel" class="form-field" type="text" name="title" [(ngModel)]="newTask.title" placeholder="Enter a title" required/>
           @if(!title.valid && title.touched){
             <span class="warning">This field is required!</span>
@@ -15,7 +15,7 @@
           <textarea name="description" id="" [(ngModel)]="newTask.description" placeholder="Enter a description"></textarea>
         </div>
         <div class="input-wrapper">
-          <h6>Due date*</h6>
+          <h6>Due date<span class="red">*</span></h6>
           <div class="date-input-wrapper">
             <input #date="ngModel" matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date"
               [(ngModel)]="newTask.date" />
@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="input-wrapper">
-          <h6>Category*</h6>
+          <h6>Category<span class="red">*</span></h6>
           <app-category (sendCategory)="setCategory($event)" [value]="newTask.category"></app-category>
           @if(categorySelected === false){
             <span class="warning">This field is required!</span>
@@ -129,12 +129,12 @@
             }
           </ul>
         </div>
-        <span class="required-text">*This field is required</span>
+        <span class="required-text"><span class="red">*</span>This field is required</span>
       </div>
     </div>
 
     <div class="form-submit">
-      <span>*This field is required</span>
+      <span><span class="red">*</span>This field is required</span>
       <div class="btn-wrapper">
         <button class="cancel-btn" (click)="onClearInputs()">
           Clear
