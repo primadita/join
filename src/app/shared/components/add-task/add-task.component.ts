@@ -176,15 +176,15 @@ export class AddTaskComponent {
   onCreateTask() {
     if (this.parentContext === 'addtask') {
       this.taskService.addTask(this.newTask);
-      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
-      setTimeout(() => {this.taskCreated.emit()}, 3000);
+      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
+      setTimeout(() => { this.taskCreated.emit() }, 3000);
     }
 
     if (this.parentContext === 'board') {
       this.createTask.emit(this.newTask);
-      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
+      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
     }
-    
+
   }
   getThreeRP(): Contact[] {
     const array = this.newTask.assignedTo;
@@ -208,17 +208,26 @@ export class AddTaskComponent {
     this.newTask.subtasks.splice(index, 1);
   }
 
-  checkValidation(){
-    if(this.newTask.title.length >= 1 &&
-      this.newTask.date >= this.actualDate &&
-      this.newTask.category != TASK_CATEGORY.DEFAULT){
+  checkValidation() {
+    if (this.newTask.date != null) {
+      if (this.newTask.title.length >= 1 &&
+        (this.newTask.date >= this.actualDate) &&
+        this.newTask.category != TASK_CATEGORY.DEFAULT) {
         this.onCreateTask();
-      }else if(this.newTask.category == TASK_CATEGORY.DEFAULT){
-
-        console.log('Task konnte nicht erstellt werden');
-        this.categorySelected = false;        
-      }else{
-        console.log('Task konnte nicht erstellt werden');
       }
+    }
+    else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+
+      console.log('Task konnte nicht erstellt werden');
+      this.categorySelected = false;
+    } else {
+      console.log('Task konnte nicht erstellt werden');
+    }
+  }
+
+  setDate(date: Date | null) {
+    this.newTask.date = date;
+    console.log(this.newTask.date);
+    
   }
 }

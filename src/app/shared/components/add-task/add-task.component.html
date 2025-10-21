@@ -16,16 +16,8 @@
         </div>
         <div class="input-wrapper">
           <h6>Due date<span class="red">*</span></h6>
-          <app-date-picker></app-date-picker>
-          <!-- <div class="date-input-wrapper">
-            <input #date="ngModel" matInput [matDatepicker]="picker" placeholder="Datum auswählen" name="date"
-              [(ngModel)]="newTask.date" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker [yPosition]="'below'" [xPosition]="'start'"></mat-datepicker>
-            @if(newTask.date < actualDate){
-              <span class="warning-date">Select an actual Date!</span>
-            }
-          </div> -->
+          <app-date-picker (sendDate)="setDate($event)"></app-date-picker>
+
         </div>
       </div>
       <div class="dividing-line"></div>
