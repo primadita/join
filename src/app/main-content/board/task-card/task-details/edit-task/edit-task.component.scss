@@ -189,10 +189,17 @@
 
       ul {
         width: 100%;
-
+        @include all.d-flex(
+          $flexdir: column,
+          $jc: space-between,
+          $alit: flex-start
+        );
+        gap: 0.5rem;
+        padding-top: 0.5rem;
         li {
+          width: 100%;
           cursor: pointer;
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 0.6rem;
           border-radius: 1rem;
 
           .list-content {
@@ -213,12 +220,19 @@
                 $jc: flex-start,
                 $alit: center
               );
+              gap: 0.5rem;
+
+              .separator {
+                height: 2rem;
+                width: 0.1rem;
+                background-color: #cdcdcd;
+              }
             }
           }
         }
 
         li:hover {
-          background-color: all.$lightgray2;
+          background-color: all.$lightgray;
         }
       }
     }
