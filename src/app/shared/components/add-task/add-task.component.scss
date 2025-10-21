@@ -14,8 +14,9 @@
             @include all.d-flex($flexdir: row, $alit: flex-start);
 
             @media(max-width: 1140px) {
-                flex-direction: column;
-                gap: 0;
+                // flex-direction: column;
+                // gap: 0;
+                display: block;
                 height: 70dvh;
                 overflow-y: auto;
 
@@ -374,5 +375,8 @@
                 }
             }
         }
+    }
+    .red{
+        color: red;
     }
 }
