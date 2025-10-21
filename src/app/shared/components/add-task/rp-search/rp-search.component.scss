@@ -39,6 +39,9 @@
 
                 .item-name {
                     width: 20rem;
+                    @media(max-width: 380px){
+                        width: 15rem;
+                    }
                     overflow-x: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
