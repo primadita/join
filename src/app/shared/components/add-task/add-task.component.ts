@@ -13,6 +13,7 @@ import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @Component({
   selector: 'app-add-task',
@@ -25,7 +26,8 @@ import { ToastMessagesService } from '../../services/toast-messages.service';
     MatAutocompleteModule,
     FormsModule,
     RpSearchComponent,
-    CategoryComponent
+    CategoryComponent,
+    DatePickerComponent
   ],
 
   templateUrl: './add-task.component.html',
@@ -143,11 +145,6 @@ export class AddTaskComponent {
 
   // #endregion
 
-
-  addNewTask() {
-    const newTask = this.newTask;
-    // console.log(newTask);
-  }
 
   updateAssignedTo(array: Array<Contact>) {
     this.newTask.assignedTo = array;
