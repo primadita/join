@@ -17,6 +17,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskPopupComponent } from './add-task-popup/add-task-popup.component';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
 import { ToastMessageComponent } from '../../shared/components/toast-message/toast-message.component';
+import { LongPressDragDirective } from '../../shared/directives/long-press-drag.directive';
 
 /*
   -------------------------------------------------------------------------------------------------------------------------
@@ -65,11 +66,13 @@ const ListIdToStatus: Record<ListId, Status> = {
 
 @Component({
   selector: 'app-board',
+  standalone: true,
   imports: [CommonModule, DragDropModule, TaskCardComponent, TaskDetailsComponent,
-    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule, ToastMessageComponent],
+    CdkDropList, CdkDrag, FormsModule, AddTaskPopupComponent, ReactiveFormsModule, ToastMessageComponent, LongPressDragDirective],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
+
 export class BoardComponent {
   // #region ATTRIBUTES
   taskService = inject(TaskService);
@@ -200,8 +203,6 @@ export class BoardComponent {
   }
 
   createNewTask(newTask: Task){
-    // console.log('received task:', newTask);
-    // console.log('current list',list);
     
     this.addTaskWindow = false;
 
