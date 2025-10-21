@@ -185,7 +185,7 @@
         overflow-y: auto;
         @include all.d-flex(
           $flexdir: column,
-          $jc: space-between,
+          $jc: flex-start,
           $alit: flex-start
         );
         gap: 0.5rem;
