@@ -35,6 +35,7 @@ export class EditTaskComponent {
   @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
+  @Output() delete = new EventEmitter<string>();
 
   isOpen: boolean = true;
 
@@ -178,5 +179,24 @@ export class EditTaskComponent {
     const updatedContacts = Array.from(byId.values());
 
     this.task = { ...this.task, assignedTo: updatedContacts };
+  }
+
+  deleteSubtask(index: number) {
+    const updated = this.task.subtasks.filter((_, i) => i !== index);
+    this.task = { ...this.task, subtasks: updated };
+  }
+
+  editingIndex: number | null = null;
+
+  editSubtask(i: number) {
+    this.editingIndex = i;
+  }
+
+  saveSubtaskEdit(i: number) {
+    this.editingIndex = null;
+  }
+
+  isEditing(i: number): boolean {
+    return this.editingIndex === i;
   }
 }

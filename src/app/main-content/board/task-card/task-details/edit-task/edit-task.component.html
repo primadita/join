@@ -208,11 +208,22 @@
         <ul>
           <li *ngFor="let s of subtasks; let i = index">
             <div class="list-content">
-              <span>{{ s.title }}</span>
+              <span *ngIf="!isEditing(i)">{{ s.title }}</span>
+
+              <!-- Wenn im Edit-Modus -->
+              <input
+                *ngIf="isEditing(i)"
+                type="text"
+                class="edit-input"
+                [(ngModel)]="s.title"
+                name="subtaskTitle{{ i }}"
+                (keydown.enter)="saveSubtaskEdit(i)"
+                (blur)="saveSubtaskEdit(i)"
+              />
 
               <!-- #region EDIT-SUBTASK-BTNS -->
               <div class="edit-subtask">
-                <button class="edit-btn">
+                <button class="edit-btn" (click)="editSubtask(i)">
                   <svg
                     width="24"
                     height="24"
@@ -240,7 +251,11 @@
                   </svg>
                 </button>
                 <div class="separator"></div>
-                <button class="delete-btn">
+                <button
+                  class="delete-btn"
+                  type="button"
+                  (click)="deleteSubtask(i)"
+                >
                   <svg
                     width="24"
                     height="24"
