@@ -1,6 +1,9 @@
 @keyframes slideInFromRight {
-    0% {transform: translateX(100%)};
-    100% {transform:translateX(35%)}
+    // 0% {transform: translateX(100%)};
+    // 100% {transform:translateX(35%)}
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)};
+    
 }
 
 @keyframes slideInFromRight-tablet {
@@ -15,7 +18,7 @@
 
 @keyframes slideInFromRight-bigscreen {
     0% {transform: translateX(0%)};
-    100% {transform:translateX(-250%)}
+    100% {transform:translateX(-50%)}
 }
 
 @keyframes toast-addtask-slideInFromRight {
