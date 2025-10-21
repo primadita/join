@@ -119,8 +119,9 @@
       ul {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
         gap: 0.5rem;
-        width: 95%;
+        width: 100%;
         padding: 0.5rem 0;
+        overflow-x: auto;
         li {
           @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
           gap: 2.5rem;
@@ -141,63 +142,49 @@
     // #endregion ASSIGNED-TO-WRAPPER
 
     // #region SUBTASKS-WRAPPER
-    #subtask-wrapper {
-      button {
-        height: 2rem;
-        width: 2rem;
-        background-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 1.9rem;
-        border-radius: 50%;
+    .subtask-input-wrapper {
+      height: 4rem;
+      width: 100%;
 
-        &:hover {
+      #subtask-input {
+        padding-right: 6rem;
+      }
+
+      .subtask-btn-wrapper {
+        @include all.d-flex($flexdir: row);
+        gap: 0.4rem;
+        position: absolute;
+        top: 50%;
+        right: -1.6rem;
+        transform: translate(-50%, -50%);
+
+        .clear-btn {
+          width: 2rem;
+          height: 2rem;
+          background-image: url(../../../../../../../public/assets/icons/cancel.svg);
+        }
+
+        .btn-divide {
+          height: 2rem;
+          width: 0.1rem;
           background-color: all.$lightgray2;
         }
-      }
-      .subtask-input-wrapper {
-        height: 4rem;
-        width: 100%;
 
-        #subtask-input {
-          padding-right: 6rem;
-        }
-
-        .subtask-btn-wrapper {
-          @include all.d-flex($flexdir: row);
-          gap: 0.4rem;
-          position: absolute;
-          top: 50%;
-          right: -1.6rem;
-          transform: translate(-50%, -50%);
-
-          .clear-btn {
-            background-image: url(../../../../../../../public/assets/icons/cancel.svg);
-          }
-
-          .btn-divide {
-            height: 2rem;
-            width: 0.1rem;
-            background-color: all.$lightgray2;
-          }
-
-          .add-btn {
-            background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
-          }
+        .add-btn {
+          width: 2rem;
+          height: 2rem;
+          background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
         }
       }
-
+    }
+    #subtask-wrapper {
       ul {
-        width: 100%;
-        @include all.d-flex(
-          $flexdir: column,
-          $jc: space-between,
-          $alit: flex-start
-        );
-        gap: 0.5rem;
         padding-top: 0.5rem;
+        height: 12rem;
+        overflow-y: auto;
         li {
           width: 100%;
+
           cursor: pointer;
           padding: 0.5rem 0.6rem;
           border-radius: 1rem;
@@ -210,10 +197,6 @@
             );
             gap: 2.5rem;
 
-            span {
-              cursor: pointer;
-            }
-
             .edit-subtask {
               @include all.d-flex(
                 $flexdir: row,
@@ -221,6 +204,8 @@
                 $alit: center
               );
               gap: 0.5rem;
+              opacity: 0;
+              pointer-events: none;
 
               .separator {
                 height: 2rem;
@@ -229,10 +214,14 @@
               }
             }
           }
-        }
 
-        li:hover {
-          background-color: all.$lightgray;
+          &:hover {
+            background-color: all.$lightgray;
+            .list-content .edit-subtask {
+              opacity: 1;
+              pointer-events: all;
+            }
+          }
         }
       }
     }
