@@ -45,8 +45,20 @@ div{
     bottom: 50dvh;
     animation: toast-addtask-slideInFromRight 1s forwards;
     animation-iteration-count: 1; 
+    @include all.tablet{
+        width: 80%;
+    }
+    
 }
 .board{
     bottom: 50dvh;
-    right: calc(50dvw - 25rem);
+    animation: toast-board-slideInFromRight 1s forwards;
+    animation-iteration-count: 1; 
+    @include all.tablet{
+        width: 80%;
+        animation: toast-board-slideInFromRight-tablet 1s forwards;
+    }
+    @include all.mobile{
+        animation: toast-board-slideInFromRight-mobile 1s forwards;
+    }
 }

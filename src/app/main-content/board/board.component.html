@@ -70,7 +70,7 @@
                     </div>
                 }
                 @for (task of board?.todo; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task">
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task">
                     </app-task-card>
                 }
             </div>
@@ -102,7 +102,7 @@
                     </div>
                 }
                 @for (task of board?.inprogress; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -133,7 +133,7 @@
                     </div>
                 }
                 @for (task of board?.awaitfeedback; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -154,7 +154,7 @@
                     </div>
                 }
                 @for (task of board?.done; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
