@@ -61,7 +61,7 @@ export class AddTaskComponent {
 
   rpSearch: string = '';
 
-  subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
+
 
   singleSubtask: string = '';
 
@@ -203,10 +203,10 @@ export class AddTaskComponent {
 
   }
 
-  deleteSubtask(subtask: Subtask) {
-    const index = this.newTask.subtasks.indexOf(subtask);
-    this.newTask.subtasks.splice(index, 1);
-  }
+  // deleteSubtask(subtask: Subtask) {
+  //   const index = this.newTask.subtasks.indexOf(subtask);
+  //   this.newTask.subtasks.splice(index, 1);
+  // }
 
   checkValidation() {
     if (this.newTask.date != null) {
@@ -228,6 +228,26 @@ export class AddTaskComponent {
   setDate(date: Date | null) {
     this.newTask.date = date;
     console.log(this.newTask.date);
-    
+  }
+
+  // #region subtasks
+
+  deleteSubtask(index: number) {
+    const updated = this.newTask.subtasks.filter((_, i) => i !== index);
+    this.newTask = { ...this.newTask, subtasks: updated };
+  }
+
+  editingIndex: number | null = null;
+
+  editSubtask(i: number) {
+    this.editingIndex = i;
+  }
+
+  saveSubtaskEdit(i: number) {
+    this.editingIndex = null;
+  }
+
+  isEditing(i: number): boolean {
+    return this.editingIndex === i;
   }
 }
