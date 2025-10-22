@@ -1,0 +1,10 @@
+<div class="date-input-wrapper">
+    <input #date="ngModel" matInput [matDatepicker]="picker" placeholder="mm/dd/yyyy" name="date" [(ngModel)]="dueDate"
+        (ngModelChange)="sendDateToParent()" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    @if (dueDate != null) {
+    @if(dueDate < actualDate){ <span class="warning-date">Select an actual Date!</span>
+        }
+        }
+</div>
