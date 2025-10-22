@@ -13,6 +13,11 @@
 
 .btn-wrapper {
   margin-left: auto;
+
+  .close-btn {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+  }
 }
 
 .edit-task {
@@ -20,7 +25,7 @@
   max-width: 52.5rem;
   background: all.$white;
   border-radius: 3rem;
-  padding: 4.8rem 4rem;
+  padding: 3.8rem 3rem;
   box-shadow: all.$shadow;
 
   form {
@@ -55,7 +60,13 @@
 
     .date-input-wrapper {
       width: 100%;
+      border: 0.1rem solid all.$lightgray2;
+      border-radius: 0.8rem;
       @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
+
+      input {
+        border: none;
+      }
     }
 
     // #region PRIORITY-BTNS
@@ -71,7 +82,6 @@
         border-radius: 0.8rem;
         border: solid 1px #d9d9d9;
         background-color: all.$white;
-        transition: 125ms;
 
         &:hover {
           box-shadow: all.$shadow;
@@ -107,6 +117,21 @@
 
         path {
           fill: all.$white;
+        }
+      }
+    }
+
+    @media (max-width: 430px) {
+      .priority-btn-wrapper {
+        button {
+          @include all.d-flex($flexdir: row, $jc: space-around, $alit: center);
+          width: 30%;
+          font-size: 1.3rem;
+
+          svg {
+            height: 1.3rem;
+            width: 1.3rem;
+          }
         }
       }
     }
@@ -163,6 +188,8 @@
           height: 2rem;
           background-image: url(../../../../../../../public/assets/icons/cancel.svg);
           background-position: center;
+          padding: 0.25rem 0.5rem;
+          border-radius: 1rem;
         }
 
         .btn-divide {
@@ -176,6 +203,8 @@
           height: 2rem;
           background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
           background-position: center;
+          padding: 0.25rem 0.5rem;
+          border-radius: 1rem;
         }
       }
     }
@@ -204,9 +233,7 @@
 
             > span {
               flex: 1 1 auto;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+              overflow-wrap: anywhere;
             }
 
             .edit-subtask {
@@ -256,5 +283,15 @@
     }
 
     // #endregion SUBTASKS-WRAPPER
+
+    .btn-wrapper {
+      .ok-btn {
+        @include all.d-flex($flexdir: row, $jc: center, $alit: center);
+        color: all.$white;
+        background-color: all.$mainColor;
+        padding: 1.8rem 1rem;
+        border-radius: 1rem;
+      }
+    }
   }
 }

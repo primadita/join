@@ -5,7 +5,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
-  date: Date;
+  date: Date | null;
   priority: Priority | null;
   assignedTo: Array<Contact>;
   category: Category;
