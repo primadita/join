@@ -8,11 +8,15 @@
   justify-content: center;
   animation: fadeIn 0.2s ease-out forwards;
   z-index: 100;
-  padding: 0 1rem;
 }
 
 .btn-wrapper {
   margin-left: auto;
+
+  .close-btn {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+  }
 }
 
 .edit-task {
@@ -20,7 +24,7 @@
   max-width: 52.5rem;
   background: all.$white;
   border-radius: 3rem;
-  padding: 4.8rem 4rem;
+  padding: 1.7rem 1.5rem;
   box-shadow: all.$shadow;
 
   form {
@@ -30,6 +34,15 @@
 
     .input-wrapper {
       width: 100%;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .prio-label {
+        font-weight: bold;
+      }
     }
 
     input {
@@ -55,7 +68,13 @@
 
     .date-input-wrapper {
       width: 100%;
+      border: 0.1rem solid all.$lightgray2;
+      border-radius: 0.8rem;
       @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
+
+      input {
+        border: none;
+      }
     }
 
     // #region PRIORITY-BTNS
@@ -71,7 +90,6 @@
         border-radius: 0.8rem;
         border: solid 1px #d9d9d9;
         background-color: all.$white;
-        transition: 125ms;
 
         &:hover {
           box-shadow: all.$shadow;
@@ -110,6 +128,21 @@
         }
       }
     }
+
+    @media (max-width: 430px) {
+      .priority-btn-wrapper {
+        button {
+          @include all.d-flex($flexdir: row, $jc: space-around, $alit: center);
+          width: 30%;
+          font-size: 1.3rem;
+
+          svg {
+            height: 1.3rem;
+            width: 1.3rem;
+          }
+        }
+      }
+    }
     // #endregion PRIORITY-BTNS
 
     // #region ASSIGNED-TO-WRAPPER
@@ -119,8 +152,9 @@
       ul {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
         gap: 0.5rem;
-        width: 95%;
+        width: 100%;
         padding: 0.5rem 0;
+        overflow-x: auto;
         li {
           @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
           gap: 2.5rem;
@@ -141,75 +175,156 @@
     // #endregion ASSIGNED-TO-WRAPPER
 
     // #region SUBTASKS-WRAPPER
-    #subtask-wrapper {
-      button {
-        height: 2rem;
-        width: 2rem;
-        background-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 1.9rem;
-        border-radius: 50%;
+    .subtask-input-wrapper {
+      height: 4rem;
+      width: 100%;
 
-        &:hover {
+      #subtask-input {
+        padding-right: 6rem;
+      }
+
+      .subtask-btn-wrapper {
+        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
+        gap: 0.4rem;
+        position: absolute;
+        top: 50%;
+        right: -1.2rem;
+        transform: translate(-50%, -50%);
+
+        .clear-btn {
+          width: 2rem;
+          height: 2rem;
+          background-image: url(../../../../../../../public/assets/icons/cancel.svg);
+          background-position: center;
+          padding: 0.25rem 0.5rem;
+          border-radius: 1rem;
+        }
+
+        .btn-divide {
+          height: 2rem;
+          width: 0.1rem;
           background-color: all.$lightgray2;
         }
-      }
-      .subtask-input-wrapper {
-        height: 4rem;
-        width: 100%;
 
-        #subtask-input {
-          padding-right: 6rem;
-        }
-
-        .subtask-btn-wrapper {
-          @include all.d-flex($flexdir: row);
-          gap: 0.4rem;
-          position: absolute;
-          top: 50%;
-          right: -1.6rem;
-          transform: translate(-50%, -50%);
-
-          .clear-btn {
-            background-image: url(../../../../../../../public/assets/icons/cancel.svg);
-          }
-
-          .btn-divide {
-            height: 2rem;
-            width: 0.1rem;
-            background-color: all.$lightgray2;
-          }
-
-          .add-btn {
-            background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
-          }
+        .add-btn {
+          width: 2rem;
+          height: 2rem;
+          background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
+          background-position: center;
+          padding: 0.25rem 0.5rem;
+          border-radius: 1rem;
         }
       }
-
+    }
+    #subtask-wrapper {
       ul {
-        width: 100%;
+        height: 100%;
+        max-height: 11rem;
+        overflow-y: auto;
+        @include all.d-flex(
+          $flexdir: column,
+          $jc: flex-start,
+          $alit: flex-start
+        );
+        gap: 0.5rem;
         li {
-          display: list-item;
-          list-style: disc;
-          margin-left: 10%;
-
+          width: 100%;
+          position: relative;
+          padding: 0.5rem 0;
+          border-radius: 1rem;
+          cursor: pointer;
           .list-content {
+            width: 100%;
             @include all.d-flex(
-              $flexdir: center,
-              $jc: flex-start,
+              $flexdir: row,
+              $jc: space-between,
               $alit: center
             );
             gap: 2.5rem;
 
-            span {
+            > span {
+              flex: 1 1 auto;
+            }
+
+            .edit-wrapper {
               width: 100%;
-              cursor: pointer;
+              .edit-input {
+                width: 100%;
+                height: 3rem;
+                border-style: none;
+                border-bottom: 1px solid all.$lightblue2;
+                border-radius: 0%;
+              }
+              .edit-subtask {
+                @include all.d-flex(
+                  $flexdir: row,
+                  $jc: flex-start,
+                  $alit: center
+                );
+                gap: 0.4rem;
+                position: absolute;
+                top: 50%;
+                right: -1.8rem;
+                transform: translate(-50%, -50%);
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.2s ease-in-out;
+
+                button {
+                  @include all.d-flex(
+                    $flexdir: row,
+                    $jc: center,
+                    $alit: center
+                  );
+                  padding: 0.25rem 0.25rem;
+                  border-radius: 1rem;
+                }
+
+                .separator {
+                  height: 2rem;
+                  width: 0.1rem;
+                  background-color: all.$lightgray4;
+                }
+              }
             }
           }
+
+          &:hover .list-content .edit-wrapper .edit-subtask {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+          }
+
+          &.editing .list-content .edit-wrapper .edit-subtask,
+          .list-content .edit-subtask.force-visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+          }
+        }
+
+        li:hover {
+          background-color: all.$lightgray4;
+        }
+
+        li.editing:hover {
+          background-color: transparent;
         }
       }
     }
+
     // #endregion SUBTASKS-WRAPPER
+
+    .btn-wrapper {
+      .ok-btn {
+        @include all.d-flex($flexdir: row, $jc: center, $alit: center);
+        color: all.$white;
+        background-color: all.$mainColor;
+        padding: 1.8rem 1rem;
+        border-radius: 1rem;
+      }
+    }
   }
 }

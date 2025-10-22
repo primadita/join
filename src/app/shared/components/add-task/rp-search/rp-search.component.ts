@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, inject, output, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  output,
+  signal,
+} from '@angular/core';
 import { FirebaseServiceService } from '../../../services/firebase.service';
 import { Contact } from '../../../interfaces/contact';
 import { FormsModule } from '@angular/forms';
@@ -8,19 +15,18 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-rp-search',
   imports: [CommonModule, FormsModule],
   templateUrl: './rp-search.component.html',
-  styleUrl: './rp-search.component.scss'
+  styleUrl: './rp-search.component.scss',
 })
 export class RpSearchComponent {
-
   contacts = inject(FirebaseServiceService);
 
-  rpArray:Array<Contact> = [];
+  rpArray: Array<Contact> = [];
 
   changeAssignedArray = output<Array<Contact>>();
 
-  searchInput: string = "";
+  searchInput: string = '';
 
-  constructor(private el: ElementRef) { }
+  constructor(public el: ElementRef) {}
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -54,35 +60,36 @@ export class RpSearchComponent {
     const test = array.includes(contact);
     if (!test) {
       array.push(contact);
-
     } else if (test) {
       const index = array.indexOf(contact);
       array.splice(index, 1);
-
     }
     this.changeAssignedArray.emit(array);
   }
 
-  checkSelectedRp(contact: Contact):boolean{
-    if(this.rpArray.includes(contact)){
+  checkSelectedRp(contact: Contact): boolean {
+    if (this.rpArray.includes(contact)) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  searchContact(){
+  searchContact() {
     const lowerSearch = this.searchInput.toLowerCase();
-    const foundContacts = this.sortedContacts().filter(contact =>
+    const foundContacts = this.sortedContacts().filter((contact) =>
       contact.name.toLowerCase().includes(lowerSearch)
-    )
-    return foundContacts
+    );
+    return foundContacts;
   }
-
 
   // #region Input-Signal
 
   isListOpen = signal(false);
+
+  closeList() {
+    this.isListOpen.set(false);
+  }
 
   onFocus() {
     this.isListOpen.set(true);

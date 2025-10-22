@@ -13,6 +13,7 @@ import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @Component({
   selector: 'app-add-task',
@@ -25,7 +26,8 @@ import { ToastMessagesService } from '../../services/toast-messages.service';
     MatAutocompleteModule,
     FormsModule,
     RpSearchComponent,
-    CategoryComponent
+    CategoryComponent,
+    DatePickerComponent
   ],
 
   templateUrl: './add-task.component.html',
@@ -59,7 +61,7 @@ export class AddTaskComponent {
 
   rpSearch: string = '';
 
-  subtasks: Array<string> = ['Wäsche waschen', 'Fenster putzen'];
+
 
   singleSubtask: string = '';
 
@@ -98,13 +100,16 @@ export class AddTaskComponent {
   }
 
   addSubtask() {
-    const subtaskTitle = this.singleSubtask;
-    const newSubtask: Subtask = {
-      title: subtaskTitle,
-      done: false,
-    };
-    this.newTask.subtasks.push(newSubtask);
-    this.singleSubtask = '';
+    if (this.singleSubtask.length > 0) {
+      const subtaskTitle = this.singleSubtask;
+      const newSubtask: Subtask = {
+        title: subtaskTitle,
+        done: false,
+      };
+      this.newTask.subtasks.push(newSubtask);
+      this.singleSubtask = '';
+    }
+
   }
 
   // #region prioritySetting
@@ -144,11 +149,6 @@ export class AddTaskComponent {
   // #endregion
 
 
-  addNewTask() {
-    const newTask = this.newTask;
-    // console.log(newTask);
-  }
-
   updateAssignedTo(array: Array<Contact>) {
     this.newTask.assignedTo = array;
     // console.log(this.newTask.assignedTo);
@@ -179,15 +179,15 @@ export class AddTaskComponent {
   onCreateTask() {
     if (this.parentContext === 'addtask') {
       this.taskService.addTask(this.newTask);
-      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
-      setTimeout(() => {this.taskCreated.emit()}, 3000);
+      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
+      setTimeout(() => { this.taskCreated.emit() }, 3000);
     }
 
     if (this.parentContext === 'board') {
       this.createTask.emit(this.newTask);
-      this.toastService.show('Task added to board', 'success','./assets/icons/board.svg');
+      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
     }
-    
+
   }
   getThreeRP(): Contact[] {
     const array = this.newTask.assignedTo;
@@ -206,22 +206,47 @@ export class AddTaskComponent {
 
   }
 
-  deleteSubtask(subtask: Subtask) {
-    const index = this.newTask.subtasks.indexOf(subtask);
-    this.newTask.subtasks.splice(index, 1);
+  checkValidation() {
+    if (this.newTask.date != null) {
+      if (this.newTask.title.length >= 1 &&
+        (this.newTask.date >= this.actualDate) &&
+        this.newTask.category != TASK_CATEGORY.DEFAULT) {
+        this.onCreateTask();
+      }
+    }
+    else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+
+      console.log('Task konnte nicht erstellt werden');
+      this.categorySelected = false;
+    } else {
+      console.log('Task konnte nicht erstellt werden');
+    }
   }
 
-  checkValidation(){
-    if(this.newTask.title.length >= 1 &&
-      this.newTask.date >= this.actualDate &&
-      this.newTask.category != TASK_CATEGORY.DEFAULT){
-        this.onCreateTask();
-      }else if(this.newTask.category == TASK_CATEGORY.DEFAULT){
+  setDate(date: Date | null) {
+    this.newTask.date = date;
+    console.log(this.newTask.date);
+  }
 
-        console.log('Task konnte nicht erstellt werden');
-        this.categorySelected = false;        
-      }else{
-        console.log('Task konnte nicht erstellt werden');
-      }
+  // #region subtasks
+
+  deleteSubtask(index: number) {
+    const updated = this.newTask.subtasks.filter((_, i) => i !== index);
+    this.newTask = { ...this.newTask, subtasks: updated };
+    this.editingIndex = null;
+  }
+
+  editingIndex: number | null = null;
+
+  editSubtask(i: number) {
+    this.editingIndex = i;
+  }
+
+  saveSubtaskEdit(i: number) {
+    this.editingIndex = null;
+  }
+
+  isEditing(i: number): boolean {
+    return this.editingIndex === i;
   }
 }
