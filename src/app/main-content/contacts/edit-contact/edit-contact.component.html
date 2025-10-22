@@ -21,7 +21,7 @@
                 <!-- #region NAME -->
                 <div class="input-wrapper">
                     <input #name="ngModel" [(ngModel)]="contactData.name" appPatternValidator="generalName" type="text" name="name" placeholder="Name"
-                        required appPatternValidator="generalName" [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img src="assets/icons/person-gray.svg" alt="Input field for name">
+                        required appPatternValidator="generalName" (ngModelChange)="formatName($event)" [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img src="assets/icons/person-gray.svg" alt="Input field for name">
                     @if (name.touched){
                         @if (name.hasError('required')){
                             <span>Name is required.</span>

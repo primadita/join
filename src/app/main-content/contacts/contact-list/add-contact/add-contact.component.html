@@ -20,7 +20,7 @@
                 <!-- #region NAME -->
                 <div class="input-wrapper">
                     <input #name="ngModel" appPatternValidator="generalName" [(ngModel)]="contactData.name" type="text" placeholder="Name" name="name"
-                        required [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img
+                        required (ngModelChange)="formatName($event)" [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img
                         src="assets/icons/person-gray.svg" alt="">
                     @if (name.touched){
                         @if (name.hasError('required')){

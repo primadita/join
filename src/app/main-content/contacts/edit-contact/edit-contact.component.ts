@@ -111,5 +111,13 @@ export class EditContactComponent {
       this.sendSaveInput();
     }
   }
+  
+  formatName(value: string) {
+    if (!value) return;
+
+    this.contactData.name = value
+      .toLowerCase()
+      .replace(/(^\w|[-'\s]\w)/g, c => c.toUpperCase()); // \w ist für Wortzeichen oder Wortzeichen nach dem Strich oder Apostroph oder Leerzeichen to upper case
+  }
   // #endregion
 }
