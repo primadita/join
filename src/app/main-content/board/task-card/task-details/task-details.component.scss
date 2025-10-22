@@ -12,6 +12,7 @@
   padding: 0 1rem;
 }
 
+// region-task-details
 .task-details {
   width: 100%;
   max-width: 52.5rem;
@@ -49,6 +50,7 @@
 
   .category-title {
     .task-title {
+      overflow-wrap: anywhere;
     }
   }
 
@@ -197,6 +199,7 @@
     }
   }
 }
+// endregion-task-details
 
 @media (max-width: 380px) {
   .task-details {

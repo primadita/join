@@ -173,7 +173,7 @@
                         color: red;
 
                         @include all.mobile {
-                            display: none;
+                            top: 3rem;
                         }
                     }
                 }
