@@ -117,6 +117,7 @@ export class ContactDetailsComponent {
     if (contact) {
       this.selectedContact = contact;
     }
+    this.isEditPoppUpOpen = false;
     this.edit = !this.edit;
   }
 
