@@ -19,11 +19,15 @@
             <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
                 <!-- #region NAME -->
                 <div class="input-wrapper">
-                    <input #name="ngModel" [(ngModel)]="contactData.name" type="text" placeholder="Name" name="name"
+                    <input #name="ngModel" appPatternValidator="generalName" [(ngModel)]="contactData.name" type="text" placeholder="Name" name="name"
                         required [ngStyle]="{'border-color': !name.valid && name.touched ? 'red' : '#D9D9D9'}"><img
                         src="assets/icons/person-gray.svg" alt="">
-                    @if (!name.valid && name.touched){
-                    <span>Please enter a name!</span>
+                    @if (name.touched){
+                        @if (name.hasError('required')){
+                            <span>Name is required.</span>
+                        } @else if (name.hasError('invalidPattern')) {
+                            <span>No numbers, ,,.,#,*,!,$,%,&,\,/,_,",?,~,=,;,:</span>
+                        }
                     }
                 </div>
                 <!-- #endregion -->
@@ -32,20 +36,28 @@
                     <input #mail="ngModel" [(ngModel)]="contactData.email"
                         [ngStyle]="{'border-color': !mail.valid && mail.touched ? 'red' : '#D9D9D9'}" type="email"
                         placeholder="Email" name="email" required
-                        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"><img src="assets/icons/mail.svg"
+                        appPatternValidator="emailFormat"><img src="assets/icons/mail.svg"
                         alt="">
-                    @if (!mail.valid && mail.touched){
-                    <span>Please enter a valid Email!</span>
+                    @if (mail.touched){
+                        @if(mail.hasError('required')){
+                            <span>Email address is required.</span>
+                        } @else if (mail.hasError('invalidPattern')) {
+                            <span>Please enter a valid email address!</span>
+                        }
                     }
                 </div>
                 <!-- #endregion -->
                 <!-- #region PHONE -->
                 <div class="input-wrapper">
-                    <input #phone="ngModel" [(ngModel)]="contactData.phone" type="text" placeholder="Phone" name="phone"
+                    <input #phone="ngModel" appPatternValidator="phoneFormat" [(ngModel)]="contactData.phone" type="text" placeholder="Phone" name="phone"
                         required [ngStyle]="{'border-color': !phone.valid && phone.touched ? 'red' : '#D9D9D9'}"><img
                         src="assets/icons/phone.svg" alt="">
-                    @if (!phone.valid && phone.touched){
-                    <span>Please enter a valid number!</span>
+                    @if (phone.touched){
+                        @if(phone.hasError('required')){
+                            <span>Phone number is required</span>
+                        }@else if (phone.hasError('invalidPattern')) {
+                            <span>Please enter a valid number!</span>
+                        }
                     }
                 </div>
                 <!-- #endregion -->

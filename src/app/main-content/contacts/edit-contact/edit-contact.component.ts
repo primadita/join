@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, PatternValidator } from '@angular/forms';
 import { UserProfileImageComponent } from '../../../shared/components/user-profile-image/user-profile-image.component';
 import { Contact } from '../../../shared/interfaces/contact';
 import { FirebaseServiceService } from '../../../shared/services/firebase.service';
+import { PatternValidatorDirective } from '../../../shared/directives/pattern-validator.directive';
 
 @Component({
   selector: 'app-edit-contact',
-  imports: [CommonModule, FormsModule, UserProfileImageComponent],
+  imports: [CommonModule, FormsModule, UserProfileImageComponent, PatternValidatorDirective],
   templateUrl: './edit-contact.component.html',
   styleUrl: './edit-contact.component.scss'
 })

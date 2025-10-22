@@ -161,6 +161,9 @@
             left: 1.6rem;
             font-size: 1.2rem;
             color: red;
+            @include all.mobile{
+              top: 3rem;
+            }
           }
         }
 
