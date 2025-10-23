@@ -36,7 +36,7 @@
         <div class="input-wrapper">
           <h6>Priority</h6>
           <div class="priority-btn-wrapper">
-            <button (click)="setPriorityUrgent()" [ngClass]="{ 'active-urgent': priorityFlag.urgent }">
+            <button type="button" (click)="setPriorityUrgent()" [ngClass]="{ 'active-urgent': priorityFlag.urgent }">
               Urgent
               <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_379835_5802)">
@@ -54,7 +54,7 @@
                 </defs>
               </svg>
             </button>
-            <button (click)="setPriorityMedium()" [ngClass]="{ 'active-medium': priorityFlag.medium }">
+            <button type="button" (click)="setPriorityMedium()" [ngClass]="{ 'active-medium': priorityFlag.medium }">
               Medium
               <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_379835_5809)">
@@ -72,7 +72,7 @@
                 </defs>
               </svg>
             </button>
-            <button (click)="setPriorityLow()" [ngClass]="{ 'active-low': priorityFlag.low }">
+            <button type="button" (click)="setPriorityLow()" [ngClass]="{ 'active-low': priorityFlag.low }">
               Low
               <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
