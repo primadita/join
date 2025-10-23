@@ -14,6 +14,10 @@
     @include all.d-flex($flexdir: row, $jc: space-between);
 }
 
+.active-list{
+    border: solid 1px all.$lightblue2;
+}
+
 .category-selection {
     position: absolute;
     top: 4rem;
