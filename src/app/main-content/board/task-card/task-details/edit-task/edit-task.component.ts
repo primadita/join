@@ -35,6 +35,9 @@ export class EditTaskComponent {
   @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
+  @Output() delete = new EventEmitter<string>();
+
+  isOpen: boolean = true;
 
   priorityFlag = {
     urgent: false,
@@ -51,6 +54,20 @@ export class EditTaskComponent {
     private contactsSvc: FirebaseServiceService,
     private profilService: UserProfileImageService
   ) {}
+
+  onOverlayClick() {
+    this.isOpen = false;
+  }
+
+  onContentClick(ev: MouseEvent, rpSearch: RpSearchComponent) {
+    const host = rpSearch?.el?.nativeElement as HTMLElement | undefined;
+    if (host && host.contains(ev.target as Node)) {
+      ev.stopPropagation();
+      return;
+    }
+    rpSearch?.closeList(); // Dropdown schließen
+    ev.stopPropagation(); // Overlay NICHT schließen
+  }
 
   setPriority(p: Priority) {
     this.task = { ...this.task, priority: p };
@@ -144,5 +161,43 @@ export class EditTaskComponent {
 
   onCancel() {
     this.close.emit();
+  }
+
+  onAssignedChange(selectedContacts: Contact[]) {
+    const current = this.task.assignedTo || [];
+    const incoming = selectedContacts || [];
+
+    // Additiver Merge: alles behalten, neue hinzufügen (unique nach id)
+    const byId = new Map<string, Contact>();
+
+    // 1) bisherige behalten
+    for (const c of current) byId.set(c.id, c);
+
+    // 2) neue drüberlegen (aktualisiert oder fügt hinzu)
+    for (const c of incoming) byId.set(c.id, c);
+
+    const updatedContacts = Array.from(byId.values());
+
+    this.task = { ...this.task, assignedTo: updatedContacts };
+  }
+
+  deleteSubtask(index: number) {
+    const updated = this.task.subtasks.filter((_, i) => i !== index);
+    this.task = { ...this.task, subtasks: updated };
+    this.editingIndex = null;
+  }
+
+  editingIndex: number | null = null;
+
+  editSubtask(i: number) {
+    this.editingIndex = i;
+  }
+
+  saveSubtaskEdit(i: number) {
+    this.editingIndex = null;
+  }
+
+  isEditing(i: number): boolean {
+    return this.editingIndex === i;
   }
 }

@@ -19,12 +19,12 @@
     <div class="board-title-div-mobile">
         <div>
             <h1>Board</h1>
-            <button id="add-task-global">
+            <button id="add-task-global" (click)="toggleAddTask()">
                 <img src="./assets/icons/add.svg" alt="add button">
             </button>
         </div>
         <div class="search-div">
-            <input [formControl]="searchControl" type="text" id="search-input" placeholder="Find Task" >
+            <input [formControl]="searchControl" type="text" id="search-input-field" placeholder="Find Task" >
             <div class="vline"></div>
             <img src="./assets/icons/search.svg" alt="search for">
         </div>
@@ -62,7 +62,8 @@
                 id="toDoList"
                 #toDoList = "cdkDropList"
                 [cdkDropListData]="board?.todo ?? []"
-                (cdkDropListDropped)="drop($event)"
+                (cdkDropListDropped)="dropAndUnhighlight($event, toDoList)"
+                (cdkDropListEntered)="highlightDropList(toDoList)"
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim()&& (board?.todo?.length ?? 0)=== 0){
                     <div class="empty-list">
@@ -70,7 +71,7 @@
                     </div>
                 }
                 @for (task of board?.todo; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task">
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task">
                     </app-task-card>
                 }
             </div>
@@ -94,7 +95,8 @@
                 id="inProgressList" 
                 #inProgressList = "cdkDropList"
                 [cdkDropListData]="board?.inprogress ?? []"
-                (cdkDropListDropped)="drop($event)"
+                (cdkDropListDropped)="dropAndUnhighlight($event, inProgressList)"
+                (cdkDropListEntered)="highlightDropList(inProgressList)"
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.inprogress?.length ?? 0) === 0){
                     <div class="empty-list">
@@ -102,7 +104,7 @@
                     </div>
                 }
                 @for (task of board?.inprogress; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -125,7 +127,8 @@
                 id="awaitFeedbackList"
                 #awaitFeedbackList = "cdkDropList"
                 [cdkDropListData]="board?.awaitfeedback ?? []"
-                (cdkDropListDropped)="drop($event)"
+                (cdkDropListDropped)="dropAndUnhighlight($event, awaitFeedbackList)"
+                (cdkDropListEntered)="highlightDropList(awaitFeedbackList)"
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.awaitfeedback?.length ?? 0)  === 0){
                     <div class="empty-list">
@@ -133,7 +136,7 @@
                     </div>
                 }
                 @for (task of board?.awaitfeedback; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -146,7 +149,8 @@
                 id="doneList"
                 #doneList = "cdkDropList"
                 [cdkDropListData]="board?.done ?? []"
-                (cdkDropListDropped)="drop($event)"
+                (cdkDropListDropped)="dropAndUnhighlight($event, doneList)"
+                (cdkDropListEntered)="highlightDropList(doneList)"
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.done?.length ?? 0) === 0){
                     <div class="empty-list">
@@ -154,18 +158,22 @@
                     </div>
                 }
                 @for (task of board?.done; track task.id){
-                    <app-task-card cdkDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
                 }
             </div>
         </div>
     </div>
-
-  <ng-container *ngIf="showDetail && selectedTask as task">
-    <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>
-  </ng-container>
-
-  <ng-container *ngIf="addTaskWindow">
-    <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
-
-  </ng-container>
+    <!-- #endregion -->
+    <!-- #region OVERLAY TASK DETAILS -->
+    <ng-container *ngIf="showDetail && selectedTask as task">
+        <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>
+    </ng-container>
+    <!-- #endregion -->
+    <!-- #region ADD TASK POP UP -->
+    <ng-container *ngIf="addTaskWindow">
+        <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
+    </ng-container>
+    <app-toast-message [context]="'board'">
+    </app-toast-message>
+    <!-- #endregion -->
 </section>

@@ -150,15 +150,16 @@
         color: all.$lightblue;
       }
       a {
-        width: 40rem;
+        width: auto;
+        max-width: 40rem;
         white-space: nowrap;
         overflow-x: hidden;
         text-overflow: ellipsis;
         @media (max-width: 450px) {
-          width: 30rem;
+          max-width: 30rem;
         }
         @media (max-width: 350px) {
-          width: 25rem;
+          max-width: 25rem;
         }
       }
     }

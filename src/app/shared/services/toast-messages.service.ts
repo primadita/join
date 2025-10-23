@@ -28,8 +28,8 @@ export class ToastMessagesService {
    * @param {string} text - The message text.
    * @param {'success'|'error'} type - The type of message.
    */
-  show(text: string, type: 'success'|'error'){
-    this.toastMessageSubject.next({text, type});
+  show(text: string, type: 'success'|'error', imgUrl?: string){
+    this.toastMessageSubject.next({text, type, imgUrl});
   }
   // #endregion
 }

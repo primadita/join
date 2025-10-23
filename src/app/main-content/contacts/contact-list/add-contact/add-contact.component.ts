@@ -8,10 +8,11 @@ import { UserProfileImageService } from '../../../../shared/services/user-profil
 import { updateDoc } from '@angular/fire/firestore';
 import { SelectContactService } from '../../../../shared/services/select-contact.service';
 import { ToastMessagesService } from '../../../../shared/services/toast-messages.service';
+import { PatternValidatorDirective } from "../../../../shared/directives/pattern-validator.directive";
 
 @Component({
   selector: 'app-add-contact',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PatternValidatorDirective],
   templateUrl: './add-contact.component.html',
   styleUrl: './add-contact.component.scss',
 })
@@ -173,6 +174,14 @@ export class AddContactComponent {
     const arrayLength = this.contactService.contactsList.length;
     return arrayLength + 1;
   }
+
+  formatName(value: string) {
+  if (!value) return;
+
+  this.contactData.name = value
+    .toLowerCase()
+    .replace(/(^\w|[-'\s]\w)/g, c => c.toUpperCase()); // \w ist für Wortzeichen oder Wortzeichen nach dem Strich oder Apostroph oder Leerzeichen to upper case
+}
   // #endregion
 }
 

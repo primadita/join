@@ -10,6 +10,13 @@
     color: all.$black;
     font-size: 1.6rem;
     font-family: all.$font;
+    &:focus{
+        border: solid 1px all.$lightblue2; 
+        outline: none;
+    }
+    &.ng-touched:invalid{
+        border: solid 1px all.$priority_urgent; 
+    }
 }
 
 
@@ -39,6 +46,9 @@
 
                 .item-name {
                     width: 20rem;
+                    @media(max-width: 380px){
+                        width: 15rem;
+                    }
                     overflow-x: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;

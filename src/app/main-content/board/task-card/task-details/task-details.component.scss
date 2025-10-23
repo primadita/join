@@ -12,6 +12,7 @@
   padding: 0 1rem;
 }
 
+// region-task-details
 .task-details {
   width: 100%;
   max-width: 52.5rem;
@@ -44,6 +45,12 @@
     }
     to {
       opacity: 1;
+    }
+  }
+
+  .category-title {
+    .task-title {
+      overflow-wrap: anywhere;
     }
   }
 
@@ -129,7 +136,8 @@
       @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
       gap: 0.5rem;
       width: 95%;
-      height: 11.6rem;
+      height: 100%;
+      max-height: 11.6rem;
       margin-left: 2rem;
       overflow-x: auto;
       padding: 0.5rem 0;
@@ -156,6 +164,8 @@
     gap: 0.5rem;
     ul {
       margin-left: 2rem;
+      height: 11rem;
+      overflow-y: auto;
       li {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 1rem;
@@ -190,6 +200,7 @@
     }
   }
 }
+// endregion-task-details
 
 @media (max-width: 380px) {
   .task-details {

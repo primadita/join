@@ -5,6 +5,7 @@ section{
     font-family: all.$font;
     padding: 8rem 6.4rem;
     // #region TITLE & SEARCH & GLOBAL ADD TASK BUTTON
+    // Desktop View
     .board-title-div{
         @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
         padding-bottom: 4rem;
@@ -70,11 +71,16 @@ section{
             }
         }
     }
+    // Mobile View
     .board-title-div-mobile{
         display: none;
         @media (max-width: 890px) {
             @include all.d-flex($alit: flex-start, $rgap: 4rem);
+            padding-bottom: 3rem;
             width: 100%;
+            @include all.mobile{
+                padding-bottom: 0;
+            }
             >div{
                 @include all.d-flex($flexdir: row, $jc: space-between);
                 width: 100%;
@@ -121,7 +127,7 @@ section{
         }
     }
     @include all.mobile{
-        padding: 4.5rem 3rem;
+        padding: 3rem 2rem;
     }
     .no-result-div{
         padding: 2rem 2rem 4rem 2rem;
@@ -140,9 +146,8 @@ section{
             }
         }
     }
-    
     // #endregion
-    // #region Progress board
+    // #region PROGRESS BOARD
     .progress-board{
         width: 100%;
         @include all.d-flex($flexdir: row, $jc: space-around, $cgap: 2rem);
@@ -174,10 +179,19 @@ section{
             }
             .progress-list{
                 width: 100%;
-                height: 50rem;
+                height: calc(100dvh - 16rem - 6.4rem - 11.4rem);
                 overflow-y: auto;
                 overflow-x: hidden;
                 display: block;
+                transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+                border: 2px solid transparent;
+                border-radius: 0.8rem;
+                &.drag-over {
+                    border: 2px dashed all.$lightgray3;
+                    background-color: rgba(all.$lightgray3, 0.2);
+                    box-shadow: inset 0 0 10px rgba(all.$lightgray3, 0.4);
+                    border-radius: 0.8rem;
+                }
                 .empty-list{
                     width: 100%;
                     height: 4.8rem;
@@ -188,23 +202,33 @@ section{
                     @include all.d-flex();
                 }
             }
+            app-task-card{
+                &.drag-active {
+                    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                }
+            }
         }
         @media (max-width: 1400px) {
             @include all.d-flex($flexdir: column, $alit: flex-start, $jc: flex-start);
             width: auto;
             max-width: calc(100dvw - 23.2rem - 12.8rem);
+            height: auto;
+            max-height: calc(100dvh - 16rem - 11.4rem - 6.4rem);
+            overflow-y: auto ;
             @include all.notebook {
-                max-width: calc(100dvw - 23.2rem - 9rem);
+                max-width: calc(100dvw - 23.2rem - 12.8rem);
+            }
+            @media (max-width: 890px) {
+                max-height: calc(100dvh - 12rem - 19.2rem - 6.4rem);
             }
             @media (max-width: 800px) {
                 max-width: calc(100dvw - 9rem);
+                max-height: calc(100dvh - 7rem - 6.4rem - 12rem - 22.2rem);
             }
             @include all.mobile{
-                max-width: calc(100dvw - 6rem);
+                max-width: calc(100dvw - 4rem);
+                max-height: calc(100dvh - 16.7rem - 6rem - 7rem - 6.4rem);
             }
-            height: auto;
-            max-height: calc(100dvh - 8rem - 30rem);
-            overflow-y: auto ;
             .progress-container{
                 width: 100%;
                 height: 35rem;
@@ -214,6 +238,8 @@ section{
                     min-height: 4.8rem;
                     overflow-x: auto;
                     flex-wrap: nowrap;
+                    touch-action: pan-y pan-x;
+                    -webkit-overflow-scrolling: touch;
                     @include all.d-flex($flexdir:row, $jc: flex-start, $alit: flex-start,$cgap:1rem);
                     .empty-list{
                         width: 100%;
@@ -223,7 +249,6 @@ section{
         }
     }
     // #endregion
-    
 }
 
 

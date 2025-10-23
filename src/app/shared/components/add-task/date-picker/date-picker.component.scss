@@ -1,0 +1,53 @@
+@use './../../../../../../public/assets/styles/all-styles.scss' as all;
+
+.date-input-wrapper {
+
+    display: flex;
+    width: 40rem;
+    
+    @media(max-width: 450px) {
+        width: 35rem;
+    }
+
+    @media(max-width: 380px) {
+        width: 30rem;
+    }
+
+    height: 4rem;
+    align-items: center;
+    border: 1px solid all.$lightgray6;
+    border-radius: 0.8rem;
+    padding-right: 40px;
+    background-color: all.$white;
+
+    &:focus-within{
+        border: 1px solid all.$lightblue2;
+    }
+    input {
+        border: none;
+        border-radius: 0.8rem;
+        outline: none;
+        padding: 8px 12px;
+        font-size: 1.6rem;
+        
+    }
+
+    mat-datepicker-toggle {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+    }
+
+    .warning-date {
+        color: all.$priority_urgent;
+        position: absolute;
+        font-size: 1.2rem;
+        top: 4.2rem;
+        left: 1rem;
+    }
+}
+.date-input-wrapper.invalid {
+  border: 1px solid all.$priority_urgent;
+}
