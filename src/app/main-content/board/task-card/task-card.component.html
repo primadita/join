@@ -25,16 +25,18 @@
 
   <div class="contact-priority">
     <!-- Kontakte laden -->
-    <div class="contacts" *ngIf="contacts.length">
-      <div>
+    <div class="contacts">
+      <div *ngIf="contacts.length > 0; else empty">
         <span
           class="contact"
-          *ngFor="let c of contacts | slice : 0 : 3; let i = index"
+          *ngFor="let c of contacts | slice : 0 : 3"
           [style.backgroundColor]="bgColorOf(c)"
         >
           {{ initialsOf(c) }}
         </span>
       </div>
+      <ng-template #empty><div class="contact-placeholder"></div></ng-template>
+
       <div class="contacts-number" *ngIf="assignedToContacts">
         <span>+{{ assignedToContacts }}</span>
       </div>

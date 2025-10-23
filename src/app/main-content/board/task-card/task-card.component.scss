@@ -96,6 +96,12 @@
       }
     }
 
+    .contact-placeholder {
+      width: 6rem; // gleiche Breite wie typischer Avatarblock
+      height: 3rem; // oder was optisch passt
+      visibility: hidden; // nimmt Platz ein, aber bleibt unsichtbar
+    }
+
     .priority {
       @include all.d-flex($flexdir: row, $jc: center, $alit: center);
     }
