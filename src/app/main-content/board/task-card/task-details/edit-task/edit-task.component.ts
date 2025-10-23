@@ -231,14 +231,9 @@ export class EditTaskComponent {
     return d instanceof Date && !isNaN(d.getTime());
   }
 
-  private isInFuture(d: Date): boolean {
-    // „heute“ ist nicht erlaubt → beide auf Mitternacht normieren
-    const picked = new Date(d);
-    picked.setHours(0, 0, 0, 0);
-
+  private isInFuture(date: Date): boolean {
+    const picked = new Date(date);
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
     return picked.getTime() > today.getTime();
   }
 }
