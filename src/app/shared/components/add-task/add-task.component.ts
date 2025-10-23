@@ -36,7 +36,6 @@ export class AddTaskComponent {
   // #region ATTRIBUTES
   contacts = inject(FirebaseServiceService);
   taskService = inject(TaskService);
-
   newTask: Task = {
     id: '',
     title: '',
@@ -48,18 +47,16 @@ export class AddTaskComponent {
     subtasks: [],
     status: TASK_STATUS.TO_DO,
   };
-
   priorityFlag = {
     urgent: false,
     medium: true,
     low: false,
   };
-
   categorySelected = true;
   actualDate = new Date();
   rpSearch: string = '';
   singleSubtask: string = '';
-
+  editingIndex: number | null = null;
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
   @Output() taskCreated = new EventEmitter<void>();
@@ -69,6 +66,13 @@ export class AddTaskComponent {
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   // #region METHODS
+  // #region METHODS of PRIORITY
+  // #endregion
+  // #region METHODS of ASSIGNED TO
+  // #endregion
+  get titleTooLong() {
+    return this.newTask.title?.length >= 30;
+  }
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
     const first = parts[0]?.[0] || '';
@@ -135,7 +139,7 @@ export class AddTaskComponent {
 
   unsetPriority(priority: 'urgent' | 'medium' | 'low') {
     if (priority == this.newTask.priority) {
-      this.newTask.priority = null;
+      this.newTask.priority = TASK_PRIORITY.MEDIUM;
     } else {
       this.newTask.priority = priority;
     }
@@ -154,7 +158,7 @@ export class AddTaskComponent {
       title: '',
       description: '',
       date: new Date(),
-      priority: null,
+      priority: TASK_PRIORITY.MEDIUM,
       assignedTo: [],
       category: TASK_CATEGORY.DEFAULT,
       subtasks: [],
@@ -163,7 +167,7 @@ export class AddTaskComponent {
 
     this.priorityFlag = {
       urgent: false,
-      medium: false,
+      medium: true,
       low: false,
     };
     this.clearTask.emit();
@@ -229,7 +233,7 @@ export class AddTaskComponent {
     this.editingIndex = null;
   }
 
-  editingIndex: number | null = null;
+
 
   editSubtask(i: number) {
     this.editingIndex = i;
