@@ -66,13 +66,100 @@ export class AddTaskComponent {
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   // #region METHODS
-  // #region METHODS of PRIORITY
-  // #endregion
-  // #region METHODS of ASSIGNED TO
-  // #endregion
   get titleTooLong() {
     return this.newTask.title?.length >= 30;
   }
+  setDate(date: Date | null) {
+    this.newTask.date = date;
+    console.log(this.newTask.date);
+  }
+
+  setCategory(value: Category) {
+    this.newTask.category = value;
+    console.log(this.newTask.category);
+    this.categorySelected = true;
+  }
+
+  checkValidation() {
+    if (this.newTask.date != null) {
+      if (this.newTask.title.length >= 1 &&
+        (this.newTask.date >= this.actualDate) &&
+        this.newTask.category != TASK_CATEGORY.DEFAULT) {
+        this.onCreateTask();
+      }
+    }
+    else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+
+      console.log('Task konnte nicht erstellt werden');
+      this.categorySelected = false;
+    } else {
+      console.log('Task konnte nicht erstellt werden');
+    }
+  }
+
+  onClearInputs() {
+    this.newTask = {
+      id: '',
+      title: '',
+      description: '',
+      date: new Date(),
+      priority: TASK_PRIORITY.MEDIUM,
+      assignedTo: [],
+      category: TASK_CATEGORY.DEFAULT,
+      subtasks: [],
+      status: TASK_STATUS.TO_DO,
+    };
+    this.priorityFlag = {
+      urgent: false,
+      medium: true,
+      low: false,
+    };
+    this.clearTask.emit();
+  }
+
+  onCreateTask() {
+    if (this.parentContext === 'addtask') {
+      this.taskService.addTask(this.newTask);
+      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
+      setTimeout(() => { this.taskCreated.emit() }, 3000);
+    }
+
+    if (this.parentContext === 'board') {
+      this.createTask.emit(this.newTask);
+      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
+    }
+  }
+  // #region METHODS of PRIORITY
+  setPriorityUrgent() {
+    this.priorityFlag.urgent = !this.priorityFlag.urgent;
+    this.priorityFlag.medium = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority('urgent');
+  }
+
+  setPriorityMedium() {
+    this.priorityFlag.medium = !this.priorityFlag.medium;
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.low = false;
+    this.unsetPriority('medium');
+  }
+  
+  setPriorityLow() {
+    this.priorityFlag.low = !this.priorityFlag.low;
+    this.priorityFlag.urgent = false;
+    this.priorityFlag.medium = false;
+    this.unsetPriority('low');
+  }
+
+  unsetPriority(priority: 'urgent' | 'medium' | 'low') {
+    if (priority == this.newTask.priority) {
+      this.newTask.priority = TASK_PRIORITY.MEDIUM;
+    } else {
+      this.newTask.priority = priority;
+    }
+  }
+  // #endregion
+  // #region METHODS of ASSIGNED TO
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
     const first = parts[0]?.[0] || '';
@@ -100,6 +187,21 @@ export class AddTaskComponent {
     });
   }
 
+  updateAssignedTo(array: Array<Contact>) {
+    this.newTask.assignedTo = array;
+  }
+
+  getThreeRP(): Contact[] {
+    const array = this.newTask.assignedTo;
+    const newArray = [array[0], array[1], array[2]]
+    return newArray
+  }
+
+  valueRp(): number {
+    return this.newTask.assignedTo.length - 3
+  }
+  // #endregion
+  // #region METHODS of SUBTASKS
   addSubtask() {
     if (this.singleSubtask.length > 0) {
       const subtaskTitle = this.singleSubtask;
@@ -110,130 +212,13 @@ export class AddTaskComponent {
       this.newTask.subtasks.push(newSubtask);
       this.singleSubtask = '';
     }
-
   }
-
-  // #region prioritySetting
-  setPriorityUrgent() {
-    this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    this.priorityFlag.medium = false;
-    this.priorityFlag.low = false;
-    this.unsetPriority('urgent');
-
-  }
-
-  setPriorityMedium() {
-    this.priorityFlag.medium = !this.priorityFlag.medium;
-    this.priorityFlag.urgent = false;
-    this.priorityFlag.low = false;
-    this.unsetPriority('medium');
-
-  }
-  setPriorityLow() {
-    this.priorityFlag.low = !this.priorityFlag.low;
-    this.priorityFlag.urgent = false;
-    this.priorityFlag.medium = false;
-    this.unsetPriority('low');
-
-  }
-
-  unsetPriority(priority: 'urgent' | 'medium' | 'low') {
-    if (priority == this.newTask.priority) {
-      this.newTask.priority = TASK_PRIORITY.MEDIUM;
-    } else {
-      this.newTask.priority = priority;
-    }
-  }
-
-  // #endregion
-
-
-  updateAssignedTo(array: Array<Contact>) {
-    this.newTask.assignedTo = array;
-  }
-
-  onClearInputs() {
-    this.newTask = {
-      id: '',
-      title: '',
-      description: '',
-      date: new Date(),
-      priority: TASK_PRIORITY.MEDIUM,
-      assignedTo: [],
-      category: TASK_CATEGORY.DEFAULT,
-      subtasks: [],
-      status: TASK_STATUS.TO_DO,
-    };
-
-    this.priorityFlag = {
-      urgent: false,
-      medium: true,
-      low: false,
-    };
-    this.clearTask.emit();
-  }
-
-  onCreateTask() {
-    if (this.parentContext === 'addtask') {
-      this.taskService.addTask(this.newTask);
-      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
-      setTimeout(() => { this.taskCreated.emit() }, 3000);
-    }
-
-    if (this.parentContext === 'board') {
-      this.createTask.emit(this.newTask);
-      this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
-    }
-
-  }
-  getThreeRP(): Contact[] {
-    const array = this.newTask.assignedTo;
-    const newArray = [array[0], array[1], array[2]]
-    return newArray
-  }
-
-  valueRp(): number {
-    return this.newTask.assignedTo.length - 3
-  }
-
-  setCategory(value: Category) {
-    this.newTask.category = value;
-    console.log(this.newTask.category);
-    this.categorySelected = true;
-
-  }
-
-  checkValidation() {
-    if (this.newTask.date != null) {
-      if (this.newTask.title.length >= 1 &&
-        (this.newTask.date >= this.actualDate) &&
-        this.newTask.category != TASK_CATEGORY.DEFAULT) {
-        this.onCreateTask();
-      }
-    }
-    else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-
-      console.log('Task konnte nicht erstellt werden');
-      this.categorySelected = false;
-    } else {
-      console.log('Task konnte nicht erstellt werden');
-    }
-  }
-
-  setDate(date: Date | null) {
-    this.newTask.date = date;
-    console.log(this.newTask.date);
-  }
-
-  // #region subtasks
 
   deleteSubtask(index: number) {
     const updated = this.newTask.subtasks.filter((_, i) => i !== index);
     this.newTask = { ...this.newTask, subtasks: updated };
     this.editingIndex = null;
   }
-
-
 
   editSubtask(i: number) {
     this.editingIndex = i;
@@ -246,5 +231,6 @@ export class AddTaskComponent {
   isEditing(i: number): boolean {
     return this.editingIndex === i;
   }
+  // #endregion
   // #endregion
 }
