@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule } from '@angular/forms';
-import { Category, Subtask, Task, TASK_CATEGORY, TASK_STATUS } from '../../interfaces/task';
+import { Category, Subtask, Task, TASK_CATEGORY, TASK_PRIORITY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
@@ -29,11 +29,11 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     CategoryComponent,
     DatePickerComponent
   ],
-
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
 export class AddTaskComponent {
+  // #region ATTRIBUTES
   contacts = inject(FirebaseServiceService);
   taskService = inject(TaskService);
 
@@ -42,7 +42,7 @@ export class AddTaskComponent {
     title: '',
     description: '',
     date: new Date(),
-    priority: null,
+    priority: TASK_PRIORITY.MEDIUM,
     assignedTo: [],
     category: TASK_CATEGORY.DEFAULT,
     subtasks: [],
@@ -51,27 +51,24 @@ export class AddTaskComponent {
 
   priorityFlag = {
     urgent: false,
-    medium: false,
+    medium: true,
     low: false,
   };
 
   categorySelected = true;
-
   actualDate = new Date();
-
   rpSearch: string = '';
-
-
-
   singleSubtask: string = '';
 
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
   @Output() taskCreated = new EventEmitter<void>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
+  // #endregion
 
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
+  // #region METHODS
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
     const first = parts[0]?.[0] || '';
@@ -123,7 +120,6 @@ export class AddTaskComponent {
 
   setPriorityMedium() {
     this.priorityFlag.medium = !this.priorityFlag.medium;
-
     this.priorityFlag.urgent = false;
     this.priorityFlag.low = false;
     this.unsetPriority('medium');
@@ -131,7 +127,6 @@ export class AddTaskComponent {
   }
   setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
-
     this.priorityFlag.urgent = false;
     this.priorityFlag.medium = false;
     this.unsetPriority('low');
@@ -151,8 +146,6 @@ export class AddTaskComponent {
 
   updateAssignedTo(array: Array<Contact>) {
     this.newTask.assignedTo = array;
-    // console.log(this.newTask.assignedTo);
-
   }
 
   onClearInputs() {
@@ -249,4 +242,5 @@ export class AddTaskComponent {
   isEditing(i: number): boolean {
     return this.editingIndex === i;
   }
+  // #endregion
 }
