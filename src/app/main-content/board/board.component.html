@@ -163,14 +163,17 @@
             </div>
         </div>
     </div>
-
-  <ng-container *ngIf="showDetail && selectedTask as task">
-    <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>
-  </ng-container>
-
-  <ng-container *ngIf="addTaskWindow">
-    <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
-  </ng-container>
-
-  <app-toast-message [context]="'board'"></app-toast-message>
+    <!-- #endregion -->
+    <!-- #region OVERLAY TASK DETAILS -->
+    <ng-container *ngIf="showDetail && selectedTask as task">
+        <app-task-details [task]="task" (close)="closeTask()"> </app-task-details>
+    </ng-container>
+    <!-- #endregion -->
+    <!-- #region ADD TASK POP UP -->
+    <ng-container *ngIf="addTaskWindow">
+        <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
+    </ng-container>
+    <app-toast-message [context]="'board'">
+    </app-toast-message>
+    <!-- #endregion -->
 </section>

@@ -5,6 +5,7 @@ section{
     font-family: all.$font;
     padding: 8rem 6.4rem;
     // #region TITLE & SEARCH & GLOBAL ADD TASK BUTTON
+    // Desktop View
     .board-title-div{
         @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
         padding-bottom: 4rem;
@@ -70,6 +71,7 @@ section{
             }
         }
     }
+    // Mobile View
     .board-title-div-mobile{
         display: none;
         @media (max-width: 890px) {
@@ -144,7 +146,6 @@ section{
             }
         }
     }
-    
     // #endregion
     // #region PROGRESS BOARD
     .progress-board{
@@ -248,7 +249,6 @@ section{
         }
     }
     // #endregion
-    
 }
 
 
