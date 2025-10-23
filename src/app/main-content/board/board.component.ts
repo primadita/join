@@ -209,5 +209,19 @@ export class BoardComponent {
     newTask.status = this.currentList;
     this.taskService.addTask(newTask);
   }
+  highlightDropList(list: CdkDropList) {
+    const element = list.element.nativeElement as HTMLElement;
+    element.classList.add('drag-over');
+  }
+
+  unhighlightDropList(list: CdkDropList) {
+    const element = list.element.nativeElement as HTMLElement;
+    element.classList.remove('drag-over');
+  }
+
+  dropAndUnhighlight(event: CdkDragDrop<Task[]>, list: CdkDropList){
+    this.unhighlightDropList(list);
+    this.drop(event);
+  }
   // #endregion
 }
