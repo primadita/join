@@ -17,16 +17,26 @@ import { TaskService } from '../../../../../shared/services/task.service';
 import { UserProfileImageService } from '../../../../../shared/services/user-profile-image.service';
 import { FormsModule } from '@angular/forms';
 import { Timestamp } from '@angular/fire/firestore';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-edit-task',
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+  ],
   imports: [
     MatDatepickerModule,
     RpSearchComponent,
     CommonModule,
     FormsModule,
     MatNativeDateModule,
+    MatInputModule,
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -48,6 +58,7 @@ export class EditTaskComponent {
 
   singleSubtask: string = '';
   dueDate: Date | null = null;
+  actualDate = new Date();
 
   constructor(
     private taskSvc: TaskService,
@@ -65,8 +76,8 @@ export class EditTaskComponent {
       ev.stopPropagation();
       return;
     }
-    rpSearch?.closeList(); // Dropdown schließen
-    ev.stopPropagation(); // Overlay NICHT schließen
+    rpSearch?.closeList();
+    ev.stopPropagation();
   }
 
   setPriority(p: Priority) {
@@ -124,6 +135,7 @@ export class EditTaskComponent {
 
   private toDate(d: any): Date | null {
     if (!d) return null;
+    // ist bereits ein Date von Datepicker oder
     if (d instanceof Date) return d;
     if (typeof d?.toDate === 'function') return d.toDate();
     return new Date(d);
@@ -155,7 +167,25 @@ export class EditTaskComponent {
   // #endregion
 
   onSubmit() {
-    const updated: Task = { ...this.task, date: this.fromDate(this.dueDate) };
+    this.dateError = null;
+
+    // 1) Muss ein valides Date sein
+    if (!this.isValidDate(this.dueDate)) {
+      this.dateError = 'invalid';
+      return; // nichts tun
+    }
+
+    // 2) Muss strikt in der Zukunft liegen (heute zählt nicht)
+    if (!this.isInFuture(this.dueDate)) {
+      this.dateError = 'pastOrToday';
+      return; // nichts tun
+    }
+
+    // 3) OK → speichern
+    const updated: Task = {
+      ...this.task,
+      date: Timestamp.fromDate(this.dueDate),
+    };
     this.save.emit(updated);
   }
 
@@ -166,18 +196,10 @@ export class EditTaskComponent {
   onAssignedChange(selectedContacts: Contact[]) {
     const current = this.task.assignedTo || [];
     const incoming = selectedContacts || [];
-
-    // Additiver Merge: alles behalten, neue hinzufügen (unique nach id)
     const byId = new Map<string, Contact>();
-
-    // 1) bisherige behalten
     for (const c of current) byId.set(c.id, c);
-
-    // 2) neue drüberlegen (aktualisiert oder fügt hinzu)
     for (const c of incoming) byId.set(c.id, c);
-
     const updatedContacts = Array.from(byId.values());
-
     this.task = { ...this.task, assignedTo: updatedContacts };
   }
 
@@ -199,5 +221,24 @@ export class EditTaskComponent {
 
   isEditing(i: number): boolean {
     return this.editingIndex === i;
+  }
+
+  // Eingegebene Datum überprüfen vor dem Submit
+
+  dateError: 'invalid' | 'pastOrToday' | null = null;
+
+  private isValidDate(d: any): d is Date {
+    return d instanceof Date && !isNaN(d.getTime());
+  }
+
+  private isInFuture(d: Date): boolean {
+    // „heute“ ist nicht erlaubt → beide auf Mitternacht normieren
+    const picked = new Date(d);
+    picked.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return picked.getTime() > today.getTime();
   }
 }

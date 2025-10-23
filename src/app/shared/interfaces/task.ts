@@ -1,3 +1,4 @@
+import { Timestamp } from '@angular/fire/firestore';
 import { Contact } from './contact';
 
 //_______________________COMPLETED TASK INTERFACE___________________
@@ -5,7 +6,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
-  date: Date | null;
+  date: Date | null | Timestamp;
   priority: Priority | null;
   assignedTo: Array<Contact>;
   category: Category;
@@ -55,7 +56,7 @@ export type Priority = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
 
 //__________________________ CATEGORY _________________________________
 export const TASK_CATEGORY = {
-    DEFAULT: "Select Category",
+  DEFAULT: 'Select Category',
   USER_STORY: 'User Story',
   TECHNICAL_TASK: 'Technical Task',
 } as const;

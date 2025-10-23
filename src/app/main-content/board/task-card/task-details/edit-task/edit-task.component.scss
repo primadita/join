@@ -43,6 +43,10 @@
       .prio-label {
         font-weight: bold;
       }
+
+      .warning-date {
+        color: all.$priority_urgent;
+      }
     }
 
     input {

@@ -44,19 +44,25 @@
             matInput
             [matDatepicker]="picker"
             [(ngModel)]="dueDate"
-            placeholder="dd/mm/yyyy"
+            [ngModelOptions]="{ updateOn: 'blur' }"
             name="date"
+            placeholder="MM/DD/YYYY"
+            inputmode="numeric"
           />
           <mat-datepicker-toggle
             matSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
-          <mat-datepicker
-            #picker
-            [yPosition]="'below'"
-            [xPosition]="'start'"
-          ></mat-datepicker>
+          <mat-datepicker #picker></mat-datepicker>
         </div>
+
+        @if (dueDate != null) { @if(dueDate < actualDate){
+        <span class="warning-date">Date must be in the future!</span>
+        } } @else if (dueDate === null) {
+        <span class="warning-date"
+          >Invalid date format. Please use MM/DD/YYYY.</span
+        >
+        }
       </div>
       <!--#endregion date-input-wrapper -->
 
