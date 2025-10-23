@@ -1,29 +1,38 @@
 <div class="content">
   <h1>Add Task</h1>
-  <form action="">
+  <form #newTaskForm="ngForm">
     <div class="form-input">
       <div class="form-input-left">
+        <!-- #region TITLE -->
         <div class="input-wrapper">
           <h6>Title<span class="red">*</span></h6>
-          <input #title="ngModel" class="form-field" type="text" name="title" [(ngModel)]="newTask.title"
+          <input #title="ngModel" class="form-field" maxlength="30" type="text" name="title" [(ngModel)]="newTask.title"
             placeholder="Enter a title" required />
-          @if(!title.valid && title.touched){
-          <span class="warning">This field is required!</span>
+          @if(title.hasError('required') && title.touched){
+            <span class="warning">This field is required!</span>
+          }
+          @if(titleTooLong){
+            <span class="warning">Title must not exceed 30 characters.</span>
           }
         </div>
+        <!-- #endregion -->
+        <!-- #region DESCRIPTION -->
         <div class="input-wrapper">
           <h6>Description</h6>
           <textarea name="description" id="" [(ngModel)]="newTask.description"
             placeholder="Enter a description"></textarea>
         </div>
+        <!-- #endregion -->
+        <!-- #region DUE DATE -->
         <div class="input-wrapper">
           <h6>Due date<span class="red">*</span></h6>
           <app-date-picker (sendDate)="setDate($event)"></app-date-picker>
-
         </div>
+        <!-- #endregion -->
       </div>
       <div class="dividing-line"></div>
       <div class="form-input-right">
+        <!-- #region PRIORITY -->
         <div class="input-wrapper">
           <h6>Priority</h6>
           <div class="priority-btn-wrapper">
@@ -76,36 +85,39 @@
             </button>
           </div>
         </div>
+        <!-- #endregion -->
+        <!-- #region ASSIGNED TO -->
         <div class="input-wrapper" id="rp-wrapper">
           <h6>Assigned to</h6>
-          <app-rp-search (changeAssignedArray)="updateAssignedTo($event)"></app-rp-search>
-
+          <app-rp-search (changeAssignedArray)="updateAssignedTo($event)">
+          </app-rp-search>
           <div class="rp-selected-box">
             @if (newTask.assignedTo.length > 3) {
-            @for (contact of getThreeRP(); track $index){
-            <span class="initials" [style.backgroundColor]="contact.bgColor">{{
-              getLetters(contact)
-              }}</span>
+              @for (contact of getThreeRP(); track $index){
+                <span class="initials" [style.backgroundColor]="contact.bgColor">
+                  {{ getLetters(contact) }}
+                </span>
+              }
+              <span>+ {{valueRp()}}</span>
+            } @else {
+              @for (contact of newTask.assignedTo; track $index){
+                <span class="initials" [style.backgroundColor]="contact.bgColor">
+                  {{ getLetters(contact) }}
+                </span>
+              }
             }
-            <span>+ {{valueRp()}}</span>
-            }@else {
-            @for (contact of newTask.assignedTo; track $index){
-            <span class="initials" [style.backgroundColor]="contact.bgColor">{{
-              getLetters(contact)
-              }}</span>
-            }
-            }
-
           </div>
         </div>
+        <!-- #region CATEGORY -->
         <div class="input-wrapper">
           <h6>Category<span class="red">*</span></h6>
           <app-category (sendCategory)="setCategory($event)" [value]="newTask.category"></app-category>
           @if(categorySelected === false){
-          <span class="warning">This field is required!</span>
+            <span class="warning">This field is required!</span>
           }
-
         </div>
+        <!-- #endregion -->
+        <!-- #region SUBTASKS -->
         <div class="input-wrapper" id="subtask-wrapper">
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
@@ -117,27 +129,18 @@
               <button class="add-btn" (click)="addSubtask()"></button>
             </div>
           </div>
-          <!-- <ul>
-            @for (subtask of newTask.subtasks ; track $index) {
-            <li class="single-subtask">
-              {{ subtask.title }} <button class="del-subtask" (click)="deleteSubtask(subtask)"></button>
-            </li>
-            }
-          </ul> -->
-
           <ul>
             <li *ngFor="let s of newTask.subtasks; let i = index" [class.editing]="isEditing(i)">
               <div class="list-content">
                 <span *ngIf="!isEditing(i)">{{ s.title }}</span>
-
-                <!-- Wenn im Edit-Modus -->
+                <!-- #region EDIT SUBTASKS -->
                 <div class="edit-wrapper">
                   <input *ngIf="isEditing(i)" type="text" class="edit-input" [(ngModel)]="s.title"
                     name="subtaskTitle{{ i }}" (keydown.enter)="saveSubtaskEdit(i)" (blur)="saveSubtaskEdit(i)" />
 
                   <!-- #region EDIT-SUBTASK-BTNS -->
                   <div class="edit-subtask" [class.force-visible]="isEditing(i)">
-                    <!-- #region nur im edit-subtask-modus zu sehen -->
+                    <!-- #region EDIT SUBTASK MODE -->
                     <button *ngIf="isEditing(i)" class="check-btn" type="button" (click)="saveSubtaskEdit(i)">
                       <svg width="22" height="22" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
@@ -147,7 +150,7 @@
                         </g>
                       </svg>
                     </button>
-                    <!-- #endregion nur im edit-subtask-modus zu sehen -->
+                    <!-- #endregion -->
                     <button *ngIf="!isEditing(i)" class="edit-btn" type="button" (click)="editSubtask(i)">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
@@ -169,23 +172,21 @@
                       </svg>
                     </button>
                   </div>
-                  <!-- #endregion EDIT-SUBTASK-BTNS -->
+                  <!-- #endregion -->
                 </div>
-
               </div>
             </li>
           </ul>
         </div>
-        <span class="required-text"><span class="red">*</span>This field is required</span>
+        <span class="required-text"><span class="red">*</span>This field is required.</span>
       </div>
     </div>
-
+    <!-- #region FORM BUTTONS -->
     <div class="form-submit">
-      <span><span class="red">*</span>This field is required</span>
+      <span><span class="red">*</span>This field is required.</span>
       <div class="btn-wrapper">
         <button class="cancel-btn" (click)="onClearInputs()">
           Clear
-
           <svg class="cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M6 6L18 18M6 18L18 6" />
           </svg>
@@ -196,5 +197,6 @@
         </div>
       </div>
     </div>
+
   </form>
 </div>

@@ -1,69 +1,58 @@
+/**
+ * @fileoverview BoardComponent provides a reactive Kanban board UI
+ * that displays tasks organized by status. Tasks can be searched, dragged
+ * between columns, and updated in real-time through the TaskService.
+ *
+ * Key features:
+ * - Reactive design: updates automatically on Firestore changes.
+ * - Clean drag-and-drop handling via Angular CDK.
+ * - Clear separation between UI identifiers and task status values.
+ * - Single source of truth via TaskService.
+ */
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input} from '@angular/core';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  DragDropModule,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { 
+  CdkDrag, 
+  CdkDragDrop, 
+  CdkDropList, 
+  DragDropModule, 
+  moveItemInArray, 
+  transferArrayItem} from '@angular/cdk/drag-drop';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailsComponent } from './task-card/task-details/task-details.component';
 import { TaskService } from '../../shared/services/task.service';
 import { Task, TASK_STATUS } from '../../shared/interfaces/task';
-import { combineLatest, filter, map, startWith } from 'rxjs';
+import { combineLatest, map, startWith } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskPopupComponent } from './add-task-popup/add-task-popup.component';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
 import { ToastMessageComponent } from '../../shared/components/toast-message/toast-message.component';
 import { LongPressDragDirective } from '../../shared/directives/long-press-drag.directive';
 
-/*
-  -------------------------------------------------------------------------------------------------------------------------
-
-  PROBLEM:
-  - Beim Drag&Drop-Event gibt die CDK im Event nur UI-Infos zurück (evet.container.id = ("toDoList", "inProgessList",...)
-  - Im Task haben wir aber ("to do" | "in progress")
-  - Wir müssen also UI-IDs und Status übersetzen
-  - Zusätzlich sollten wir KEINEN lokalen Board-State haben, sondern alles aus dem Service-Stream ableiten
-
-  ZIELE:
-  - Reaktive UI: Jede Datenänderung in Firestore wird automatisch im Board angezeigt
-  - Sauberer Drag&Drop-Flow: sofortiges visuelles Feedback + sauberer Statuswechsel 
-  - Klare Trennung von UI (IDs) und Task (Status)
-  - Eine Wahrheitsquelle: TaskService.task$ (keine lokalen Arrays)
-
-  -------------------------------------------------------------------------------------------------------------------------
-*/
-
-// ###### Typen absicherung ######
-/*
-  Nur eine Quelle der Wahrheit (hier Task-Interface und ListID)
-  ListId sagt genau wie die ids genannt werden sollen
-  Status-Typ wird aus dem Interface gelesen
-*/
+/**
+ * Represents the task status derived from the Task interface.
+ * @typedef {Task['status']} Status
+ */
 type Status = Task['status'];
 
+/**
+ * Represents the allowed UI list IDs for drag-and-drop lists.
+ * @typedef {'toDoList' | 'inProgressList' | 'awaitFeedbackList' | 'doneList'} ListId
+ */
 type ListId = 'toDoList' | 'inProgressList' | 'awaitFeedbackList' | 'doneList';
 
-/*
-  Mapping UI-Liste - Task Status
-  - ListIdToStatus Ist ein Objekt
-  - Links sind die UI-Begriffe
-  - Rechts sind Task-Status
-  - Durch Record dürfen die Keys nur vom type ListID sein und die values nur vom type Status
-  Vorteil: 
-  - Ganze Übersetzung ist an einer Stelle
-*/
+/**
+ * Maps between UI list IDs and task status values.
+ * Ensures strong typing via Record<ListId, Status>.
+ * @constant
+ * @type {Record<ListId, Status>}
+ */
 const ListIdToStatus: Record<ListId, Status> = {
   toDoList: 'to do',
   inProgressList: 'in progress',
   awaitFeedbackList: 'await feedback',
   doneList: 'done',
 };
-
-
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -73,24 +62,45 @@ const ListIdToStatus: Record<ListId, Status> = {
   styleUrl: './board.component.scss',
 })
 
+/**
+ * BoardComponent is the main Kanban board view.
+ * It manages columns for tasks by status, enables drag-and-drop reordering,
+ * integrates task creation via a popup, and filters tasks via search.
+ */
 export class BoardComponent {
   // #region ATTRIBUTES
+  /** Service responsible for task data management. */
   taskService = inject(TaskService);
-  searchControl = new FormControl(''); // es ist eine bessere Alternative als ngModel, da FormControl schon Observable-Strom hat, der bei jeder Änderung getriggert wird.
+
+  /**
+   * Reactive form control for search input.
+   * Emits a value on each input change.
+   * @type {FormControl<string | null>}
+   */
+  searchControl = new FormControl('');
+  /**
+   * Observable emitting lowercase search input text.
+   * @type {Observable<string>}
+   */
   searchInput$= this.searchControl.valueChanges.pipe(startWith(''),
-    map(e => e ? e.toLowerCase():'')); // Variable für Input in Suchfeld
+    map(e => e ? e.toLowerCase():'')); 
+  
+  /**
+   * Observable emitting a filtered list of tasks based on the search input.
+   * @type {Observable<Task[]>}
+   */
   filteredTasks = combineLatest([this.taskService.tasks$, this.searchInput$]).pipe(
     map(
-      ([alltasks, search]) => search ? alltasks.filter(a => a.title.toLowerCase().includes(search)|| a.description.toLowerCase().includes(search)): alltasks));
-  /*
-  board$ leitet aus tasks$ die vier Spalten ab
-  - taks$ ist ein Observable aus dem Task-Service
-  - pipe(...) transfomiert board$ auch zu einen Observable
-  - aber vom Typ Observable <BoardColumns> - also ein Objekt mit 4 Arrays für die 4 Spalten
-  - Durch map wird bei jeder Änderung der Task die Board-Struktur neu berechnet - reaktiv 
-  - Wenn Firestore pusht, rechnet map neu, board$ emittiert neu, UI-Aktualisiert sich
-  */
+      ([alltasks, search]) => search 
+        ? alltasks.filter(
+          a => a.title.toLowerCase().includes(search)|| a.description.toLowerCase().includes(search))
+          : alltasks));
   
+  /**
+   * Reactive board structure divided into four columns.
+   * Automatically recalculated whenever tasks or search terms change.
+   * @type {Observable<BoardColumns>}
+   */
   board$ = this.filteredTasks.pipe(
     map((filtered) =>
     ({
@@ -101,80 +111,73 @@ export class BoardComponent {
     } as BoardColumns))// hiermit hat das Objekt exakt die Felder todo, inprogress usw. exakt dem Interface BoardColumns
   );
   
-  selectedTask: Task | null = null; // Variable für TaskCard, die gewählt ist
-  showDetail = false; //Defaultzustand von Taskcard, wenn true, dann wird Task Details angezeigt
+  /** The currently selected task for viewing details. */
+  selectedTask: Task | null = null; 
+  
+  /** Whether the task details panel is visible. */
+  showDetail = false; 
+  
+  /**
+   * Observable that emits `true` if a search has input but no results are found.
+   * @type {Observable<boolean>}
+   */
   showNoResult$ = combineLatest([this.searchInput$, this.filteredTasks]).pipe(
     map(([i, t]) => i.trim().length > 0 && t.length === 0));
-  addTaskWindow: boolean = false; // Flag für add task overlay oder Window
+  
+  /** Flag indicating whether the "Add Task" popup is open. */
+    addTaskWindow: boolean = false; 
+  
+  /** The currently selected list for adding a new task. */
   currentList:Status = TASK_STATUS.TO_DO;
+
+  /** Optional input to initialize a board column. */
   @Input() initialList: string = '';
   // #endregion
 
   // #region METHODS
-  openTask(task: Task) { // Zum Öffnen von Task Details
+  /**
+   * Opens the task details view for the provided task.
+   * @param {Task} task - The task to open.
+   */
+  openTask(task: Task) { 
     this.selectedTask = task;
     this.showDetail = true;
   }
 
-  closeTask() { // Zum Schließen der Task Details
+  /**
+   * Closes the currently open task details view.
+   */
+  closeTask() { 
     this.showDetail = false;
     this.selectedTask = null;
   }
 
-  /*
-  Drag&Drop
-  - wird sofort visuell dargestellt
-  - den verschobenen Task holen wir über [cdkDragData]="task" im Template 
-  - CDK ruft diese Funktion nur auf wenn etwas losgelassen wird 
-  */
+  /**
+   * Handles drag-and-drop events when a task is moved between lists.
+   * Updates the task status in Firestore if it has changed.
+   *
+   * @param {CdkDragDrop<Task[]>} event - The drag-and-drop event containing task data.
+   */
   drop(event: CdkDragDrop<Task[]>) {
-    // Lokales Array-Update (sofortiges visuelles Feedback)
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
 
-    /*
-      Welcher Task wurde bewegt?
-      - Im HTML Drag-Element [cdkDragData]="task"] 
-      - Zuverlässiger als mit Index
-    */
     const movedTask = event.item.data as Task;
-
-    // Ziel-Status aus Liste ableiten
     const newStatus = ListIdToStatus[event.container.id as ListId];
-    if (!newStatus) return;
-
-    // Nur speichern, wenn sich der Status wirklich geändert hat
+    if (!newStatus) return
     if (movedTask.status !== newStatus) {
-      /*
-        - Beim Spaltenwechsel gibt es ein Update
-        - ...movedTask kopiert das Objekt movedTask flach 
-        - es wird nur der status geändert der rest bleibt gleich
-
-        Was passiert wenn wir es nicht flach kopieren?
-        Wenn wir es direkt verändern mit movedTask.status = newStatus dann:
-        - Ändert sich das gleiche Objekt im Speicher, auf das auch andere stellen zeigen wie:
-        - die UI, Arrays, Observables usw.
-        - Angular sieht das nicht sofort, weil sich die Referenz des objektes nicht geändert hat
-        - Angular erkennt Änderungen am besten, wenn sich die Referenz ändert - also ein neues Objekt entsteht
-      */
       const updated: Task = { ...movedTask, status: newStatus };
-      // Firestore-Update triggert automatisch neue Werte in board$ -> UI ist konsistent
       this.taskService.updateTask(updated);
     }
   }
 
+  /**
+   * Toggles the Add Task popup and sets the current list status.
+   * @param {string} [list] - Optional list name to preselect in the popup.
+   */
   toggleAddTask(list?:string){
     this.addTaskWindow = !this.addTaskWindow;
     this.currentList = TASK_STATUS.TO_DO;
@@ -194,20 +197,55 @@ export class BoardComponent {
     }
   }
 
+  /**
+   * Closes the Add Task popup.
+   */
   onClosePopUp(){
     this.addTaskWindow = false;
   }
 
+  /**
+   * Opens the Add Task popup, typically after clearing input fields.
+   */
   clearInputTask(){
     this.addTaskWindow = true;
   }
-
+  
+  /**
+   * Creates a new task and adds it to Firestore.
+   * @param {Task} newTask - The new task object to create.
+   */
   createNewTask(newTask: Task){
-    
     this.addTaskWindow = false;
-
     newTask.status = this.currentList;
     this.taskService.addTask(newTask);
+  }
+
+  /**
+   * Highlights a drop list element visually when a drag event hovers over it.
+   * @param {CdkDropList} list - The list element to highlight.
+   */
+  highlightDropList(list: CdkDropList) {
+    const element = list.element.nativeElement as HTMLElement;
+    element.classList.add('drag-over');
+  }
+  /**
+   * Removes the highlight from a drop list after a drag event ends.
+   * @param {CdkDropList} list - The list element to unhighlight.
+   */
+  unhighlightDropList(list: CdkDropList) {
+    const element = list.element.nativeElement as HTMLElement;
+    element.classList.remove('drag-over');
+  }
+
+  /**
+   * Combines unhighlighting and drop handling in a single event.
+   * @param {CdkDragDrop<Task[]>} event - The drag-and-drop event.
+   * @param {CdkDropList} list - The drop list element to unhighlight.
+   */
+  dropAndUnhighlight(event: CdkDragDrop<Task[]>, list: CdkDropList){
+    this.unhighlightDropList(list);
+    this.drop(event);
   }
   // #endregion
 }
