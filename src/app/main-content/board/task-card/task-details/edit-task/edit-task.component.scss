@@ -8,7 +8,6 @@
   justify-content: center;
   animation: fadeIn 0.2s ease-out forwards;
   z-index: 100;
-  padding: 0 1rem;
 }
 
 .btn-wrapper {
@@ -25,7 +24,7 @@
   max-width: 52.5rem;
   background: all.$white;
   border-radius: 3rem;
-  padding: 3.8rem 3rem;
+  padding: 1.7rem 1.5rem;
   box-shadow: all.$shadow;
 
   form {
@@ -35,6 +34,15 @@
 
     .input-wrapper {
       width: 100%;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .prio-label {
+        font-weight: bold;
+      }
     }
 
     input {
@@ -210,7 +218,8 @@
     }
     #subtask-wrapper {
       ul {
-        height: 11rem;
+        height: 100%;
+        max-height: 11rem;
         overflow-y: auto;
         @include all.d-flex(
           $flexdir: column,
@@ -220,10 +229,12 @@
         gap: 0.5rem;
         li {
           width: 100%;
-          padding: 0.5rem 1rem;
+          position: relative;
+          padding: 0.5rem 0;
           border-radius: 1rem;
           cursor: pointer;
           .list-content {
+            width: 100%;
             @include all.d-flex(
               $flexdir: row,
               $jc: space-between,
@@ -233,42 +244,60 @@
 
             > span {
               flex: 1 1 auto;
-              overflow-wrap: anywhere;
             }
 
-            .edit-subtask {
-              @include all.d-flex(
-                $flexdir: row,
-                $jc: flex-start,
-                $alit: center
-              );
-              gap: 0.4rem;
-              flex: 0 0 auto;
-              white-space: nowrap;
-              opacity: 0;
-              visibility: hidden;
-              pointer-events: none;
-              transition: opacity 0.2s ease-in-out;
-
-              button {
-                @include all.d-flex($flexdir: row, $jc: center, $alit: center);
+            .edit-wrapper {
+              width: 100%;
+              .edit-input {
+                width: 100%;
+                height: 3rem;
+                border-style: none;
+                border-bottom: 1px solid all.$lightblue2;
+                border-radius: 0%;
               }
+              .edit-subtask {
+                @include all.d-flex(
+                  $flexdir: row,
+                  $jc: flex-start,
+                  $alit: center
+                );
+                gap: 0.4rem;
+                position: absolute;
+                top: 50%;
+                right: -1.8rem;
+                transform: translate(-50%, -50%);
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.2s ease-in-out;
 
-              .separator {
-                height: 2rem;
-                width: 0.1rem;
-                background-color: all.$lightgray2;
+                button {
+                  @include all.d-flex(
+                    $flexdir: row,
+                    $jc: center,
+                    $alit: center
+                  );
+                  padding: 0.25rem 0.25rem;
+                  border-radius: 1rem;
+                }
+
+                .separator {
+                  height: 2rem;
+                  width: 0.1rem;
+                  background-color: all.$lightgray4;
+                }
               }
             }
           }
 
-          &:hover .list-content .edit-subtask {
+          &:hover .list-content .edit-wrapper .edit-subtask {
             opacity: 1;
             visibility: visible;
             pointer-events: all;
           }
 
-          &.editing .list-content .edit-subtask,
+          &.editing .list-content .edit-wrapper .edit-subtask,
           .list-content .edit-subtask.force-visible {
             opacity: 1;
             visibility: visible;
@@ -278,6 +307,10 @@
 
         li:hover {
           background-color: all.$lightgray4;
+        }
+
+        li.editing:hover {
+          background-color: transparent;
         }
       }
     }

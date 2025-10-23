@@ -184,6 +184,7 @@ export class EditTaskComponent {
   deleteSubtask(index: number) {
     const updated = this.task.subtasks.filter((_, i) => i !== index);
     this.task = { ...this.task, subtasks: updated };
+    this.editingIndex = null;
   }
 
   editingIndex: number | null = null;
