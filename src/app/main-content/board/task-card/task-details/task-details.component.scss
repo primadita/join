@@ -136,7 +136,8 @@
       @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
       gap: 0.5rem;
       width: 95%;
-      height: 11.6rem;
+      height: 100%;
+      max-height: 11.6rem;
       margin-left: 2rem;
       overflow-x: auto;
       padding: 0.5rem 0;
