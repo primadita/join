@@ -62,5 +62,9 @@ export class DatePickerComponent {
   sendDateToParent(){
     this.sendDate.emit(this.dueDate);
   }
+
+  clearDate(){
+    this.dueDate = null;
+  }
   // #endregion
 }
