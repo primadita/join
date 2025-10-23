@@ -1,29 +1,58 @@
+/**
+ * @fileoverview Defines the Task interface and related enumerations for
+ * priorities, categories, and statuses used across the Kanban application.
+ */
 import { Contact } from './contact';
 
-//_______________________COMPLETED TASK INTERFACE___________________
+/**
+ * Represents a single task within the application.
+ */
 export interface Task {
+  /** Unique identifier assigned by Firestore. */
   id: string;
+
+  /** Short descriptive title of the task. */
   title: string;
+
+  /** Detailed information about the task. */
   description: string;
+
+  /** Due date for the task, or null if not specified. */
   date: Date | null;
+
+  /** Task priority level (urgent, medium, or low). */
   priority: Priority | null;
+
+  /** List of users or contacts assigned to the task. */
   assignedTo: Array<Contact>;
+
+  /** Category of the task (e.g., User Story, Technical Task). */
   category: Category;
+
+  /** List of subtasks associated with this task. */
   subtasks: Subtask[];
-  /*
-    enums sind nicht mehr notwendig
-    - mit type Status = Task['status'] in board-component hängt alles direkt am Interface
-    - Ändert sich das interface, zieht der Typ automatisch mit
-  */
+  
+  /** List of subtasks associated with this task. */
   status: Status;
 }
 
+//__________________________ SUBTASK _________________________________
+/**
+ * Represents a smaller task that contributes to completing a parent task.
+ */
 export interface Subtask {
+  /** Title or label of the subtask. */
   title: string;
+
+  /** Indicates whether the subtask has been completed. */
   done: boolean;
 }
 
-//____________________________STATUS_________________________________
+//__________________________ STATUS _________________________________
+/**
+ * Enumeration of possible task statuses.
+ * These values correspond directly to Firestore data and UI columns.
+ */
 export const TASK_STATUS = {
   TO_DO: 'to do',
   IN_PROGRESS: 'in progress',
@@ -31,33 +60,45 @@ export const TASK_STATUS = {
   DONE: 'done',
 } as const;
 
-/*
-  typeof heißt: holt den Typ einer Variablen oder eines Objekts
-  keyof heißt: gib mir alle Schlüssel eines Typs - "TO_DO" | "IN_PROGRESS" | "AWAIT_FEEDBACK" | "DONE"
-*/
+/**
+ * Type representing valid task status values.
+ * @typedef {'to do' | 'in progress' | 'await feedback' | 'done'} Status
+ */
 export type Status = (typeof TASK_STATUS)[keyof typeof TASK_STATUS];
 
-// dieser wert kann nun beim erstellen eines neuen tasks verwendet werden
-// niemand kann dadurch versehentlich etwas anderes eintragen
+/** Default task status assigned when creating a new task. */
 export const DEFAULT_STATUS: Status = TASK_STATUS.TO_DO;
 
-//____________________________PRIORITY_________________________________
-
-// diesen wert genauso beim erstellen verwenden und nicht selbst nochmal neu schreiben
-// dadurch bleibt alles gekapselt und wir brauchen bei Anderungen nur hier etwas machen
+//__________________________ PRIORITY _________________________________
+/**
+ * Enumeration of task priority levels.
+ * Used to indicate urgency or importance of a task.
+ */
 export const TASK_PRIORITY = {
   URGENT: 'urgent',
   MEDIUM: 'medium',
   LOW: 'low',
 } as const;
 
+/**
+ * Type representing valid task priority values.
+ * @typedef {'urgent' | 'medium' | 'low'} Priority
+ */
 export type Priority = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
 
 //__________________________ CATEGORY _________________________________
+/**
+ * Enumeration of available task categories.
+ * Used to classify tasks for better organization and filtering.
+ */
 export const TASK_CATEGORY = {
     DEFAULT: "Select Category",
   USER_STORY: 'User Story',
   TECHNICAL_TASK: 'Technical Task',
 } as const;
 
+/**
+ * Type representing valid task category values.
+ * @typedef {'Select Category' | 'User Story' | 'Technical Task'} Category
+ */
 export type Category = (typeof TASK_CATEGORY)[keyof typeof TASK_CATEGORY];
