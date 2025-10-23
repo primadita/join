@@ -122,11 +122,11 @@
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
             <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask"
-              placeholder="Add new Subtask" />
+              placeholder="Add new Subtask" (keydown.enter)="addSubtask()"/>
             <div class="subtask-btn-wrapper">
               <button class="clear-btn"></button>
               <div class="btn-divide"></div>
-              <button class="add-btn" (click)="addSubtask()"></button>
+              <button class="add-btn"  (click)="addSubtask()"></button>
             </div>
           </div>
           <ul>
