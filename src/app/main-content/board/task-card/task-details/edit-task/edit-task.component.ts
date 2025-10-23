@@ -227,7 +227,9 @@ export class EditTaskComponent {
 
   dateError: 'invalid' | 'pastOrToday' | null = null;
 
+  // prüft ob der parameter ein wirkliches Date-Objekt ist
   private isValidDate(d: any): d is Date {
+    //ist der paramter
     return d instanceof Date && !isNaN(d.getTime());
   }
 

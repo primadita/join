@@ -32,8 +32,10 @@
       font-weight: bold;
     }
     .descrip {
+      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+      word-wrap: break-word;
       font-size: 1.6rem;
       color: all.$iconColor;
     }
