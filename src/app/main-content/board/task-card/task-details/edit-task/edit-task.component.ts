@@ -120,6 +120,10 @@ export class EditTaskComponent {
     return this.task.subtasks;
   }
 
+  get titleTooLong() {
+    return this.task.title.length >= 30;
+  }
+
   initialsOf(c: Contact) {
     return this.profilService.createInitial(c.name);
   }

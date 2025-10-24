@@ -19,6 +19,9 @@
   padding: 4rem 3rem;
   box-shadow: all.$shadow;
   @include all.d-flex();
+  @include all.mobile{
+    padding: 3rem 2rem;
+  }
 
   form {
     width: 100%;
@@ -36,29 +39,35 @@
         &:hover{
           background-color: all.$lightgray2;
         }
+        @include all.mobile{
+          font-size: 1.8rem;
+          @include all.square($length: 2.4rem);
+        }
       }
       .ok-btn {
-          @include all.d-flex($flexdir: row, $cgap: 0.5rem);
-          color: all.$white;
-          background-color: all.$mainColor;
-          padding: 1.2rem 1.4rem;
-          border-radius: 1rem;
-          font-weight: 700;
-          &:hover{
-            background-color: all.$lightblue2;
-            box-shadow: all.$shadow;
-          }
+        @include all.d-flex($flexdir: row, $cgap: 0.5rem);
+        color: all.$white;
+        background-color: all.$mainColor;
+        padding: 1.2rem 1.4rem;
+        border-radius: 1rem;
+        font-weight: 700;
+        &:hover{
+          background-color: all.$lightblue2;
+          box-shadow: all.$shadow;
         }
+        @include all.mobile{
+          padding: 0.8rem 1.2rem;
+        }
+      }
     }
     .form-wrapper{
       width: 100%;
       overflow-y: auto;
       scrollbar-gutter: stable both-edges;
       display: block;
-      // gap: 2rem;
-      // @include all.d-flex($rgap: 2rem);
       .input-wrapper {
         width: 100%;
+        padding-bottom: 2.4rem;
         label {
           display: block;
           margin-bottom: 0.5rem;
@@ -68,6 +77,13 @@
         }
         .warning-date {
           color: all.$priority_urgent;
+        }
+        .warning {
+          color: all.$priority_urgent;
+          position: absolute;
+          top: 6.7rem;
+          left: 1rem;
+          font-size: 1.2rem;
         }
       }
       input { //valid for input title, due date, assigned to and subtasks

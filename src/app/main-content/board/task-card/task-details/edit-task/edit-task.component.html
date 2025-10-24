@@ -17,9 +17,15 @@
             placeholder="Enter a title"
             [(ngModel)]="task.title"
             #titleCtrl="ngModel"/>
-          <span *ngIf="titleCtrl.errors?.['maxlength']">
+          <!-- <span *ngIf="titleCtrl.errors?.['maxlength']">
             Maximal 30 Zeichen erlaubt.
-          </span>
+          </span> -->
+          @if(titleCtrl.hasError('required') && titleCtrl.touched){
+            <span class="warning">This field is required!</span>
+          }
+          @if(titleTooLong){
+            <span class="warning">Title must not exceed 30 characters.</span>
+          }
         </div>
         <!--#endregion title-input-wrapper -->
 
@@ -54,14 +60,14 @@
 
           @if (dueDate != null) { 
             @if(dueDate < actualDate){
-              <span class="warning-date">
+              <span class="warning">
                 Date must be in the future!
               </span>
             } 
           } @else if (dueDate === null) {
-          <span class="warning-date"
-            >Invalid date format. Please use MM/DD/YYYY.</span
-          >
+            <span class="warning">
+              Invalid date format. Please use MM/DD/YYYY.
+            </span>
           }
         </div>
         <!--#endregion date-input-wrapper -->
