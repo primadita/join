@@ -98,6 +98,8 @@
   // #region description
   .description {
     width: 100%;
+    height: 8rem;
+    overflow-y: auto;
     padding: 1rem 0;
     .descrip {
       font-size: 2rem;
