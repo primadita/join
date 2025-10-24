@@ -61,9 +61,8 @@ export class AddTaskComponent {
   @Output() createTask = new EventEmitter<Task>();
   @Output() taskCreated = new EventEmitter<void>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
-  @ViewChild(RpSearchComponent) rpSearchComponent!: RpSearchComponent;
   @ViewChild(DatePickerComponent) datePickerComponent!: DatePickerComponent;
-  
+
   // #endregion
 
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
@@ -118,7 +117,6 @@ export class AddTaskComponent {
       low: false,
     };
     this.clearTask.emit();
-    this.rpSearchComponent.clearRpList();
     this.datePickerComponent.clearDate();
   }
 
@@ -148,7 +146,7 @@ export class AddTaskComponent {
     this.priorityFlag.low = false;
     this.unsetPriority('medium');
   }
-  
+
   setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
     this.priorityFlag.urgent = false;
@@ -192,8 +190,15 @@ export class AddTaskComponent {
     });
   }
 
-  updateAssignedTo(array: Array<Contact>) {
-    this.newTask.assignedTo = array;
+  addRpToArray(contact: Contact) {
+    const array = this.newTask.assignedTo;
+    const test = array.includes(contact);
+    if (!test) {
+      array.push(contact);
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+    }
   }
 
   getThreeRP(): Contact[] {

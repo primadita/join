@@ -203,6 +203,17 @@ export class EditTaskComponent {
     this.task = { ...this.task, assignedTo: updatedContacts };
   }
 
+    addRpToArray(contact: Contact) {
+    const array = this.task.assignedTo;
+    const test = array.includes(contact);
+    if (!test) {
+      array.push(contact);
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+    }
+  }
+
   deleteSubtask(index: number) {
     const updated = this.task.subtasks.filter((_, i) => i !== index);
     this.task = { ...this.task, subtasks: updated };
