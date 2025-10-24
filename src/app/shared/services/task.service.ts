@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Provides Firestore-based CRUD (Create, Read, Update, Delete) operations for tasks.
+ * This service is a single source of truth for all task data.
+ * It exposes a reactive stream (`tasks$`) that automatically updates
+ * when Firestore data changes.
+ */
 import { inject, Injectable } from '@angular/core';
 import {
   addDoc,
@@ -12,81 +18,76 @@ import {
 import { Task } from '../interfaces/task';
 import { Observable } from 'rxjs';
 
-/*
-  Der Service lebt, so lange wie die App
-  ngOnDestroy() wird daher bei ihnen nicht aufgerufen
-*/
+/**
+ * Service for managing task data in Firestore.
+ * Handles creation, reading, updating, and deletion of tasks.
+ * The service lives for the lifetime of the application.
+ */
 @Injectable({
   providedIn: 'root',
 })
 
-/* 
-    Ein Service ist eine Hilfsklasse, die Dinge erledigt, die mehrere Komponenten brauchen
-     z.B. Daten holen, speichern usw.
-  
-  */
 export class TaskService {
-  /*
-    Firestore ist eine Klasse, die von AngularFire kommt.
-    Angular erzeugt ein Firestore-Objekt / Instanz und speichert es in fs.
-    Das nennt man Dependency Injection
-    Durch inject kann man nun fs außerhalb des constructors benutzen
-    protected verhindert Zugriff von außen - nur TaskService & eventuelle Unterklassen können es sehen und nutzen
-  */
+  // #region ATTRIBUTES
+ /**
+   * Firestore instance injected via Angular’s dependency injection.
+   * Used for creating collection references and performing database operations.
+   * @protected
+   */
   protected fs: Firestore = inject(Firestore);
 
-  /*
-    Dies erstellt einen Verweis (Reference) auf die Firestore-Sammlung
-    Durch private kann keine Komponente direkt auf die Collection zugreifen
-    sie können nur fertige Methoden verwenden die auch public sind
-  */
+  /**
+   * Reference to the "tasks" collection in Firestore.
+   * Restricted to internal use within the service.
+   * @private
+   */
   private tasksCol = collection(this.fs, 'tasks') as CollectionReference<Task>;
 
-  /*
-    collectionData(...) gibt ein Observable - aktualisiert sich automatisch
-    idField ist damit man weiß, welches Dokument man aktualisieren oder löschen möchte
-    readonly - tasks$ wird niemals überschrieben sondern nur genutzt
-  */
+  /**
+   * Reactive stream of all tasks in Firestore.
+   * Automatically emits updates when Firestore data changes.
+   *
+   * The `idField` option ensures each task document includes its Firestore ID.
+   * @readonly
+   * @type {Observable<Task[]>}
+   */
   readonly tasks$: Observable<Task[]> = collectionData(this.tasksCol, {
     idField: 'id',
   });
 
-  /*
-    ################## CRUD-OPERATIONEN ####################
-    CRUD: Create, Read, Update, Delete
-  */
+  
+  //  ################## CRUD-OPERATIONEN ####################
+  
 
   /**
-   * Nimmt das Task interface aber lässt das Feld "id" weg
-   * Denn wenn ein neues Dokument angelegt wird, gibt es diese ID noch nicht
-   * Firestore vergibt diese Automatisch
+   * Adds a new task to the Firestore collection.
    *
-   * @return promise - DocumentReference-Object
+   * The `id` field is omitted because Firestore automatically generates it.
+   *
+   * @param {Omit<Task, 'id'>} data - Task data excluding the `id` field.
+   * @returns {Promise<import('firebase/firestore').DocumentReference>} A promise resolving to the created document reference.
    */
   addTask(data: Omit<Task, 'id'>) {
     return addDoc(this.tasksCol, data);
   }
 
   /**
-   * Destrukturierung:
-   * id wird gebraucht um das Dokument zu finden
-   * rest enthält alle Felder, die gespeichert werden sollen
-   * doc(...) erzeugt eine Referenz auf genau dieses Dokument in Firestore
-   * updateDoc(...) schickt die neuen Daten (rest) an Firestore
-   * @param task
-   * @returns promise<void>
+   * Updates an existing task document in Firestore.
+   *
+   * @param {Task} task - The task object containing the updated data.
+   * The `id` field is used to locate the document.
+   * @returns {Promise<void>} A promise that resolves when the update is complete.
    */
   updateTask(task: Task) {
     const { id, ...rest } = task;
     return updateDoc(doc(this.tasksCol, id), rest);
   }
 
-  /**
-   * Löscht das Dokument mit dieser ID aus der Task-Colletion
-   * doc(...) ist wieder eine Reference auf dieses Dokument in Firestore
-   * deleteDoc(...) löscht dieses Dokument aus der Datenbank
-   * @param id
-   * @returns promise<void> - kein Ergebnis, nur das Signal "fertig"
+   /**
+   * Deletes a task document from Firestore by its ID.
+   *
+   * @param {string} id - The Firestore document ID of the task to delete.
+   * @returns {Promise<void>} A promise that resolves when the deletion is complete.
    */
   deleteTask(id: string) {
     return deleteDoc(doc(this.tasksCol, id));
