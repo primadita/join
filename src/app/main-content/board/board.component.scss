@@ -1,100 +1,133 @@
 @use './../../../../public/assets/styles/all-styles.scss' as all;
 
-section{
+section {
     background: all.$lightgray;
     font-family: all.$font;
     padding: 8rem 6.4rem;
+
     // #region TITLE & SEARCH & GLOBAL ADD TASK BUTTON
     // Desktop View
-    .board-title-div{
+    .board-title-div {
         @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
         padding-bottom: 4rem;
-        >div{
+
+        >div {
             @include all.d-flex($flexdir: row, $jc: space-between, $cgap: 3.2rem);
-            .search-div{
-                background: all.$white;
+
+            .search-div {
                 width: 31.2rem;
                 height: 4.8rem;
-                border: 1px solid all.$iconColor;
-                border-radius: 1rem;
-                padding: 0.4rem 0.4rem 0.4rem 1.6rem;
+
                 @include all.d-flex($flexdir: row, $jc: space-between);
-                input{
-                    width: 25rem;
+
+                input {
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid all.$iconColor;
+                    border-radius: 1rem;
+                    padding: 0.4rem 4.4rem 0.4rem 1.2rem;
+                    border: 1px solid all.$iconColor;
+                    border-radius: 1rem;
                     color: all.$mainColor;
                     font-size: 2rem;
                     @include all.style-regular();
                 }
-                input::placeholder{
+
+                input::placeholder {
                     color: all.$lightgray3;
                 }
-                .vline{
-                    width: 1px;
-                    height: 3.1rem;
-                    background: all.$lightgray3;
+
+                .search-btn-wrapper {
+                    @include all.d-flex($flexdir: row);
+                    position: absolute;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    right: 1rem;
+
+                    .vline {
+                        width: 1px;
+                        height: 3.1rem;
+                        background: all.$lightgray3;
+                    }
+
+                    img {
+                        @include all.square($length: 3.2rem);
+                    }
                 }
-                img{
-                    @include all.square($length: 3.2rem);
-                }
+
             }
-            #add-task-global{
+
+            #add-task-global {
                 background: all.$mainColor;
                 box-shadow: all.$shadow;
                 border-radius: 1rem;
                 color: all.$white;
-                padding: 0.8rem 1.6rem ;
+                padding: 0.8rem 1.6rem;
                 width: 16rem;
                 height: 4.8rem;
-                @include all.d-flex($flexdir: row, $jc:space-around);
-                @include all.notebook{
+                @include all.d-flex($flexdir: row, $jc: space-around);
+
+                @include all.notebook {
                     width: auto;
                     padding: 0.8rem;
-                    h5{
+
+                    h5 {
                         display: none;
                     }
                 }
-                img{
+
+                img {
                     @include all.square($length: 3.2rem);
                 }
             }
         }
     }
-    @include all.notebook{
+
+    @include all.notebook {
         padding: 6rem 4.5rem;
-        .board-title-div{
+
+        .board-title-div {
             column-gap: 2rem;
-            >div{
+
+            >div {
                 column-gap: 2rem;
             }
+
             @media (max-width: 890px) {
                 display: none;
             }
         }
     }
+
     // Mobile View
-    .board-title-div-mobile{
+    .board-title-div-mobile {
         display: none;
+
         @media (max-width: 890px) {
             @include all.d-flex($alit: flex-start, $rgap: 4rem);
             padding-bottom: 3rem;
             width: 100%;
-            @include all.mobile{
+
+            @include all.mobile {
                 padding-bottom: 0;
             }
-            >div{
+
+            >div {
                 @include all.d-flex($flexdir: row, $jc: space-between);
                 width: 100%;
-                button{
+
+                button {
                     background: all.$mainColor;
                     box-shadow: all.$shadow;
                     border-radius: 1rem;
                     color: all.$white;
-                    padding: 0.8rem ;
+                    padding: 0.8rem;
                     @include all.square($length: 4.8rem);
-                    @include all.d-flex($flexdir: row, $jc:space-around);
+                    @include all.d-flex($flexdir: row, $jc: space-around);
                 }
             }
-            .search-div{
+
+            .search-div {
                 background: all.$white;
                 width: 100%;
                 height: 4.8rem;
@@ -102,82 +135,101 @@ section{
                 border-radius: 1rem;
                 padding: 0.4rem 0.4rem 0.4rem 1.6rem;
                 @include all.d-flex($flexdir: row, $jc: flex-end);
-                input{
+
+                input {
                     width: calc(100% - 1px - 3.2rem);
                     color: all.$mainColor;
                     font-size: 2rem;
                     text-align: left;
                     @include all.style-regular();
                 }
-                input::placeholder{
+
+                input::placeholder {
                     color: all.$lightgray3;
                 }
-                .vline{
+
+                .vline {
                     width: 1px;
                     height: 3.1rem;
                     background: all.$lightgray3;
                 }
-                img{
+
+                img {
                     @include all.square($length: 3.2rem);
                 }
+
                 @media (max-width: 800px) {
                     margin-bottom: 3rem;
                 }
             }
         }
     }
-    @include all.mobile{
+
+    @include all.mobile {
         padding: 3rem 2rem;
     }
-    .no-result-div{
+
+    .no-result-div {
         padding: 2rem 2rem 4rem 2rem;
         @include all.d-flex();
-        @include all.mobile{
+
+        @include all.mobile {
             padding: 1rem 1rem 3rem 1rem;
         }
-        span{
+
+        span {
             font-size: 3rem;
             color: all.$iconColor;
-            @include all.tablet{
+
+            @include all.tablet {
                 font-size: 2.2rem;
             }
-            @include all.mobile{
+
+            @include all.mobile {
                 font-size: 1.8rem;
             }
         }
     }
+
     // #endregion
     // #region PROGRESS BOARD
-    .progress-board{
+    .progress-board {
         width: 100%;
         @include all.d-flex($flexdir: row, $jc: space-around, $cgap: 2rem);
-        .progress-container{
+
+        .progress-container {
             width: 25.2rem;
             @include all.d-flex($jc: flex-start);
-            .progress-title{
+
+            .progress-title {
                 width: 100%;
                 padding-bottom: 1.2rem;
                 @include all.d-flex($flexdir: row, $jc: space-between);
-                h5{
+
+                h5 {
                     color: all.$menuColor;
                 }
-                .specific-add-btn{
+
+                .specific-add-btn {
                     background: transparent;
                     border-radius: 0.8rem;
                     border: 2px solid all.$mainColor ;
                     @include all.square($length: 2.4rem);
                     @include all.d-flex();
-                    svg{
+
+                    svg {
                         @include all.square($length: 1.8rem);
-                        g{
-                            path{
+
+                        g {
+                            path {
                                 fill: all.$mainColor;
                             }
                         }
                     }
                 }
             }
-            .progress-list{
+
+            .progress-list {
                 width: 100%;
                 height: calc(100dvh - 16rem - 6.4rem - 11.4rem);
                 overflow-y: auto;
@@ -186,13 +238,15 @@ section{
                 transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
                 border: 2px solid transparent;
                 border-radius: 0.8rem;
+
                 &.drag-over {
                     border: 2px dashed all.$lightgray3;
                     background-color: rgba(all.$lightgray3, 0.2);
                     box-shadow: inset 0 0 10px rgba(all.$lightgray3, 0.4);
                     border-radius: 0.8rem;
                 }
-                .empty-list{
+
+                .empty-list {
                     width: 100%;
                     height: 4.8rem;
                     background: all.$lightgray5;
@@ -202,53 +256,61 @@ section{
                     @include all.d-flex();
                 }
             }
-            app-task-card{
+
+            app-task-card {
                 &.drag-active {
                     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                 }
             }
         }
+
         @media (max-width: 1400px) {
             @include all.d-flex($flexdir: column, $alit: flex-start, $jc: flex-start);
             width: auto;
             max-width: calc(100dvw - 23.2rem - 12.8rem);
             height: auto;
             max-height: calc(100dvh - 16rem - 11.4rem - 6.4rem);
-            overflow-y: auto ;
+            overflow-y: auto;
+
             @include all.notebook {
                 max-width: calc(100dvw - 23.2rem - 12.8rem);
             }
+
             @media (max-width: 890px) {
                 max-height: calc(100dvh - 12rem - 19.2rem - 6.4rem);
             }
+
             @media (max-width: 800px) {
                 max-width: calc(100dvw - 9rem);
                 max-height: calc(100dvh - 7rem - 6.4rem - 12rem - 22.2rem);
             }
-            @include all.mobile{
+
+            @include all.mobile {
                 max-width: calc(100dvw - 4rem);
                 max-height: calc(100dvh - 16.7rem - 6rem - 7rem - 6.4rem);
             }
-            .progress-container{
+
+            .progress-container {
                 width: 100%;
                 height: 35rem;
                 padding-bottom: 3rem;
-                .progress-list{
+
+                .progress-list {
                     height: auto;
                     min-height: 4.8rem;
                     overflow-x: auto;
                     flex-wrap: nowrap;
                     touch-action: pan-y pan-x;
                     -webkit-overflow-scrolling: touch;
-                    @include all.d-flex($flexdir:row, $jc: flex-start, $alit: flex-start,$cgap:1rem);
-                    .empty-list{
+                    @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start, $cgap: 1rem);
+
+                    .empty-list {
                         width: 100%;
                     }
                 }
             }
         }
     }
+
     // #endregion
 }
-
-
