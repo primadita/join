@@ -253,4 +253,22 @@ export class EditTaskComponent {
     const today = new Date();
     return picked.getTime() > today.getTime();
   }
+
+  getLetters(contact: Contact): string {
+    const parts = contact.name.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    const initials = (first + last).toUpperCase();
+    return initials;
+  }
+
+  getThreeRP(): Contact[] {
+    const array = this.task.assignedTo;
+    const newArray = [array[0], array[1], array[2]]
+    return newArray
+  }
+
+  valueRp(): number {
+    return this.task.assignedTo.length - 3
+  }
 }

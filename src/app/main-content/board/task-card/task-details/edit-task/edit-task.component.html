@@ -161,7 +161,6 @@
           </div>
         </div>
         <!-- #endregion priority-buttons-wrapper -->
-
         <!-- #region assigned-to-wrapper -->
         <div class="input-wrapper" id="rp-wrapper">
           <label>Assigned to</label>
@@ -171,15 +170,20 @@
             (sendContact)="addRpToArray($event)"
             [selectedContacts]="assignedToContacts"
           ></app-rp-search>
-          <ul>
-            <ul class="assignees">
-              <li *ngFor="let c of assignedToContacts">
-                <span class="avatar" [style.backgroundColor]="bgColorOf(c)">
-                  {{ initialsOf(c) }}
-                </span>
-              </li>
-            </ul>
-          </ul>
+          <div class="rp-selected-box">
+            @if (task.assignedTo.length > 3) { @for (contact of getThreeRP();
+            track $index){
+            <span class="initials" [style.backgroundColor]="contact.bgColor">
+              {{ getLetters(contact) }}
+            </span>
+            }
+            <span>+ {{ valueRp() }}</span>
+            } @else { @for (contact of task.assignedTo; track $index){
+            <span class="initials" [style.backgroundColor]="contact.bgColor">
+              {{ getLetters(contact) }}
+            </span>
+            } }
+          </div>
         </div>
         <!-- #endregion assigned-to-wrapper -->
 
