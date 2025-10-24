@@ -140,3 +140,38 @@ button {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// #region scrollbar
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+
+}
+
+// ::-webkit-scrollbar:vertical {
+//   width: 2px;
+
+// }
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: all.$lightgray2;
+  border-radius: 3px;
+    @include all.tablet{
+    background: transparent;
+  }
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a7a7a7;
+}
