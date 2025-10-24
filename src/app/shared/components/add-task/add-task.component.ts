@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, signal, ViewChild } from '@angular/core';
 import { FirebaseServiceService } from '../../services/firebase.service';
 import { Contact } from '../../interfaces/contact';
 import { CommonModule } from '@angular/common';
@@ -40,7 +40,7 @@ export class AddTaskComponent {
     id: '',
     title: '',
     description: '',
-    date: new Date(),
+    date: null,
     priority: TASK_PRIORITY.MEDIUM,
     assignedTo: [],
     category: TASK_CATEGORY.DEFAULT,
@@ -61,6 +61,9 @@ export class AddTaskComponent {
   @Output() createTask = new EventEmitter<Task>();
   @Output() taskCreated = new EventEmitter<void>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
+  @ViewChild(RpSearchComponent) rpSearchComponent!: RpSearchComponent;
+  @ViewChild(DatePickerComponent) datePickerComponent!: DatePickerComponent;
+  
   // #endregion
 
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
@@ -102,7 +105,7 @@ export class AddTaskComponent {
       id: '',
       title: '',
       description: '',
-      date: new Date(),
+      date: null,
       priority: TASK_PRIORITY.MEDIUM,
       assignedTo: [],
       category: TASK_CATEGORY.DEFAULT,
@@ -115,6 +118,8 @@ export class AddTaskComponent {
       low: false,
     };
     this.clearTask.emit();
+    this.rpSearchComponent.clearRpList();
+    this.datePickerComponent.clearDate();
   }
 
   onCreateTask() {

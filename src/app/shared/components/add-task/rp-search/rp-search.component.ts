@@ -91,6 +91,10 @@ export class RpSearchComponent {
     this.isListOpen.set(false);
   }
 
+  clearRpList(){
+    this.rpArray = [];
+  }
+
   onFocus() {
     this.isListOpen.set(true);
   }

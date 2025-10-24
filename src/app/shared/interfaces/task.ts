@@ -2,6 +2,7 @@
  * @fileoverview Defines the Task interface and related enumerations for
  * priorities, categories, and statuses used across the Kanban application.
  */
+import { Timestamp } from '@angular/fire/firestore';
 import { Contact } from './contact';
 
 /**
@@ -17,8 +18,8 @@ export interface Task {
   /** Detailed information about the task. */
   description: string;
 
-  /** Due date for the task, or null if not specified. */
-  date: Date | null;
+  /** Due date for the task or null or timestamp */
+  date: Date | null | Timestamp;
 
   /** Task priority level (urgent, medium, or low). */
   priority: Priority | null;
@@ -92,7 +93,7 @@ export type Priority = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
  * Used to classify tasks for better organization and filtering.
  */
 export const TASK_CATEGORY = {
-    DEFAULT: "Select Category",
+  DEFAULT: 'Select Category',
   USER_STORY: 'User Story',
   TECHNICAL_TASK: 'Technical Task',
 } as const;
