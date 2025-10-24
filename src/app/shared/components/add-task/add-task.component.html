@@ -147,7 +147,7 @@
         <!-- #region ASSIGNED TO -->
         <div class="input-wrapper" id="rp-wrapper">
           <h6>Assigned to</h6>
-          <app-rp-search (changeAssignedArray)="updateAssignedTo($event)">
+          <app-rp-search (sendContact)="addRpToArray($event)" [selectedContacts]="newTask.assignedTo">
           </app-rp-search>
           <div class="rp-selected-box">
             @if (newTask.assignedTo.length > 3) { @for (contact of getThreeRP();

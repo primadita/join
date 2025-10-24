@@ -4,6 +4,7 @@ import {
   ElementRef,
   HostListener,
   inject,
+  Input,
   output,
   signal,
 } from '@angular/core';
@@ -18,11 +19,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './rp-search.component.scss',
 })
 export class RpSearchComponent {
+  @Input() selectedContacts!: Contact[];
   contacts = inject(FirebaseServiceService);
-
-  rpArray: Array<Contact> = [];
-
-  changeAssignedArray = output<Array<Contact>>();
+  sendContact = output<Contact>();
 
   searchInput: string = '';
 
@@ -34,6 +33,10 @@ export class RpSearchComponent {
     const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
     const initials = (first + last).toUpperCase();
     return initials;
+  }
+
+  sendContactToParent(contact: Contact){
+    this.sendContact.emit(contact);
   }
 
   /**
@@ -55,20 +58,8 @@ export class RpSearchComponent {
     });
   }
 
-  addRpToArray(contact: Contact) {
-    const array = this.rpArray;
-    const test = array.includes(contact);
-    if (!test) {
-      array.push(contact);
-    } else if (test) {
-      const index = array.indexOf(contact);
-      array.splice(index, 1);
-    }
-    this.changeAssignedArray.emit(array);
-  }
-
   checkSelectedRp(contact: Contact): boolean {
-    if (this.rpArray.includes(contact)) {
+    if (this.selectedContacts.includes(contact)) {
       return true;
     } else {
       return false;
@@ -89,10 +80,6 @@ export class RpSearchComponent {
 
   closeList() {
     this.isListOpen.set(false);
-  }
-
-  clearRpList(){
-    this.rpArray = [];
   }
 
   onFocus() {

@@ -174,9 +174,11 @@
         <!-- #region assigned-to-wrapper -->
         <div class="input-wrapper" id="rp-wrapper">
           <label>Assigned to</label>
-          <app-rp-search
+          <app-rp-search 
             #rpSearch
-            (changeAssignedArray)="onAssignedChange($event)"
+
+            (sendContact)="addRpToArray($event)"
+            [selectedContacts]="assignedToContacts"
           ></app-rp-search>
           <ul>
             <ul class="assignees">
