@@ -1,21 +1,42 @@
 @keyframes slideInFromRight {
-    0% {transform: translateX(100%)};
-    100% {transform:translateX(35%)}
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)};
+    
 }
 
-@keyframes slideInFromRight-tablet {
-    0% {transform: translateX(100%)};
-    100% {transform:translateX(20%)}
+@keyframes slideInFromRight-tablet{
+    0% {right: 0};
+    100% {right: calc(50dvw - 20rem)};
 }
 
-@keyframes slideInFromRight-mobile {
-    0% {transform: translateX(80%)};
-    100% {transform:translateX(10%)}
+@keyframes slideInFromRight-mobile{
+    0% {right: 0};
+    100% {right: 25dvw};
 }
 
-@keyframes slideInFromRight-bigscreen {
-    0% {transform: translateX(0%)};
-    100% {transform:translateX(-250%)}
+@keyframes slideInFromRight-smartphone {
+    0% {right: 0};
+    100% {right: 12dvw};
+}
+
+@keyframes toast-addtask-slideInFromRight {
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)}
+}
+
+@keyframes toast-board-slideInFromRight {
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)};
+}
+
+@keyframes toast-board-slideInFromRight-tablet {
+    0% {right: 0};
+    100% {right: 25dvw};
+}
+
+@keyframes toast-board-slideInFromRight-mobile {
+    0% {right: 0};
+    100% {right: 10dvw};
 }
 
 @keyframes slideInPopUp {

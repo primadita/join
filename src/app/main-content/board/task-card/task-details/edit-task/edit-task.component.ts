@@ -17,16 +17,26 @@ import { TaskService } from '../../../../../shared/services/task.service';
 import { UserProfileImageService } from '../../../../../shared/services/user-profile-image.service';
 import { FormsModule } from '@angular/forms';
 import { Timestamp } from '@angular/fire/firestore';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-edit-task',
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+  ],
   imports: [
     MatDatepickerModule,
     RpSearchComponent,
     CommonModule,
     FormsModule,
     MatNativeDateModule,
+    MatInputModule,
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -35,6 +45,9 @@ export class EditTaskComponent {
   @Input() task!: Task;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
+  @Output() delete = new EventEmitter<string>();
+
+  isOpen: boolean = true;
 
   priorityFlag = {
     urgent: false,
@@ -45,12 +58,27 @@ export class EditTaskComponent {
 
   singleSubtask: string = '';
   dueDate: Date | null = null;
+  actualDate = new Date();
 
   constructor(
     private taskSvc: TaskService,
     private contactsSvc: FirebaseServiceService,
     private profilService: UserProfileImageService
   ) {}
+
+  onOverlayClick() {
+    this.isOpen = false;
+  }
+
+  onContentClick(ev: MouseEvent, rpSearch: RpSearchComponent) {
+    const host = rpSearch?.el?.nativeElement as HTMLElement | undefined;
+    if (host && host.contains(ev.target as Node)) {
+      ev.stopPropagation();
+      return;
+    }
+    rpSearch?.closeList();
+    ev.stopPropagation();
+  }
 
   setPriority(p: Priority) {
     this.task = { ...this.task, priority: p };
@@ -92,6 +120,10 @@ export class EditTaskComponent {
     return this.task.subtasks;
   }
 
+  get titleTooLong() {
+    return this.task.title.length >= 30;
+  }
+
   initialsOf(c: Contact) {
     return this.profilService.createInitial(c.name);
   }
@@ -107,6 +139,7 @@ export class EditTaskComponent {
 
   private toDate(d: any): Date | null {
     if (!d) return null;
+    // ist bereits ein Date von Datepicker oder
     if (d instanceof Date) return d;
     if (typeof d?.toDate === 'function') return d.toDate();
     return new Date(d);
@@ -138,11 +171,104 @@ export class EditTaskComponent {
   // #endregion
 
   onSubmit() {
-    const updated: Task = { ...this.task, date: this.fromDate(this.dueDate) };
+    this.dateError = null;
+
+    // 1) Muss ein valides Date sein
+    if (!this.isValidDate(this.dueDate)) {
+      this.dateError = 'invalid';
+      return; // nichts tun
+    }
+
+    // 2) Muss strikt in der Zukunft liegen (heute zählt nicht)
+    if (!this.isInFuture(this.dueDate)) {
+      this.dateError = 'pastOrToday';
+      return; // nichts tun
+    }
+
+    // 3) OK → speichern
+    const updated: Task = {
+      ...this.task,
+      date: Timestamp.fromDate(this.dueDate),
+    };
     this.save.emit(updated);
   }
 
   onCancel() {
     this.close.emit();
+  }
+
+  onAssignedChange(selectedContacts: Contact[]) {
+    const current = this.task.assignedTo || [];
+    const incoming = selectedContacts || [];
+    const byId = new Map<string, Contact>();
+    for (const c of current) byId.set(c.id, c);
+    for (const c of incoming) byId.set(c.id, c);
+    const updatedContacts = Array.from(byId.values());
+    this.task = { ...this.task, assignedTo: updatedContacts };
+  }
+
+    addRpToArray(contact: Contact) {
+    const array = this.task.assignedTo;
+    const test = array.includes(contact);
+    if (!test) {
+      array.push(contact);
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+    }
+  }
+
+  deleteSubtask(index: number) {
+    const updated = this.task.subtasks.filter((_, i) => i !== index);
+    this.task = { ...this.task, subtasks: updated };
+    this.editingIndex = null;
+  }
+
+  editingIndex: number | null = null;
+
+  editSubtask(i: number) {
+    this.editingIndex = i;
+  }
+
+  saveSubtaskEdit(i: number) {
+    this.editingIndex = null;
+  }
+
+  isEditing(i: number): boolean {
+    return this.editingIndex === i;
+  }
+
+  // Eingegebene Datum überprüfen vor dem Submit
+
+  dateError: 'invalid' | 'pastOrToday' | null = null;
+
+  // prüft ob der parameter ein wirkliches Date-Objekt ist
+  private isValidDate(d: any): d is Date {
+    //ist der paramter
+    return d instanceof Date && !isNaN(d.getTime());
+  }
+
+  private isInFuture(date: Date): boolean {
+    const picked = new Date(date);
+    const today = new Date();
+    return picked.getTime() > today.getTime();
+  }
+
+  getLetters(contact: Contact): string {
+    const parts = contact.name.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    const initials = (first + last).toUpperCase();
+    return initials;
+  }
+
+  getThreeRP(): Contact[] {
+    const array = this.task.assignedTo;
+    const newArray = [array[0], array[1], array[2]]
+    return newArray
+  }
+
+  valueRp(): number {
+    return this.task.assignedTo.length - 3
   }
 }

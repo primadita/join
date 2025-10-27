@@ -32,8 +32,10 @@
       font-weight: bold;
     }
     .descrip {
+      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+      word-wrap: break-word;
       font-size: 1.6rem;
       color: all.$iconColor;
     }
@@ -92,6 +94,12 @@
       .contacts-number {
         font-size: 1.6rem;
       }
+    }
+
+    .contact-placeholder {
+      width: 6rem; // gleiche Breite wie typischer Avatarblock
+      height: 3rem; // oder was optisch passt
+      visibility: hidden; // nimmt Platz ein, aber bleibt unsichtbar
     }
 
     .priority {

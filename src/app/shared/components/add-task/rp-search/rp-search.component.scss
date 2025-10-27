@@ -10,78 +10,112 @@
     color: all.$black;
     font-size: 1.6rem;
     font-family: all.$font;
+
+    &:focus {
+        border: solid 1px all.$lightblue2;
+        outline: none;
+    }
+
+    &.ng-touched:invalid {
+        border: solid 1px all.$priority_urgent;
+    }
 }
 
+.list-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    background-image: url('../../../../../../public/assets/icons/arrow_drop_down.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 1.2rem;
+}
 
-    #rpSelection {
-        // display: none;
-        position: absolute;
-        top: 4rem;
-        max-height: 25rem;
+.rp-selection-wrapper {
+    box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.19);
+    position: absolute;
+    top: 4rem;
+    width: 100%;
+}
+
+#rpSelection {
+    max-height: 25rem;
+    width: 100%;
+    overflow-y: scroll;
+    z-index: 100;
+    background-color: all.$white;
+
+
+    li {
         width: 100%;
-        overflow-y: scroll;
-        z-index: 100;
-        background-color: all.$white;
+        @include all.d-flex($flexdir: row, $jc: space-between);
+        padding: 0.8rem 1.6rem;
+        border-radius: 0.8rem;
+        margin-bottom: 1px;
+        cursor: pointer;
 
-        li {
-            width: 100%;
-            @include all.d-flex($flexdir: row, $jc: space-between);
-            padding: 0.8rem 1.6rem;
-            border-radius: 0.8rem;
-            margin-bottom: 1px;
+        &:hover {
+            background-color: all.$lightgray2;
+        }
 
-            &:hover {
-                background-color: all.$lightgray2;
-            }
+        .item-name-box {
+            @include all.d-flex($flexdir: row, $jc: flex-start);
 
-            .item-name-box {
-                @include all.d-flex($flexdir: row, $jc: flex-start);
+            .item-name {
+                width: 20rem;
 
-                .item-name {
-                    width: 20rem;
-                    overflow-x: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                @media(max-width: 380px) {
+                    width: 15rem;
                 }
-            }
-            .checkbox{
-                height: 2rem;
-                width: 2rem;
-                cursor: pointer;
+
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
-        .active-contact{
-            color: white;
-            background-color: all.$mainColor;
 
-            &:hover{
-                background-color: all.$hoverMainColor;
-            }
+        .checkbox {
+            height: 2rem;
+            width: 2rem;
+            cursor: pointer;
         }
     }
 
-    .rp-selected-box {
-        @include all.d-flex($flexdir: row, $jc: flex-start);
-        margin-top: 1.6rem;
+    .active-contact {
+        color: white;
+        background-color: all.$mainColor;
 
-        .test {
-            background-color: teal;
-            margin-right: 0.8rem;
+        &:hover {
+            background-color: all.$hoverMainColor;
         }
     }
+}
 
-    .initials {
-        width: 4rem;
-        height: 4rem;
-        border-radius: 50%;
-        border: 0.2rem solid all.$white;
-        padding: 1.5rem;
-        font-size: 1.6rem;
-        font-weight: 300;
-        font-family: 'Inter';
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: all.$white;
-        margin-right: 2.4rem;
+.rp-selected-box {
+    @include all.d-flex($flexdir: row, $jc: flex-start);
+    margin-top: 1.6rem;
+
+    .test {
+        background-color: teal;
+        margin-right: 0.8rem;
     }
+}
+
+.initials {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 0.2rem solid all.$white;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 300;
+    font-family: 'Inter';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: all.$white;
+    margin-right: 2.4rem;
+}

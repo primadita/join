@@ -11,43 +11,59 @@
         gap: 3rem;
 
         .form-input {
-            @include all.d-flex($flexdir: row, $alit: flex-start);
+            @include all.d-flex($flexdir: row, $alit: flex-start, $cgap: 2.4rem);
+            width: 100%;
 
             @media(max-width: 1140px) {
-                flex-direction: column;
-                gap: 0;
+                display: block;
                 height: 70dvh;
-                overflow-y: scroll  ;
+                overflow-y: auto;
 
                 &::-webkit-scrollbar {
                     display: none;
                 }
             }
-            @media(max-height: 950px){
+
+            @media(max-height: 950px) {
                 height: 65dvh;
             }
-            @media(max-height: 870px){
+
+            @media(max-height: 870px) {
                 height: 60dvh;
             }
-            @media(max-height: 750px){
+
+            @media(max-height: 750px) {
                 height: 55dvh;
             }
-
-            gap: 2.4rem;
-            width: 100%;
-
 
             .input-wrapper {
                 width: 40rem;
                 margin-bottom: 2.4rem;
 
+                @media(max-width: 450px) {
+                    width: 35rem;
+                }
+
+                @media(max-width: 380px) {
+                    width: 30rem;
+                }
+
                 h6 {
                     margin-bottom: 0.8rem;
                 }
 
+                .warning {
+                    color: all.$priority_urgent;
+                    position: absolute;
+                    top: 7.2rem;
+                    left: 1rem;
+                    font-size: 1.6rem;
+                }
+
+                // #region TITLE
                 .form-field {
                     height: 4rem;
-                    border: solid 1px #D9D9D9;
+                    border: solid 1px all.$lightgray6;
                     padding-left: 1.2rem;
                     padding-right: 3.6rem;
                     width: 100%;
@@ -55,11 +71,22 @@
                     color: all.$black;
                     font-size: 1.6rem;
                     font-family: all.$font;
+
+                    &:focus {
+                        border: solid 1px all.$lightblue2;
+                        outline: none;
+                    }
+
+                    &.ng-touched:invalid {
+                        border: solid 1px all.$priority_urgent;
+                    }
                 }
 
+                // #endregion
+                // #region DESCRIPTION
                 textarea {
                     height: 12rem;
-                    border: solid 1px #D9D9D9;
+                    border: solid 1px all.$lightgray6;
                     padding: 0.8rem 1.2rem;
                     width: 100%;
                     border-radius: 0.8rem;
@@ -67,7 +94,14 @@
                     font-size: 1.6rem;
                     font-family: all.$font;
                     resize: none;
+
+                    &:focus {
+                        border: solid 1px all.$lightblue2;
+                        outline: none;
+                    }
                 }
+
+                // #endregion
 
                 .priority-btn-wrapper {
                     width: 100%;
@@ -79,7 +113,7 @@
                         width: 30%;
                         height: 4rem;
                         border-radius: 0.8rem;
-                        border: solid 1px #D9D9D9;
+                        border: solid 1px all.$lightgray6;
                         background-color: all.$white;
                         transition: 125ms;
 
@@ -88,13 +122,14 @@
                         }
 
                         svg {
-                            height: 1.6rem;
-                            width: 1.6rem;
+                            @include all.square($length: 1.6rem);
+                            // height: 1.6rem;
+                            // width: 1.6rem;
                         }
                     }
 
                     .active-urgent {
-                        background-color: #FF3D00;
+                        background-color: all.$priority_urgent;
                         color: all.$white;
 
                         path {
@@ -103,7 +138,7 @@
                     }
 
                     .active-medium {
-                        background-color: #FFA800;
+                        background-color: all.$priority_medium;
                         color: all.$white;
 
                         path {
@@ -112,7 +147,7 @@
                     }
 
                     .active-low {
-                        background-color: #7AE229;
+                        background-color: all.$priority_low;
                         color: all.$white;
 
                         path {
@@ -123,6 +158,114 @@
             }
 
             #subtask-wrapper {
+
+                // #region von Henry
+
+                ul {
+                    max-height: 11rem;
+                    overflow-y: auto;
+                    gap: 0.5rem;
+                    // box-shadow: 0px 9px 13px -11px rgba(0, 0, 0, 0.19);
+
+
+                    li {
+                        width: 100%;
+                        height: 3rem;
+                        @include all.d-flex($flexdir: row, $jc: flex-start);
+                        border-radius: 1rem;
+                        cursor: pointer;
+
+                        .list-content {
+                            width: 100%;
+                            @include all.d-flex($flexdir: row,
+                                $jc: none,
+                                $alit: center);
+                            gap: 2.5rem;
+
+                            >span {
+
+                                width: 1000px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+
+                            .edit-wrapper {
+                                width: 100%;
+                            }
+
+                            .edit-input {
+                                width: 100%;
+                                height: 3rem;
+                                border-bottom: 1px solid all.$lightblue2;
+                                padding-left: 1.6rem;
+                                padding-right: 6rem;
+
+                            }
+
+                            input:focus {
+                                border: none;
+                                border-bottom: 1px solid all.$lightblue2;
+                            }
+
+                            .edit-subtask {
+                                position: absolute;
+                                top: 50%;
+                                right: 0.9rem;
+                                transform: translateY(-50%);
+                                @include all.d-flex($flexdir: row,
+                                    $jc: flex-start,
+                                    $alit: center);
+                                gap: 0.4rem;
+                                flex: 0 0 auto;
+                                white-space: nowrap;
+                                opacity: 0;
+                                visibility: hidden;
+                                pointer-events: none;
+                                transition: opacity 0.2s ease-in-out;
+
+                                @include all.notebook {
+                                    opacity: 1;
+                                    visibility: visible;
+                                    pointer-events: all;
+                                }
+
+                                button {
+                                    @include all.d-flex($flexdir: row, $jc: center, $alit: center);
+                                }
+
+                                .separator {
+                                    height: 2rem;
+                                    width: 0.1rem;
+                                    background-color: all.$lightgray2;
+                                }
+                            }
+                        }
+                        @include all.desktop {
+
+                            &:hover .list-content .edit-subtask {
+                                opacity: 1;
+                                visibility: visible;
+                                pointer-events: all;
+                            }
+
+                        }
+
+                        &.editing .list-content .edit-subtask,
+                        .list-content .edit-subtask.force-visible {
+                            opacity: 1;
+                            visibility: visible;
+                            pointer-events: all;
+                        }
+                    }
+
+                    li:hover {
+                        background-color: all.$lightgray4;
+                    }
+                }
+
+                // #endregion
+
                 button {
                     height: 2rem;
                     width: 2rem;
@@ -169,24 +312,6 @@
                     }
                 }
 
-                ul {
-                    list-style-type: disc;
-                    max-height: 8rem;
-                    overflow-x: auto;
-
-                    li {
-                        @include all.d-flex($flexdir: row, $jc: space-between);
-                        font-size: 1.6rem;
-                        font-weight: 400;
-                        font-family: 'Inter';
-                        padding: 0.4rem 1.6rem;
-
-                        .del-subtask {
-                            background-image: url(../../../../../public/assets/icons/delete.svg);
-                            background-size: 1.7rem;
-                        }
-                    }
-                }
             }
 
             #rp-wrapper {
@@ -216,33 +341,6 @@
 
                 span {
                     font-weight: 600;
-                }
-            }
-
-            .date-input-wrapper {
-
-                display: flex;
-                width: 40rem;
-                height: 4rem;
-                align-items: center;
-                border: 1px solid #D9D9D9;
-                border-radius: 0.8rem;
-                padding-right: 40px;
-                background-color: white;
-
-                input {
-                    border: none;
-                    outline: none;
-                    padding: 8px 12px;
-                    font-size: 14px;
-                }
-
-                mat-datepicker-toggle {
-                    position: absolute;
-                    right: 8px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    color: #666;
                 }
             }
 
@@ -292,6 +390,18 @@
                     border-radius: 0.8rem;
                     transition: 125ms;
 
+                    @include all.desktop {
+                        &:hover {
+                            border: 2px solid all.$lightblue2;
+                            color: all.$lightblue2;
+                            box-shadow: all.$shadow;
+
+                            .cancel-icon {
+                                stroke: all.$lightblue2;
+                            }
+                        }
+                    }
+
                     .cancel-icon {
                         width: 20px;
                         height: 20px;
@@ -301,15 +411,7 @@
                         transition: stroke 0.2s ease;
                     }
 
-                    &:hover {
-                        border: 2px solid all.$lightblue2;
-                        color: all.$lightblue2;
-                        box-shadow: all.$shadow;
 
-                        .cancel-icon {
-                            stroke: all.$lightblue2;
-                        }
-                    }
 
                 }
 
@@ -327,10 +429,14 @@
                         transition: 125ms;
                         cursor: pointer;
 
-                        &:hover {
-                            background-color: all.$lightblue2;
-                            box-shadow: all.$shadow;
+                        @include all.desktop {
+                            &:hover {
+                                background-color: all.$lightblue2;
+                                box-shadow: all.$shadow;
+                            }
                         }
+
+
                     }
 
                     img {
@@ -342,5 +448,9 @@
                 }
             }
         }
+    }
+
+    .red {
+        color: red;
     }
 }
