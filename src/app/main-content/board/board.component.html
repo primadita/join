@@ -66,7 +66,8 @@
             </div>
             <div cdkDropList id="toDoList" #toDoList="cdkDropList" [cdkDropListData]="board?.todo ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, toDoList)"
-                (cdkDropListEntered)="highlightDropList(toDoList)" class="progress-list">
+                (cdkDropListEntered)="highlightDropList(toDoList); unhighlightDropList(inProgressList); unhighlightDropList(awaitFeedbackList); unhighlightDropList(doneList)" 
+                class="progress-list">
                 @if(!(searchInput$ | async)?.trim()&& (board?.todo?.length ?? 0)=== 0){
                 <div class="empty-list">
                     <span>No tasks in this list</span>
@@ -100,7 +101,8 @@
             <div cdkDropList id="inProgressList" #inProgressList="cdkDropList"
                 [cdkDropListData]="board?.inprogress ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, inProgressList)"
-                (cdkDropListEntered)="highlightDropList(inProgressList)" class="progress-list">
+                (cdkDropListEntered)="highlightDropList(inProgressList); unhighlightDropList(toDoList); unhighlightDropList(awaitFeedbackList); unhighlightDropList(doneList)" 
+                class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.inprogress?.length ?? 0) === 0){
                 <div class="empty-list">
                     <span>No tasks in this list</span>
@@ -133,7 +135,8 @@
             <div cdkDropList id="awaitFeedbackList" #awaitFeedbackList="cdkDropList"
                 [cdkDropListData]="board?.awaitfeedback ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, awaitFeedbackList)"
-                (cdkDropListEntered)="highlightDropList(awaitFeedbackList)" class="progress-list">
+                (cdkDropListEntered)="highlightDropList(awaitFeedbackList); unhighlightDropList(toDoList); unhighlightDropList(inProgressList); unhighlightDropList(doneList)" 
+                class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.awaitfeedback?.length ?? 0) === 0){
                 <div class="empty-list">
                     <span>No tasks in this list</span>
@@ -152,7 +155,8 @@
             </div>
             <div cdkDropList id="doneList" #doneList="cdkDropList" [cdkDropListData]="board?.done ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, doneList)"
-                (cdkDropListEntered)="highlightDropList(doneList)" class="progress-list">
+                (cdkDropListEntered)="highlightDropList(doneList); unhighlightDropList(toDoList); unhighlightDropList(inProgressList); unhighlightDropList(awaitFeedbackList)" 
+                class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.done?.length ?? 0) === 0){
                 <div class="empty-list">
                     <span>No tasks in this list</span>
