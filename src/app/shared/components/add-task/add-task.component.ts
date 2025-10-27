@@ -210,8 +210,8 @@ export class AddTaskComponent {
   }
   // #endregion
   // #region METHODS of SUBTASKS
-  addSubtask() {
-    if (this.singleSubtask.length > 0) {
+  addSubtask(subtask: NgModel) {
+    if (subtask.valid) {
       const subtaskTitle = this.singleSubtask;
       const newSubtask: Subtask = {
         title: subtaskTitle,

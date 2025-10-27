@@ -118,12 +118,12 @@
         <div class="input-wrapper" id="subtask-wrapper">
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
-            <input class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask"
-              name="subtask" placeholder="Add new Subtask" (keydown.enter)="addSubtask()" />
+            <input #subtask="ngModel" class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask"
+              name="subtask" placeholder="Add new Subtask" pattern=".*[A-Za-zÄÖÜäöüß].*" (keydown.enter)="addSubtask(subtask)" />
             <div class="subtask-btn-wrapper">
               <button class="clear-btn"></button>
               <div class="btn-divide"></div>
-              <button class="add-btn" (click)="addSubtask()"></button>
+              <button class="add-btn" (click)="addSubtask(subtask)"></button>
             </div>
           </div>
           <ul>
