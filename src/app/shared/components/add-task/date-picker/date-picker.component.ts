@@ -3,14 +3,14 @@
  * built with Angular Material components. It allows users to select a due date
  * and emits the selected value to the parent component.
  */
-import { Component, output } from '@angular/core';
+import { Component, output, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 
 /**
  * A reusable, standalone component for selecting and emitting dates.
@@ -52,6 +52,8 @@ export class DatePickerComponent {
    * @type {EventEmitter<Date | null>}
    */
   sendDate = output<Date | null>();
+
+  @ViewChildren(NgModel) formFields!: QueryList<NgModel>;
   // #endregion
 
   // #region METHODS
@@ -59,12 +61,16 @@ export class DatePickerComponent {
    * Emits the currently selected date to the parent component.
    * This method is typically called when the user confirms a date selection.
    */
-  sendDateToParent(){
+  sendDateToParent() {
     this.sendDate.emit(this.dueDate);
   }
 
-  clearDate(){
+  clearDate() {
     this.dueDate = null;
+    this.formFields.forEach(field => {
+      field.control.markAsPristine();
+      field.control.markAsUntouched();
+    });
   }
   // #endregion
 }

@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { Category, Subtask, Task, TASK_CATEGORY, TASK_PRIORITY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
@@ -27,7 +27,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     FormsModule,
     RpSearchComponent,
     CategoryComponent,
-    DatePickerComponent
+    DatePickerComponent,
   ],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
@@ -73,12 +73,10 @@ export class AddTaskComponent {
   }
   setDate(date: Date | null) {
     this.newTask.date = date;
-    console.log(this.newTask.date);
   }
 
   setCategory(value: Category) {
     this.newTask.category = value;
-    console.log(this.newTask.category);
     this.categorySelected = true;
   }
 
@@ -91,15 +89,11 @@ export class AddTaskComponent {
       }
     }
     else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-
-      console.log('Task konnte nicht erstellt werden');
       this.categorySelected = false;
-    } else {
-      console.log('Task konnte nicht erstellt werden');
-    }
+    } 
   }
 
-  onClearInputs() {
+  onClearInputs(title: NgModel) {
     this.newTask = {
       id: '',
       title: '',
@@ -116,6 +110,10 @@ export class AddTaskComponent {
       medium: true,
       low: false,
     };
+    title.control.markAsUntouched();
+    
+    this.singleSubtask = "";
+    this.categorySelected = true;
     this.clearTask.emit();
     this.datePickerComponent.clearDate();
   }
@@ -212,8 +210,8 @@ export class AddTaskComponent {
   }
   // #endregion
   // #region METHODS of SUBTASKS
-  addSubtask() {
-    if (this.singleSubtask.length > 0) {
+  addSubtask(subtask: NgModel) {
+    if (subtask.valid) {
       const subtaskTitle = this.singleSubtask;
       const newSubtask: Subtask = {
         title: subtaskTitle,

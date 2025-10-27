@@ -86,6 +86,14 @@ export class RpSearchComponent {
     this.isListOpen.set(true);
   }
 
+  onFocusButton(){
+    if(this.isListOpen()){
+      this.isListOpen.set(false);
+    }else{
+      this.isListOpen.set(true);
+    }
+  }
+
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent) {
     if (!this.el.nativeElement.contains(event.target)) {
