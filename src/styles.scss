@@ -1,6 +1,3 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @use "./../public/assets/styles/all-styles.scss" as all;
 
@@ -63,7 +60,8 @@ a {
 // #region FONTS
 @font-face {
   font-family: "Inter";
-  src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+  // src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+  src: url('../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
 }
 
 h1 {
