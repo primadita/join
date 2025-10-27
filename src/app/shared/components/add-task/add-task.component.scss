@@ -183,7 +183,7 @@
                             gap: 2.5rem;
 
                             >span {
-                                
+
                                 width: 1000px;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
@@ -224,6 +224,12 @@
                                 pointer-events: none;
                                 transition: opacity 0.2s ease-in-out;
 
+                                @include all.notebook {
+                                    opacity: 1;
+                                    visibility: visible;
+                                    pointer-events: all;
+                                }
+
                                 button {
                                     @include all.d-flex($flexdir: row, $jc: center, $alit: center);
                                 }
@@ -235,11 +241,14 @@
                                 }
                             }
                         }
+                        @include all.desktop {
 
-                        &:hover .list-content .edit-subtask {
-                            opacity: 1;
-                            visibility: visible;
-                            pointer-events: all;
+                            &:hover .list-content .edit-subtask {
+                                opacity: 1;
+                                visibility: visible;
+                                pointer-events: all;
+                            }
+
                         }
 
                         &.editing .list-content .edit-subtask,
@@ -381,6 +390,18 @@
                     border-radius: 0.8rem;
                     transition: 125ms;
 
+                    @include all.desktop {
+                        &:hover {
+                            border: 2px solid all.$lightblue2;
+                            color: all.$lightblue2;
+                            box-shadow: all.$shadow;
+
+                            .cancel-icon {
+                                stroke: all.$lightblue2;
+                            }
+                        }
+                    }
+
                     .cancel-icon {
                         width: 20px;
                         height: 20px;
@@ -390,15 +411,7 @@
                         transition: stroke 0.2s ease;
                     }
 
-                    &:hover {
-                        border: 2px solid all.$lightblue2;
-                        color: all.$lightblue2;
-                        box-shadow: all.$shadow;
 
-                        .cancel-icon {
-                            stroke: all.$lightblue2;
-                        }
-                    }
 
                 }
 
@@ -416,10 +429,14 @@
                         transition: 125ms;
                         cursor: pointer;
 
-                        &:hover {
-                            background-color: all.$lightblue2;
-                            box-shadow: all.$shadow;
+                        @include all.desktop {
+                            &:hover {
+                                background-color: all.$lightblue2;
+                                box-shadow: all.$shadow;
+                            }
                         }
+
+
                     }
 
                     img {
