@@ -16,7 +16,7 @@
 
             @media(max-width: 1140px) {
                 display: block;
-                height: 70dvh;
+                height: 65dvh;
                 overflow-y: auto;
 
                 &::-webkit-scrollbar {
@@ -25,15 +25,19 @@
             }
 
             @media(max-height: 950px) {
-                height: 65dvh;
+                height: 60dvh;
+                gap: 1.6rem;
             }
 
             @media(max-height: 870px) {
-                height: 60dvh;
+                height: 55dvh;
             }
 
             @media(max-height: 750px) {
-                height: 55dvh;
+                height: 50dvh;
+            }
+            @media(max-height: 600px){
+                height: 40dvh;
             }
 
             .input-wrapper {
@@ -354,31 +358,28 @@
                 }
             }
 
-            .required-text {
-                @media(min-width: 1139px) {
-                    display: none;
-                }
-            }
+
         }
 
         .form-submit {
             @include all.d-flex($flexdir: row, $jc: space-between, $alit: flex-end);
 
             @media(max-width:1140px) {
-                justify-content: center;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.6rem;
+                justify-content: flex-start;
             }
 
             width: 100%;
 
-            span {
-                @media(max-width:1140px) {
-                    display: none;
-                }
-            }
-
             .btn-wrapper {
                 @include all.d-flex($flexdir: row, $jc: flex-start);
                 gap: 1.6rem;
+                @media(max-width: 1140px){
+                    width: 100%;
+                    justify-content: center;
+                }
 
                 button {
                     height: 5rem;

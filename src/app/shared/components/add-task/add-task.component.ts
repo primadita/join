@@ -69,7 +69,7 @@ export class AddTaskComponent {
 
   // #region METHODS
   get titleTooLong() {
-    return this.newTask.title?.length >= 30;
+    return this.newTask.title?.length > 30;
   }
   setDate(date: Date | null) {
     this.newTask.date = date;
