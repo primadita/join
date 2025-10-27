@@ -110,6 +110,7 @@ export class AddTaskComponent {
       medium: true,
       low: false,
     };
+    this.singleSubtask = "";
     this.clearTask.emit();
     this.datePickerComponent.clearDate();
   }
