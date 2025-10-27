@@ -73,12 +73,10 @@ export class AddTaskComponent {
   }
   setDate(date: Date | null) {
     this.newTask.date = date;
-    console.log(this.newTask.date);
   }
 
   setCategory(value: Category) {
     this.newTask.category = value;
-    console.log(this.newTask.category);
     this.categorySelected = true;
   }
 
@@ -91,12 +89,8 @@ export class AddTaskComponent {
       }
     }
     else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-
-      console.log('Task konnte nicht erstellt werden');
       this.categorySelected = false;
-    } else {
-      console.log('Task konnte nicht erstellt werden');
-    }
+    } 
   }
 
   onClearInputs() {
