@@ -13,6 +13,7 @@
         .form-input {
             @include all.d-flex($flexdir: row, $alit: flex-start, $cgap: 2.4rem);
             width: 100%;
+
             @media(max-width: 1140px) {
                 display: block;
                 height: 70dvh;
@@ -58,6 +59,7 @@
                     left: 1rem;
                     font-size: 1.6rem;
                 }
+
                 // #region TITLE
                 .form-field {
                     height: 4rem;
@@ -69,14 +71,17 @@
                     color: all.$black;
                     font-size: 1.6rem;
                     font-family: all.$font;
-                    &:focus{
-                        border: solid 1px all.$lightblue2; 
+
+                    &:focus {
+                        border: solid 1px all.$lightblue2;
                         outline: none;
                     }
-                    &.ng-touched:invalid{
-                        border: solid 1px all.$priority_urgent; 
+
+                    &.ng-touched:invalid {
+                        border: solid 1px all.$priority_urgent;
                     }
                 }
+
                 // #endregion
                 // #region DESCRIPTION
                 textarea {
@@ -89,13 +94,15 @@
                     font-size: 1.6rem;
                     font-family: all.$font;
                     resize: none;
-                    &:focus{
-                        border: solid 1px all.$lightblue2; 
+
+                    &:focus {
+                        border: solid 1px all.$lightblue2;
                         outline: none;
                     }
                 }
+
                 // #endregion
-                
+
                 .priority-btn-wrapper {
                     width: 100%;
                     @include all.d-flex($flexdir: row, $jc: space-between);
@@ -155,12 +162,14 @@
                 // #region von Henry
 
                 ul {
-                    height: 11rem;
+                    max-height: 11rem;
                     overflow-y: auto;
                     @include all.d-flex($flexdir: column,
                         $jc: flex-start,
                         $alit: flex-start);
                     gap: 0.5rem;
+                    // box-shadow: 0px 9px 13px -11px rgba(0, 0, 0, 0.19);
+
 
                     li {
                         width: 100%;
@@ -183,11 +192,12 @@
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
                             }
-                            .edit-wrapper{
-                                width: 100%;                                
+
+                            .edit-wrapper {
+                                width: 100%;
                             }
 
-                            .edit-input{
+                            .edit-input {
                                 width: 100%;
                                 height: 3rem;
                                 border-bottom: 1px solid all.$lightblue2;
@@ -196,10 +206,10 @@
 
                             }
 
-                            input:focus{
-                                    border: none;
-                                    border-bottom: 1px solid all.$lightblue2;
-                                }
+                            input:focus {
+                                border: none;
+                                border-bottom: 1px solid all.$lightblue2;
+                            }
 
                             .edit-subtask {
                                 position: absolute;

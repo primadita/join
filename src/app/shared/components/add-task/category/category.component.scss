@@ -14,16 +14,23 @@
     @include all.d-flex($flexdir: row, $jc: space-between);
 }
 
-.active-list{
+.active-list {
     border: solid 1px all.$lightblue2;
 }
 
-.category-selection {
+.selection-wrapper {
     position: absolute;
     top: 4rem;
+    width: 100%;
+    box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.19);
+    z-index: 100;
+}
+
+.category-selection {
+
     max-height: 25rem;
     width: 100%;
-    z-index: 100;
+
     background-color: all.$white;
 
     li {

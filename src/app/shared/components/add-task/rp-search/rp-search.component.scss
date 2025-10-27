@@ -21,7 +21,7 @@
     }
 }
 
-.list-button{
+.list-button {
     width: 2.4rem;
     height: 2.4rem;
     background-image: url('../../../../../../public/assets/icons/arrow_drop_down.svg');
@@ -34,10 +34,14 @@
     right: 1.2rem;
 }
 
-
-#rpSelection {
+.rp-selection-wrapper {
+    box-shadow: 0px 5px 13px 0px rgba(0, 0, 0, 0.19);
     position: absolute;
     top: 4rem;
+    width: 100%;
+}
+
+#rpSelection {
     max-height: 25rem;
     width: 100%;
     overflow-y: scroll;
