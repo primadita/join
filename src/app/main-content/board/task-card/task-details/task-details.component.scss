@@ -70,11 +70,12 @@
       color: all.$white;
       padding: 0.4rem 1.6rem;
       border-radius: 0.8rem;
+      margin-left: 2rem;
     }
 
     button {
-      border-radius: 1rem;
-      padding: 0.25rem 0.5rem;
+      border-radius: 4.5rem;
+      padding: 1rem 1.5rem;
       background: all.$white;
     }
 
@@ -103,14 +104,19 @@
   // #region description
   .description {
     width: 100%;
-    max-height: 15rem;
-    overflow: auto;
-    padding: 1rem 0;
-    .descrip {
-      font-size: 2rem;
+    height: 15rem;
 
-      @include all.mobile {
+    padding: 1rem 0;
+
+    .description-wrapper {
+      height: 100%;
+      overflow: auto;
+      .descrip {
         font-size: 1.6rem;
+
+        @include all.mobile {
+          font-size: 1.6rem;
+        }
       }
     }
   }
@@ -212,6 +218,7 @@
     width: 100%;
     @include all.d-flex($flexdir: row, $jc: flex-end, $alit: center);
     gap: 2rem;
+    padding: 0 2rem;
 
     button {
       @include all.d-flex($flexdir: row, $jc: center, $alit: center);
