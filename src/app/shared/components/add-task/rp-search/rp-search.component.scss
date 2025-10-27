@@ -21,7 +21,13 @@
     }
 }
 
-img{
+.list-button{
+    width: 2.4rem;
+    height: 2.4rem;
+    background-image: url('../../../../../../public/assets/icons/arrow_drop_down.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
     position: absolute;
     transform: translateY(-50%);
     top: 50%;
@@ -30,7 +36,6 @@ img{
 
 
 #rpSelection {
-    // display: none;
     position: absolute;
     top: 4rem;
     max-height: 25rem;
@@ -38,6 +43,7 @@ img{
     overflow-y: scroll;
     z-index: 100;
     background-color: all.$white;
+
 
     li {
         width: 100%;
