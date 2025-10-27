@@ -16,11 +16,13 @@
             [value]="task.title"
             placeholder="Enter a title"
             [(ngModel)]="task.title"
-            #titleCtrl="ngModel"/>
+            pattern=".*[A-Za-zÄÖÜäöüß].*"
+            #titleCtrl="ngModel"
+            required/>
           <!-- <span *ngIf="titleCtrl.errors?.['maxlength']">
             Maximal 30 Zeichen erlaubt.
           </span> -->
-          @if(titleCtrl.hasError('required') && titleCtrl.touched){
+          @if(!titleCtrl.valid && titleCtrl.touched){
             <span class="warning">This field is required!</span>
           }
           @if(titleTooLong){
