@@ -20,22 +20,28 @@
   padding: 4rem 3rem;
   box-shadow: all.$shadow;
   @include all.d-flex();
+  gap: 1rem;
 
   @include all.mobile {
-    padding: 3rem 2rem;
+    padding: 3rem 1.5rem;
   }
 
   form {
     width: 100%;
     height: auto;
     max-height: calc(100dvh - 3rem - 3.4rem);
-    @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start, $rgap: 2rem);
+    @include all.d-flex(
+      $flexdir: column,
+      $jc: flex-start,
+      $alit: flex-start,
+      $rgap: 2rem
+    );
 
     .btn-wrapper {
       margin-left: auto;
 
       .close-btn {
-        font-size: 2rem;
+        font-size: 1.6rem;
         background: transparent;
         border-radius: 50%;
         @include all.square($length: 3rem);
@@ -75,6 +81,7 @@
       overflow-y: auto;
       scrollbar-gutter: stable both-edges;
       display: block;
+      padding: 0 1rem;
 
       .input-wrapper {
         width: 100%;
@@ -131,7 +138,7 @@
         border-radius: 0.8rem;
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
 
-        >input {
+        > input {
           border: none;
         }
       }
@@ -139,7 +146,11 @@
       // #region Priority-Buttons-Wrapper
       .priority-btn-wrapper {
         width: 100%;
-        @include all.d-flex($flexdir: row, $jc: space-between, $alit: flex-start);
+        @include all.d-flex(
+          $flexdir: row,
+          $jc: space-between,
+          $alit: flex-start
+        );
 
         button {
           @include all.d-flex($flexdir: row, $cgap: 0.8rem);
@@ -186,7 +197,7 @@
         }
       }
 
-      // #endregion 
+      // #endregion
       // #region ASSIGNED-TO-WRAPPER
       #rp-wrapper {
         width: 100%;
@@ -204,7 +215,7 @@
           padding: 1.5rem;
           font-size: 1.6rem;
           font-weight: 300;
-          font-family: 'Inter';
+          font-family: "Inter";
           display: flex;
           align-items: center;
           justify-content: center;
@@ -217,7 +228,7 @@
         }
       }
 
-      // #endregion 
+      // #endregion
       // #region SUBTASKS-WRAPPER
       #subtask-wrapper {
         .subtask-input-wrapper {
@@ -265,7 +276,11 @@
           height: 100%;
           max-height: 11rem;
           overflow-y: auto;
-          @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
+          @include all.d-flex(
+            $flexdir: column,
+            $jc: flex-start,
+            $alit: flex-start
+          );
 
           li {
             width: 100%;
@@ -276,30 +291,29 @@
 
             .list-content {
               width: 100%;
-              @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
+              @include all.d-flex(
+                $flexdir: row,
+                $jc: flex-start,
+                $alit: center
+              );
               gap: 0.5rem;
 
-              >span {
-                // width: calc(100% - 6rem);
-                flex: 1 1 auto;
-                min-width: 0;
+              > span {
+                width: 100%;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
                 height: 3rem;
-                @include all.d-flex($flexdir: row, $alit: center, $jc: flex-start);
-
+                @include all.d-flex($flexdir: center);
               }
 
               .edit-wrapper {
                 width: auto;
-                flex: 1 1 auto;
-                min-width: 0;
-                @include all.d-flex($flexdir: row);
+                @include all.d-flex($flexdir: row, $jc: space-between);
+                gap: 1rem;
 
                 .edit-input {
-                  flex: 1 1 auto;
-                  min-width: 0;
+                  width: 90%;
                   height: 3rem;
                   text-overflow: ellipsis;
                   white-space: nowrap;
@@ -310,9 +324,13 @@
                 }
 
                 .edit-subtask {
-                  @include all.d-flex($flexdir: row, $jc: flex-end, $alit: center);
+                  @include all.d-flex(
+                    $flexdir: row,
+                    $jc: flex-end,
+                    $alit: center
+                  );
                   gap: 0.4rem;
-                  margin-left: auto;
+
                   opacity: 0;
                   visibility: hidden;
                   pointer-events: none;
@@ -325,9 +343,11 @@
                   }
 
                   button {
-                    @include all.d-flex($flexdir: row,
+                    @include all.d-flex(
+                      $flexdir: row,
                       $jc: center,
-                      $alit: center);
+                      $alit: center
+                    );
                     padding: 0.25rem 0.25rem;
                     border-radius: 1rem;
                   }
@@ -348,7 +368,6 @@
                 pointer-events: all;
               }
             }
-
 
             &.editing .list-content .edit-wrapper .edit-subtask,
             .list-content .edit-subtask.force-visible {
