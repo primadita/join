@@ -74,7 +74,7 @@
                 </div>
                 }
                 @for (task of board?.todo; track task.id){
-                <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
                     [task]="task">
                 </app-task-card>
                 }
@@ -109,7 +109,7 @@
                 </div>
                 }
                 @for (task of board?.inprogress; track task.id){
-                <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
                     [task]="task"></app-task-card>
                 }
             </div>
@@ -143,7 +143,7 @@
                 </div>
                 }
                 @for (task of board?.awaitfeedback; track task.id){
-                <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
                     [task]="task"></app-task-card>
                 }
             </div>
@@ -163,7 +163,7 @@
                 </div>
                 }
                 @for (task of board?.done; track task.id){
-                <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
                     [task]="task"></app-task-card>
                 }
             </div>
