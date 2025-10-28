@@ -16,6 +16,7 @@ import {
 import { Timestamp } from '@angular/fire/firestore';
 import { TaskService } from '../../../../shared/services/task.service';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { ToastMessagesService } from '../../../../shared/services/toast-messages.service';
 
 @Component({
   selector: 'app-task-details',
@@ -34,7 +35,8 @@ export class TaskDetailsComponent {
   constructor(
     private taskSvc: TaskService,
     private contactsSvc: FirebaseServiceService,
-    private profilService: UserProfileImageService
+    private profilService: UserProfileImageService,
+    private toastService: ToastMessagesService
   ) {}
 
   closing = false;
@@ -117,5 +119,6 @@ export class TaskDetailsComponent {
   deleteTask(id: string) {
     this.onClose();
     this.taskSvc.deleteTask(id);
+    this.toastService.show('Task deleted', 'success');
   }
 }

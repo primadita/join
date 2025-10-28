@@ -49,6 +49,7 @@ div{
 }
 .board{
     bottom: 50dvh;
+    z-index: 220;
     animation: toast-board-slideInFromRight 1s forwards;
     animation-iteration-count: 1; 
     @include all.tablet{
