@@ -1,6 +1,6 @@
 <div class="content">
   <h1>Add Task</h1>
-  <form #newTaskForm="ngForm">
+  <form #newTaskForm="ngForm" (ngSubmit)="onSubmit(newTaskForm)">
     <div class="form-input">
       <div class="form-input-left">
         <!-- #region TITLE -->
@@ -188,7 +188,7 @@
           </svg>
         </button>
         <div class="submit-wrapper">
-          <input type="submit" value="Create task" (click)="checkValidation()" />
+          <input type="submit" value="Create task"/>
           <img src="assets/icons/check.svg" alt="check-img" />
         </div>
       </div>
