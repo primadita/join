@@ -81,7 +81,7 @@
       overflow-y: auto;
       scrollbar-gutter: stable both-edges;
       display: block;
-      padding: 0 1rem;
+      padding: 0 1rem 0 0;
 
       .input-wrapper {
         width: 100%;
@@ -151,6 +151,7 @@
           $jc: space-between,
           $alit: flex-start
         );
+        
 
         button {
           @include all.d-flex($flexdir: row, $cgap: 0.8rem);
@@ -166,6 +167,13 @@
 
           svg {
             @include all.square($length: 1.6rem);
+          }
+
+          @media (max-width: 400px) {
+            @include all.d-flex($flexdir: row, $cgap: 0.3rem);
+            width: auto;
+            min-width: 30%;
+            max-width: 34%;
           }
         }
 
