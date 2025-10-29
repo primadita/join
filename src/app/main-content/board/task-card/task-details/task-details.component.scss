@@ -191,10 +191,10 @@
     gap: 0.5rem;
 
     ul {
-      width: 95%;
       margin-left: 2rem;
 
       li {
+        width: 100%;
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 1rem;
         // margin: 0.5rem 0;
@@ -203,6 +203,15 @@
 
         input {
           cursor: pointer;
+        }
+
+        /* Prevent subtask text from overflowing the card */
+        span {
+          flex: 1 1 auto;
+          min-width: 0; /* allow flex child to shrink inside row */
+          overflow-wrap: anywhere; /* wrap long words/URLs */
+          word-break: break-word;
+          white-space: normal;
         }
       }
 
