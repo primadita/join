@@ -4,11 +4,11 @@
     <img *ngIf="!menuOpen" class="smaller" src="/assets/icons/menu.png" alt="menu button">
   </button>
   <div *ngIf="menuOpen" class="menu-popup" (click)="toggleMenu($event)"> Move to...
-    <br>
-    <button *ngIf=task.status (click)="moveTo('to do')">To do</button><br>
-    <button *ngIf=task.status (click)="moveTo('in progress')">In progress</button><br>
-    <button *ngIf=task.status (click)="moveTo('await feedback')">Await feedback</button><br>
-    <button *ngIf=task.status (click)="moveTo('done')">Done</button>
+    
+    <button *ngIf=task.status (click)="moveTo('to do')"><span>To do</span></button>
+    <button *ngIf=task.status (click)="moveTo('in progress')"><span>In progress</span></button>
+    <button *ngIf=task.status (click)="moveTo('await feedback')"><span>Await feedback</span></button>
+    <button *ngIf=task.status (click)="moveTo('done')"><span>Done</span></button>
   </div>
   <div class="category">
     <span
