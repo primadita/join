@@ -153,11 +153,12 @@ export class EditTaskComponent {
    */
 
   onSubmit() {
+    // solang das datum nicht in der zukunft liegt wird onSubmit nicht ausgeführt
     if (!this.isFutureDate(this.dueDate)) {
       return;
     }
 
-    // sauberes subtask array ohne leere subtasks
+    // sauberes subtask-array ohne leere subtasks
     const cleanedSubtasks: Subtask[] = [];
     // alle bestehenden subtasks
     const subtasks = this.localTask.subtasks || [];
@@ -166,7 +167,7 @@ export class EditTaskComponent {
       // entferne leerzeichen am anfang und ende jeden subtasks
       const trimmedTitle = (subtask.title || '').trim();
 
-      // fügt nur subtask hinzu wenn es nicht leer ist
+      // fügt nur subtasks ins saubere subtask-array hinzu wenn es nicht leer ist
       if (trimmedTitle.length > 0) {
         cleanedSubtasks.push({ ...subtask, title: trimmedTitle });
       }
