@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
-import { Task, TASK_CATEGORY } from '../../../shared/interfaces/task';
+import { Status, Task, TASK_CATEGORY, TASK_STATUS } from '../../../shared/interfaces/task';
 import { CommonModule } from '@angular/common';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { Contact } from '../../../shared/interfaces/contact';
@@ -15,12 +15,25 @@ import { FirebaseServiceService } from '../../../shared/services/firebase.servic
 })
 export class TaskCardComponent {
   @Input() task!: Task;
+  @Input() isMobile: boolean = false;
   @Output() openTask = new EventEmitter<Task>();
+  @Output() moveTask = new EventEmitter<{task: Task, status: Status}>();
+  menuOpen: boolean = false;
 
   constructor(
     private contactService: FirebaseServiceService,
     public profilService: UserProfileImageService
   ) {}
+
+  toggleMenu(event: Event){
+    event.stopPropagation();
+    this.menuOpen = !this.menuOpen;
+  }
+  
+  moveTo(status: Status){
+    this.menuOpen = false;
+    this.moveTask.emit({task: this.task, status});
+  }
 
   onClick() {
     this.openTask.emit(this.task);

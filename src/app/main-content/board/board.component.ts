@@ -10,7 +10,7 @@
  * - Single source of truth via TaskService.
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input} from '@angular/core';
+import { Component, inject, Input, NgModule} from '@angular/core';
 import { 
   CdkDrag, 
   CdkDragDrop, 
@@ -18,11 +18,12 @@ import {
   DragDropModule, 
   moveItemInArray, 
   transferArrayItem} from '@angular/cdk/drag-drop';
+import { BreakpointObserver } from '@angular/cdk/layout'; 
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TaskDetailsComponent } from './task-card/task-details/task-details.component';
 import { TaskService } from '../../shared/services/task.service';
 import { Task, TASK_STATUS } from '../../shared/interfaces/task';
-import { combineLatest, map, startWith } from 'rxjs';
+import { combineLatest, map, shareReplay, startWith } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTaskPopupComponent } from './add-task-popup/add-task-popup.component';
 import { BoardColumns } from '../../shared/interfaces/boardColumns';
@@ -111,6 +112,12 @@ export class BoardComponent {
     } as BoardColumns))// hiermit hat das Objekt exakt die Felder todo, inprogress usw. exakt dem Interface BoardColumns
   );
   
+  mobileObserver = inject(BreakpointObserver);
+
+  isMobile$ = this.mobileObserver.observe([`(max-width: 640px)`]).pipe(
+    map(result => result.matches), shareReplay(1)
+  );
+
   /** The currently selected task for viewing details. */
   selectedTask: Task | null = null; 
   
@@ -246,6 +253,13 @@ export class BoardComponent {
   dropAndUnhighlight(event: CdkDragDrop<Task[]>, list: CdkDropList){
     this.unhighlightDropList(list);
     this.drop(event);
+  }
+
+  moveTaskToList(event: {task:Task, status: Status}){
+    const {task, status} = event;
+    if(task.status === status) return;
+    const updated = {...task, status};
+    this.taskService.updateTask(updated);
   }
   // #endregion
 }

@@ -1,6 +1,3 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @use "./../public/assets/styles/all-styles.scss" as all;
 
@@ -63,7 +60,8 @@ a {
 // #region FONTS
 @font-face {
   font-family: "Inter";
-  src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+  // src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+  src: url('../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
 }
 
 h1 {
@@ -146,19 +144,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
+  width: 10px;
+  height: 10px;
 
 }
 
-// ::-webkit-scrollbar:vertical {
-//   width: 2px;
-
-// }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: all.$lightgray5;
 
 }
 
@@ -166,12 +160,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ::-webkit-scrollbar-thumb {
   background: all.$lightgray2;
   border-radius: 3px;
-    @include all.tablet{
-    background: transparent;
-  }
+
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #a7a7a7;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

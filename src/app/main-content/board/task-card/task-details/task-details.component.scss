@@ -39,14 +39,17 @@
     from {
       transform: translateX(100%);
     }
+
     to {
       transform: translateX(0);
     }
   }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -54,7 +57,7 @@
 
   .category-title {
     .task-title {
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
     }
   }
 
@@ -67,11 +70,12 @@
       color: all.$white;
       padding: 0.4rem 1.6rem;
       border-radius: 0.8rem;
+      margin-left: 2rem;
     }
 
     button {
-      border-radius: 1rem;
-      padding: 0.25rem 0.5rem;
+      border-radius: 4.5rem;
+      padding: 1rem 1.5rem;
       background: all.$white;
     }
 
@@ -79,15 +83,18 @@
       background: all.$lightgray4;
     }
   }
+
   // #endregion close-btn & priority
 
   .category-title {
     .task-title {
-      font-size: 6.1rem;
+      font-size: 5.1rem;
       font-weight: bold;
+
       @include all.tablet {
         font-size: 4.8rem;
       }
+
       @include all.mobile {
         font-size: 3.6rem;
       }
@@ -97,16 +104,23 @@
   // #region description
   .description {
     width: 100%;
+    height: 15rem;
 
-    scrollbar-width: none;
     padding: 1rem 0;
-    .descrip {
-      font-size: 2rem;
-      @include all.mobile {
+
+    .description-wrapper {
+      height: 100%;
+      overflow: auto;
+      .descrip {
         font-size: 1.6rem;
+
+        @include all.mobile {
+          font-size: 1.6rem;
+        }
       }
     }
   }
+
   // #endregion description
 
   .due-date {
@@ -145,6 +159,7 @@
     @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
     gap: 0.5rem;
     width: 95%;
+
     ul {
       @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
       gap: 0.5rem;
@@ -152,9 +167,9 @@
       height: 100%;
       max-height: 11.6rem;
       overflow-y: auto;
-      scrollbar-width: none;
       margin-left: 2rem;
       padding: 0.5rem 0;
+
       li {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 2.5rem;
@@ -176,9 +191,11 @@
   .subtasks {
     @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
     gap: 0.5rem;
+
     ul {
       width: 95%;
       margin-left: 2rem;
+
       li {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 1rem;
@@ -190,6 +207,7 @@
           cursor: pointer;
         }
       }
+
       li:hover {
         background-color: all.$lightgray4;
       }
@@ -200,6 +218,7 @@
     width: 100%;
     @include all.d-flex($flexdir: row, $jc: flex-end, $alit: center);
     gap: 2rem;
+    padding: 0 2rem;
 
     button {
       @include all.d-flex($flexdir: row, $jc: center, $alit: center);
@@ -221,29 +240,36 @@
   overflow-y: auto;
   padding: 0 2rem 2rem 2rem;
 }
+
 // endregion-task-details
 
 // #region closing-animation
 .task-details.closing {
   animation: slideOut 0.22s ease-in forwards;
 }
+
 @keyframes slideOut {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(100%);
   }
 }
+
 .overlay.closing {
   animation: fadeOut 0.28s ease-in forwards;
 }
+
 @keyframes fadeOut {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
 }
+
 // #endregion closing-animation
