@@ -20,9 +20,7 @@
             #titleCtrl="ngModel"
             required
           />
-          <!-- <span *ngIf="titleCtrl.errors?.['maxlength']">
-            Maximal 30 Zeichen erlaubt.
-          </span> -->
+
           @if(!titleCtrl.valid && titleCtrl.touched){
           <span class="warning">This field is required!</span>
           } @if(titleTooLong){
