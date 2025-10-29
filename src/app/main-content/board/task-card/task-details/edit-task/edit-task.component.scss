@@ -306,12 +306,13 @@
               gap: 0.5rem;
 
               > span {
-                width: 100%;
+                width: 70%;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-                height: 3rem;
-                @include all.d-flex($flexdir: row, $jc: space-between);
+                // height: 3rem;
+                text-align: center;
+                // @include all.d-flex($flexdir: row, $jc: flex-start);
               }
 
               .edit-input {
