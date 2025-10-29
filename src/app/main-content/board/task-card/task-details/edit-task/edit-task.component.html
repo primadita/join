@@ -236,18 +236,18 @@
               <div class="list-content">
                 <span *ngIf="!isEditing(i)">{{ s.title }}</span>
 
+                <input
+                  *ngIf="isEditing(i)"
+                  type="text"
+                  class="edit-input"
+                  [(ngModel)]="s.title"
+                  name="subtaskTitle{{ i }}"
+                  (keydown.enter)="saveSubtaskEdit(i)"
+                  (blur)="saveSubtaskEdit(i)"
+                />
+
                 <!-- Wenn im Edit-Modus -->
                 <div class="edit-wrapper">
-                  <input
-                    *ngIf="isEditing(i)"
-                    type="text"
-                    class="edit-input"
-                    [(ngModel)]="s.title"
-                    name="subtaskTitle{{ i }}"
-                    (keydown.enter)="saveSubtaskEdit(i)"
-                    (blur)="saveSubtaskEdit(i)"
-                  />
-
                   <!-- #region EDIT-SUBTASK-BTNS -->
                   <div
                     class="edit-subtask"
