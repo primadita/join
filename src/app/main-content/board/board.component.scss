@@ -198,7 +198,7 @@ section {
         @include all.d-flex($flexdir: row, $jc: space-around, $cgap: 2rem);
 
         .progress-container {
-            width: 25.2rem;
+            width: calc(25.2rem + 2rem + 1rem);
             @include all.d-flex($jc: flex-start);
 
             .progress-title {
@@ -235,6 +235,9 @@ section {
                 overflow-y: auto;
                 overflow-x: hidden;
                 display: block;
+                padding: 1rem;
+                background: rgba(all.$mainColor, 0.05);
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
                 transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
                 border: 2px solid transparent;
                 border-radius: 0.8rem;
@@ -245,7 +248,7 @@ section {
                     box-shadow: inset 0 0 10px rgba(all.$lightgray3, 0.4);
                     border-radius: 0.8rem;
                 }
-
+                
                 .empty-list {
                     width: 100%;
                     height: 4.8rem;
@@ -311,6 +314,89 @@ section {
             }
         }
     }
+    .progress-board::-webkit-scrollbar-button:single-button, 
+    .progress-list::-webkit-scrollbar-button:single-button {
+        background-color: all.$lightgray;
+        display: block;
+        background-size: 1.2rem;
+        background-repeat: no-repeat;
+    }
 
+    /* Up */
+    .progress-board::-webkit-scrollbar-button:single-button:vertical:decrement, 
+    .progress-list::-webkit-scrollbar-button:single-button:vertical:decrement {
+        height: 12px;
+        width: 16px;
+        background-position: center 4px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
+    }
+
+    .progress-board::-webkit-scrollbar-button:single-button:vertical:decrement:hover, 
+    .progress-list::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='50,00 0,50 100,50'/></svg>");
+    }
+
+    .progress-board::-webkit-scrollbar-button:single-button:vertical:decrement:active, .progress-list::-webkit-scrollbar-button:single-button:vertical:decrement:active {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='50,00 0,50 100,50'/></svg>");
+    }
+
+    /* Down */
+    .progress-board::-webkit-scrollbar-button:single-button:vertical:increment,.progress-list::-webkit-scrollbar-button:single-button:vertical:increment {
+        height: 12px;
+        width: 16px;
+        background-position: center 2px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 100,0 50,50'/></svg>");
+    }
+
+    .progress-board::-webkit-scrollbar-button:single-button:vertical:increment:hover, .progress-list::-webkit-scrollbar-button:single-button:vertical:increment:hover {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 100,0 50,50'/></svg>");
+    }
+
+    .progress-board::-webkit-scrollbar-button:single-button:vertical:increment:active, .progress-list::-webkit-scrollbar-button:single-button:vertical:increment:active {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 100,0 50,50'/></svg>");
+    }
+    /* Left */
+    .progress-list::-webkit-scrollbar-button:single-button:horizontal:decrement {
+        height: 16px;
+        width: 16px;
+        background-size: 12px;
+        background-position: center center;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,50 50,100 50,0'/></svg>");
+
+    }
+
+    .progress-list::-webkit-scrollbar-button:single-button:horizontal:decrement:hover {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,50 50,100 50,0'/></svg>");
+    }
+
+    .progress-list::-webkit-scrollbar-button:single-button:horizontal:decrement:active {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,50 50,100 50,0'/></svg>");
+    }
+
+    /* Right */
+    .progress-list::-webkit-scrollbar-button:single-button:horizontal:increment {
+        height: 16px;
+        width: 16px;
+        background-size: 12px;
+        background-position: center center;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 0,100 50,50'/></svg>");
+    }
+
+    .progress-list::-webkit-scrollbar-button:single-button:horizontal:increment:hover {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 0,100 50,50'/></svg>");
+    }
+
+    .progress-list::-webkit-scrollbar-button:single-button:horizontal:increment:active {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 0,100 50,50'/></svg>");
+    }
     // #endregion
+
+}
+
+.cdk-drag-preview {
+    overflow: visible; 
+    scrollbar-width: none; 
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
