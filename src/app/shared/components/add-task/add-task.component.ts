@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { Category, Subtask, Task, TASK_CATEGORY, TASK_PRIORITY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
@@ -80,6 +80,12 @@ export class AddTaskComponent {
     this.categorySelected = true;
   }
 
+    onSubmit(ngForm: NgForm) {
+    if (ngForm.submitted && ngForm.form.valid){
+      this.checkValidation();
+    }
+  }
+  
   checkValidation() {
     if (this.newTask.date != null) {
       if (this.newTask.title.length >= 1 &&
