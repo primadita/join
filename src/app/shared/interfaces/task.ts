@@ -93,7 +93,7 @@ export type Priority = (typeof TASK_PRIORITY)[keyof typeof TASK_PRIORITY];
  * Used to classify tasks for better organization and filtering.
  */
 export const TASK_CATEGORY = {
-  DEFAULT: 'Select Category',
+  DEFAULT: 'Select category',
   USER_STORY: 'User Story',
   TECHNICAL_TASK: 'Technical Task',
 } as const;

@@ -20,9 +20,7 @@
             #titleCtrl="ngModel"
             required
           />
-          <!-- <span *ngIf="titleCtrl.errors?.['maxlength']">
-            Maximal 30 Zeichen erlaubt.
-          </span> -->
+
           @if(!titleCtrl.valid && titleCtrl.touched){
           <span class="warning">This field is required!</span>
           } @if(titleTooLong){
@@ -210,7 +208,7 @@
               type="text"
               name="subtask"
               maxlength="50"
-              placeholder="Add new Subtask"
+              placeholder="Add new subtask"
               (keydown.enter)="addSubtask(singleSubtask)"
               [(ngModel)]="singleSubtask"
             />
@@ -236,18 +234,18 @@
               <div class="list-content">
                 <span *ngIf="!isEditing(i)">{{ s.title }}</span>
 
+                <input
+                  *ngIf="isEditing(i)"
+                  type="text"
+                  class="edit-input"
+                  [(ngModel)]="s.title"
+                  name="subtaskTitle{{ i }}"
+                  (keydown.enter)="saveSubtaskEdit(i)"
+                  (blur)="saveSubtaskEdit(i)"
+                />
+
                 <!-- Wenn im Edit-Modus -->
                 <div class="edit-wrapper">
-                  <input
-                    *ngIf="isEditing(i)"
-                    type="text"
-                    class="edit-input"
-                    [(ngModel)]="s.title"
-                    name="subtaskTitle{{ i }}"
-                    (keydown.enter)="saveSubtaskEdit(i)"
-                    (blur)="saveSubtaskEdit(i)"
-                  />
-
                   <!-- #region EDIT-SUBTASK-BTNS -->
                   <div
                     class="edit-subtask"

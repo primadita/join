@@ -20,6 +20,8 @@ import {
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { ToastMessagesService } from '../../../../../shared/services/toast-messages.service';
+import { ToastMessageComponent } from '../../../../../shared/components/toast-message/toast-message.component';
 
 @Component({
   selector: 'app-edit-task',
@@ -34,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatNativeDateModule,
     MatInputModule,
+    ToastMessageComponent
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -58,7 +61,7 @@ export class EditTaskComponent {
   dueDate: Date | null = null;
   actualDate = new Date();
 
-  constructor(private contactsSvc: FirebaseServiceService) {}
+  constructor(private contactsSvc: FirebaseServiceService, private toastService: ToastMessagesService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['task'] && this.task) {
@@ -140,7 +143,7 @@ export class EditTaskComponent {
   }
 
   get titleTooLong() {
-    return (this.localTask?.title?.length ?? 0) >= 30;
+    return (this.localTask?.title?.length ?? 0) > 30;
   }
 
   /**
@@ -167,10 +170,12 @@ export class EditTaskComponent {
     };
 
     this.save.emit(updated);
+    this.toastService.show('Task changed', 'success');
   }
 
   onCancel() {
     this.close.emit();
+    this.toastService.show('Discard changes', 'success');
   }
 
   onDelete() {

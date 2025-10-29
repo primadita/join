@@ -81,7 +81,7 @@
       overflow-y: auto;
       scrollbar-gutter: stable both-edges;
       display: block;
-      padding: 0 1rem;
+      padding: 0 1rem 0 0;
 
       .input-wrapper {
         width: 100%;
@@ -166,6 +166,13 @@
 
           svg {
             @include all.square($length: 1.6rem);
+          }
+
+          @media (max-width: 400px) {
+            @include all.d-flex($flexdir: row, $cgap: 0.3rem);
+            width: auto;
+            min-width: 30%;
+            max-width: 34%;
           }
         }
 
@@ -293,7 +300,7 @@
               width: 100%;
               @include all.d-flex(
                 $flexdir: row,
-                $jc: flex-start,
+                $jc: space-between,
                 $alit: center
               );
               gap: 0.5rem;
@@ -304,24 +311,23 @@
                 overflow: hidden;
                 white-space: nowrap;
                 height: 3rem;
-                @include all.d-flex($flexdir: center);
+                @include all.d-flex($flexdir: row, $jc: space-between);
+              }
+
+              .edit-input {
+                width: 90%;
+                height: 3rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                border-style: none;
+                border-bottom: 1px solid all.$lightblue2;
+                border-radius: 0%;
               }
 
               .edit-wrapper {
-                width: auto;
                 @include all.d-flex($flexdir: row, $jc: space-between);
                 gap: 1rem;
-
-                .edit-input {
-                  width: 90%;
-                  height: 3rem;
-                  text-overflow: ellipsis;
-                  white-space: nowrap;
-                  overflow: hidden;
-                  border-style: none;
-                  border-bottom: 1px solid all.$lightblue2;
-                  border-radius: 0%;
-                }
 
                 .edit-subtask {
                   @include all.d-flex(
