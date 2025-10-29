@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { SelectContactService } from '../shared/services/select-contact.service';
 import { BoardComponent } from './board/board.component';
 import { AddTaskViewComponent } from './add-task-view/add-task-view.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @Component({
   selector: 'app-main-content',
-  imports: [CommonModule, ContactsComponent, NavBarComponent, HeaderComponent, LegalNoticeComponent, PrivacyPolicyComponent, HelpComponent, BoardComponent, AddTaskViewComponent],
+  imports: [CommonModule, ContactsComponent, NavBarComponent, HeaderComponent, LegalNoticeComponent, PrivacyPolicyComponent, HelpComponent, BoardComponent, AddTaskViewComponent, SummaryComponent],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
