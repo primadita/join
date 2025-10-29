@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContactsComponent } from './contacts/contacts.component';
 import { NavBarComponent } from '../shared/components/nav-bar/nav-bar.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
@@ -9,10 +9,12 @@ import { CommonModule } from '@angular/common';
 import { SelectContactService } from '../shared/services/select-contact.service';
 import { BoardComponent } from './board/board.component';
 import { AddTaskViewComponent } from './add-task-view/add-task-view.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @Component({
   selector: 'app-main-content',
-  imports: [CommonModule, ContactsComponent, NavBarComponent, HeaderComponent, LegalNoticeComponent, PrivacyPolicyComponent, HelpComponent, BoardComponent, AddTaskViewComponent],
+  standalone: true,
+  imports: [CommonModule, ContactsComponent, NavBarComponent, HeaderComponent, LegalNoticeComponent, PrivacyPolicyComponent, HelpComponent, BoardComponent, AddTaskViewComponent, SummaryComponent],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })

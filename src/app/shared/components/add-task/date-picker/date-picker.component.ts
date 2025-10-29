@@ -18,6 +18,7 @@ import { FormsModule, NgModel } from '@angular/forms';
  */
 @Component({
   selector: 'app-date-picker',
+  standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
