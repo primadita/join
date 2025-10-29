@@ -5,6 +5,7 @@
 <!-- #endregion -->
     <!-- #region SWITCHABLE PART -->
     <div>
+        <app-summary *ngIf="activeComponent === 'summary'"></app-summary>
         <app-board *ngIf="activeComponent === 'board'"></app-board>
         <app-add-task-view *ngIf="activeComponent === 'add-task'" (switchAddTaskToBoard)="switchComponent($event)"></app-add-task-view>
         <app-contacts *ngIf="activeComponent === 'contacts'"></app-contacts>
