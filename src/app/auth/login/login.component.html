@@ -1,0 +1,28 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2 class="title">Log in</h2>
+
+    <form class="login-form" (submit)="$event.preventDefault()">
+      <label class="field">
+        <input type="email" placeholder="you@example.com" required />
+      </label>
+
+      <label class="field">
+        <input type="password" placeholder="••••••••" required />
+      </label>
+
+      <div class="buttons-field">
+        <button class="btn primary" type="button" (click)="goToApp()">
+          Login
+        </button>
+        <button class="btn-guest" type="button">Guest Log in</button>
+      </div>
+    </form>
+
+    <div class="meta">
+      <a class="link" href="#">Forgot password?</a>
+      <span>•</span>
+      <a class="link" href="#">Create account</a>
+    </div>
+  </div>
+</div>

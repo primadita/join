@@ -8,6 +8,7 @@ import { PatternValidatorDirective } from '../../../shared/directives/pattern-va
 
 @Component({
   selector: 'app-edit-contact',
+  standalone: true,
   imports: [CommonModule, FormsModule, UserProfileImageComponent, PatternValidatorDirective],
   templateUrl: './edit-contact.component.html',
   styleUrl: './edit-contact.component.scss'

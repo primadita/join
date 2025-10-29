@@ -9,6 +9,7 @@ import { SelectContactService } from '../../../shared/services/select-contact.se
 
 @Component({
   selector: 'app-contact-list',
+  standalone: true,
   imports: [ContactLabelComponent, AddContactComponent, CommonModule],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.scss',

@@ -17,6 +17,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @Component({
   selector: 'app-add-task',
+  standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
