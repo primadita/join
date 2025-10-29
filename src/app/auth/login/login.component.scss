@@ -1,121 +1,157 @@
-:host {
-  display: block;
-  height: 100dvh;
-}
+@use "../../../../public/assets/styles/all-styles.scss" as *;
 
 .login-wrapper {
   height: 100%;
   display: grid;
   place-items: center;
-  background: linear-gradient(180deg, #f7f8fb 0%, #eef1f7 100%);
-  padding: 24px;
-}
+  background-color: #f7f8fb;
+  padding: 4rem 4rem;
 
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-  padding: 32px;
-  display: grid;
-  gap: 20px;
-}
+  .login-head {
+    width: 100%;
+    height: 100%;
+    @include d-flex($flexdir: row, $jc: space-between);
+    .logo-field {
+      height: 100%;
+      img {
+        width: 10rem;
+        height: 12rem;
+      }
+    }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  user-select: none;
-}
+    // #region box for sign-up with span element
+    .sign-up-field {
+      height: 100%;
 
-.logo-circle {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #2A3647;
-  color: #fff;
-  font-weight: 700;
-}
+      span {
+        font-size: 2rem;
+        margin-right: 4rem;
+      }
+    }
+  }
 
-.brand h1 {
-  margin: 0;
-  font-size: 20px;
-  letter-spacing: 0.5px;
-  color: #2A3647;
-}
+  .btn {
+    border: none;
+    border-radius: 0.8rem;
+    padding: 1.5rem 2.4rem;
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #fff;
+    background: $mainColor;
+    cursor: pointer;
+    text-align: center;
+  }
 
-.title {
-  margin: 4px 0 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: #2A3647;
-}
+  .btn:hover {
+    background-color: $lightblue2;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
 
-.login-form {
-  display: grid;
-  gap: 14px;
-}
+  .login-card {
+    width: 100%;
+    max-width: 65.2rem;
+    height: 100%;
+    max-height: 44.9rem;
+    background: #fff;
+    border-radius: 3rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
+    padding: 32px;
+    @include d-flex($jc: space-between);
+    gap: 2rem;
+    .title-field {
+      .title {
+        font-size: 6.1rem;
+        font-weight: 700;
+        text-align: center;
+        font-family: $font, sans-serif;
+      }
 
-.field {
-  display: grid;
-  gap: 6px;
-}
+      .title-line {
+        padding-top: 1rem;
+        width: 14rem;
+        border-bottom: 0.3rem solid $lightblue2;
+        margin: 0 auto;
+      }
+    }
 
-.field span {
-  font-size: 12px;
-  color: #6b7280;
+    .buttons-field {
+      @include d-flex($flexdir: row);
+      gap: 4rem;
+
+      .guest {
+        border: 0.2rem solid $mainColor;
+        color: $mainColor;
+        background-color: #fff;
+      }
+
+      .guest:hover {
+        border-color: $lightblue2;
+        background-color: #fff;
+        color: $lightblue2;
+      }
+    }
+
+    .login-form {
+      @include d-flex();
+      gap: 3rem;
+
+      .field {
+        width: 42.2rem;
+        height: 4.8rem;
+        @include d-flex($flexdir: row);
+        padding: 0 2rem;
+        border: 0.1rem solid $iconColor;
+        border-radius: 1rem;
+        position: relative;
+
+        img.lock,
+        img.visibility-off {
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+
+        img.lock {
+          display: inline-block;
+        }
+        img.visibility-off {
+          display: none;
+        }
+      }
+
+      .field:focus-within {
+        border: 0.2rem solid $lightblue2;
+        background: #fff;
+
+        /* Swap icons on focus-within */
+        img.lock {
+          display: none;
+        }
+        img.visibility-off {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .meta {
+    @include d-flex($flexdir: row);
+    gap: 4rem;
+
+    .link {
+      font-size: 1.6rem;
+      color: $iconColor;
+    }
+    .link:hover {
+      color: $lightblue2;
+    }
+  }
 }
 
 input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #fafafa;
-  outline: none;
-  transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
-}
-
-input:focus {
-  border-color: #2A3647;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(42,54,71,0.12);
-}
-
-.btn.primary {
-  appearance: none;
   border: none;
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-weight: 600;
-  color: #fff;
-  background: #2A3647;
+  outline: none;
   cursor: pointer;
-  transition: transform 0.04s ease, background 0.2s ease;
 }
-
-.btn.primary:hover { background: #1F2A3A; }
-.btn.primary:active { transform: translateY(1px); }
-
-.meta {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-.link {
-  color: #2A3647;
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-

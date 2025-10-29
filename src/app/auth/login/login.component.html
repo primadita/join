@@ -1,28 +1,55 @@
 <div class="login-wrapper">
+  <div class="login-head">
+    <div class="logo-field">
+      <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+    </div>
+    <!-- #region sign-up-field -->
+    <div class="sign-up-field">
+      <span>Not a Join user?</span>
+      <button class="btn" type="button">Sign up</button>
+    </div>
+    <!-- #endregion sign-up-field -->
+  </div>
+
+  <!-- #region login-card -->
   <div class="login-card">
-    <h2 class="title">Log in</h2>
+    <div class="title-field">
+      <h2 class="title">Log in</h2>
+      <div class="title-line"></div>
+    </div>
 
+    <!-- #region login-form -->
     <form class="login-form" (submit)="$event.preventDefault()">
-      <label class="field">
-        <input type="email" placeholder="you@example.com" required />
-      </label>
+      <div class="field">
+        <input type="email" placeholder="Email" required />
+        <img src="assets/icons/mail.svg" alt="" />
+      </div>
 
-      <label class="field">
-        <input type="password" placeholder="••••••••" required />
-      </label>
-
-      <div class="buttons-field">
-        <button class="btn primary" type="button" (click)="goToApp()">
-          Login
-        </button>
-        <button class="btn-guest" type="button">Guest Log in</button>
+      <div class="field">
+        <input type="password" placeholder="Password" required />
+        <img class="lock" src="assets/icons/lock.svg" alt="" />
+        <img
+          class="visibility-off"
+          src="assets/icons/visibility_off.svg"
+          alt=""
+        />
       </div>
     </form>
+    <!-- #endregion login-form -->
 
-    <div class="meta">
-      <a class="link" href="#">Forgot password?</a>
-      <span>•</span>
-      <a class="link" href="#">Create account</a>
+    <div class="buttons-field">
+      <button class="btn login" type="button" (click)="goToApp()">
+        Log in
+      </button>
+      <button class="btn guest" type="button">Guest Log in</button>
     </div>
   </div>
+  <!-- #endregion login-card -->
+
+  <!-- #region policy & legal notice -->
+  <div class="meta">
+    <a class="link" href="#">Privacy Policy</a>
+    <a class="link" href="#">Legal notice</a>
+  </div>
+  <!-- #endregion policy & legal notice -->
 </div>
