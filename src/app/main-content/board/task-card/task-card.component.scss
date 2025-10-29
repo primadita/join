@@ -41,9 +41,11 @@
     button{
       background: transparent;
       font-size: 1.8rem;
-      padding-top: 0.2rem;
-      padding-bottom: 0.2rem;
-      text-align: right;
+      @include all.d-flex($jc: flex-start, $alit: flex-start);
+      span{
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+      }
     }
   }
 
