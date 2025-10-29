@@ -26,6 +26,19 @@
     z-index: 100;
 }
 
+.list-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    background-image: url('../../../../../../public/assets/icons/arrow_drop_down.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 1.2rem;
+}
+
 .category-selection {
 
     max-height: 25rem;
