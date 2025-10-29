@@ -92,6 +92,7 @@
 
       .input-wrapper {
         width: 100%;
+        letter-spacing: 0.1rem;
 
         label {
           display: block;
@@ -131,6 +132,8 @@
         font-size: 1.6rem;
         font-family: all.$font;
         resize: none;
+        letter-spacing: 0.1rem;
+        line-height: 1.5;
       }
 
       // #endregion
@@ -320,7 +323,7 @@
                 white-space: nowrap;
                 // height: 3rem;
                 text-align: start;
-                // @include all.d-flex($flexdir: row, $jc: flex-start);
+                letter-spacing: 0.1rem;
               }
 
               .edit-input {

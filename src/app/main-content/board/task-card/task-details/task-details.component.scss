@@ -58,6 +58,7 @@
   .category-title {
     .task-title {
       overflow-wrap: break-word;
+      letter-spacing: 0.1rem;
     }
   }
 
@@ -116,6 +117,8 @@
     padding: 1.5rem;
     .descrip {
       font-size: 1.6rem;
+      letter-spacing: 0.1rem;
+      line-height: 1.5;
     }
   }
 
@@ -227,6 +230,7 @@
           overflow-wrap: anywhere; /* wrap long words/URLs */
           word-break: break-word;
           white-space: normal;
+          letter-spacing: 0.1rem;
         }
       }
 
