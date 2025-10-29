@@ -143,7 +143,7 @@ export class EditTaskComponent {
   }
 
   get titleTooLong() {
-    return (this.localTask?.title?.length ?? 0) >= 30;
+    return (this.localTask?.title?.length ?? 0) > 30;
   }
 
   /**
