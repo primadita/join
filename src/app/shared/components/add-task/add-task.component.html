@@ -119,7 +119,7 @@
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
             <input #subtask="ngModel" class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask"
-              name="subtask" placeholder="Add new Subtask" pattern=".*[A-Za-zÄÖÜäöüß].*" (keydown.enter)="addSubtask(subtask)" />
+              name="subtask" placeholder="Add new subtask" pattern=".*[A-Za-zÄÖÜäöüß].*" (keydown.enter)="addSubtask(subtask)" />
             <div class="subtask-btn-wrapper">
               <button class="clear-btn"></button>
               <div class="btn-divide"></div>
@@ -188,7 +188,7 @@
           </svg>
         </button>
         <div class="submit-wrapper">
-          <input type="submit" value="Create Task" (click)="checkValidation()" />
+          <input type="submit" value="Create task" (click)="checkValidation()" />
           <img src="assets/icons/check.svg" alt="check-img" />
         </div>
       </div>

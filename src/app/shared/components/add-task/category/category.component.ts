@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoryComponent {
 
-  value = input<"Select Category" | Category>()
+  value = input<"Select category" | Category>()
 
   sendCategory = output<Category>();
 
@@ -22,7 +22,7 @@ export class CategoryComponent {
   constructor(private el: ElementRef) { }
 
   checkDefaultValue(){
-    return this.value() === "Select Category";
+    return this.value() === "Select category";
   }
 
   isListOpen = signal(false)
