@@ -36,7 +36,6 @@ import { ToastMessageComponent } from '../../../../../shared/components/toast-me
     FormsModule,
     MatNativeDateModule,
     MatInputModule,
-    ToastMessageComponent
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -61,7 +60,10 @@ export class EditTaskComponent {
   dueDate: Date | null = null;
   actualDate = new Date();
 
-  constructor(private contactsSvc: FirebaseServiceService, private toastService: ToastMessagesService) {}
+  constructor(
+    private contactsSvc: FirebaseServiceService,
+    private toastService: ToastMessagesService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['task'] && this.task) {
@@ -84,9 +86,7 @@ export class EditTaskComponent {
    * _____________________________________________________
    */
 
-  onOverlayClick() {
-    this.isOpen = false;
-  }
+  // Overlay clicks no longer close the dialog; only the close button does.
 
   onContentClick(ev: MouseEvent, rpSearch: RpSearchComponent) {
     const host = rpSearch?.el?.nativeElement as HTMLElement | undefined;
