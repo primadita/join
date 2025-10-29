@@ -157,10 +157,13 @@ export class EditTaskComponent {
       return;
     }
 
+    // sauberes subtask array ohne leere subtasks
     const cleanedSubtasks: Subtask[] = [];
+    // alle bestehenden subtasks
     const subtasks = this.localTask.subtasks || [];
 
     for (const subtask of subtasks) {
+      // entferne leerzeichen am anfang und ende jeden subtasks
       const trimmedTitle = (subtask.title || '').trim();
 
       // fügt nur subtask hinzu wenn es nicht leer ist
