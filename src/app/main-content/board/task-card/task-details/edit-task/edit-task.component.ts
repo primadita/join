@@ -165,7 +165,7 @@ export class EditTaskComponent {
 
     for (const subtask of subtasks) {
       // entferne leerzeichen am anfang und ende jeden subtasks
-      const trimmedTitle = (subtask.title || '').trim();
+      const trimmedTitle = subtask.title.trim();
 
       // fügt nur subtasks ins saubere subtask-array hinzu wenn es nicht leer ist
       if (trimmedTitle.length > 0) {
