@@ -85,18 +85,18 @@ export class AddTaskComponent {
       this.checkValidation();
     }
   }
-  
+
   checkValidation() {
     if (this.newTask.date != null) {
       if (this.newTask.title.length >= 1 &&
         (this.newTask.date >= this.actualDate) &&
         this.newTask.category != TASK_CATEGORY.DEFAULT) {
         this.onCreateTask();
-      }
-    }
-    else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+      } else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
       this.categorySelected = false;
     } 
+    }
+
   }
 
   onClearInputs(title: NgModel) {
