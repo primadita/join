@@ -7,6 +7,14 @@
     border-radius: 2.4rem;
     box-shadow: 0px 0px 4px 0px rgba(51, 51, 51, 0.2);
     height: 16rem;
+    transition: 125ms;
+
+    &:hover {
+        background-color: all.$mainColor;
+        color: all.$white;
+        transform: scale(1.08);
+    }
+
 }
 
 .counter-wrapper {
@@ -21,6 +29,7 @@
 .summary-task-status {
     font-size: 2rem;
     text-align: center;
+    width: 10rem;
 }
 
 .svg-wrapper {
@@ -69,6 +78,7 @@ section {
                     flex: 1;
                     @include all.d-flex($flexdir: row);
                     gap: 1.6rem;
+                    transition: 125ms;
 
                     svg {
                         height: 4rem;
@@ -80,6 +90,16 @@ section {
                         height: 2.4rem;
                         width: 2.4rem;
                     }
+
+                    &:hover {
+                        .svg-wrapper {
+                            background-color: all.$white;
+
+                            svg {
+                                fill: all.$mainColor;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -87,39 +107,64 @@ section {
                 width: 100%;
                 @include all.d-flex($flexdir: row);
                 gap: 3.2rem;
-                .summary-prio{
+
+                .summary-prio {
                     @include all.d-flex($flexdir: row);
                     gap: 1.6rem;
-                    #urgent{
+
+                    #urgent {
                         background-color: red;
-                        svg{
+
+                        svg {
                             fill: all.$white;
                             width: 3.2rem;
                             height: 3.2rem;
                         }
                     }
                 }
-                .divide{
+
+                .divide {
                     width: 0.2rem;
                     height: 8rem;
                     background-color: all.$lightgray3;
                 }
-                .deadline{
+
+                .deadline {
                     @include all.d-flex($alit: flex-start);
                     gap: 0.8rem;
-                    .deadline-date{
+
+                    .deadline-date {
                         font-weight: 700;
                         font-size: 2.1rem;
                     }
                 }
             }
-            .summary-bottom{
+
+            .summary-bottom {
                 width: 100%;
                 @include all.d-flex($flexdir: row);
                 gap: 2.4rem;
-                .summary-bottom-single{
+
+                .summary-bottom-single {
                     @include all.d-flex();
+                    flex: 1;
                 }
+            }
+        }
+
+        .greeting-container {
+            @include all.d-flex($alit: flex-start);
+
+            .greeting-start {
+                font-size: 4.7rem;
+                font-weight: 500;
+            }
+
+            .greeting-name {
+                font-size: 6.4rem;
+                font-weight: 700;
+                color: all.$lightblue2;
+
             }
         }
     }
