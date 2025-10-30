@@ -81,23 +81,27 @@ export class AddTaskComponent {
     this.categorySelected = true;
   }
 
-    onSubmit(ngForm: NgForm) {
-    if (ngForm.submitted && ngForm.form.valid){
-      this.checkValidation();
+  sendForm(ngForm: NgForm, title: NgModel) {
+    if (this.fullValidation(ngForm)) {
+      this.onCreateTask();
+    }
+    if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+      this.categorySelected = false;
+    }
+    if (!ngForm.form.valid){
+      title.control.markAsTouched();
+    }
+    if ((this.newTask.date == null) || (this.newTask.date <= this.actualDate)){
+      this.datePickerComponent.markDateAsTouched();
     }
   }
 
-  checkValidation() {
-    if (this.newTask.date != null) {
-      if (this.newTask.title.length >= 1 &&
-        (this.newTask.date >= this.actualDate) &&
-        this.newTask.category != TASK_CATEGORY.DEFAULT) {
-        this.onCreateTask();
-      } else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-      this.categorySelected = false;
-    } 
-    }
-
+  fullValidation(ngForm: NgForm){
+    return ngForm.submitted &&
+    ngForm.form.valid &&
+    this.newTask.date != null &&
+    this.newTask.date >= this.actualDate &&
+    this.newTask.category != TASK_CATEGORY.DEFAULT
   }
 
   onClearInputs(title: NgModel) {
@@ -118,7 +122,7 @@ export class AddTaskComponent {
       low: false,
     };
     title.control.markAsUntouched();
-    
+
     this.singleSubtask = "";
     this.categorySelected = true;
     this.clearTask.emit();
@@ -229,7 +233,7 @@ export class AddTaskComponent {
     }
   }
 
-  clearSubtaskInput(){
+  clearSubtaskInput() {
     this.singleSubtask = "";
   }
 
