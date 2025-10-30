@@ -1,4 +1,4 @@
-<div class="overlay" (click)="onClose()">
+<div class="overlay" (click)="onOverlayClick()">
   <div
     class="task-details"
     [class.closing]="closing"
@@ -21,9 +21,7 @@
       </div>
       <!-- here description -->
       <div class="description">
-        <div class="description-wrapper">
-          <span class="descrip">{{ task.description }} </span>
-        </div>
+        <span class="descrip">{{ task.description }} </span>
       </div>
       <!-- here due date -->
       <div class="due-date">
@@ -121,39 +119,44 @@
       <div class="assigned-to">
         <span>Assigned To:</span>
 
-        @if (assignedToContacts.length === 0) {
-        <div class="empty">No assignees</div>
-        } @else {
-        <ul class="assignees">
-          <li *ngFor="let c of assignedToContacts">
-            <span class="avatar" [style.backgroundColor]="bgColorOf(c)">
-              {{ initialsOf(c) }}
-            </span>
-            <span class="name">{{ c.name }}</span>
-          </li>
-        </ul>
-        }
+        <div class="assigned-wrapper">
+          @if (assignedToContacts.length === 0) {
+          <div class="empty">No assignees</div>
+          } @else {
+          <ul class="assignees">
+            <li *ngFor="let c of assignedToContacts">
+              <span class="avatar" [style.backgroundColor]="bgColorOf(c)">
+                {{ initialsOf(c) }}
+              </span>
+              <span class="name">{{ c.name }}</span>
+            </li>
+          </ul>
+          }
+        </div>
       </div>
 
       <!-- here subtasks -->
       <div class="subtasks">
         <label>Subtasks</label>
-        @if (subtasks.length === 0) {
-        <span class="empty">No subtasks</span>
-        } @else {
-        <ul>
-          <li *ngFor="let s of subtasks; let i = index">
-            <input
-              type="checkbox"
-              #cb
-              [checked]="s.done"
-              (change)="onToggleSubtask(i, cb.checked)"
-            />
-            <span [class.done]="s.done">{{ s.title }}</span>
-          </li>
-        </ul>
 
-        }
+        <div class="sub-wrapper">
+          @if (subtasks.length === 0) {
+          <span class="empty">No subtasks</span>
+          } @else {
+          <ul>
+            <li *ngFor="let s of subtasks; let i = index">
+              <input
+                type="checkbox"
+                #cb
+                [checked]="s.done"
+                (change)="onToggleSubtask(i, cb.checked)"
+              />
+              <span [class.done]="s.done">{{ s.title }}</span>
+            </li>
+          </ul>
+
+          }
+        </div>
       </div>
 
       }@else {

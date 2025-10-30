@@ -1,4 +1,4 @@
-<div *ngIf="isOpen" class="overlay" (click)="onOverlayClick()">
+<div *ngIf="isOpen" class="overlay">
   <div class="edit-task" (click)="onContentClick($event, rpSearch)">
     <form>
       <div class="btn-wrapper">
@@ -6,8 +6,8 @@
       </div>
       <div class="form-wrapper">
         <!--#region title-input-wrapper -->
+        <label class="wrapper-title">Title:</label>
         <div class="input-wrapper">
-          <label>Title:</label>
           <input
             class="form-field"
             type="text"
@@ -30,8 +30,8 @@
         <!--#endregion title-input-wrapper -->
 
         <!--#region description-input-wrapper -->
+        <label class="wrapper-title">Description</label>
         <div class="input-wrapper">
-          <label>Description</label>
           <textarea
             name="description"
             id=""
@@ -44,8 +44,8 @@
         <!--#endregion description-input-wrapper -->
 
         <!--#region date-input-wrapper -->
+        <label class="wrapper-title">Due date</label>
         <div class="input-wrapper">
-          <label>Due date</label>
           <div class="date-input-wrapper">
             <input
               matInput
@@ -74,8 +74,8 @@
         <!--#endregion date-input-wrapper -->
 
         <!-- #region priority-buttons-wrapper -->
+        <label class="wrapper-title">Priority</label>
         <div class="input-wrapper">
-          <label class="prio-label">Priority</label>
           <div class="priority-btn-wrapper">
             <button
               type="button"
@@ -174,8 +174,8 @@
         </div>
         <!-- #endregion priority-buttons-wrapper -->
         <!-- #region assigned-to-wrapper -->
+        <label class="wrapper-title">Assigned to</label>
         <div class="input-wrapper" id="rp-wrapper">
-          <label>Assigned to</label>
           <app-rp-search
             #rpSearch
             (sendContact)="addRpToArray($event)"
@@ -199,8 +199,8 @@
         <!-- #endregion assigned-to-wrapper -->
 
         <!-- #region subtasks-wrapper -->
+        <label class="wrapper-title">Subtasks</label>
         <div class="input-wrapper" id="subtask-wrapper">
-          <label>Subtasks</label>
           <div class="subtask-input-wrapper">
             <input
               class="form-field"
@@ -234,18 +234,18 @@
               <div class="list-content">
                 <span *ngIf="!isEditing(i)">{{ s.title }}</span>
 
+                <input
+                  *ngIf="isEditing(i)"
+                  type="text"
+                  class="edit-input"
+                  [(ngModel)]="s.title"
+                  name="subtaskTitle{{ i }}"
+                  (keydown.enter)="saveSubtaskEdit(i)"
+                  (blur)="saveSubtaskEdit(i)"
+                />
+
                 <!-- Wenn im Edit-Modus -->
                 <div class="edit-wrapper">
-                  <input
-                    *ngIf="isEditing(i)"
-                    type="text"
-                    class="edit-input"
-                    [(ngModel)]="s.title"
-                    name="subtaskTitle{{ i }}"
-                    (keydown.enter)="saveSubtaskEdit(i)"
-                    (blur)="saveSubtaskEdit(i)"
-                  />
-
                   <!-- #region EDIT-SUBTASK-BTNS -->
                   <div
                     class="edit-subtask"

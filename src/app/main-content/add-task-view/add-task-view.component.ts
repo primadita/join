@@ -4,6 +4,7 @@ import { ToastMessageComponent } from '../../shared/components/toast-message/toa
 
 @Component({
   selector: 'app-add-task-view',
+  standalone: true,
   imports: [AddTaskComponent, ToastMessageComponent],
   templateUrl: './add-task-view.component.html',
   styleUrl: './add-task-view.component.scss',

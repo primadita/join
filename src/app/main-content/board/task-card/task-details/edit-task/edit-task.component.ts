@@ -36,7 +36,6 @@ import { ToastMessageComponent } from '../../../../../shared/components/toast-me
     FormsModule,
     MatNativeDateModule,
     MatInputModule,
-    ToastMessageComponent
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -61,7 +60,10 @@ export class EditTaskComponent {
   dueDate: Date | null = null;
   actualDate = new Date();
 
-  constructor(private contactsSvc: FirebaseServiceService, private toastService: ToastMessagesService) {}
+  constructor(
+    private contactsSvc: FirebaseServiceService,
+    private toastService: ToastMessagesService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['task'] && this.task) {
@@ -84,9 +86,7 @@ export class EditTaskComponent {
    * _____________________________________________________
    */
 
-  onOverlayClick() {
-    this.isOpen = false;
-  }
+  // Overlay clicks no longer close the dialog; only the close button does.
 
   onContentClick(ev: MouseEvent, rpSearch: RpSearchComponent) {
     const host = rpSearch?.el?.nativeElement as HTMLElement | undefined;
@@ -153,8 +153,24 @@ export class EditTaskComponent {
    */
 
   onSubmit() {
+    // solang das datum nicht in der zukunft liegt wird onSubmit nicht ausgeführt
     if (!this.isFutureDate(this.dueDate)) {
       return;
+    }
+
+    // sauberes subtask-array ohne leere subtasks
+    const cleanedSubtasks: Subtask[] = [];
+    // alle bestehenden subtasks
+    const subtasks = this.localTask.subtasks || [];
+
+    for (const subtask of subtasks) {
+      // entferne leerzeichen am anfang und ende jeden subtasks
+      const trimmedTitle = subtask.title.trim();
+
+      // fügt nur subtasks ins saubere subtask-array hinzu wenn es nicht leer ist
+      if (trimmedTitle.length > 0) {
+        cleanedSubtasks.push({ ...subtask, title: trimmedTitle });
+      }
     }
 
     const updated: Task = {
@@ -165,7 +181,7 @@ export class EditTaskComponent {
       category: this.localTask.category,
       priority: this.localTask.priority,
       assignedTo: this.localTask.assignedTo.map((c) => ({ ...c })),
-      subtasks: this.localTask.subtasks.map((s) => ({ ...s })),
+      subtasks: cleanedSubtasks,
       date: this.fromDate(this.dueDate),
     };
 
@@ -249,6 +265,21 @@ export class EditTaskComponent {
   editingIndex: number | null = null;
 
   saveSubtaskEdit(i: number) {
+    const current = this.localTask.subtasks?.[i];
+    if (!current) {
+      this.editingIndex = null;
+      return;
+    }
+    const trimmed = (current.title ?? '').trim();
+    if (!trimmed) {
+      // remove empty subtask instead of saving empty title
+      this.localTask = {
+        ...this.localTask,
+        subtasks: this.localTask.subtasks.filter((_, idx) => idx !== i),
+      };
+    } else {
+      this.localTask.subtasks[i] = { ...current, title: trimmed };
+    }
     this.editingIndex = null;
   }
 

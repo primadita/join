@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rp-search',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './rp-search.component.html',
   styleUrl: './rp-search.component.scss',
