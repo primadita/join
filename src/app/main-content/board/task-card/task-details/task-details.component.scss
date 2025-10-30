@@ -39,14 +39,17 @@
     from {
       transform: translateX(100%);
     }
+
     to {
       transform: translateX(0);
     }
   }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -54,7 +57,8 @@
 
   .category-title {
     .task-title {
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
+      letter-spacing: 0.1rem;
     }
   }
 
@@ -67,29 +71,35 @@
       color: all.$white;
       padding: 0.4rem 1.6rem;
       border-radius: 0.8rem;
+      margin-left: 2rem;
     }
 
     button {
-      border-radius: 1rem;
-      padding: 0.25rem 0.5rem;
+      border-radius: 4.5rem;
+      padding: 1rem 1.5rem;
       background: all.$white;
+      font-weight: bold;
+      font-size: 1.8rem;
     }
 
     button:hover {
       background: all.$lightgray4;
     }
   }
+
   // #endregion close-btn & priority
 
   .category-title {
     .task-title {
-      font-size: 6.1rem;
+      font-size: 5.1rem;
       font-weight: bold;
+
       @include all.tablet {
         font-size: 4.8rem;
       }
+
       @include all.mobile {
-        font-size: 3.6rem;
+        font-size: 2.6rem;
       }
     }
   }
@@ -97,25 +107,30 @@
   // #region description
   .description {
     width: 100%;
-
-    scrollbar-width: none;
+    min-height: 10rem;
+    max-height: 15rem;
+    overflow: auto;
     padding: 1rem 0;
+    border-radius: 1rem;
+    box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+
+    padding: 1.5rem;
     .descrip {
-      font-size: 2rem;
-      @include all.mobile {
-        font-size: 1.6rem;
-      }
+      font-size: 1.6rem;
+      letter-spacing: 0.1rem;
+      line-height: 1.5;
     }
   }
+
   // #endregion description
 
   .due-date {
     font-size: 2rem;
     @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
+    gap: 0.5rem;
 
     .date-label {
-      width: 100%;
-      max-width: 10rem;
+      max-width: 12rem;
       white-space: nowrap;
     }
 
@@ -129,13 +144,12 @@
     @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
 
     .prio-label {
-      width: 100%;
-      max-width: 10rem;
+      width: 12rem;
     }
 
     .prio {
       width: 100%;
-      max-width: 10rem;
+      max-width: 12rem;
       @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
       gap: 1rem;
     }
@@ -144,17 +158,24 @@
   .assigned-to {
     @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
     gap: 0.5rem;
-    width: 95%;
+    width: 100%;
+
+    .assigned-wrapper {
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.25);
+      padding: 1rem 0rem 0 1rem;
+      overflow-y: auto;
+    }
+
     ul {
       @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
       gap: 0.5rem;
-      width: 100%;
       height: 100%;
       max-height: 11.6rem;
-      overflow-y: auto;
-      scrollbar-width: none;
+
       margin-left: 2rem;
-      padding: 0.5rem 0;
+
       li {
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 2.5rem;
@@ -174,12 +195,24 @@
   }
 
   .subtasks {
+    width: 100%;
     @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
     gap: 0.5rem;
+
+    .sub-wrapper {
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+      padding: 1rem 0rem 0 1rem;
+      overflow: auto;
+    }
+
     ul {
-      width: 95%;
       margin-left: 2rem;
+      max-height: 8rem;
+
       li {
+        width: 100%;
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
         gap: 1rem;
         // margin: 0.5rem 0;
@@ -189,7 +222,18 @@
         input {
           cursor: pointer;
         }
+
+        /* Prevent subtask text from overflowing the card */
+        span {
+          flex: 1 1 auto;
+          min-width: 0; /* allow flex child to shrink inside row */
+          overflow-wrap: anywhere; /* wrap long words/URLs */
+          word-break: break-word;
+          white-space: normal;
+          letter-spacing: 0.1rem;
+        }
       }
+
       li:hover {
         background-color: all.$lightgray4;
       }
@@ -200,6 +244,7 @@
     width: 100%;
     @include all.d-flex($flexdir: row, $jc: flex-end, $alit: center);
     gap: 2rem;
+    padding: 0 2rem;
 
     button {
       @include all.d-flex($flexdir: row, $jc: center, $alit: center);
@@ -221,29 +266,36 @@
   overflow-y: auto;
   padding: 0 2rem 2rem 2rem;
 }
+
 // endregion-task-details
 
 // #region closing-animation
 .task-details.closing {
   animation: slideOut 0.22s ease-in forwards;
 }
+
 @keyframes slideOut {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(100%);
   }
 }
+
 .overlay.closing {
   animation: fadeOut 0.28s ease-in forwards;
 }
+
 @keyframes fadeOut {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
 }
+
 // #endregion closing-animation

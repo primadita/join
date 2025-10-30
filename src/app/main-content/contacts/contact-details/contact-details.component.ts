@@ -20,6 +20,7 @@ import { SelectContactService } from '../../../shared/services/select-contact.se
 
 @Component({
   selector: 'app-contact-details',
+  standalone: true,
   imports: [
     CommonModule,
     SectionTitleVLineComponent,

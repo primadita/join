@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rp-search',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './rp-search.component.html',
   styleUrl: './rp-search.component.scss',
@@ -84,6 +85,14 @@ export class RpSearchComponent {
 
   onFocus() {
     this.isListOpen.set(true);
+  }
+
+  onFocusButton(){
+    if(this.isListOpen()){
+      this.isListOpen.set(false);
+    }else{
+      this.isListOpen.set(true);
+    }
   }
 
   @HostListener('document:click', ['$event'])

@@ -1,18 +1,19 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @use "./../public/assets/styles/all-styles.scss" as all;
 
 html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: "Inter",
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: "Inter",
+      density: 0,
+    )
+  );
 }
-
 
 // #region GENERAL
 * {
@@ -23,6 +24,7 @@ html {
   scroll-behavior: smooth;
   list-style: none;
   border-style: none;
+  font-family: all.$font;
 }
 
 .content {
@@ -61,7 +63,7 @@ a {
 @font-face {
   font-family: "Inter";
   // src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
-  src: url('../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
+  src: url("../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
 }
 
 h1 {
@@ -136,9 +138,14 @@ button {
 
 // #endregion
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 // #region scrollbar
 
@@ -146,27 +153,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-
 }
-
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: all.$lightgray5;
-
+  background: #e2eaf2;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: all.$lightgray2;
+  background: #aad3f9;
   border-radius: 3px;
-
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #a7a7a7;
+  background: all.$lightblue2;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
