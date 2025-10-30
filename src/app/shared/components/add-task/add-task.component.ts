@@ -229,6 +229,10 @@ export class AddTaskComponent {
     }
   }
 
+  clearSubtaskInput(){
+    this.singleSubtask = "";
+  }
+
   deleteSubtask(index: number) {
     const updated = this.newTask.subtasks.filter((_, i) => i !== index);
     this.newTask = { ...this.newTask, subtasks: updated };
