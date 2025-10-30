@@ -15,7 +15,7 @@
     .logo-field {
       height: 100%;
       img {
-        @include join-logo-size;
+        @include join-logo-large;
       }
     }
 
