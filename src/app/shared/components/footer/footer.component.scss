@@ -1,0 +1,16 @@
+@use './../../../../../public/assets/styles/all-styles.scss' as all; 
+footer{
+    width: 100%;
+    height: 7.5rem;
+    background: all.$lightgray;
+    @include all.d-flex($flexdir: row, $cgap: 8rem);
+    a{
+        width: 11rem;
+        text-align: center;
+        color: all.$iconColor;
+        &:hover{
+            @include all.style-bold;
+            color: all.$lightblue2;
+        }
+    }
+}
