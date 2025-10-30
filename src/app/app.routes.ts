@@ -7,8 +7,12 @@ import { LegalNoticeComponent } from './shared/components/legal-notice/legal-not
 import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
+  // wenn im browser nur / verwendet wird, leitet dies direkt auf /login um
   { path: '', pathMatch: 'full', redirectTo: 'login' },
+  // aufruf von /login rendert die Login-Seite
   { path: 'login', component: LoginComponent },
+  // aufruf von /main rendert den Wrapper, der <app-main-content anzeigt
   { path: 'main', component: MainShellComponent },
+  // jeder unbekannte pfad wird auf /login umgeleitet
   { path: '**', redirectTo: 'login' },
 ];
