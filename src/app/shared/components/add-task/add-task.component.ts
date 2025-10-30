@@ -99,8 +99,7 @@ export class AddTaskComponent {
   }
 
   fullValidation(ngForm: NgForm) {
-    return ngForm.submitted &&
-      ngForm.form.valid &&
+    return ngForm.form.valid &&
       this.newTask.date != null &&
       this.newTask.date >= this.actualDate &&
       this.newTask.category != TASK_CATEGORY.DEFAULT
