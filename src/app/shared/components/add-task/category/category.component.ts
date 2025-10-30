@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category',
+  standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatSelectModule, CommonModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
@@ -21,19 +22,27 @@ export class CategoryComponent {
 
   constructor(private el: ElementRef) { }
 
-  checkDefaultValue(){
+  checkDefaultValue() {
     return this.value() === "Select category";
   }
 
   isListOpen = signal(false)
 
-  setValue(_value: Category){
+  setValue(_value: Category) {
     this.sendCategory.emit(_value);
     this.isListOpen.set(false)
   }
 
   onFocus() {
     this.isListOpen.set(true);
+  }
+
+  onFocusButton() {
+    if (this.isListOpen()) {
+      this.isListOpen.set(false);
+    } else {
+      this.isListOpen.set(true);
+    }
   }
 
   @HostListener('document:click', ['$event'])

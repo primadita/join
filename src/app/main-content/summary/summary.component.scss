@@ -1,0 +1,171 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+// #region global
+
+.b-white {
+    background-color: all.$white;
+    border-radius: 2.4rem;
+    box-shadow: 0px 0px 4px 0px rgba(51, 51, 51, 0.2);
+    height: 16rem;
+    transition: 125ms;
+
+    &:hover {
+        background-color: all.$mainColor;
+        color: all.$white;
+        transform: scale(1.08);
+    }
+
+}
+
+.counter-wrapper {
+    @include all.d-flex();
+}
+
+.summary-number {
+    font-weight: 600;
+    font-size: 6rem;
+}
+
+.summary-task-status {
+    font-size: 2rem;
+    text-align: center;
+    width: 10rem;
+}
+
+.svg-wrapper {
+    height: 5.6rem;
+    width: 5.6rem;
+    background-color: all.$mainColor;
+    @include all.d-flex();
+    border-radius: 100%;
+}
+
+// #endregion
+
+
+section {
+    background-color: all.$lightgray4;
+    @include all.d-flex($alit: flex-start);
+    gap: 4rem;
+    padding: 9.6rem;
+
+    .head {
+        @include all.d-flex($flexdir: row);
+        gap: 2.4rem;
+
+        .blue-divide {
+            height: 6rem;
+            width: 0.2rem;
+            background-color: all.$lightblue2;
+        }
+    }
+
+    .big-container {
+        @include all.d-flex($flexdir: row);
+        gap: 4rem;
+
+        .summary-container {
+            width: 50rem;
+            @include all.d-flex();
+            gap: 2.4rem;
+
+            .summary-top {
+                @include all.d-flex($flexdir: row, $jc: space-between);
+                width: 100%;
+                gap: 2.4rem;
+
+                .summary-top-single {
+                    flex: 1;
+                    @include all.d-flex($flexdir: row);
+                    gap: 1.6rem;
+                    transition: 125ms;
+
+                    svg {
+                        height: 4rem;
+                        width: 4rem;
+                        fill: white;
+                    }
+
+                    .pen {
+                        height: 2.4rem;
+                        width: 2.4rem;
+                    }
+
+                    &:hover {
+                        .svg-wrapper {
+                            background-color: all.$white;
+
+                            svg {
+                                fill: all.$mainColor;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .summary-middle {
+                width: 100%;
+                @include all.d-flex($flexdir: row);
+                gap: 3.2rem;
+
+                .summary-prio {
+                    @include all.d-flex($flexdir: row);
+                    gap: 1.6rem;
+
+                    #urgent {
+                        background-color: red;
+
+                        svg {
+                            fill: all.$white;
+                            width: 3.2rem;
+                            height: 3.2rem;
+                        }
+                    }
+                }
+
+                .divide {
+                    width: 0.2rem;
+                    height: 8rem;
+                    background-color: all.$lightgray3;
+                }
+
+                .deadline {
+                    @include all.d-flex($alit: flex-start);
+                    gap: 0.8rem;
+
+                    .deadline-date {
+                        font-weight: 700;
+                        font-size: 2.1rem;
+                    }
+                }
+            }
+
+            .summary-bottom {
+                width: 100%;
+                @include all.d-flex($flexdir: row);
+                gap: 2.4rem;
+
+                .summary-bottom-single {
+                    @include all.d-flex();
+                    flex: 1;
+                }
+            }
+        }
+
+        .greeting-container {
+            @include all.d-flex($alit: flex-start);
+
+            .greeting-start {
+                font-size: 4.7rem;
+                font-weight: 500;
+            }
+
+            .greeting-name {
+                font-size: 6.4rem;
+                font-weight: 700;
+                color: all.$lightblue2;
+
+            }
+        }
+    }
+}

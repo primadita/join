@@ -19,9 +19,6 @@
                 height: 65dvh;
                 overflow-y: auto;
 
-                &::-webkit-scrollbar {
-                    display: none;
-                }
             }
 
             @media(max-height: 950px) {

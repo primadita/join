@@ -1,0 +1,49 @@
+<section>
+    <!-- #region LOGO -->
+    <div class="logo-field">
+        <img src="assets/icons/join_logo_dark.svg" alt="join logo">
+    </div>
+    <!-- #endregion -->
+    <!-- #region SIGN UP AREA -->
+    <div class="signup-field">
+        <div class="title-field">
+            <h1>Sign up</h1>
+            <div class="title-line"></div>
+        </div>
+        <a href="login" class="back-btn">
+            <img src="assets/icons/back.svg" alt="back button">
+        </a>
+        <!-- #region SIGN UP FORM -->
+        <form class="signup-form" (submit)="$event.preventDefault()">
+            <div class="inputs">
+                <input type="name" placeholder="Name" required />
+                <img src="assets/icons/person-gray.svg" alt="input field for name" />
+            </div>
+            <div class="inputs">
+                <input type="email" placeholder="Email" required />
+                <img src="assets/icons/mail.svg" alt="input field for email" />
+            </div>
+            <div class="inputs">
+                <input type="password" placeholder="Password" required />
+                <img class="lock" src="assets/icons/lock.svg" alt="input field for password" />
+                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt=""/>
+            </div>
+            <div class="inputs">
+                <input type="password" placeholder="Confirm password" required />
+                <img class="lock" src="assets/icons/lock.svg" alt="input field for confirm password" />
+                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt=""/>
+            </div>
+            <div class="privacy-policy-check">
+                <input type="checkbox" name="privacy" id="confirm">
+                <label for="confirm">I accept the <a href="">privacy policy</a>.</label>
+            </div>
+            <button id="signup-btn">
+                <h5>Sign up</h5>
+            </button>
+        </form>
+        <!-- #endregion -->
+        </div>
+        <!-- #endregion -->
+<app-toast-message></app-toast-message>
+</section>
+<app-footer></app-footer>
