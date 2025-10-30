@@ -155,6 +155,10 @@
 
             #subtask-wrapper {
 
+                .hidden {
+                    visibility: hidden;
+                }
+
                 // #region von Henry
 
                 ul {
@@ -174,7 +178,7 @@
 
                         .list-content {
                             width: 100%;
-                            @include all.d-flex($flexdir: row,$jc: none, $alit: center);
+                            @include all.d-flex($flexdir: row, $jc: none, $alit: center);
                             gap: 2.5rem;
 
                             >span {
