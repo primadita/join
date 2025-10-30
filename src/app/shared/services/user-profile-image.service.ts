@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
  * and generation of initials based on a user's name.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserProfileImageService {
   // #region ATTRIBUTES
@@ -14,7 +14,7 @@ export class UserProfileImageService {
    */
   bgColorList: string[] = [
     '#008B8B',
-    '#8A2BE2',
+    '#aad3f9',
     '#CD661D',
     '#696969',
     '#228B22',
@@ -42,8 +42,8 @@ export class UserProfileImageService {
     '#708090',
     '#00CD00',
     '#FF7F50',
-    '#FF8247'
-  ]
+    '#FF8247',
+  ];
 
   /**
    * The initials generated from the user's name.
@@ -65,10 +65,10 @@ export class UserProfileImageService {
    * @param {string} name - The full name of the user.
    * @returns {string} The generated initials in uppercase.
    */
-  createInitial(name:string): string {
+  createInitial(name: string): string {
     const parts = name.trim().split(' ');
     const first = parts[0]?.[0];
-    const last = parts.length > 1 ? parts[parts.length - 1][0]: ''; 
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
     const initial = first + last;
     return initial.toUpperCase();
   }
@@ -80,11 +80,9 @@ export class UserProfileImageService {
    * @param {number} index - The index used to select a background color.
    * @returns {string} The selected background color in hex format.
    */
-  getBackgroundColor(index: number): string{
+  getBackgroundColor(index: number): string {
     const colorId = index % this.bgColorList.length;
-    return this.bgColor = this.bgColorList[colorId];
+    return (this.bgColor = this.bgColorList[colorId]);
   }
   // #endregion
 }
-
-
