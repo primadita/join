@@ -1,6 +1,6 @@
 <div class="content">
   <h1>Add Task</h1>
-  <form #newTaskForm="ngForm" (ngSubmit)="onSubmit(newTaskForm)">
+  <form #newTaskForm="ngForm" (keydown.enter)="$event.preventDefault()">
     <div class="form-input">
       <div class="form-input-left">
         <!-- #region TITLE -->
@@ -121,9 +121,9 @@
             <input #subtask="ngModel" class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask"
               name="subtask" placeholder="Add new subtask" pattern=".*[A-Za-zÄÖÜäöüß].*" (keydown.enter)="addSubtask(subtask)" />
             <div class="subtask-btn-wrapper">
-              <button class="clear-btn"></button>
+              <button (click)="clearSubtaskInput()" type="button" class="clear-btn" ></button>
               <div class="btn-divide"></div>
-              <button class="add-btn" (click)="addSubtask(subtask)"></button>
+              <button type="button" class="add-btn" (click)="addSubtask(subtask)"></button>
             </div>
           </div>
           <ul>
@@ -181,14 +181,14 @@
     <div class="form-submit">
       <span><span class="red">*</span>This field is required.</span>
       <div class="btn-wrapper">
-        <button class="cancel-btn" (click)="onClearInputs(title)">
+        <button type="button" class="cancel-btn" (click)="onClearInputs(title)">
           Clear
           <svg class="cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M6 6L18 18M6 18L18 6" />
           </svg>
         </button>
         <div class="submit-wrapper">
-          <input type="submit" value="Create task"/>
+          <input type="submit" value="Create task" (click)="sendForm(newTaskForm, title)"/>
           <img src="assets/icons/check.svg" alt="check-img" />
         </div>
       </div>
