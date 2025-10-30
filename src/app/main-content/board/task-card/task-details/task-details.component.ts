@@ -77,6 +77,11 @@ export class TaskDetailsComponent {
     setTimeout(() => this.close.emit(), 220);
   }
 
+  onOverlayClick() {
+    if (this.isEditing) return;
+    this.onClose();
+  }
+
   assignedIds() {
     const assignedId = this.task.assignedTo;
     return assignedId.map((x) => {

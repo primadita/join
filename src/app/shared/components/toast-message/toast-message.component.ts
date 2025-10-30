@@ -5,6 +5,7 @@ import { Messages } from '../../interfaces/messages';
 
 @Component({
   selector: 'app-toast-message',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './toast-message.component.html',
   styleUrl: './toast-message.component.scss'

@@ -1,0 +1,157 @@
+@use "../../../../public/assets/styles/all-styles.scss" as *;
+
+.login-wrapper {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: $lightgray;
+  padding: 4rem 4rem;
+
+  .login-head {
+    width: 100%;
+    height: 100%;
+    @include d-flex($flexdir: row, $jc: space-between);
+    .logo-field {
+      height: 100%;
+      img {
+        @include join-logo-size;
+      }
+    }
+
+    // #region box for sign-up with span element
+    .sign-up-field {
+      height: 100%;
+
+      span {
+        font-size: 2rem;
+        margin-right: 4rem;
+      }
+    }
+  }
+
+  .btn {
+    border: none;
+    border-radius: 0.8rem;
+    padding: 1.5rem 2.4rem;
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #fff;
+    font-family: $font;
+    background: $mainColor;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .btn:hover {
+    background-color: $lightblue2;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 65.2rem;
+    height: 100%;
+    max-height: 44.9rem;
+    background: #fff;
+    border-radius: 3rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
+    padding: 32px;
+    @include d-flex($jc: space-between);
+    gap: 2rem;
+    .title-field {
+      .title {
+        font-size: 6.1rem;
+        font-weight: 700;
+        text-align: center;
+        font-family: $font, sans-serif;
+      }
+
+      .title-line {
+        padding-top: 1rem;
+        width: 14rem;
+        border-bottom: 0.3rem solid $lightblue2;
+        margin: 0 auto;
+      }
+    }
+
+    .buttons-field {
+      @include d-flex($flexdir: row);
+      gap: 4rem;
+
+      .guest {
+        border: 0.2rem solid $mainColor;
+        color: $mainColor;
+        background-color: #fff;
+      }
+
+      .guest:hover {
+        border-color: $lightblue2;
+        background-color: #fff;
+        color: $lightblue2;
+      }
+    }
+
+    .login-form {
+      @include d-flex();
+      gap: 3rem;
+
+      .field {
+        width: 42.2rem;
+        height: 4.8rem;
+        @include d-flex($flexdir: row);
+        padding: 0 2rem;
+        border: 0.1rem solid $iconColor;
+        border-radius: 1rem;
+        position: relative;
+
+        img.lock,
+        img.visibility-off {
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+
+        img.lock {
+          display: inline-block;
+        }
+        img.visibility-off {
+          display: none;
+        }
+      }
+
+      .field:focus-within {
+        border: 0.2rem solid $lightblue2;
+        background: #fff;
+
+        /* Swap icons on focus-within */
+        img.lock {
+          display: none;
+        }
+        img.visibility-off {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .meta {
+    @include d-flex($flexdir: row);
+    gap: 4rem;
+
+    .link {
+      font-size: 1.6rem;
+      color: $iconColor;
+    }
+    .link:hover {
+      color: $lightblue2;
+    }
+  }
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

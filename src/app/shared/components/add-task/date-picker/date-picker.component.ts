@@ -18,6 +18,7 @@ import { FormsModule, NgModel } from '@angular/forms';
  */
 @Component({
   selector: 'app-date-picker',
+  standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
@@ -70,6 +71,12 @@ export class DatePickerComponent {
     this.formFields.forEach(field => {
       field.control.markAsPristine();
       field.control.markAsUntouched();
+    });
+  }
+
+  markDateAsTouched() {
+    this.formFields.forEach(field => {
+      field.control.markAsTouched();
     });
   }
   // #endregion

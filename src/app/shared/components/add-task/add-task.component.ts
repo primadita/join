@@ -17,6 +17,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @Component({
   selector: 'app-add-task',
+  standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
@@ -52,6 +53,7 @@ export class AddTaskComponent {
     medium: true,
     low: false,
   };
+  isLoading = false;
   categorySelected = true;
   actualDate = new Date();
   rpSearch: string = '';
@@ -80,23 +82,27 @@ export class AddTaskComponent {
     this.categorySelected = true;
   }
 
-    onSubmit(ngForm: NgForm) {
-    if (ngForm.submitted && ngForm.form.valid){
-      this.checkValidation();
+  sendForm(ngForm: NgForm, title: NgModel) {
+    if (this.fullValidation(ngForm)) {
+      this.isLoading = true;
+      this.onCreateTask();
+    }
+    if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+      this.categorySelected = false;
+    }
+    if (!ngForm.form.valid) {
+      title.control.markAsTouched();
+    }
+    if ((this.newTask.date == null) || (this.newTask.date <= this.actualDate)) {
+      this.datePickerComponent.markDateAsTouched();
     }
   }
 
-  checkValidation() {
-    if (this.newTask.date != null) {
-      if (this.newTask.title.length >= 1 &&
-        (this.newTask.date >= this.actualDate) &&
-        this.newTask.category != TASK_CATEGORY.DEFAULT) {
-        this.onCreateTask();
-      } else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-      this.categorySelected = false;
-    } 
-    }
-
+  fullValidation(ngForm: NgForm) {
+    return ngForm.form.valid &&
+      this.newTask.date != null &&
+      this.newTask.date >= this.actualDate &&
+      this.newTask.category != TASK_CATEGORY.DEFAULT
   }
 
   onClearInputs(title: NgModel) {
@@ -117,7 +123,7 @@ export class AddTaskComponent {
       low: false,
     };
     title.control.markAsUntouched();
-    
+
     this.singleSubtask = "";
     this.categorySelected = true;
     this.clearTask.emit();
@@ -228,6 +234,10 @@ export class AddTaskComponent {
     }
   }
 
+  clearSubtaskInput() {
+    this.singleSubtask = "";
+  }
+
   deleteSubtask(index: number) {
     const updated = this.newTask.subtasks.filter((_, i) => i !== index);
     this.newTask = { ...this.newTask, subtasks: updated };
@@ -238,9 +248,25 @@ export class AddTaskComponent {
     this.editingIndex = i;
   }
 
-  saveSubtaskEdit(i: number) {
+    saveSubtaskEdit(i: number) {
+    const current = this.newTask.subtasks?.[i];
+    if (!current) {
+      this.editingIndex = null;
+      return;
+    }
+    const trimmed = (current.title ?? '').trim();
+    if (!trimmed) {
+      // remove empty subtask instead of saving empty title
+      this.newTask = {
+        ...this.newTask,
+        subtasks: this.newTask.subtasks.filter((_, idx) => idx !== i),
+      };
+    } else {
+      this.newTask.subtasks[i] = { ...current, title: trimmed };
+    }
     this.editingIndex = null;
   }
+
 
   isEditing(i: number): boolean {
     return this.editingIndex === i;

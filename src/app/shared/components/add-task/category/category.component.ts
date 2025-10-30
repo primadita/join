@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category',
+  standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatSelectModule, CommonModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
