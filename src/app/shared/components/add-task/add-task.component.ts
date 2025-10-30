@@ -53,6 +53,7 @@ export class AddTaskComponent {
     medium: true,
     low: false,
   };
+  isLoading = false;
   categorySelected = true;
   actualDate = new Date();
   rpSearch: string = '';
@@ -83,25 +84,26 @@ export class AddTaskComponent {
 
   sendForm(ngForm: NgForm, title: NgModel) {
     if (this.fullValidation(ngForm)) {
+      this.isLoading = true;
       this.onCreateTask();
     }
     if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
       this.categorySelected = false;
     }
-    if (!ngForm.form.valid){
+    if (!ngForm.form.valid) {
       title.control.markAsTouched();
     }
-    if ((this.newTask.date == null) || (this.newTask.date <= this.actualDate)){
+    if ((this.newTask.date == null) || (this.newTask.date <= this.actualDate)) {
       this.datePickerComponent.markDateAsTouched();
     }
   }
 
-  fullValidation(ngForm: NgForm){
+  fullValidation(ngForm: NgForm) {
     return ngForm.submitted &&
-    ngForm.form.valid &&
-    this.newTask.date != null &&
-    this.newTask.date >= this.actualDate &&
-    this.newTask.category != TASK_CATEGORY.DEFAULT
+      ngForm.form.valid &&
+      this.newTask.date != null &&
+      this.newTask.date >= this.actualDate &&
+      this.newTask.category != TASK_CATEGORY.DEFAULT
   }
 
   onClearInputs(title: NgModel) {
@@ -247,9 +249,25 @@ export class AddTaskComponent {
     this.editingIndex = i;
   }
 
-  saveSubtaskEdit(i: number) {
+    saveSubtaskEdit(i: number) {
+    const current = this.newTask.subtasks?.[i];
+    if (!current) {
+      this.editingIndex = null;
+      return;
+    }
+    const trimmed = (current.title ?? '').trim();
+    if (!trimmed) {
+      // remove empty subtask instead of saving empty title
+      this.newTask = {
+        ...this.newTask,
+        subtasks: this.newTask.subtasks.filter((_, idx) => idx !== i),
+      };
+    } else {
+      this.newTask.subtasks[i] = { ...current, title: trimmed };
+    }
     this.editingIndex = null;
   }
+
 
   isEditing(i: number): boolean {
     return this.editingIndex === i;
