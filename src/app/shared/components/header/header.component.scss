@@ -88,6 +88,9 @@ header {
       &:hover{
         background-color: #39475b;
       }
+      a{
+        color: all.$lightgray;
+      }
     }
     .mobile{
       display: none;

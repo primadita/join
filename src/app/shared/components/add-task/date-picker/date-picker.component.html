@@ -1,6 +1,6 @@
 <div class="date-input-wrapper" [class.invalid]="dueDate && dueDate < actualDate">
     <input #date="ngModel" matInput [matDatepicker]="picker" placeholder="mm/dd/yyyy" name="date" [(ngModel)]="dueDate"
-        (ngModelChange)="sendDateToParent()" />
+        (ngModelChange)="sendDateToParent()" required/>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     @if(date.touched){

@@ -5,7 +5,8 @@
   display: grid;
   place-items: center;
   background-color: $lightgray;
-  padding: 4rem 4rem;
+  // padding: 4rem 4rem;
+  padding: 8rem 7.7rem;
 
   .login-head {
     width: 100%;
@@ -14,7 +15,7 @@
     .logo-field {
       height: 100%;
       img {
-        @include join-logo-size;
+        @include join-logo-large;
       }
     }
 
