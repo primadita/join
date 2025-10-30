@@ -1,0 +1,111 @@
+@use "../../../../public/assets/styles/all-styles.scss" as all;
+
+section {
+    width: 100%;
+    background: all.$lightgray;
+    height: calc(100dvh - 7.5rem);
+    @include all.d-flex();
+    // #region LOGO
+    .logo-field {
+        position: absolute;
+        top: 8rem;
+        left: 7.7rem;
+        img {
+        @include all.join-logo-size;
+        }
+    }
+    // #endregion
+    // #region SIGN UP AREA
+    .signup-field {
+        width: 100%;
+        max-width: 59.8rem;
+        height: 100%;
+        max-height: 63rem;
+        background: all.$white;
+        border-radius: 3rem;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
+        padding: 32px;
+        @include all.d-flex($jc: space-between, $rgap: 2rem);
+        .title-field {
+            .title-line {
+                height: 1rem;
+                width: 14rem;
+                border-bottom: 0.3rem solid all.$lightblue2;
+                margin: 0 auto;
+            }
+        }
+        .back-btn {
+            background: transparent;
+            position: absolute;
+            top: 5rem;
+            left: 7rem;
+            @include all.square($length: 3.2rem);
+        }
+        // #region SIGN UP FORM
+        .signup-form {
+            @include all.d-flex($rgap: 3rem);
+            .inputs {
+                width: 42.2rem;
+                height: 4.8rem;
+                padding: 0 2rem;
+                border: 0.1rem solid all.$iconColor;
+                border-radius: 1rem;
+                @include all.d-flex($flexdir: row);
+                img.lock,
+                img.visibility-off {
+                @include all.square($length: 2.4rem);
+                }
+                img.lock {
+                display: inline-block;
+                }
+                img.visibility-off {
+                display: none;
+                }
+                input[type="name"],
+                input[type="email"],
+                input[type="password"] {
+                    width: 100%;
+                    padding: 12px 14px 12px 0px;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                }
+            }
+            .inputs:focus-within {
+                border: 0.2rem solid all.$lightblue2;
+                background: #fff;
+
+                /* Swap icons on focus-within */
+                img.lock {
+                display: none;
+                }
+                img.visibility-off {
+                display: inline-block;
+                }
+            }
+            .privacy-policy-check{
+                @include all.d-flex($flexdir: row, $cgap: 1rem);
+                label{
+                    color: all.$iconColor;
+                    a{
+                        color: all.$lightblue2;
+                    }
+                }
+            }
+            #signup-btn{
+                border: none;
+    border-radius: 0.8rem;
+    padding: 1.5rem 2.4rem;
+    font-size: 2.1rem;
+    color: all.$white;
+    background: all.$mainColor;
+    cursor: pointer;
+    text-align: center;
+            }
+            #signup-btn:hover {
+    background-color: all.$lightblue2;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+        }
+    }
+}
