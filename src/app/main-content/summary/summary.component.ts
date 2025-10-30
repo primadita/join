@@ -49,6 +49,12 @@ export class SummaryComponent {
     // return array;
   }
 
+  // TODO: Funktion für mittleren summary-teil
+  // Ein Array erstellen mit allen timestamps von den Tasks
+  // den kleinsten Wert aus dem Array herausfiltern
+  // => Wert für deadline-date
+  // aus dem tasks-array alle tasks mit dem 
+
 }
 
 
