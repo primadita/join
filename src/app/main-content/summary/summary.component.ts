@@ -23,8 +23,6 @@ export class SummaryComponent {
     this.tasksSub = this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
     });
-    this.filterLowestDate()
-
   }
 
   ngOnDestroy() {
@@ -42,13 +40,94 @@ export class SummaryComponent {
     return this.tasks.length - this.filterTodo('done');
   }
 
-  filterLowestDate() {
-    // const array: Task["date"][] = [];
+  // filterLowestDate() {
+  //   const array: any[] = [];
+  //   const secondArray: number[] = [];
+  //   this.tasks.forEach(task =>
+  //     array.push(task.date?.toJSON())
+  //   );
+  //   array.forEach(e =>
+  //     secondArray.push(e.seconds)
+  //   );
+
+  //   const lowDate = Math.min.apply(null, secondArray)
+  //   const dateFormat = new Date(lowDate * 1000);
+  //   const options: Intl.DateTimeFormatOptions = {
+  //     year: "numeric",
+  //     month: "long",
+  //     day: "numeric",
+  //   };
+  //   const lowestDateString = dateFormat.toLocaleDateString("en-EN", options);
+
+
+  //   // console.log(lowDate);
+  //   // console.log(dateFormat.toLocaleDateString("en-EN", options));
+  //   return lowestDateString
+  // }
+
+  getLowestDate() {
+    const dateJSONs: any[] = [];
+    const secondsArray: number[] = [];
     this.tasks.forEach(task =>
-      console.log(task.date!.valueOf())
+      dateJSONs.push(task.date?.toJSON())
     );
-    // return array;
+    dateJSONs.forEach(e =>
+      secondsArray.push(e.seconds)
+    );
+
+    const datesOverNow = secondsArray.filter(d => d > (Date.now() / 1000));
+    const lowDate = Math.min.apply(null, datesOverNow);
+    console.log(lowDate);
+
+    return lowDate;
   }
+
+  showLowestDateString() {
+    if (this.getLowestDate() == Infinity) {
+      return 'No upcoming Deadline'
+    } else {
+      const dateFormat = new Date(this.getLowestDate() * 1000);
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const lowestDateString = dateFormat.toLocaleDateString("en-EN", options);
+      return lowestDateString
+    }
+  }
+
+  filterLowestTasks() {
+    const timestamp = new Timestamp(this.getLowestDate(), 0)
+    const array = this.tasks.filter((task) =>
+      task.date?.valueOf() === timestamp.valueOf()
+    );
+    return array;
+  }
+
+  // showDates() {
+  //   const array: any[] = [];
+  //   const secondArray: number[] = [];
+  //   this.tasks.forEach(task =>
+  //     array.push(task.date?.toJSON())
+  //   );
+  //   array.forEach(e =>
+  //     secondArray.push(e.seconds)
+  //   );
+
+  //   const lowDate = Math.min.apply(null, secondArray)
+  //   const dateFormat = new Date(lowDate * 1000);
+
+  //   const timestamp = new Timestamp(lowDate, 0)
+  //   console.log(timestamp);
+
+  //   console.log(dateFormat.getTime());
+
+  //   console.log(this.tasks[1].date);
+
+  // }
+
+
 
   // TODO: Funktion für mittleren summary-teil
   // Ein Array erstellen mit allen timestamps von den Tasks

@@ -21,7 +21,7 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="counter-wrapper">
+                    <div class="counter-wrapper" (click)="filterLowestTasks()">
                         <span class="summary-number">{{filterTodo('to do')}}</span>
                         <span class="summary-task-status">To do</span>
                     </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="divide"></div>
                 <div class="deadline">
-                    <span class="deadline-date">October 16, 2022</span>
+                    <span class="deadline-date">{{showLowestDateString()}}</span>
                     <!-- <span class="deadline-date">{{tasks[1].date}}</span> -->
                     <span>Upcoming Deadline</span>
                 </div>
