@@ -40,35 +40,15 @@ export class SummaryComponent {
     return this.tasks.length - this.filterTodo('done');
   }
 
-  // filterLowestDate() {
-  //   const array: any[] = [];
-  //   const secondArray: number[] = [];
-  //   this.tasks.forEach(task =>
-  //     array.push(task.date?.toJSON())
-  //   );
-  //   array.forEach(e =>
-  //     secondArray.push(e.seconds)
-  //   );
-
-  //   const lowDate = Math.min.apply(null, secondArray)
-  //   const dateFormat = new Date(lowDate * 1000);
-  //   const options: Intl.DateTimeFormatOptions = {
-  //     year: "numeric",
-  //     month: "long",
-  //     day: "numeric",
-  //   };
-  //   const lowestDateString = dateFormat.toLocaleDateString("en-EN", options);
-
-
-  //   // console.log(lowDate);
-  //   // console.log(dateFormat.toLocaleDateString("en-EN", options));
-  //   return lowestDateString
-  // }
+    undoneTasks() {
+    const undoneTasksArray = this.tasks.filter(t => t.status != TASK_STATUS.DONE);
+    return undoneTasksArray;
+  }
 
   getLowestDate() {
     const dateJSONs: any[] = [];
     const secondsArray: number[] = [];
-    this.tasks.forEach(task =>
+    this.undoneTasks().forEach(task =>
       dateJSONs.push(task.date?.toJSON())
     );
     dateJSONs.forEach(e =>
@@ -99,7 +79,7 @@ export class SummaryComponent {
 
   filterLowestTasks() {
     const timestamp = new Timestamp(this.getLowestDate(), 0)
-    const array = this.tasks.filter((task) =>
+    const array = this.undoneTasks().filter((task) =>
       task.date?.valueOf() === timestamp.valueOf()
     );
     return array;
@@ -133,37 +113,6 @@ export class SummaryComponent {
       return undefined
     }
   }
-
-  // showDates() {
-  //   const array: any[] = [];
-  //   const secondArray: number[] = [];
-  //   this.tasks.forEach(task =>
-  //     array.push(task.date?.toJSON())
-  //   );
-  //   array.forEach(e =>
-  //     secondArray.push(e.seconds)
-  //   );
-
-  //   const lowDate = Math.min.apply(null, secondArray)
-  //   const dateFormat = new Date(lowDate * 1000);
-
-  //   const timestamp = new Timestamp(lowDate, 0)
-  //   console.log(timestamp);
-
-  //   console.log(dateFormat.getTime());
-
-  //   console.log(this.tasks[1].date);
-
-  // }
-
-
-
-  // TODO: Funktion für mittleren summary-teil
-  // Ein Array erstellen mit allen timestamps von den Tasks
-  // den kleinsten Wert aus dem Array herausfiltern
-  // => Wert für deadline-date
-  // aus dem tasks-array alle tasks mit dem 
-
 }
 
 
