@@ -65,14 +65,14 @@
                         </svg>
                     </div>
                     <div class="counter-wrapper">
-                        <span class="summary-number">1</span>
-                        <span class="summary-task-status">Urgent</span>
+                        <span class="summary-number">{{filterPriority().length}}</span>
+                        <span class="summary-task-status">{{convertPrioToString()}}</span>
                     </div>
                 </div>
                 <div class="divide"></div>
                 <div class="deadline">
                     <span class="deadline-date">{{showLowestDateString()}}</span>
-                    <!-- <span class="deadline-date">{{tasks[1].date}}</span> -->
+
                     <span>Upcoming Deadline</span>
                 </div>
             </div>

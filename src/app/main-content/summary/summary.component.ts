@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { TaskService } from '../../shared/services/task.service';
-import { Task, TASK_STATUS } from '../../shared/interfaces/task';
+import { Task, TASK_PRIORITY, TASK_STATUS } from '../../shared/interfaces/task';
 import { Subscription } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 
@@ -103,6 +103,35 @@ export class SummaryComponent {
       task.date?.valueOf() === timestamp.valueOf()
     );
     return array;
+  }
+
+  filterPriority() {
+    const taskArray = this.filterLowestTasks();
+    const urgentArray = taskArray.filter(t => t.priority == TASK_PRIORITY.URGENT);
+    const mediumArray = taskArray.filter(t => t.priority == TASK_PRIORITY.MEDIUM);
+    const lowArray = taskArray.filter(t => t.priority == TASK_PRIORITY.LOW);
+    if (urgentArray.length > 0) {
+      return urgentArray
+    } else if (mediumArray.length > 0) {
+      return mediumArray
+    } else if (lowArray.length > 0) {
+      return lowArray
+    } else {
+      return urgentArray;
+    }
+  }
+
+  convertPrioToString(){
+    const prio = this.filterPriority()[0].priority;
+    if(prio == TASK_PRIORITY.URGENT){
+      return "Urgent"
+    }else if(prio == TASK_PRIORITY.MEDIUM){
+      return "Medium"
+    }else if(prio == TASK_PRIORITY.LOW){
+      return "Low"
+    }else{
+      return undefined
+    }
   }
 
   // showDates() {
