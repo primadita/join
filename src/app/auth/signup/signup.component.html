@@ -64,7 +64,7 @@
                 @if(confirmPassword.touched){
                     @if(confirmPassword.hasError('required')){
                         <span class="invalid-inputs">Retype password to confirm</span>
-                    } @else if(confirmPassword !== password){
+                    } @else if(!passwordsMatch){
                         <span class="invalid-inputs">Password doesn't match</span>
                     }
                 }
