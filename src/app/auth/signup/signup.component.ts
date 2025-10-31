@@ -23,6 +23,9 @@ export class SignupComponent {
 
   constructor(private toastService: ToastMessagesService){}
   // #region METHODS
+  get passwordsMatch(): boolean {
+    return this.user.password === this.user.confirmPassword;
+  }
   onSubmit(ngForm: NgForm){
     this.toastService.show('Sign up is successful',"success");
   }
