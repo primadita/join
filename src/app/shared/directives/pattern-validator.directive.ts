@@ -22,7 +22,8 @@ export class PatternValidatorDirective implements Validator, OnInit{
       const presets: Record<string, string> = {
         generalName: '^\\p{L}+(?:[\'’\\- ]\\p{L}+)*$', // \p{L}: jedes Unicode Letter Zeichen, + : mindestens ein Buchstabe, (?: optional), dann ist '´- oder Leerzeichen erlaubt-
         phoneFormat: '^\\+?[0-9 ]+$',
-        emailFormat: '^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$'
+        emailFormat: '^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$',
+        password: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,_#%+$=^"\/\-])[a-zA-Z0-9.,_#%+$=^"\/\-]{8,}$'
       };
       this.patternString = presets[this.inputValue] || this.inputValue;
       this.regex = new RegExp(this.patternString, 'u');
