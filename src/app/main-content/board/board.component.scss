@@ -204,6 +204,7 @@ section {
             .progress-title {
                 width: 100%;
                 padding-bottom: 1.2rem;
+                // padding-right: 0.8rem;
                 @include all.d-flex($flexdir: row, $jc: space-between);
 
                 h5 {
@@ -271,6 +272,7 @@ section {
             @include all.d-flex($flexdir: column, $alit: flex-start, $jc: flex-start);
             width: auto;
             max-width: calc(100dvw - 23.2rem - 12.8rem);
+            padding-right: 0.8rem;
             height: auto;
             max-height: calc(100dvh - 16rem - 11.4rem - 6.4rem);
             overflow-y: auto;
