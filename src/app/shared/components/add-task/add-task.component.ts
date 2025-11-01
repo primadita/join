@@ -14,6 +14,7 @@ import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { PatternValidatorDirective } from "../../directives/pattern-validator.directive";
 
 @Component({
   selector: 'app-add-task',
@@ -29,7 +30,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     RpSearchComponent,
     CategoryComponent,
     DatePickerComponent,
-  ],
+    PatternValidatorDirective
+],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -229,7 +231,7 @@ export class AddTaskComponent {
         title: subtaskTitle,
         done: false,
       };
-      this.newTask.subtasks.push(newSubtask);
+      this.newTask.subtasks.unshift(newSubtask);
       this.singleSubtask = '';
     }
   }
@@ -271,6 +273,5 @@ export class AddTaskComponent {
   isEditing(i: number): boolean {
     return this.editingIndex === i;
   }
-  // #endregion
   // #endregion
 }

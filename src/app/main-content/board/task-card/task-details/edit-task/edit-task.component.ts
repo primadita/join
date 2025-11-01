@@ -281,12 +281,17 @@ export class EditTaskComponent {
     this.singleSubtask = '';
   }
 
+  private isEmpty(){
+    if(this.singleSubtask.trim().length === 0) return true;
+    return false;
+  }
+
   addSubtask(title?: string) {
     const t = (title ?? this.singleSubtask).trim();
     if (!t) return;
     this.localTask = {
       ...this.localTask,
-      subtasks: [...(this.localTask.subtasks ?? []), { title: t, done: false }],
+      subtasks: [{ title: t, done: false }, ...(this.localTask.subtasks ?? [])],
     };
     this.singleSubtask = '';
   }
