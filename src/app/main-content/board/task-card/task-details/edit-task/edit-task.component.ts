@@ -22,6 +22,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { ToastMessagesService } from '../../../../../shared/services/toast-messages.service';
 import { ToastMessageComponent } from '../../../../../shared/components/toast-message/toast-message.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-edit-task',
@@ -189,9 +190,33 @@ export class EditTaskComponent {
     this.toastService.show('Task changed', 'success');
   }
 
+  private hasChanges(): boolean {
+    if(this.task.title !== this.localTask.title) return true;
+    if(this.task.description !== this.localTask.description) return true;
+    if(this.task.category !== this.localTask.category) return true;
+    if(this.task.priority !== this.localTask.priority) return true;
+
+    const originalDate = this.toDate(this.task.date);
+    if(originalDate?.getTime() !== this.dueDate?.getTime()) return true;
+
+    const originalAssignees = (this.task.assignedTo ?? []).map( c => c.id).sort();
+    const localAssignees = (this.localTask.assignedTo ?? []).map( c => c.id).sort();
+    if(JSON.stringify(originalAssignees) !== JSON.stringify(localAssignees)) return true;
+
+    const originalSubtasks = (this.task.subtasks ?? []).map(s => ({title: s.title.trim(), done: s.done }));
+    const localSubtasks = (this.localTask.subtasks ?? []).map(s => ({title: s.title.trim(), done: s.done}));
+    if(JSON.stringify(originalSubtasks) !== JSON.stringify(localSubtasks)) return true;
+
+    return false;
+  }
+
   onCancel() {
+    if(this.hasChanges()){
+      this.toastService.show('Discard changes', 'success');
+    }
+    
     this.close.emit();
-    this.toastService.show('Discard changes', 'success');
+    
   }
 
   onDelete() {
