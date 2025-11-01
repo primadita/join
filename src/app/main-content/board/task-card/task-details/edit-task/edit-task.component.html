@@ -197,7 +197,15 @@
           </div>
         </div>
         <!-- #endregion assigned-to-wrapper -->
-
+        <!-- #region CATEGORY -->
+        <label class="wrapper-title">Category</label>
+        <div class="input-wrapper">
+          <app-category (sendCategory)="setCategory($event)" [value]="localTask.category"></app-category>
+          @if(categorySelected === false){
+          <span class="warning">This field is required!</span>
+          }
+        </div>
+        <!-- #endregion -->
         <!-- #region subtasks-wrapper -->
         <label class="wrapper-title">Subtasks</label>
         <div class="input-wrapper" id="subtask-wrapper">

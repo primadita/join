@@ -5,7 +5,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Subtask, Task } from '../../../../../shared/interfaces/task';
+import { Category, Subtask, Task } from '../../../../../shared/interfaces/task';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { RpSearchComponent } from '../../../../../shared/components/add-task/rp-search/rp-search.component';
 import { Contact } from '../../../../../shared/interfaces/contact';
@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ToastMessagesService } from '../../../../../shared/services/toast-messages.service';
 import { ToastMessageComponent } from '../../../../../shared/components/toast-message/toast-message.component';
 import { take } from 'rxjs';
+import { CategoryComponent } from '../../../../../shared/components/add-task/category/category.component';
 
 @Component({
   selector: 'app-edit-task',
@@ -37,6 +38,7 @@ import { take } from 'rxjs';
     FormsModule,
     MatNativeDateModule,
     MatInputModule,
+    CategoryComponent
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -46,7 +48,7 @@ export class EditTaskComponent {
   @Input() task!: Task;
   // Lokale, editierbare Kopie des Tasks
   localTask!: Task;
-
+  categorySelected = true;
   //Outputs an Parent
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
@@ -253,6 +255,16 @@ export class EditTaskComponent {
         ? this.localTask.assignedTo.filter((c) => c.id !== contact.id)
         : [...(this.localTask.assignedTo ?? []), contact],
     };
+  }
+
+  /**
+   * _____________________________________________________
+   * Category
+   * _____________________________________________________
+   */
+  setCategory(value: Category) {
+    this.localTask.category = value;
+    this.categorySelected = true;
   }
 
   /**
