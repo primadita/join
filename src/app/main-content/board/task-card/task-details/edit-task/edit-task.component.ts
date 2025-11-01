@@ -189,7 +189,11 @@ export class EditTaskComponent {
     };
 
     this.save.emit(updated);
-    this.toastService.show('Task changed', 'success');
+
+    if(this.hasChanges()){
+      this.toastService.show('Task changed', 'success');
+    }
+    
   }
 
   private hasChanges(): boolean {
