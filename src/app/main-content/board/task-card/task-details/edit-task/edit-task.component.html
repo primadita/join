@@ -197,7 +197,15 @@
           </div>
         </div>
         <!-- #endregion assigned-to-wrapper -->
-
+        <!-- #region CATEGORY -->
+        <label class="wrapper-title">Category</label>
+        <div class="input-wrapper">
+          <app-category (sendCategory)="setCategory($event)" [value]="localTask.category"></app-category>
+          @if(categorySelected === false){
+          <span class="warning">This field is required!</span>
+          }
+        </div>
+        <!-- #endregion -->
         <!-- #region subtasks-wrapper -->
         <label class="wrapper-title">Subtasks</label>
         <div class="input-wrapper" id="subtask-wrapper">
@@ -207,7 +215,8 @@
               id="subtask-input"
               type="text"
               name="subtask"
-              maxlength="50"
+              maxlength="150"
+              appPatternValidator="generalText"
               placeholder="Add new subtask"
               (keydown.enter)="addSubtask(singleSubtask)"
               [(ngModel)]="singleSubtask"
@@ -322,6 +331,12 @@
               </div>
             </li>
           </ul>
+          <!-- @if(singleSubtask.hasError('invalidPattern')){
+            <span class="warning">
+              Invalid subtask.
+            </span>
+          } -->
+          
         </div>
         <!-- #endregion subtasks-wrapper -->
       </div>

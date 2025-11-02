@@ -5,7 +5,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Subtask, Task } from '../../../../../shared/interfaces/task';
+import { Category, Subtask, Task } from '../../../../../shared/interfaces/task';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { RpSearchComponent } from '../../../../../shared/components/add-task/rp-search/rp-search.component';
 import { Contact } from '../../../../../shared/interfaces/contact';
@@ -22,6 +22,8 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { ToastMessagesService } from '../../../../../shared/services/toast-messages.service';
 import { ToastMessageComponent } from '../../../../../shared/components/toast-message/toast-message.component';
+import { take } from 'rxjs';
+import { CategoryComponent } from '../../../../../shared/components/add-task/category/category.component';
 
 @Component({
   selector: 'app-edit-task',
@@ -36,6 +38,7 @@ import { ToastMessageComponent } from '../../../../../shared/components/toast-me
     FormsModule,
     MatNativeDateModule,
     MatInputModule,
+    CategoryComponent
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -45,7 +48,7 @@ export class EditTaskComponent {
   @Input() task!: Task;
   // Lokale, editierbare Kopie des Tasks
   localTask!: Task;
-
+  categorySelected = true;
   //Outputs an Parent
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
@@ -186,12 +189,40 @@ export class EditTaskComponent {
     };
 
     this.save.emit(updated);
-    this.toastService.show('Task changed', 'success');
+
+    if(this.hasChanges()){
+      this.toastService.show('Task changed', 'success');
+    }
+    
+  }
+
+  private hasChanges(): boolean {
+    if(this.task.title !== this.localTask.title) return true;
+    if(this.task.description !== this.localTask.description) return true;
+    if(this.task.category !== this.localTask.category) return true;
+    if(this.task.priority !== this.localTask.priority) return true;
+
+    const originalDate = this.toDate(this.task.date);
+    if(originalDate?.getTime() !== this.dueDate?.getTime()) return true;
+
+    const originalAssignees = (this.task.assignedTo ?? []).map( c => c.id).sort();
+    const localAssignees = (this.localTask.assignedTo ?? []).map( c => c.id).sort();
+    if(JSON.stringify(originalAssignees) !== JSON.stringify(localAssignees)) return true;
+
+    const originalSubtasks = (this.task.subtasks ?? []).map(s => ({title: s.title.trim(), done: s.done }));
+    const localSubtasks = (this.localTask.subtasks ?? []).map(s => ({title: s.title.trim(), done: s.done}));
+    if(JSON.stringify(originalSubtasks) !== JSON.stringify(localSubtasks)) return true;
+
+    return false;
   }
 
   onCancel() {
+    if(this.hasChanges()){
+      this.toastService.show('Discard changes', 'success');
+    }
+    
     this.close.emit();
-    this.toastService.show('Discard changes', 'success');
+    
   }
 
   onDelete() {
@@ -232,6 +263,16 @@ export class EditTaskComponent {
 
   /**
    * _____________________________________________________
+   * Category
+   * _____________________________________________________
+   */
+  setCategory(value: Category) {
+    this.localTask.category = value;
+    this.categorySelected = true;
+  }
+
+  /**
+   * _____________________________________________________
    * Subtasks
    * _____________________________________________________
    */
@@ -240,12 +281,16 @@ export class EditTaskComponent {
     this.singleSubtask = '';
   }
 
+  private isEmpty(){
+    if(this.singleSubtask.trim().length === 0) return true;
+    return false;
+  }
+
   addSubtask(title?: string) {
     const t = (title ?? this.singleSubtask).trim();
-    if (!t) return;
     this.localTask = {
       ...this.localTask,
-      subtasks: [...(this.localTask.subtasks ?? []), { title: t, done: false }],
+      subtasks: [{ title: t, done: false }, ...(this.localTask.subtasks ?? [])],
     };
     this.singleSubtask = '';
   }
