@@ -60,6 +60,7 @@ export class AddTaskComponent {
   actualDate = new Date();
   rpSearch: string = '';
   singleSubtask: string = '';
+  showInvalidSubtaskWarning: boolean = false;
   editingIndex: number | null = null;
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
@@ -225,6 +226,7 @@ export class AddTaskComponent {
   // #endregion
   // #region METHODS of SUBTASKS
   addSubtask(subtask: NgModel) {
+    this.showInvalidSubtaskWarning = true;
     if (subtask.valid && this.singleSubtask.length >= 1) {
       const subtaskTitle = this.singleSubtask;
       const newSubtask: Subtask = {
@@ -233,6 +235,7 @@ export class AddTaskComponent {
       };
       this.newTask.subtasks.unshift(newSubtask);
       this.singleSubtask = '';
+      this.showInvalidSubtaskWarning = false;
     }
   }
 

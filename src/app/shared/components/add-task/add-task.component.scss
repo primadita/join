@@ -62,6 +62,15 @@
                     font-size: 1.6rem;
                 }
 
+                .warning-invalid-subtask {
+                    color: all.$priority_urgent;
+                    position: absolute;
+                    top: 14.2rem;
+                    margin-top: 0.4rem;
+                    left: 1rem;
+                    font-size: 1.6rem;
+                }
+
                 // #region TITLE
                 .form-field {
                     height: 4rem;

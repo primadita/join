@@ -288,7 +288,6 @@ export class EditTaskComponent {
 
   addSubtask(title?: string) {
     const t = (title ?? this.singleSubtask).trim();
-    if (!t) return;
     this.localTask = {
       ...this.localTask,
       subtasks: [{ title: t, done: false }, ...(this.localTask.subtasks ?? [])],
