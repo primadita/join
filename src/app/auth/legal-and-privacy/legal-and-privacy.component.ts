@@ -33,15 +33,12 @@ export class LegalAndPrivacyComponent implements OnInit {
     });
   }
 
-  navigateToComponent(event: Event, targetComponent: string) {
-    event.preventDefault();
-    this.activeComponent = targetComponent;
-    this.selectedActiveComponent.emit(targetComponent);
-
+  navigateTo(view: string) {
+    this.activeComponent = view;
+    this.selectedActiveComponent.emit(view);
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { view: targetComponent },
-      queryParamsHandling: 'merge',
+      queryParams: { view },
     });
   }
 
