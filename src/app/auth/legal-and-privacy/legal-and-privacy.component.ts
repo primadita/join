@@ -34,10 +34,10 @@ export class LegalAndPrivacyComponent implements OnInit {
   }
 
   navigateToComponent(event: Event, targetComponent: string) {
-    event.preventDefault(); //avoid page reload
+    event.preventDefault();
     this.activeComponent = targetComponent;
     this.selectedActiveComponent.emit(targetComponent);
-    // keep URL in sync for deep-linking/back-forward support
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { view: targetComponent },
