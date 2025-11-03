@@ -12,7 +12,7 @@ import { Contact } from '../../../../../shared/interfaces/contact';
 import { CommonModule } from '@angular/common';
 import { FirebaseServiceService } from '../../../../../shared/services/firebase.service';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { Timestamp } from '@angular/fire/firestore';
 import {
   MAT_DATE_LOCALE,
@@ -24,6 +24,7 @@ import { ToastMessagesService } from '../../../../../shared/services/toast-messa
 import { ToastMessageComponent } from '../../../../../shared/components/toast-message/toast-message.component';
 import { take } from 'rxjs';
 import { CategoryComponent } from '../../../../../shared/components/add-task/category/category.component';
+import { PatternValidatorDirective } from '../../../../../shared/directives/pattern-validator.directive';
 
 @Component({
   selector: 'app-edit-task',
@@ -38,7 +39,8 @@ import { CategoryComponent } from '../../../../../shared/components/add-task/cat
     FormsModule,
     MatNativeDateModule,
     MatInputModule,
-    CategoryComponent
+    CategoryComponent,
+    PatternValidatorDirective
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -59,6 +61,8 @@ export class EditTaskComponent {
 
   /** Subtask eingabe */
   singleSubtask: string = '';
+  showInvalidSubtaskWarning: boolean = false;
+  invalidSubtaskMessage: string = '';
   /**Termin als Date-Objekt für den Datepicker */
   dueDate: Date | null = null;
   actualDate = new Date();
@@ -281,18 +285,34 @@ export class EditTaskComponent {
     this.singleSubtask = '';
   }
 
-  private isEmpty(){
-    if(this.singleSubtask.trim().length === 0) return true;
-    return false;
-  }
 
-  addSubtask(title?: string) {
-    const t = (title ?? this.singleSubtask).trim();
-    this.localTask = {
-      ...this.localTask,
-      subtasks: [{ title: t, done: false }, ...(this.localTask.subtasks ?? [])],
-    };
-    this.singleSubtask = '';
+  addSubtask(subtask: NgModel) {
+    this.showInvalidSubtaskWarning = true;
+    this.invalidSubtaskMessage = '';
+    const trimmedSubtask = this.singleSubtask.trim();
+    const existedSubtask = this.localTask.subtasks.some(s => s.title.toLowerCase() === trimmedSubtask.toLowerCase());
+
+    if(!trimmedSubtask){
+      this.invalidSubtaskMessage = "Subtask cannot be empty.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+    
+    if(existedSubtask){
+      this.invalidSubtaskMessage = "Subtask already exists.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (subtask.valid) {
+      const newSubtask = { title: trimmedSubtask, done: false };
+      this.localTask.subtasks.unshift(newSubtask);
+      this.singleSubtask = '';
+      this.showInvalidSubtaskWarning = false;
+    } else {
+      this.showInvalidSubtaskWarning = true;
+      this.invalidSubtaskMessage = "Invalid subtask."
+    }
   }
 
   editSubtask(i: number) {
@@ -302,7 +322,7 @@ export class EditTaskComponent {
   deleteSubtask(index: number) {
     this.localTask = {
       ...this.localTask,
-      subtasks: this.subtasks.filter((_, i) => i !== index),
+      subtasks: this.localTask.subtasks.filter((_, i) => i !== index),
     };
     this.editingIndex = null;
   }

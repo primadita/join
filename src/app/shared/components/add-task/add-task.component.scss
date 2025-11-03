@@ -8,11 +8,12 @@
     form {
         @include all.d-flex();
         width: 100%;
-        gap: 3rem;
+        gap: 4rem;
 
         .form-input {
             @include all.d-flex($flexdir: row, $alit: flex-start, $cgap: 2.4rem);
             width: 100%;
+            padding-right: 0.5rem;
 
             @media(max-width: 1140px) {
                 display: block;
@@ -65,7 +66,7 @@
                 .warning-invalid-subtask {
                     color: all.$priority_urgent;
                     position: absolute;
-                    top: 14.2rem;
+                    top: 12.8rem;
                     margin-top: 0.4rem;
                     left: 1rem;
                     font-size: 1.6rem;
@@ -109,7 +110,7 @@
                 }
 
                 // #endregion
-
+                // #region PRIORITY
                 .priority-btn-wrapper {
                     width: 100%;
                     @include all.d-flex($flexdir: row, $jc: space-between);
@@ -161,7 +162,8 @@
                     }
                 }
             }
-
+            // #endregion
+            // #region SUBTASK-WRAPPER
             #subtask-wrapper {
 
                 .hidden {
@@ -171,7 +173,7 @@
                 // #region von Henry
 
                 ul {
-                    height: 7rem;
+                    height: 6rem;
                     overflow-y: auto;
                     gap: 0.5rem;
                     box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
@@ -320,6 +322,8 @@
                     }
                 }
             }
+            // #endregion
+            // #region ASSIGNED TO
 
             #rp-wrapper {
 
