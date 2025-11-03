@@ -61,6 +61,7 @@ export class AddTaskComponent {
   rpSearch: string = '';
   singleSubtask: string = '';
   showInvalidSubtaskWarning: boolean = false;
+  invalidSubtaskMessage: string = '';
   editingIndex: number | null = null;
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
@@ -227,15 +228,34 @@ export class AddTaskComponent {
   // #region METHODS of SUBTASKS
   addSubtask(subtask: NgModel) {
     this.showInvalidSubtaskWarning = true;
-    if (subtask.valid && this.singleSubtask.length >= 1) {
-      const subtaskTitle = this.singleSubtask;
+    this.invalidSubtaskMessage = '';
+    const trimmedSubtask = this.singleSubtask.trim();
+    const existedSubtask = this.newTask.subtasks.some( s => s.title.toLowerCase() === trimmedSubtask.toLowerCase());
+    
+    if(!trimmedSubtask){
+      this.invalidSubtaskMessage = "Subtask cannot be empty.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+    
+    if(existedSubtask){
+      this.invalidSubtaskMessage = "Subtask already exists.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (subtask.valid) {
+      // const subtaskTitle = this.singleSubtask;
       const newSubtask: Subtask = {
-        title: subtaskTitle,
-        done: false,
+        title: this.singleSubtask,
+        done: false
       };
       this.newTask.subtasks.unshift(newSubtask);
       this.singleSubtask = '';
       this.showInvalidSubtaskWarning = false;
+    } else{
+      this.showInvalidSubtaskWarning = true;
+      this.invalidSubtaskMessage ="Invalid subtask."
     }
   }
 

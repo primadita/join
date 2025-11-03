@@ -175,14 +175,14 @@
             </li>
           </ul>
           <span
-            *ngIf="newTask.subtasks.length === 0 && showInvalidSubtaskWarning && (subtask.hasError('invalidPattern') || singleSubtask.trim().length === 0)"
+            *ngIf="newTask.subtasks.length === 0 && showInvalidSubtaskWarning"
             class="warning">
-              Invalid subtask.
+              {{invalidSubtaskMessage}}
           </span>
           <span
-            *ngIf="newTask.subtasks.length > 0 && showInvalidSubtaskWarning && (subtask.hasError('invalidPattern') || singleSubtask.trim().length === 0)"
+            *ngIf="newTask.subtasks.length > 0 && showInvalidSubtaskWarning"
             class="warning-invalid-subtask">
-            Invalid subtask.
+            {{invalidSubtaskMessage}}
           </span>
         </div>
       </div>
