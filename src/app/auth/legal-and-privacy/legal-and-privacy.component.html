@@ -1,7 +1,7 @@
 <!-- #region FIX PART -->
 <section>
   <div class="head">
-    <img src="assets/icons/join_logo.svg" alt="Join logo" />
+    <img class="logo" src="assets/icons/join_logo.svg" alt="Join logo" />
     <div class="login-btn-container">
       <button class="login-btn" (click)="goToLogin()">
         <img src="assets/icons/login.svg" alt="" />
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="nav-btn">
     <button
       (click)="navigateTo('privacy-policy')"
       [class.active]="activeComponent === 'privacy-policy'"
