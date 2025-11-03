@@ -40,7 +40,7 @@ export class SummaryComponent {
     return this.tasks.length - this.filterTodo('done');
   }
 
-    undoneTasks() {
+  undoneTasks() {
     const undoneTasksArray = this.tasks.filter(t => t.status != TASK_STATUS.DONE);
     return undoneTasksArray;
   }
@@ -48,6 +48,7 @@ export class SummaryComponent {
   getLowestDate() {
     const dateJSONs: any[] = [];
     const secondsArray: number[] = [];
+    let lowDate = 1
     this.undoneTasks().forEach(task =>
       dateJSONs.push(task.date?.toJSON())
     );
@@ -56,14 +57,14 @@ export class SummaryComponent {
     );
 
     const datesOverNow = secondsArray.filter(d => d > (Date.now() / 1000));
-    const lowDate = Math.min.apply(null, datesOverNow);
-    console.log(lowDate);
-
+    if (datesOverNow.length > 0) {
+      lowDate = Math.min.apply(null, datesOverNow);
+    }
     return lowDate;
   }
 
   showLowestDateString() {
-    if (this.getLowestDate() == Infinity) {
+    if (this.getLowestDate() == 1) {
       return 'No upcoming Deadline'
     } else {
       const dateFormat = new Date(this.getLowestDate() * 1000);
@@ -101,15 +102,15 @@ export class SummaryComponent {
     }
   }
 
-  convertPrioToString(){
-    const prio = this.filterPriority()[0].priority;
-    if(prio == TASK_PRIORITY.URGENT){
+  convertPrioToString() {
+    const prio = this.filterPriority()[0]?.priority;
+    if (prio == TASK_PRIORITY.URGENT) {
       return "Urgent"
-    }else if(prio == TASK_PRIORITY.MEDIUM){
+    } else if (prio == TASK_PRIORITY.MEDIUM) {
       return "Medium"
-    }else if(prio == TASK_PRIORITY.LOW){
+    } else if (prio == TASK_PRIORITY.LOW) {
       return "Low"
-    }else{
+    } else {
       return undefined
     }
   }
