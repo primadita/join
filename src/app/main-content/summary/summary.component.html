@@ -1,8 +1,10 @@
 <section>
+    <div>
     <div class="head">
         <h1>Join 360</h1>
         <div class="blue-divide"></div>
         <h4>Key Metrics at a Glance</h4>
+        <div class="blue-divide-mobile"></div>
     </div>
     <div class="big-container">
         <div class="summary-container">
@@ -98,16 +100,15 @@
                         <span class="summary-task-status">{{convertPrioToString()}}</span>
                     </div>
                 </div>
-
-
                 <div class="divide"></div>
+                <div class="divide-mobile"></div>
                 <div class="deadline">
                     <span class="deadline-date">{{showLowestDateString()}}</span>
 
                     <span>Upcoming Deadline</span>
                 </div>                
             }@else {
-                    <span class="no-deadline">No upcoming Deadline</span>
+                    <span class="no-deadline">No upcoming deadline</span>
                 }
             </div>
             <div class="summary-bottom">
@@ -131,5 +132,6 @@
             <span class="greeting-name">Du Opfer</span>
         </div>
 
+    </div>
     </div>
 </section>

@@ -9,12 +9,17 @@
     height: 16rem;
     transition: 125ms;
 
-    &:hover {
-        background-color: all.$mainColor;
-        color: all.$white;
-        transform: scale(1.08);
+    @include all.mobile {
+        height: 13rem;
     }
 
+    @include all.desktop {
+        &:hover {
+            background-color: all.$mainColor;
+            color: all.$white;
+            transform: scale(1.08);
+        }
+    }
 }
 
 .counter-wrapper {
@@ -24,12 +29,21 @@
 .summary-number {
     font-weight: 600;
     font-size: 6rem;
+
+    @include all.mobile {
+        font-size: 4.7rem;
+    }
 }
 
 .summary-task-status {
     font-size: 2rem;
     text-align: center;
     width: 10rem;
+
+    @include all.mobile {
+        font-size: 1.6rem;
+        width: 8rem;
+    }
 }
 
 .svg-wrapper {
@@ -38,6 +52,10 @@
     background-color: all.$mainColor;
     @include all.d-flex();
     border-radius: 100%;
+    @media(max-width: 370px){
+        height: 4rem;
+        width: 4rem;
+    }
 }
 
 // #endregion
@@ -49,14 +67,53 @@ section {
     gap: 4rem;
     padding: 9.6rem;
 
+    @include all.notebook {
+        padding: 5.6rem;
+    }
+
+    @media(max-width: 800px) {
+        align-items: center;
+    }
+
+    >div {
+        @include all.d-flex($alit: flex-start);
+        gap: 4rem;
+
+        @media(max-height: 790px) {
+            gap: 1.6rem;
+
+        }
+    }
+
+
     .head {
         @include all.d-flex($flexdir: row);
         gap: 2.4rem;
+
+        @include all.notebook {
+            display: block;
+        }
 
         .blue-divide {
             height: 6rem;
             width: 0.2rem;
             background-color: all.$lightblue2;
+
+            @include all.notebook {
+                display: none;
+            }
+        }
+
+        .blue-divide-mobile {
+            margin-top: 1.6rem;
+            height: 0.3rem;
+            width: 12rem;
+            background-color: all.$lightblue2;
+            border-radius: 3px;
+
+            @include all.desktop {
+                display: none;
+            }
         }
     }
 
@@ -64,21 +121,68 @@ section {
         @include all.d-flex($flexdir: row);
         gap: 4rem;
 
+        @media(max-width: 1230px) {
+            flex-direction: column;
+        }
+
+        @media(max-height: 790px) {
+            display: block;
+            height: 450px;
+            overflow-y: auto;
+            padding: 0.4rem;
+        }
+
+        @media(max-height: 700px) {
+            height: 400px;
+        }
+
+        @media(max-height: 650px) {
+            height: 350px;
+        }
+
+        @media(max-height: 600px) {
+            height: 300px;
+        }
+
         .summary-container {
             width: 50rem;
             @include all.d-flex();
             gap: 2.4rem;
+
+            @include all.notebook {
+                width: 45rem;
+            }
+
+            @include all.mobile {
+                width: 40rem;
+                gap: 1.6rem;
+            }
+
+            @media(max-width: 430px) {
+                width: 35rem;
+            }
+            @media(max-width: 370px){
+                width: 30rem;
+            }
 
             .summary-top {
                 @include all.d-flex($flexdir: row, $jc: space-between);
                 width: 100%;
                 gap: 2.4rem;
 
+                @include all.mobile {
+                    gap: 1.6rem;
+                }
+
                 .summary-top-single {
                     flex: 1;
                     @include all.d-flex($flexdir: row);
                     gap: 1.6rem;
                     transition: 125ms;
+
+                    @media(max-width: 430px) {
+                        gap: 0;
+                    }
 
                     svg {
                         height: 4rem;
@@ -91,15 +195,18 @@ section {
                         width: 2.4rem;
                     }
 
-                    &:hover {
-                        .svg-wrapper {
-                            background-color: all.$white;
+                    @include all.desktop {
+                        &:hover {
+                            .svg-wrapper {
+                                background-color: all.$white;
 
-                            svg {
-                                fill: all.$mainColor;
+                                svg {
+                                    fill: all.$mainColor;
+                                }
                             }
                         }
                     }
+
                 }
             }
 
@@ -108,37 +215,40 @@ section {
                 @include all.d-flex($flexdir: row);
                 gap: 3.2rem;
 
+                @media(max-width: 430px) {
+                    flex-direction: column;
+                    height: auto;
+                    padding: 2.4rem;
+                }
+
                 .summary-prio {
                     @include all.d-flex($flexdir: row);
                     gap: 1.6rem;
 
+                    @media(max-width: 430px) {
+                        gap: 0;
+                    }
+
+                    svg {
+                        fill: all.$white;
+                        width: 3.2rem;
+                        height: 3.2rem;
+                        @media(max-width: 370px){
+                            height: 2.5rem;
+                            width: 2.5rem;
+                        }
+                    }
+
                     #urgent {
                         background-color: all.$priority_urgent;
-
-                        svg {
-                            fill: all.$white;
-                            width: 3.2rem;
-                            height: 3.2rem;
-                        }
                     }
 
                     #medium {
                         background-color: all.$priority_medium;
-
-                        svg {
-                            fill: all.$white;
-                            width: 3.2rem;
-                            height: 3.2rem;
-                        }
                     }
+
                     #low {
                         background-color: all.$priority_low;
-
-                        svg {
-                            fill: all.$white;
-                            width: 3.2rem;
-                            height: 3.2rem;
-                        }
                     }
                 }
 
@@ -146,6 +256,19 @@ section {
                     width: 0.2rem;
                     height: 8rem;
                     background-color: all.$lightgray3;
+
+                    @media(max-width: 430px) {
+                        display: none;
+                    }
+                }
+                .divide-mobile {
+                    height: 0.2rem;
+                    width: 16rem;
+                    background-color: all.$lightgray3;
+
+                    @media(min-width: 430px) {
+                        display: none;
+                    }
                 }
 
                 .deadline {
@@ -155,10 +278,14 @@ section {
                     .deadline-date {
                         font-weight: 700;
                         font-size: 2.1rem;
+
+                        @include all.mobile {
+                            font-size: 1.7rem;
+                        }
                     }
                 }
 
-                .no-deadline{
+                .no-deadline {
                     font-size: 3rem;
                     font-family: 600;
                 }
@@ -169,15 +296,42 @@ section {
                 @include all.d-flex($flexdir: row);
                 gap: 2.4rem;
 
+                @include all.mobile {
+                    gap: 1.6rem;
+                }
+
+                @media(max-width: 380px) {
+                    flex-direction: column;
+                }
+
                 .summary-bottom-single {
                     @include all.d-flex();
                     flex: 1;
+
+                    @media(max-width: 380px) {
+                        flex-direction: row;
+                        padding: 0.8rem;
+                        width: 100%;
+                        gap: 1.6rem;
+                        .summary-task-status{
+                            width: 15rem;
+                            text-align: left;
+                        }
+                        .summary-number{
+                            font-size: 2.4rem;
+                        }
+                    }
                 }
             }
         }
 
         .greeting-container {
+
             @include all.d-flex($alit: flex-start);
+
+            @media(max-width: 1230px) {
+                display: none;
+            }
 
             .greeting-start {
                 font-size: 4.7rem;
