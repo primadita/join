@@ -49,8 +49,18 @@
 
   <!-- #region policy & legal notice -->
   <div class="meta">
-    <a class="link" href="#">Privacy Policy</a>
-    <a class="link" href="#">Legal notice</a>
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }"
+      >Privacy Policy</a
+    >
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'legal-notice' }"
+      >Legal notice</a
+    >
   </div>
   <!-- #endregion policy & legal notice -->
 </div>

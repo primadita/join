@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { TaskService } from '../../shared/services/task.service';
-import { Task, TASK_STATUS } from '../../shared/interfaces/task';
+import { Task, TASK_PRIORITY, TASK_STATUS } from '../../shared/interfaces/task';
 import { Subscription } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 
@@ -23,8 +23,6 @@ export class SummaryComponent {
     this.tasksSub = this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
     });
-    this.filterLowestDate()
-
   }
 
   ngOnDestroy() {
@@ -42,20 +40,80 @@ export class SummaryComponent {
     return this.tasks.length - this.filterTodo('done');
   }
 
-  filterLowestDate() {
-    // const array: Task["date"][] = [];
-    this.tasks.forEach(task =>
-      console.log(task.date!.valueOf())
-    );
-    // return array;
+  undoneTasks() {
+    const undoneTasksArray = this.tasks.filter(t => t.status != TASK_STATUS.DONE);
+    return undoneTasksArray;
   }
 
-  // TODO: Funktion für mittleren summary-teil
-  // Ein Array erstellen mit allen timestamps von den Tasks
-  // den kleinsten Wert aus dem Array herausfiltern
-  // => Wert für deadline-date
-  // aus dem tasks-array alle tasks mit dem 
+  getLowestDate() {
+    const dateJSONs: any[] = [];
+    const secondsArray: number[] = [];
+    let lowDate = 1
+    this.undoneTasks().forEach(task =>
+      dateJSONs.push(task.date?.toJSON())
+    );
+    dateJSONs.forEach(e =>
+      secondsArray.push(e.seconds)
+    );
 
+    const datesOverNow = secondsArray.filter(d => d > (Date.now() / 1000));
+    if (datesOverNow.length > 0) {
+      lowDate = Math.min.apply(null, datesOverNow);
+    }
+    return lowDate;
+  }
+
+  showLowestDateString() {
+    if (this.getLowestDate() == 1) {
+      return 'No upcoming Deadline'
+    } else {
+      const dateFormat = new Date(this.getLowestDate() * 1000);
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const lowestDateString = dateFormat.toLocaleDateString("en-EN", options);
+      return lowestDateString
+    }
+  }
+
+  filterLowestTasks() {
+    const timestamp = new Timestamp(this.getLowestDate(), 0)
+    const array = this.undoneTasks().filter((task) =>
+      task.date?.valueOf() === timestamp.valueOf()
+    );
+    return array;
+  }
+
+  filterPriority() {
+    const taskArray = this.filterLowestTasks();
+    const urgentArray = taskArray.filter(t => t.priority == TASK_PRIORITY.URGENT);
+    const mediumArray = taskArray.filter(t => t.priority == TASK_PRIORITY.MEDIUM);
+    const lowArray = taskArray.filter(t => t.priority == TASK_PRIORITY.LOW);
+    if (urgentArray.length > 0) {
+      return urgentArray
+    } else if (mediumArray.length > 0) {
+      return mediumArray
+    } else if (lowArray.length > 0) {
+      return lowArray
+    } else {
+      return urgentArray;
+    }
+  }
+
+  convertPrioToString() {
+    const prio = this.filterPriority()[0]?.priority;
+    if (prio == TASK_PRIORITY.URGENT) {
+      return "Urgent"
+    } else if (prio == TASK_PRIORITY.MEDIUM) {
+      return "Medium"
+    } else if (prio == TASK_PRIORITY.LOW) {
+      return "Low"
+    } else {
+      return undefined
+    }
+  }
 }
 
 
