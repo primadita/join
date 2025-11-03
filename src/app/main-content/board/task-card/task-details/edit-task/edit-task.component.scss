@@ -30,16 +30,9 @@
     width: 100%;
     height: auto;
     max-height: calc(100dvh - 3rem - 3.4rem);
-    @include all.d-flex(
-      $flexdir: column,
-      $jc: flex-start,
-      $alit: flex-start,
-      $rgap: 2rem
-    );
-
+    @include all.d-flex($flexdir: column, $jc: flex-start,$alit: flex-start, $rgap: 2rem);
     .btn-wrapper {
       margin-left: auto;
-
       .close-btn {
         font-size: 1.8rem;
         font-weight: bold;
@@ -47,17 +40,14 @@
         border-radius: 50%;
         @include all.square($length: 3rem);
         @include all.d-flex();
-
         &:hover {
           background-color: all.$lightgray2;
         }
-
         @include all.mobile {
           font-size: 1.8rem;
           @include all.square($length: 2.4rem);
         }
       }
-
       .ok-btn {
         @include all.d-flex($flexdir: row, $cgap: 0.5rem);
         color: all.$white;
@@ -65,18 +55,15 @@
         padding: 1.2rem 1.4rem;
         border-radius: 1rem;
         font-weight: 700;
-
         &:hover {
           background-color: all.$lightblue2;
           box-shadow: all.$shadow;
         }
-
         @include all.mobile {
           padding: 0.8rem 1.2rem;
         }
       }
     }
-
     .form-wrapper {
       width: 100%;
       overflow-y: auto;
@@ -84,55 +71,63 @@
       @include all.d-flex($flexdir: column, $jc: space-between, $alit: center);
       gap: 1.5rem;
       padding: 0 1rem 0 0;
-
       .wrapper-title {
         width: 100%;
         text-align: start;
       }
-
       .input-wrapper {
         width: 100%;
-
         label {
           display: block;
           margin-bottom: 0.5rem;
         }
-
         .prio-label {
           font-weight: bold;
         }
-
         .warning-date {
           color: all.$priority_urgent;
         }
-
         .warning {
           color: all.$priority_urgent;
           font-size: 1.6rem;
+          left: 1rem;
+        }
+        .warning-invalid-subtask {
+          color: all.$priority_urgent;
+          position: absolute;
+          top: 9.5rem;
+          margin-top: 0.4rem;
+          left: 1rem;
+          font-size: 1.6rem;
         }
       }
-
       input {
-        //valid for input title, due date, assigned to and subtasks
         width: 100%;
         border: 0.1rem solid all.$lightgray2;
         border-radius: 0.8rem;
         padding: 0.8rem 1.2rem;
+        &:focus {
+          border: solid 1px all.$lightblue2;
+          outline: none;
+        }
       }
-
       // #region Description-Input-Wrapper
       textarea {
         width: 100%;
         height: 12rem;
-        box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+        border: 0.1rem solid all.$lightgray2;
         padding: 0.8rem 1.2rem;
         border-radius: 0.8rem;
         color: all.$black;
         font-size: 1.6rem;
         font-family: all.$font;
         resize: none;
+        line-height: 1.5;
+        &:focus {
+          border: solid 1px all.$lightblue2;
+          outline: none;
+        }
       }
-
       // #endregion
       // #region Date-Input-Wrapper
       .date-input-wrapper {
@@ -140,10 +135,15 @@
         border: 0.1rem solid all.$lightgray2;
         border-radius: 0.8rem;
         @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
-
         > input {
           border: none;
         }
+        &:focus-within {
+          border: 1px solid all.$lightblue2;
+        }
+      }
+      .date-input-wrapper.invalid {
+        border: 1px solid all.$priority_urgent;
       }
 
       // #region Priority-Buttons-Wrapper
@@ -170,7 +170,6 @@
           svg {
             @include all.square($length: 1.6rem);
           }
-
           @media (max-width: 400px) {
             @include all.d-flex($flexdir: row, $cgap: 0.3rem);
             width: auto;
@@ -178,45 +177,36 @@
             max-width: 34%;
           }
         }
-
         .active-urgent {
           background-color: all.$priority_urgent;
           color: all.$white;
-
           path {
             fill: all.$white;
           }
         }
-
         .active-medium {
           background-color: all.$priority_medium;
           color: all.$white;
-
           path {
             fill: all.$white;
           }
         }
-
         .active-low {
           background-color: all.$priority_low;
           color: all.$white;
-
           path {
             fill: all.$white;
           }
         }
       }
-
       // #endregion
       // #region ASSIGNED-TO-WRAPPER
       #rp-wrapper {
         width: 100%;
-
         .rp-selected-box {
           @include all.d-flex($flexdir: row, $jc: flex-start);
           margin-top: 1.6rem;
         }
-
         .initials {
           width: 4rem;
           height: 4rem;
@@ -232,177 +222,149 @@
           color: all.$white;
           margin-right: 0.8rem;
         }
-
         span {
           font-weight: 600;
         }
       }
-
       // #endregion
       // #region SUBTASKS-WRAPPER
-
       #subtask-wrapper {
-        border-radius: 1rem;
-        border: 0.1rem solid all.$lightgray2;
-        box-shadow: inset 0 -1px 4px rgba(0, 0, 0, 0.15);
-
-        .subtask-input-wrapper {
-          height: 4rem;
-          width: 100%;
-          border-bottom: 0.1rem solid all.$lightgray2;
-          #subtask-input {
-            width: 76%;
-            border: none;
-          }
-
-          .subtask-btn-wrapper {
-            @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
-            gap: 0.4rem;
-            position: absolute;
-            top: 50%;
-            right: -1.8rem;
-            transform: translate(-50%, -50%);
-
-            .clear-btn {
-              @include all.square($length: 2rem);
-              background-image: url(../../../../../../../public/assets/icons/cancel.svg);
-              background-position: center;
-              padding: 0.25rem 0.5rem;
-              border-radius: 1rem;
-            }
-
-            .btn-divide {
-              height: 2rem;
-              width: 0.1rem;
-              background-color: all.$lightgray2;
-            }
-
-            .add-btn {
-              @include all.square($length: 2rem);
-              background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
-              background-position: center;
-              padding: 0.25rem 0.5rem;
-              border-radius: 1rem;
-            }
-          }
+        .hidden {
+          visibility: hidden;
         }
-
         ul {
+          position: absolute;
+          height: 6rem;
+          top: 3.8rem;
           width: 100%;
-          max-height: 8rem;
           overflow-y: auto;
-          @include all.d-flex(
-            $flexdir: column,
-            $jc: flex-start,
-            $alit: flex-start
-          );
-
+          gap: 0.5rem;
+          box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+          border-radius: 8px;
           li {
             width: 100%;
-            padding: 0.5rem 1rem;
+            height: 3rem;
+            @include all.d-flex($flexdir: row, $jc: flex-start);
             border-radius: 1rem;
-            @include all.d-flex();
             cursor: pointer;
-
+            padding-left: 0.8rem;
             .list-content {
               width: 100%;
-              @include all.d-flex(
-                $flexdir: row,
-                $jc: space-between,
-                $alit: center
-              );
-              gap: 0.5rem;
-
+              @include all.d-flex($flexdir: row, $jc: none, $alit: center);
+              gap: 2.5rem;
               > span {
-                width: 70%;
-                text-overflow: ellipsis;
+                width: 1000px;
                 overflow: hidden;
-                white-space: nowrap;
-                // height: 3rem;
-                text-align: start;
-                // @include all.d-flex($flexdir: row, $jc: flex-start);
-              }
-
-              .edit-input {
-                width: 90%;
-                height: 3rem;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                overflow: hidden;
-                border-style: none;
-                border-bottom: 1px solid all.$lightblue2;
-                border-radius: 0%;
               }
-
               .edit-wrapper {
-                @include all.d-flex($flexdir: row, $jc: space-between);
-                gap: 1rem;
-
-                .edit-subtask {
+                width: 100%;
+              }
+              .edit-input {
+                width: 100%;
+                height: 3rem;
+                border-bottom: 1px solid all.$lightblue2;
+                padding-left: 1.6rem;
+                padding-right: 6rem;
+              }
+              input:focus {
+                border: none;
+                border-bottom: 1px solid all.$lightblue2;
+              }
+              .edit-subtask {
+                position: absolute;
+                top: 50%;
+                right: 0.9rem;
+                transform: translateY(-50%);
+                @include all.d-flex(
+                  $flexdir: row,
+                  $jc: flex-start,
+                  $alit: center
+                );
+                gap: 0.4rem;
+                flex: 0 0 auto;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.2s ease-in-out;
+                @include all.notebook {
+                  opacity: 1;
+                  visibility: visible;
+                  pointer-events: all;
+                }
+                button {
                   @include all.d-flex(
                     $flexdir: row,
-                    $jc: flex-end,
+                    $jc: center,
                     $alit: center
                   );
-                  gap: 0.4rem;
-
-                  opacity: 0;
-                  visibility: hidden;
-                  pointer-events: none;
-                  transition: opacity 0.2s ease-in-out;
-
-                  @include all.notebook {
-                    opacity: 1;
-                    visibility: visible;
-                    pointer-events: all;
-                  }
-
-                  button {
-                    @include all.d-flex(
-                      $flexdir: row,
-                      $jc: center,
-                      $alit: center
-                    );
-                    padding: 0.25rem 0.25rem;
-                    border-radius: 1rem;
-                  }
-
-                  .separator {
-                    height: 2rem;
-                    width: 0.1rem;
-                    background-color: all.$lightgray4;
-                  }
+                }
+                .separator {
+                  height: 2rem;
+                  width: 0.1rem;
+                  background-color: all.$lightgray2;
                 }
               }
             }
-
             @include all.desktop {
-              &:hover .list-content .edit-wrapper .edit-subtask {
+              &:hover .list-content .edit-subtask {
                 opacity: 1;
                 visibility: visible;
                 pointer-events: all;
               }
             }
-
-            &.editing .list-content .edit-wrapper .edit-subtask,
+            &.editing .list-content .edit-subtask,
             .list-content .edit-subtask.force-visible {
               opacity: 1;
               visibility: visible;
               pointer-events: all;
             }
           }
-
           li:hover {
             background-color: all.$lightgray4;
           }
-
-          li.editing:hover {
-            background-color: transparent;
+        }
+        button {
+          @include all.square($length: 2rem);
+          background-color: transparent;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 1.9rem;
+          border-radius: 50%;
+          &:hover {
+            background-color: all.$lightgray2;
+          }
+        }
+        .subtask-input-wrapper {
+          height: 4rem;
+          width: 100%;
+          #subtask-input {
+            padding-right: 6rem;
+          }
+          .subtask-btn-wrapper {
+            @include all.d-flex($flexdir: row);
+            gap: 0.4rem;
+            position: absolute;
+            top: 50%;
+            right: -1.6rem;
+            transform: translate(-50%, -50%);
+            .clear-btn {
+              background-image: url(../../../../../../../public/assets/icons/cancel.svg);
+            }
+            .btn-divide {
+              height: 2rem;
+              width: 0.1rem;
+              background-color: all.$lightgray2;
+            }
+            .add-btn {
+              background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
+            }
           }
         }
       }
-
-      // #endregion SUBTASKS-WRAPPER
+      // #endregion
     }
   }
 }

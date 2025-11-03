@@ -8,11 +8,12 @@
     form {
         @include all.d-flex();
         width: 100%;
-        gap: 3rem;
+        gap: 4rem;
 
         .form-input {
             @include all.d-flex($flexdir: row, $alit: flex-start, $cgap: 2.4rem);
             width: 100%;
+            padding-right: 0.5rem;
 
             @media(max-width: 1140px) {
                 display: block;
@@ -33,7 +34,8 @@
             @media(max-height: 750px) {
                 height: 50dvh;
             }
-            @media(max-height: 600px){
+
+            @media(max-height: 600px) {
                 height: 40dvh;
             }
 
@@ -61,6 +63,15 @@
                     font-size: 1.6rem;
                 }
 
+                .warning-invalid-subtask {
+                    color: all.$priority_urgent;
+                    position: absolute;
+                    top: 12.8rem;
+                    margin-top: 0.4rem;
+                    left: 1rem;
+                    font-size: 1.6rem;
+                }
+
                 // #region TITLE
                 .form-field {
                     height: 4rem;
@@ -76,10 +87,6 @@
                     &:focus {
                         border: solid 1px all.$lightblue2;
                         outline: none;
-                    }
-
-                    &.ng-touched:invalid {
-                        border: solid 1px all.$priority_urgent;
                     }
                 }
 
@@ -103,7 +110,7 @@
                 }
 
                 // #endregion
-
+                // #region PRIORITY
                 .priority-btn-wrapper {
                     width: 100%;
                     @include all.d-flex($flexdir: row, $jc: space-between);
@@ -124,8 +131,6 @@
 
                         svg {
                             @include all.square($length: 1.6rem);
-                            // height: 1.6rem;
-                            // width: 1.6rem;
                         }
                     }
 
@@ -157,17 +162,22 @@
                     }
                 }
             }
-
+            // #endregion
+            // #region SUBTASK-WRAPPER
             #subtask-wrapper {
+
+                .hidden {
+                    visibility: hidden;
+                }
 
                 // #region von Henry
 
                 ul {
-                    max-height: 11rem;
+                    height: 6rem;
                     overflow-y: auto;
                     gap: 0.5rem;
-                    // box-shadow: 0px 9px 13px -11px rgba(0, 0, 0, 0.19);
-
+                    box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+                    border-radius: 8px;
 
                     li {
                         width: 100%;
@@ -175,12 +185,11 @@
                         @include all.d-flex($flexdir: row, $jc: flex-start);
                         border-radius: 1rem;
                         cursor: pointer;
+                        padding-left: 0.8rem;
 
                         .list-content {
                             width: 100%;
-                            @include all.d-flex($flexdir: row,
-                                $jc: none,
-                                $alit: center);
+                            @include all.d-flex($flexdir: row, $jc: none, $alit: center);
                             gap: 2.5rem;
 
                             >span {
@@ -242,6 +251,7 @@
                                 }
                             }
                         }
+
                         @include all.desktop {
 
                             &:hover .list-content .edit-subtask {
@@ -249,7 +259,6 @@
                                 visibility: visible;
                                 pointer-events: all;
                             }
-
                         }
 
                         &.editing .list-content .edit-subtask,
@@ -312,8 +321,9 @@
                         }
                     }
                 }
-
             }
+            // #endregion
+            // #region ASSIGNED TO
 
             #rp-wrapper {
 
@@ -322,6 +332,10 @@
                 .rp-selected-box {
                     @include all.d-flex($flexdir: row, $jc: flex-start);
                     margin-top: 1.6rem;
+                    box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+                    border-radius: 0.8rem;
+                    height: 5rem;
+                    padding-left: 0.8rem;
                 }
 
                 .initials {
@@ -354,8 +368,6 @@
                     display: none;
                 }
             }
-
-
         }
 
         .form-submit {
@@ -373,7 +385,8 @@
             .btn-wrapper {
                 @include all.d-flex($flexdir: row, $jc: flex-start);
                 gap: 1.6rem;
-                @media(max-width: 1140px){
+
+                @media(max-width: 1140px) {
                     width: 100%;
                     justify-content: center;
                 }
@@ -408,9 +421,6 @@
                         fill: none;
                         transition: stroke 0.2s ease;
                     }
-
-
-
                 }
 
                 .submit-wrapper {
@@ -433,8 +443,6 @@
                                 box-shadow: all.$shadow;
                             }
                         }
-
-
                     }
 
                     img {
@@ -451,4 +459,14 @@
     .red {
         color: red;
     }
+}
+
+.load-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.158);
+    z-index: 1000;
 }

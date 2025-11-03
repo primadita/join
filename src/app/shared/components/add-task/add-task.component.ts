@@ -14,6 +14,7 @@ import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { PatternValidatorDirective } from "../../directives/pattern-validator.directive";
 
 @Component({
   selector: 'app-add-task',
@@ -29,7 +30,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     RpSearchComponent,
     CategoryComponent,
     DatePickerComponent,
-  ],
+    PatternValidatorDirective
+],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -53,10 +55,13 @@ export class AddTaskComponent {
     medium: true,
     low: false,
   };
+  isLoading = false;
   categorySelected = true;
   actualDate = new Date();
   rpSearch: string = '';
   singleSubtask: string = '';
+  showInvalidSubtaskWarning: boolean = false;
+  invalidSubtaskMessage: string = '';
   editingIndex: number | null = null;
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
@@ -81,23 +86,27 @@ export class AddTaskComponent {
     this.categorySelected = true;
   }
 
-    onSubmit(ngForm: NgForm) {
-    if (ngForm.submitted && ngForm.form.valid){
-      this.checkValidation();
+  sendForm(ngForm: NgForm, title: NgModel) {
+    if (this.fullValidation(ngForm)) {
+      this.isLoading = true;
+      this.onCreateTask();
+    }
+    if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
+      this.categorySelected = false;
+    }
+    if (!ngForm.form.valid) {
+      title.control.markAsTouched();
+    }
+    if ((this.newTask.date == null) || (this.newTask.date <= this.actualDate)) {
+      this.datePickerComponent.markDateAsTouched();
     }
   }
 
-  checkValidation() {
-    if (this.newTask.date != null) {
-      if (this.newTask.title.length >= 1 &&
-        (this.newTask.date >= this.actualDate) &&
-        this.newTask.category != TASK_CATEGORY.DEFAULT) {
-        this.onCreateTask();
-      } else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-      this.categorySelected = false;
-    } 
-    }
-
+  fullValidation(ngForm: NgForm) {
+    return ngForm.form.valid &&
+      this.newTask.date != null &&
+      this.newTask.date >= this.actualDate &&
+      this.newTask.category != TASK_CATEGORY.DEFAULT
   }
 
   onClearInputs(title: NgModel) {
@@ -118,7 +127,7 @@ export class AddTaskComponent {
       low: false,
     };
     title.control.markAsUntouched();
-    
+
     this.singleSubtask = "";
     this.categorySelected = true;
     this.clearTask.emit();
@@ -218,15 +227,40 @@ export class AddTaskComponent {
   // #endregion
   // #region METHODS of SUBTASKS
   addSubtask(subtask: NgModel) {
-    if (subtask.valid && this.singleSubtask.length >= 1) {
-      const subtaskTitle = this.singleSubtask;
-      const newSubtask: Subtask = {
-        title: subtaskTitle,
-        done: false,
-      };
-      this.newTask.subtasks.push(newSubtask);
-      this.singleSubtask = '';
+    this.showInvalidSubtaskWarning = true;
+    this.invalidSubtaskMessage = '';
+    const trimmedSubtask = this.singleSubtask.trim();
+    const existedSubtask = this.newTask.subtasks.some( s => s.title.toLowerCase() === trimmedSubtask.toLowerCase());
+    
+    if(!trimmedSubtask){
+      this.invalidSubtaskMessage = "Subtask cannot be empty.";
+      this.showInvalidSubtaskWarning = true;
+      return;
     }
+    
+    if(existedSubtask){
+      this.invalidSubtaskMessage = "Subtask already exists.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (subtask.valid) {
+      // const subtaskTitle = this.singleSubtask;
+      const newSubtask: Subtask = {
+        title: this.singleSubtask,
+        done: false
+      };
+      this.newTask.subtasks.unshift(newSubtask);
+      this.singleSubtask = '';
+      this.showInvalidSubtaskWarning = false;
+    } else{
+      this.showInvalidSubtaskWarning = true;
+      this.invalidSubtaskMessage ="Invalid subtask."
+    }
+  }
+
+  clearSubtaskInput() {
+    this.singleSubtask = "";
   }
 
   deleteSubtask(index: number) {
@@ -240,12 +274,27 @@ export class AddTaskComponent {
   }
 
   saveSubtaskEdit(i: number) {
+    const current = this.newTask.subtasks?.[i];
+    if (!current) {
+      this.editingIndex = null;
+      return;
+    }
+    const trimmed = (current.title ?? '').trim();
+    if (!trimmed) {
+      // remove empty subtask instead of saving empty title
+      this.newTask = {
+        ...this.newTask,
+        subtasks: this.newTask.subtasks.filter((_, idx) => idx !== i),
+      };
+    } else {
+      this.newTask.subtasks[i] = { ...current, title: trimmed };
+    }
     this.editingIndex = null;
   }
+
 
   isEditing(i: number): boolean {
     return this.editingIndex === i;
   }
-  // #endregion
   // #endregion
 }

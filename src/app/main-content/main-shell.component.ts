@@ -9,4 +9,3 @@ import { MainContentComponent } from './main-content.component';
   template: `<app-main-content></app-main-content>`,
 })
 export class MainShellComponent {}
-
