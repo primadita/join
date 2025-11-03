@@ -16,6 +16,7 @@ export class SignupComponent {
   user = {
     name: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: ""
   }

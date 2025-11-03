@@ -10,6 +10,9 @@
             <h1>Sign up</h1>
             <div class="title-line"></div>
         </div>
+        <div class="logo-field-mobile">
+            <img src="assets/icons/join_logo_dark.svg" alt="join logo">
+        </div>
         <a href="login" class="back-btn">
             <img src="assets/icons/back.svg" alt="back button">
         </a>
@@ -34,6 +37,17 @@
                         <span class="invalid-inputs">Email is required!</span>
                     } @else if(email.hasError('invalidPattern')){
                         <span class="invalid-inputs">Please enter a valid email address!</span>
+                    }
+                }
+            </div>
+            <div class="inputs">
+                <input #phone="ngModel" [(ngModel)]="user.phone" type="phone" name="phone" placeholder="Phone number" required appPatternValidator="phoneFormat"/>
+                <img src="assets/icons/phone.svg" alt="input field for phone number" />
+                @if(phone.touched){
+                    @if(phone.hasError('required')){
+                        <span class="invalid-inputs">Phone number is required!</span>
+                    } @else if(phone.hasError('invalidPattern')){
+                        <span class="invalid-inputs">Please enter a valid number!</span>
                     }
                 }
             </div>
