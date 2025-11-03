@@ -109,7 +109,7 @@
                 }
 
                 // #endregion
-
+                // #region PRIORITY
                 .priority-btn-wrapper {
                     width: 100%;
                     @include all.d-flex($flexdir: row, $jc: space-between);
@@ -161,7 +161,8 @@
                     }
                 }
             }
-
+            // #endregion
+            // #region SUBTASK-WRAPPER
             #subtask-wrapper {
 
                 .hidden {
@@ -320,6 +321,8 @@
                     }
                 }
             }
+            // #endregion
+            // #region ASSIGNED TO
 
             #rp-wrapper {
 

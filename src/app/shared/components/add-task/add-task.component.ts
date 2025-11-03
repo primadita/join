@@ -253,7 +253,7 @@ export class AddTaskComponent {
     this.editingIndex = i;
   }
 
-    saveSubtaskEdit(i: number) {
+  saveSubtaskEdit(i: number) {
     const current = this.newTask.subtasks?.[i];
     if (!current) {
       this.editingIndex = null;
