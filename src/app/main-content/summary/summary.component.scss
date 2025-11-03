@@ -113,7 +113,26 @@ section {
                     gap: 1.6rem;
 
                     #urgent {
-                        background-color: red;
+                        background-color: all.$priority_urgent;
+
+                        svg {
+                            fill: all.$white;
+                            width: 3.2rem;
+                            height: 3.2rem;
+                        }
+                    }
+
+                    #medium {
+                        background-color: all.$priority_medium;
+
+                        svg {
+                            fill: all.$white;
+                            width: 3.2rem;
+                            height: 3.2rem;
+                        }
+                    }
+                    #low {
+                        background-color: all.$priority_low;
 
                         svg {
                             fill: all.$white;
@@ -137,6 +156,11 @@ section {
                         font-weight: 700;
                         font-size: 2.1rem;
                     }
+                }
+
+                .no-deadline{
+                    font-size: 3rem;
+                    font-family: 600;
                 }
             }
 
