@@ -1,0 +1,41 @@
+<!-- #region FIX PART -->
+<section>
+  <div class="head">
+    <img src="assets/icons/join_logo.svg" alt="Join logo" />
+    <div class="login-btn-container">
+      <button class="login-btn" (click)="goToLogin()">
+        <img src="assets/icons/login.svg" alt="" />
+        <span>Log In</span>
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <button
+      (click)="navigateToComponent($event, 'privacy-policy')"
+      [class.active]="activeComponent === 'privacy-policy'"
+    >
+      Privacy Policy
+    </button>
+    <button
+      (click)="navigateToComponent($event, 'legal-notice')"
+      [class.active]="activeComponent === 'legal-notice'"
+    >
+      Legal Notice
+    </button>
+  </div>
+</section>
+<div class="content-wrapper">
+  <app-header></app-header>
+  <!-- #endregion -->
+  <!-- #region SWITCHABLE PART -->
+  <div>
+    <app-legal-notice
+      *ngIf="activeComponent === 'legal-notice'"
+    ></app-legal-notice>
+    <app-privacy-policy
+      *ngIf="activeComponent === 'privacy-policy'"
+    ></app-privacy-policy>
+  </div>
+  <!-- #endregion -->
+</div>
