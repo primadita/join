@@ -9,6 +9,46 @@
   box-shadow: all.$shadow;
   cursor: pointer;
 
+  .menu-btn{
+    position: absolute;
+    top: 1.2rem;
+    right: 1rem;
+    background: transparent;
+    @include all.square($length: 3rem);
+    @include all.d-flex();
+    img{
+      @include all.square($length:100%);
+    }
+    .smaller{
+      @include all.square($length: 65%);
+    }
+  }
+
+  .menu-popup{
+    position: absolute;
+    top: 4.2rem;
+    right: 0rem;
+    z-index: 52;
+    background: all.$lightgray2;
+    width: 16rem;
+    height: 14rem;
+    text-align: center;
+    font-weight: 600;
+    padding: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 2.4rem 0 2.4rem 0;
+    cursor: default;
+    button{
+      background: transparent;
+      font-size: 1.8rem;
+      @include all.d-flex($jc: flex-start, $alit: flex-start);
+      span{
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+      }
+    }
+  }
+
   .category {
     .category-label {
       color: all.$white;

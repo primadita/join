@@ -5,9 +5,12 @@
         <h1>Board</h1>
         <div>
             <div class="search-div">
-                <input [formControl]="searchControl" type="text" id="search-input-field" placeholder="Find Task">
-                <div class="vline"></div>
-                <img src="./assets/icons/search.svg" alt="search for">
+                <input [formControl]="searchControl" type="text" placeholder="Find Task">
+                <div class="search-btn-wrapper">
+                    <div class="vline"></div>
+                    <img src="./assets/icons/search.svg" alt="search for">
+                </div>
+
             </div>
             <button id="add-task-global" (click)="toggleAddTask()">
                 <h5>Add task</h5>
@@ -24,55 +27,56 @@
             </button>
         </div>
         <div class="search-div">
-            <input [formControl]="searchControl" type="text" id="search-input-field" placeholder="Find Task" >
+            <input [formControl]="searchControl" type="text" placeholder="Find Task">
             <div class="vline"></div>
             <img src="./assets/icons/search.svg" alt="search for">
         </div>
     </div>
     @if(showNoResult$ |async){
-        <div class="no-result-div">
-            <span>No results were found.</span>
-        </div>
+    <div class="no-result-div">
+        <span>No results were found.</span>
+    </div>
     }
-    
+
     <!-- #endregion -->
     <!-- #region PROGRESS BOARD -->
     <div class="progress-board" cdkDropListGroup>
-    <!--################## OBSERVABLE ######################-->
-    <!-- Durch async abonniert Angular das Observable board$ und gibt das aktuelle BoardColumns Objekt -->
-    <!-- Wenn board$ neu emittiert, render Angular die Listen neu -->
-    <!-- Beim destroy der Komponente beendet | async das Abo automatisch -->
-    <!-- dadurch ist ngOnDestroy() nicht mehr nötig -->
-    @let board = board$ | async;
+        <!--################## OBSERVABLE ######################-->
+        <!-- Durch async abonniert Angular das Observable board$ und gibt das aktuelle BoardColumns Objekt -->
+        <!-- Wenn board$ neu emittiert, render Angular die Listen neu -->
+        <!-- Beim destroy der Komponente beendet | async das Abo automatisch -->
+        <!-- dadurch ist ngOnDestroy() nicht mehr nötig -->
+        @let board = board$ | async;
         <div class="progress-container">
             <div class="progress-title">
                 <h5>To do</h5>
                 <button class="specific-add-btn" (click)="toggleAddTask('to do')">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
-                            <rect width="32" height="32" fill="#D9D9D9"/>
+                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                            width="32" height="32">
+                            <rect width="32" height="32" fill="#D9D9D9" />
                         </mask>
                         <g mask="url(#mask0_373733_4377)">
-                            <path d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z" fill="white"/>
+                            <path
+                                d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z"
+                                fill="white" />
                         </g>
                     </svg>
                 </button>
             </div>
-            <div cdkDropList 
-                id="toDoList"
-                #toDoList = "cdkDropList"
-                [cdkDropListData]="board?.todo ?? []"
+            <div cdkDropList id="toDoList" #toDoList="cdkDropList" [cdkDropListData]="board?.todo ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, toDoList)"
-                (cdkDropListEntered)="highlightDropList(toDoList)"
+                (cdkDropListEntered)="highlightDropList(toDoList); unhighlightDropList(inProgressList); unhighlightDropList(awaitFeedbackList); unhighlightDropList(doneList)" 
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim()&& (board?.todo?.length ?? 0)=== 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
+                <div class="empty-list">
+                    <span>No tasks in this list</span>
+                </div>
                 }
                 @for (task of board?.todo; track task.id){
-                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task">
-                    </app-task-card>
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                    [task]="task">
+                </app-task-card>
                 }
             </div>
         </div>
@@ -82,29 +86,31 @@
                 <h5>In progress</h5>
                 <button class="specific-add-btn" (click)="toggleAddTask('in progress')">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
-                            <rect width="32" height="32" fill="#D9D9D9"/>
+                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                            width="32" height="32">
+                            <rect width="32" height="32" fill="#D9D9D9" />
                         </mask>
                         <g mask="url(#mask0_373733_4377)">
-                            <path d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z" fill="white"/>
+                            <path
+                                d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z"
+                                fill="white" />
                         </g>
                     </svg>
                 </button>
             </div>
-            <div cdkDropList
-                id="inProgressList" 
-                #inProgressList = "cdkDropList"
+            <div cdkDropList id="inProgressList" #inProgressList="cdkDropList"
                 [cdkDropListData]="board?.inprogress ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, inProgressList)"
-                (cdkDropListEntered)="highlightDropList(inProgressList)"
+                (cdkDropListEntered)="highlightDropList(inProgressList); unhighlightDropList(toDoList); unhighlightDropList(awaitFeedbackList); unhighlightDropList(doneList)" 
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.inprogress?.length ?? 0) === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
+                <div class="empty-list">
+                    <span>No tasks in this list</span>
+                </div>
                 }
                 @for (task of board?.inprogress; track task.id){
-                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                    [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -114,29 +120,31 @@
                 <h5>Await feedback</h5>
                 <button class="specific-add-btn" (click)="toggleAddTask('await feedback')">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32">
-                            <rect width="32" height="32" fill="#D9D9D9"/>
+                        <mask id="mask0_373733_4377" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                            width="32" height="32">
+                            <rect width="32" height="32" fill="#D9D9D9" />
                         </mask>
                         <g mask="url(#mask0_373733_4377)">
-                            <path d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z" fill="white"/>
+                            <path
+                                d="M14.666 17.3327H6.66602V14.666H14.666V6.66602H17.3327V14.666H25.3327V17.3327H17.3327V25.3327H14.666V17.3327Z"
+                                fill="white" />
                         </g>
                     </svg>
                 </button>
             </div>
-            <div cdkDropList 
-                id="awaitFeedbackList"
-                #awaitFeedbackList = "cdkDropList"
+            <div cdkDropList id="awaitFeedbackList" #awaitFeedbackList="cdkDropList"
                 [cdkDropListData]="board?.awaitfeedback ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, awaitFeedbackList)"
-                (cdkDropListEntered)="highlightDropList(awaitFeedbackList)"
+                (cdkDropListEntered)="highlightDropList(awaitFeedbackList); unhighlightDropList(toDoList); unhighlightDropList(inProgressList); unhighlightDropList(doneList)" 
                 class="progress-list">
-                @if(!(searchInput$ | async)?.trim() && (board?.awaitfeedback?.length ?? 0)  === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
+                @if(!(searchInput$ | async)?.trim() && (board?.awaitfeedback?.length ?? 0) === 0){
+                <div class="empty-list">
+                    <span>No tasks in this list</span>
+                </div>
                 }
                 @for (task of board?.awaitfeedback; track task.id){
-                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                    [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -145,20 +153,18 @@
             <div class="progress-title">
                 <h5>Done</h5>
             </div>
-            <div cdkDropList 
-                id="doneList"
-                #doneList = "cdkDropList"
-                [cdkDropListData]="board?.done ?? []"
+            <div cdkDropList id="doneList" #doneList="cdkDropList" [cdkDropListData]="board?.done ?? []"
                 (cdkDropListDropped)="dropAndUnhighlight($event, doneList)"
-                (cdkDropListEntered)="highlightDropList(doneList)"
+                (cdkDropListEntered)="highlightDropList(doneList); unhighlightDropList(toDoList); unhighlightDropList(inProgressList); unhighlightDropList(awaitFeedbackList)" 
                 class="progress-list">
                 @if(!(searchInput$ | async)?.trim() && (board?.done?.length ?? 0) === 0){
-                    <div class="empty-list">
-                        <span>No tasks in this list</span>
-                    </div>
+                <div class="empty-list">
+                    <span>No tasks in this list</span>
+                </div>
                 }
                 @for (task of board?.done; track task.id){
-                    <app-task-card cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)" [task]="task"></app-task-card>
+                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                    [task]="task"></app-task-card>
                 }
             </div>
         </div>
@@ -171,7 +177,8 @@
     <!-- #endregion -->
     <!-- #region ADD TASK POP UP -->
     <ng-container *ngIf="addTaskWindow">
-        <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()" (create)="createNewTask($event)"></app-add-task-popup>
+        <app-add-task-popup (close)="onClosePopUp()" (clear)="clearInputTask()"
+            (create)="createNewTask($event)"></app-add-task-popup>
     </ng-container>
     <app-toast-message [context]="'board'">
     </app-toast-message>

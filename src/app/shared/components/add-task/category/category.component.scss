@@ -14,16 +14,35 @@
     @include all.d-flex($flexdir: row, $jc: space-between);
 }
 
-.active-list{
+.active-list {
     border: solid 1px all.$lightblue2;
 }
 
-.category-selection {
+.selection-wrapper {
     position: absolute;
     top: 4rem;
+    width: 100%;
+    box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.19);
+    z-index: 100;
+}
+
+.list-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    background-image: url('../../../../../../public/assets/icons/arrow_drop_down.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 1.2rem;
+}
+
+.category-selection {
+
     max-height: 25rem;
     width: 100%;
-    z-index: 100;
     background-color: all.$white;
 
     li {
@@ -31,7 +50,6 @@
         @include all.d-flex($flexdir: row, $jc: space-between);
         padding: 0.8rem 1.6rem;
         border-radius: 0.8rem;
-        margin-bottom: 1px;
         font-size: 1.6rem;
         font-family: all.$font;
         font-weight: 400;

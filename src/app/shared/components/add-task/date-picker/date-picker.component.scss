@@ -1,4 +1,4 @@
-@use './../../../../../../public/assets/styles/all-styles.scss' as all;
+@use '../../../../../../public/assets/styles/all-styles.scss' as all;
 
 .date-input-wrapper {
 
@@ -43,7 +43,7 @@
     .warning-date {
         color: all.$priority_urgent;
         position: absolute;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         top: 4.2rem;
         left: 1rem;
     }

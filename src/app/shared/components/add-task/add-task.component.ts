@@ -7,16 +7,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { Category, Subtask, Task, TASK_CATEGORY, TASK_PRIORITY, TASK_STATUS } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { PatternValidatorDirective } from "../../directives/pattern-validator.directive";
 
 @Component({
   selector: 'app-add-task',
+  standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
@@ -27,8 +29,9 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     FormsModule,
     RpSearchComponent,
     CategoryComponent,
-    DatePickerComponent
-  ],
+    DatePickerComponent,
+    PatternValidatorDirective
+],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -52,55 +55,61 @@ export class AddTaskComponent {
     medium: true,
     low: false,
   };
+  isLoading = false;
   categorySelected = true;
   actualDate = new Date();
   rpSearch: string = '';
   singleSubtask: string = '';
+  showInvalidSubtaskWarning: boolean = false;
+  invalidSubtaskMessage: string = '';
   editingIndex: number | null = null;
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
   @Output() taskCreated = new EventEmitter<void>();
   @Input() parentContext: 'board' | 'addtask' = 'addtask';
-  @ViewChild(RpSearchComponent) rpSearchComponent!: RpSearchComponent;
   @ViewChild(DatePickerComponent) datePickerComponent!: DatePickerComponent;
-  
+
   // #endregion
 
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   // #region METHODS
   get titleTooLong() {
-    return this.newTask.title?.length >= 30;
+    return this.newTask.title?.length > 30;
   }
   setDate(date: Date | null) {
     this.newTask.date = date;
-    console.log(this.newTask.date);
   }
 
   setCategory(value: Category) {
     this.newTask.category = value;
-    console.log(this.newTask.category);
     this.categorySelected = true;
   }
 
-  checkValidation() {
-    if (this.newTask.date != null) {
-      if (this.newTask.title.length >= 1 &&
-        (this.newTask.date >= this.actualDate) &&
-        this.newTask.category != TASK_CATEGORY.DEFAULT) {
-        this.onCreateTask();
-      }
+  sendForm(ngForm: NgForm, title: NgModel) {
+    if (this.fullValidation(ngForm)) {
+      this.isLoading = true;
+      this.onCreateTask();
     }
-    else if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
-
-      console.log('Task konnte nicht erstellt werden');
+    if (this.newTask.category == TASK_CATEGORY.DEFAULT) {
       this.categorySelected = false;
-    } else {
-      console.log('Task konnte nicht erstellt werden');
+    }
+    if (!ngForm.form.valid) {
+      title.control.markAsTouched();
+    }
+    if ((this.newTask.date == null) || (this.newTask.date <= this.actualDate)) {
+      this.datePickerComponent.markDateAsTouched();
     }
   }
 
-  onClearInputs() {
+  fullValidation(ngForm: NgForm) {
+    return ngForm.form.valid &&
+      this.newTask.date != null &&
+      this.newTask.date >= this.actualDate &&
+      this.newTask.category != TASK_CATEGORY.DEFAULT
+  }
+
+  onClearInputs(title: NgModel) {
     this.newTask = {
       id: '',
       title: '',
@@ -117,8 +126,11 @@ export class AddTaskComponent {
       medium: true,
       low: false,
     };
+    title.control.markAsUntouched();
+
+    this.singleSubtask = "";
+    this.categorySelected = true;
     this.clearTask.emit();
-    this.rpSearchComponent.clearRpList();
     this.datePickerComponent.clearDate();
   }
 
@@ -148,7 +160,7 @@ export class AddTaskComponent {
     this.priorityFlag.low = false;
     this.unsetPriority('medium');
   }
-  
+
   setPriorityLow() {
     this.priorityFlag.low = !this.priorityFlag.low;
     this.priorityFlag.urgent = false;
@@ -192,8 +204,15 @@ export class AddTaskComponent {
     });
   }
 
-  updateAssignedTo(array: Array<Contact>) {
-    this.newTask.assignedTo = array;
+  addRpToArray(contact: Contact) {
+    const array = this.newTask.assignedTo;
+    const test = array.includes(contact);
+    if (!test) {
+      array.push(contact);
+    } else if (test) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
+    }
   }
 
   getThreeRP(): Contact[] {
@@ -207,16 +226,41 @@ export class AddTaskComponent {
   }
   // #endregion
   // #region METHODS of SUBTASKS
-  addSubtask() {
-    if (this.singleSubtask.length > 0) {
-      const subtaskTitle = this.singleSubtask;
-      const newSubtask: Subtask = {
-        title: subtaskTitle,
-        done: false,
-      };
-      this.newTask.subtasks.push(newSubtask);
-      this.singleSubtask = '';
+  addSubtask(subtask: NgModel) {
+    this.showInvalidSubtaskWarning = true;
+    this.invalidSubtaskMessage = '';
+    const trimmedSubtask = this.singleSubtask.trim();
+    const existedSubtask = this.newTask.subtasks.some( s => s.title.toLowerCase() === trimmedSubtask.toLowerCase());
+    
+    if(!trimmedSubtask){
+      this.invalidSubtaskMessage = "Subtask cannot be empty.";
+      this.showInvalidSubtaskWarning = true;
+      return;
     }
+    
+    if(existedSubtask){
+      this.invalidSubtaskMessage = "Subtask already exists.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (subtask.valid) {
+      // const subtaskTitle = this.singleSubtask;
+      const newSubtask: Subtask = {
+        title: this.singleSubtask,
+        done: false
+      };
+      this.newTask.subtasks.unshift(newSubtask);
+      this.singleSubtask = '';
+      this.showInvalidSubtaskWarning = false;
+    } else{
+      this.showInvalidSubtaskWarning = true;
+      this.invalidSubtaskMessage ="Invalid subtask."
+    }
+  }
+
+  clearSubtaskInput() {
+    this.singleSubtask = "";
   }
 
   deleteSubtask(index: number) {
@@ -230,12 +274,27 @@ export class AddTaskComponent {
   }
 
   saveSubtaskEdit(i: number) {
+    const current = this.newTask.subtasks?.[i];
+    if (!current) {
+      this.editingIndex = null;
+      return;
+    }
+    const trimmed = (current.title ?? '').trim();
+    if (!trimmed) {
+      // remove empty subtask instead of saving empty title
+      this.newTask = {
+        ...this.newTask,
+        subtasks: this.newTask.subtasks.filter((_, idx) => idx !== i),
+      };
+    } else {
+      this.newTask.subtasks[i] = { ...current, title: trimmed };
+    }
     this.editingIndex = null;
   }
+
 
   isEditing(i: number): boolean {
     return this.editingIndex === i;
   }
-  // #endregion
   // #endregion
 }

@@ -12,6 +12,7 @@ import { PatternValidatorDirective } from "../../../../shared/directives/pattern
 
 @Component({
   selector: 'app-add-contact',
+  standalone: true,
   imports: [CommonModule, FormsModule, PatternValidatorDirective],
   templateUrl: './add-contact.component.html',
   styleUrl: './add-contact.component.scss',

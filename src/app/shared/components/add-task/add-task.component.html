@@ -1,25 +1,24 @@
 <div class="content">
   <h1>Add Task</h1>
-  <form #newTaskForm="ngForm">
+  <form #newTaskForm="ngForm" (keydown.enter)="$event.preventDefault()">
     <div class="form-input">
       <div class="form-input-left">
         <!-- #region TITLE -->
         <div class="input-wrapper">
           <h6>Title<span class="red">*</span></h6>
           <input #title="ngModel" class="form-field" maxlength="30" type="text" name="title" [(ngModel)]="newTask.title"
-            placeholder="Enter a title" required />
-          @if(title.hasError('required') && title.touched){
-            <span class="warning">This field is required!</span>
-          }
-          @if(titleTooLong){
-            <span class="warning">Title must not exceed 30 characters.</span>
+            placeholder="Enter a title" pattern=".*[A-Za-zÄÖÜäöüß].*" required />
+          @if(!title.valid && title.touched){
+          <span class="warning">This field is required!</span>
+          } @if(titleTooLong){
+          <span class="warning">Title must not exceed 30 characters.</span>
           }
         </div>
         <!-- #endregion -->
         <!-- #region DESCRIPTION -->
         <div class="input-wrapper">
           <h6>Description</h6>
-          <textarea name="description" id="" [(ngModel)]="newTask.description"
+          <textarea maxlength="500" name="description" id="" [(ngModel)]="newTask.description"
             placeholder="Enter a description"></textarea>
         </div>
         <!-- #endregion -->
@@ -89,23 +88,21 @@
         <!-- #region ASSIGNED TO -->
         <div class="input-wrapper" id="rp-wrapper">
           <h6>Assigned to</h6>
-          <app-rp-search (changeAssignedArray)="updateAssignedTo($event)">
+          <app-rp-search (sendContact)="addRpToArray($event)" [selectedContacts]="newTask.assignedTo">
           </app-rp-search>
-          <div class="rp-selected-box">
-            @if (newTask.assignedTo.length > 3) {
-              @for (contact of getThreeRP(); track $index){
-                <span class="initials" [style.backgroundColor]="contact.bgColor">
-                  {{ getLetters(contact) }}
-                </span>
-              }
-              <span>+ {{valueRp()}}</span>
-            } @else {
-              @for (contact of newTask.assignedTo; track $index){
-                <span class="initials" [style.backgroundColor]="contact.bgColor">
-                  {{ getLetters(contact) }}
-                </span>
-              }
+          <div [ngClass]="{'rp-selected-box': newTask.assignedTo.length >= 1}">
+            @if (newTask.assignedTo.length > 3) { @for (contact of getThreeRP();
+            track $index){
+            <span class="initials" [style.backgroundColor]="contact.bgColor">
+              {{ getLetters(contact) }}
+            </span>
             }
+            <span>+ {{ valueRp() }}</span>
+            } @else { @for (contact of newTask.assignedTo; track $index){
+            <span class="initials" [style.backgroundColor]="contact.bgColor">
+              {{ getLetters(contact) }}
+            </span>
+            } }
           </div>
         </div>
         <!-- #region CATEGORY -->
@@ -113,7 +110,7 @@
           <h6>Category<span class="red">*</span></h6>
           <app-category (sendCategory)="setCategory($event)" [value]="newTask.category"></app-category>
           @if(categorySelected === false){
-            <span class="warning">This field is required!</span>
+          <span class="warning">This field is required!</span>
           }
         </div>
         <!-- #endregion -->
@@ -121,15 +118,15 @@
         <div class="input-wrapper" id="subtask-wrapper">
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
-            <input class="form-field" id="subtask-input" type="text" [(ngModel)]="singleSubtask" name="subtask"
-              placeholder="Add new Subtask" (keydown.enter)="addSubtask()"/>
+            <input #subtask="ngModel" class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask"
+              name="subtask" placeholder="Add new subtask" appPatternValidator="generalText" (keydown.enter)="addSubtask(subtask)" />
             <div class="subtask-btn-wrapper">
-              <button class="clear-btn"></button>
+              <button (click)="clearSubtaskInput()" type="button" class="clear-btn" ></button>
               <div class="btn-divide"></div>
-              <button class="add-btn"  (click)="addSubtask()"></button>
+              <button type="button" class="add-btn" (click)="addSubtask(subtask)"></button>
             </div>
           </div>
-          <ul>
+          <ul [ngClass]="{'hidden' : newTask.subtasks.length == 0}">
             <li *ngFor="let s of newTask.subtasks; let i = index" [class.editing]="isEditing(i)">
               <div class="list-content">
                 <span *ngIf="!isEditing(i)">{{ s.title }}</span>
@@ -177,26 +174,35 @@
               </div>
             </li>
           </ul>
+          <span
+            *ngIf="newTask.subtasks.length === 0 && showInvalidSubtaskWarning"
+            class="warning">
+              {{invalidSubtaskMessage}}
+          </span>
+          <span
+            *ngIf="newTask.subtasks.length > 0 && showInvalidSubtaskWarning"
+            class="warning-invalid-subtask">
+            {{invalidSubtaskMessage}}
+          </span>
         </div>
-        <span class="required-text"><span class="red">*</span>This field is required.</span>
       </div>
     </div>
     <!-- #region FORM BUTTONS -->
     <div class="form-submit">
       <span><span class="red">*</span>This field is required.</span>
       <div class="btn-wrapper">
-        <button class="cancel-btn" (click)="onClearInputs()">
+        <button type="button" class="cancel-btn" (click)="onClearInputs(title)">
           Clear
           <svg class="cancel-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M6 6L18 18M6 18L18 6" />
           </svg>
         </button>
         <div class="submit-wrapper">
-          <input type="submit" value="Create Task" (click)="checkValidation()" />
+          <input type="submit" value="Create task" (click)="sendForm(newTaskForm, title)"/>
           <img src="assets/icons/check.svg" alt="check-img" />
         </div>
       </div>
     </div>
-
   </form>
 </div>
+<div [ngClass]="{'load-overlay': isLoading}"></div>

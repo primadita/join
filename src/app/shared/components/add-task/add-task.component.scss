@@ -8,31 +8,35 @@
     form {
         @include all.d-flex();
         width: 100%;
-        gap: 3rem;
+        gap: 4rem;
 
         .form-input {
             @include all.d-flex($flexdir: row, $alit: flex-start, $cgap: 2.4rem);
             width: 100%;
+            padding-right: 0.5rem;
+
             @media(max-width: 1140px) {
                 display: block;
-                height: 70dvh;
+                height: 65dvh;
                 overflow-y: auto;
 
-                &::-webkit-scrollbar {
-                    display: none;
-                }
             }
 
             @media(max-height: 950px) {
-                height: 65dvh;
+                height: 60dvh;
+                gap: 1.6rem;
             }
 
             @media(max-height: 870px) {
-                height: 60dvh;
+                height: 55dvh;
             }
 
             @media(max-height: 750px) {
-                height: 55dvh;
+                height: 50dvh;
+            }
+
+            @media(max-height: 600px) {
+                height: 40dvh;
             }
 
             .input-wrapper {
@@ -56,8 +60,18 @@
                     position: absolute;
                     top: 7.2rem;
                     left: 1rem;
-                    font-size: 1.2rem;
+                    font-size: 1.6rem;
                 }
+
+                .warning-invalid-subtask {
+                    color: all.$priority_urgent;
+                    position: absolute;
+                    top: 12.8rem;
+                    margin-top: 0.4rem;
+                    left: 1rem;
+                    font-size: 1.6rem;
+                }
+
                 // #region TITLE
                 .form-field {
                     height: 4rem;
@@ -69,14 +83,13 @@
                     color: all.$black;
                     font-size: 1.6rem;
                     font-family: all.$font;
-                    &:focus{
-                        border: solid 1px all.$lightblue2; 
+
+                    &:focus {
+                        border: solid 1px all.$lightblue2;
                         outline: none;
                     }
-                    &.ng-touched:invalid{
-                        border: solid 1px all.$priority_urgent; 
-                    }
                 }
+
                 // #endregion
                 // #region DESCRIPTION
                 textarea {
@@ -89,13 +102,15 @@
                     font-size: 1.6rem;
                     font-family: all.$font;
                     resize: none;
-                    &:focus{
-                        border: solid 1px all.$lightblue2; 
+
+                    &:focus {
+                        border: solid 1px all.$lightblue2;
                         outline: none;
                     }
                 }
+
                 // #endregion
-                
+                // #region PRIORITY
                 .priority-btn-wrapper {
                     width: 100%;
                     @include all.d-flex($flexdir: row, $jc: space-between);
@@ -116,8 +131,6 @@
 
                         svg {
                             @include all.square($length: 1.6rem);
-                            // height: 1.6rem;
-                            // width: 1.6rem;
                         }
                     }
 
@@ -149,45 +162,49 @@
                     }
                 }
             }
-
+            // #endregion
+            // #region SUBTASK-WRAPPER
             #subtask-wrapper {
+
+                .hidden {
+                    visibility: hidden;
+                }
 
                 // #region von Henry
 
                 ul {
-                    height: 11rem;
+                    height: 6rem;
                     overflow-y: auto;
-                    @include all.d-flex($flexdir: column,
-                        $jc: flex-start,
-                        $alit: flex-start);
                     gap: 0.5rem;
+                    box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+                    border-radius: 8px;
 
                     li {
                         width: 100%;
                         height: 3rem;
                         @include all.d-flex($flexdir: row, $jc: flex-start);
-                        // padding: 0.5rem 1rem;
                         border-radius: 1rem;
                         cursor: pointer;
+                        padding-left: 0.8rem;
 
                         .list-content {
                             width: 100%;
-                            @include all.d-flex($flexdir: row,
-                                $jc: space-between,
-                                $alit: center);
+                            @include all.d-flex($flexdir: row, $jc: none, $alit: center);
                             gap: 2.5rem;
 
                             >span {
-                                width: 30rem;
+
+                                width: 1000px;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
                             }
-                            .edit-wrapper{
-                                width: 100%;                                
+
+                            .edit-wrapper {
+                                width: 100%;
                             }
 
-                            .edit-input{
+                            .edit-input {
                                 width: 100%;
                                 height: 3rem;
                                 border-bottom: 1px solid all.$lightblue2;
@@ -196,10 +213,10 @@
 
                             }
 
-                            input:focus{
-                                    border: none;
-                                    border-bottom: 1px solid all.$lightblue2;
-                                }
+                            input:focus {
+                                border: none;
+                                border-bottom: 1px solid all.$lightblue2;
+                            }
 
                             .edit-subtask {
                                 position: absolute;
@@ -217,6 +234,12 @@
                                 pointer-events: none;
                                 transition: opacity 0.2s ease-in-out;
 
+                                @include all.notebook {
+                                    opacity: 1;
+                                    visibility: visible;
+                                    pointer-events: all;
+                                }
+
                                 button {
                                     @include all.d-flex($flexdir: row, $jc: center, $alit: center);
                                 }
@@ -229,10 +252,13 @@
                             }
                         }
 
-                        &:hover .list-content .edit-subtask {
-                            opacity: 1;
-                            visibility: visible;
-                            pointer-events: all;
+                        @include all.desktop {
+
+                            &:hover .list-content .edit-subtask {
+                                opacity: 1;
+                                visibility: visible;
+                                pointer-events: all;
+                            }
                         }
 
                         &.editing .list-content .edit-subtask,
@@ -295,8 +321,9 @@
                         }
                     }
                 }
-
             }
+            // #endregion
+            // #region ASSIGNED TO
 
             #rp-wrapper {
 
@@ -305,6 +332,10 @@
                 .rp-selected-box {
                     @include all.d-flex($flexdir: row, $jc: flex-start);
                     margin-top: 1.6rem;
+                    box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+                    border-radius: 0.8rem;
+                    height: 5rem;
+                    padding-left: 0.8rem;
                 }
 
                 .initials {
@@ -337,32 +368,28 @@
                     display: none;
                 }
             }
-
-            .required-text {
-                @media(min-width: 1139px) {
-                    display: none;
-                }
-            }
         }
 
         .form-submit {
             @include all.d-flex($flexdir: row, $jc: space-between, $alit: flex-end);
 
             @media(max-width:1140px) {
-                justify-content: center;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.6rem;
+                justify-content: flex-start;
             }
 
             width: 100%;
 
-            span {
-                @media(max-width:1140px) {
-                    display: none;
-                }
-            }
-
             .btn-wrapper {
                 @include all.d-flex($flexdir: row, $jc: flex-start);
                 gap: 1.6rem;
+
+                @media(max-width: 1140px) {
+                    width: 100%;
+                    justify-content: center;
+                }
 
                 button {
                     height: 5rem;
@@ -374,6 +401,18 @@
                     border-radius: 0.8rem;
                     transition: 125ms;
 
+                    @include all.desktop {
+                        &:hover {
+                            border: 2px solid all.$lightblue2;
+                            color: all.$lightblue2;
+                            box-shadow: all.$shadow;
+
+                            .cancel-icon {
+                                stroke: all.$lightblue2;
+                            }
+                        }
+                    }
+
                     .cancel-icon {
                         width: 20px;
                         height: 20px;
@@ -382,17 +421,6 @@
                         fill: none;
                         transition: stroke 0.2s ease;
                     }
-
-                    &:hover {
-                        border: 2px solid all.$lightblue2;
-                        color: all.$lightblue2;
-                        box-shadow: all.$shadow;
-
-                        .cancel-icon {
-                            stroke: all.$lightblue2;
-                        }
-                    }
-
                 }
 
                 .submit-wrapper {
@@ -409,9 +437,11 @@
                         transition: 125ms;
                         cursor: pointer;
 
-                        &:hover {
-                            background-color: all.$lightblue2;
-                            box-shadow: all.$shadow;
+                        @include all.desktop {
+                            &:hover {
+                                background-color: all.$lightblue2;
+                                box-shadow: all.$shadow;
+                            }
                         }
                     }
 
@@ -429,4 +459,14 @@
     .red {
         color: red;
     }
+}
+
+.load-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.158);
+    z-index: 1000;
 }
