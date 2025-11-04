@@ -19,23 +19,32 @@ export class SignupComponent {
     email: "",
     phone: "",
     password: "",
-    confirmPassword: ""
   }
-  hidePassword: boolean = true;
-  passwordFocused: boolean = false;
-
+  confirmPassword: string = "";
+  hidePasswordA: boolean = true;
+  hidePasswordB: boolean = true;
+  passwordAFocused: boolean = false;
+  passwordBFocused: boolean = false;
+  privacyPolicyCheck: boolean = false;
   // #endregion
 
   constructor(private toastService: ToastMessagesService){}
 
   // #region METHODS
   get passwordsMatch(): boolean {
-    return this.user.password === this.user.confirmPassword;
+    return this.user.password === this.confirmPassword;
   }
 
-  togglePasswordVisibility():void{
-    this.hidePassword = !this.hidePassword;
-    this.passwordFocused = true;
+  togglePasswordVisibility(passwordField: string):void{
+    
+    if(passwordField === 'A'){
+      this.hidePasswordA = !this.hidePasswordA;
+      this.passwordAFocused = true;
+    } else if(passwordField === 'B'){
+      this.hidePasswordB = !this.hidePasswordB;
+      this.passwordBFocused = true;
+    }
+    
   }
   
   onSubmit(ngForm: NgForm){
