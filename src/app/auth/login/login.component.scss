@@ -66,6 +66,9 @@
         border-bottom: 0.3rem solid $lightblue2;
         margin: 0 auto;
       }
+      .logo-field-mobile {
+        display: none;
+      }
     }
 
     .buttons-field {
@@ -143,24 +146,15 @@
 
 @include mobile {
   .login-wrapper {
-    padding: 4rem 2.7rem;
-    @include d-flex($flexdir: column, $jc: space-between);
-    gap: 4rem;
+    padding: 4.5rem 2.7rem;
+    @include d-flex($flexdir: column, $jc: space-around);
+    gap: 2rem;
     overflow-y: auto;
 
     .logo-field {
-      position: relative;
-      top: auto;
-      right: auto;
-      bottom: auto;
-      left: auto;
-      width: 100%;
-      order: 1;
-      img {
-        width: 6rem;
-        height: 8rem;
-      }
+      display: none;
     }
+
     .login-head {
       order: 3;
       height: auto;
@@ -176,7 +170,8 @@
         }
 
         .btn {
-          font-size: 1.8rem;
+          font-size: 1.6rem;
+          padding: 1rem 1.8rem;
         }
       }
     }
@@ -186,7 +181,15 @@
       @include d-flex($jc: space-between);
       gap: 2rem;
       order: 2;
-      padding: 3rem;
+      padding: 1.5rem 1rem;
+
+      .title-field {
+        width: 100%;
+        @include d-flex($flexdir: row, $jc: space-around);
+        .logo-field-mobile {
+          display: block;
+        }
+      }
 
       .login-form {
         .field {
@@ -198,7 +201,8 @@
         gap: 2rem;
         .btn {
           width: 100%;
-          font-size: 1.8rem;
+          font-size: 1.6rem;
+          padding: 1rem 1.8rem;
         }
       }
     }
