@@ -52,9 +52,10 @@
                 }
             </div>
             <div class="inputs">
-                <input #password="ngModel" [(ngModel)]="user.password" type="password" name="password" appPatternValidator="password" placeholder="Password" required />
-                <img class="lock" src="assets/icons/lock.svg" alt="input field for password" />
-                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible"/>
+                <input #password="ngModel" [(ngModel)]="user.password" [type]="hidePassword ? 'password' : 'text'" name="password" appPatternValidator="password" placeholder="Password" required (focus)="passwordFocused = true" (blur)="passwordFocused = false" />
+                <img class="lock" src="assets/icons/lock.svg" alt="input field for password" *ngIf="!passwordFocused && !user.password"/>
+                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible" *ngIf="hidePassword" (click)="togglePasswordVisibility()">
+                <img class="visibility-on" src="assets/icons/visibility_on.svg" alt="password is visible" *ngIf="!hidePassword" (mousedown)="$event.preventDefault()" (click)="togglePasswordVisibility()">
                 @if(password.touched){
                     @if(password.hasError('required')){
                         <span class="invalid-inputs">Password is required!</span>
@@ -75,6 +76,7 @@
                 <input #confirmPassword="ngModel" [(ngModel)]="user.confirmPassword" type="password" name="confirmPassword" placeholder="Confirm password" required />
                 <img class="lock" src="assets/icons/lock.svg" alt="input field for confirm password" />
                 <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible"/>
+                <img class="visibility-on" src="assets/icons/visibility_on.svg" alt="password is visible"/>
                 @if(confirmPassword.touched){
                     @if(confirmPassword.hasError('required')){
                         <span class="invalid-inputs">Retype password to confirm</span>

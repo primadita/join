@@ -115,19 +115,27 @@ section {
                 padding: 0 2rem;
                 border: 0.1rem solid all.$iconColor;
                 border-radius: 1rem;
+                transition: border-color 80ms;
                 @include all.d-flex($flexdir: row);
                 img.lock,
-                img.visibility-off {
-                @include all.square($length: 2.4rem);
+                img.visibility-off, img.visibility-on {
+                    @include all.square($length: 2.4rem);
                 }
-                img.lock {
-                display: inline-block;
+                img.visibility-off, img.visibility-on{
+                    user-select: none;
                 }
-                img.visibility-off {
-                display: none;
-                }
+                // img.lock {
+                // display: inline-block;
+                // }
+                // img.visibility-off {
+                // display: none;
+                // }
+                // img.visibility-on {
+                // display: none;
+                // }
                 input[type="name"],
                 input[type="email"],
+                input[type="text"],
                 input[type="phone"],
                 input[type="password"] {
                     width: 100%;
@@ -161,15 +169,18 @@ section {
             }
             .inputs:focus-within {
                 border: 0.2rem solid all.$lightblue2;
-                background: #fff;
+                background: all.$white;
 
                 /* Swap icons on focus-within */
                 img.lock {
-                display: none;
+                    display: none;
                 }
-                img.visibility-off {
-                display: inline-block;
-                }
+                // img.visibility-off {
+                //     display: inline-block;
+                // }
+                // img.visibility-on{
+                //     display: inline-block;
+                // }
             }
             .privacy-policy-check{
                 @include all.d-flex($flexdir: row, $cgap: 1rem);
