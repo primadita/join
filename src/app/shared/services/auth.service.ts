@@ -8,6 +8,7 @@ import { UserCredential } from 'firebase/auth';
 export class AuthService {
   constructor(private auth: Auth) {}
 
+  // UserCredential sind die gesamten infos zum angemeldeten User
   login(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
