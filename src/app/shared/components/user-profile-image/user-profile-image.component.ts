@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile-image',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './user-profile-image.component.html',
   styleUrl: './user-profile-image.component.scss'

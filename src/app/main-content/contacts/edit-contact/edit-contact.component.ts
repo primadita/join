@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, PatternValidator } from '@angular/forms';
 import { UserProfileImageComponent } from '../../../shared/components/user-profile-image/user-profile-image.component';
 import { Contact } from '../../../shared/interfaces/contact';
 import { FirebaseServiceService } from '../../../shared/services/firebase.service';
+import { PatternValidatorDirective } from '../../../shared/directives/pattern-validator.directive';
 
 @Component({
   selector: 'app-edit-contact',
-  imports: [CommonModule, FormsModule, UserProfileImageComponent],
+  standalone: true,
+  imports: [CommonModule, FormsModule, UserProfileImageComponent, PatternValidatorDirective],
   templateUrl: './edit-contact.component.html',
   styleUrl: './edit-contact.component.scss'
 })
@@ -109,6 +111,14 @@ export class EditContactComponent {
     if (ngForm.form.valid && ngForm.submitted) {
       this.sendSaveInput();
     }
+  }
+  
+  formatName(value: string) {
+    if (!value) return;
+
+    this.contactData.name = value
+      .toLowerCase()
+      .replace(/(^\w|[-'\s]\w)/g, c => c.toUpperCase()); // \w ist für Wortzeichen oder Wortzeichen nach dem Strich oder Apostroph oder Leerzeichen to upper case
   }
   // #endregion
 }

@@ -20,6 +20,7 @@ import { SelectContactService } from '../../../shared/services/select-contact.se
 
 @Component({
   selector: 'app-contact-details',
+  standalone: true,
   imports: [
     CommonModule,
     SectionTitleVLineComponent,
@@ -117,6 +118,7 @@ export class ContactDetailsComponent {
     if (contact) {
       this.selectedContact = contact;
     }
+    this.isEditPoppUpOpen = false;
     this.edit = !this.edit;
   }
 

@@ -1,0 +1,114 @@
+@use "../../../../public/assets/styles/all-styles.scss" as all;
+:host {
+  display: flex;
+}
+
+section {
+  height: 100dvh;
+  width: 23.2rem;
+  background: all.$mainColor;
+
+  @include all.d-flex($jc: space-between);
+  padding: 4rem 0;
+
+  .head {
+    @include all.d-flex($flexdir: column);
+    gap: 12rem;
+
+    .login-btn-container {
+      width: 100%;
+      .login-btn {
+        @include all.d-flex($flexdir: row);
+        gap: 1rem;
+      }
+    }
+  }
+
+  button {
+    color: all.$lightgray2;
+    background: transparent;
+    text-decoration: none;
+  }
+
+  > div {
+    @include all.d-flex($alit: flex-start);
+    gap: 1rem;
+    width: 100%;
+
+    button {
+      width: 100%;
+      padding: 1.2rem 4rem;
+
+      &:hover {
+        background: all.$hoverMainColor;
+      }
+
+      &.active {
+        background: all.$hoverMainColor;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  section {
+    width: 100%;
+    height: all.$navbar-height-mobile;
+    @include all.d-flex($flexdir: row, $jc: space-between);
+    flex-shrink: 0;
+    padding: 0 1rem;
+
+    .head {
+      width: auto;
+      .logo {
+        display: none;
+      }
+
+      .login-btn-container {
+        width: auto;
+
+        .login-btn {
+          @include all.d-flex($flexdir: column);
+          border-radius: 1rem;
+        }
+      }
+    }
+
+    .nav-btn {
+      width: auto;
+      height: 100%;
+      @include all.d-flex($flexdir: row, $jc: space-between);
+      gap: 1rem;
+      button {
+        border-radius: 1rem;
+        padding: 1.2rem 2rem;
+        width: auto;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.content-wrapper {
+  width: calc(100% - 232px);
+  max-width: calc(1920px - 232px);
+  height: 100%;
+}
+
+@media (max-width: 1300px) {
+  .content-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  :host {
+    height: 100vh;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}

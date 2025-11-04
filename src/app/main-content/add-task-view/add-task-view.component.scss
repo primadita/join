@@ -1,0 +1,6 @@
+@use '../../../../public/assets/styles/all-styles.scss' as all;
+
+section{
+    @include all.d-flex();
+    background-color: all.$lightgray;
+}

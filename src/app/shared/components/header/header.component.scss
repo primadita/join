@@ -63,13 +63,15 @@ header {
     position: fixed;
     inset: 0;
     width: 100%;
-    height: 100dvh;  
+    max-width: 1920px;
+    height: 100dvh; 
+    padding-right: 3.2rem;
+    @include all.d-flex($jc: flex-start, $alit: flex-end);
 
     nav {
-    position: absolute;
     width: 17rem;
+    max-width: 1920px;
     top: all.$header-height;
-    right: 1rem;
     @include all.d-flex($alit: flex-start);
     background-color: all.$mainColor;
     padding: 2.4rem 0.8rem;
@@ -85,6 +87,9 @@ header {
       padding: 0.8rem 1.6rem;
       &:hover{
         background-color: #39475b;
+      }
+      a{
+        color: all.$lightgray;
       }
     }
     .mobile{
