@@ -81,7 +81,7 @@
                     @if(cPassword.hasError('required')){
                         <span class="invalid-inputs">Retype password to confirm</span>
                     } @else if(!passwordsMatch){
-                        <span class="invalid-inputs">Password doesn't match</span>
+                        <span class="invalid-inputs">Passwords don't match</span>
                     }
                 }
             </div>
@@ -101,6 +101,6 @@
         <!-- #endregion -->
         </div>
         <!-- #endregion -->
-<app-toast-message></app-toast-message>
+<app-toast-message [context]="'signup'"></app-toast-message>
 </section>
 <app-footer></app-footer>

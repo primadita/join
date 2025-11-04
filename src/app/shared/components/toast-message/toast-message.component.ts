@@ -24,7 +24,7 @@ export class ToastMessageComponent {
  * - `null` means no active message is being shown.
  */
   message: Messages | null = null;
-  @Input() context: 'contacts'|'addtask' | 'board' | 'edittask' = 'contacts';
+  @Input() context: 'contacts'|'addtask' | 'board' | 'edittask' | 'signup' = 'board';
   // #endregion
 
   constructor(private toastService: ToastMessagesService) { }
