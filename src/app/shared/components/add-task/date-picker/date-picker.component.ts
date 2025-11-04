@@ -73,5 +73,11 @@ export class DatePickerComponent {
       field.control.markAsUntouched();
     });
   }
+
+  markDateAsTouched() {
+    this.formFields.forEach(field => {
+      field.control.markAsTouched();
+    });
+  }
   // #endregion
 }

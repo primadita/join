@@ -1,9 +1,8 @@
-<div class="overlay" (click)="onOverlayClick()">
+<div class="overlay">
   <div
     class="task-details"
     [class.closing]="closing"
-    (click)="$event.stopPropagation()"
-  >
+    (click)="$event.stopPropagation()">
     <!-- here category -->
     <div class="categoryAndClosebtn">
       <span class="category" [style.background-color]="getCategoryColor(task)"

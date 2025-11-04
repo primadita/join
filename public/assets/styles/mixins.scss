@@ -25,6 +25,20 @@
   height: $length;
 }
 
+@mixin join-logo-large{
+  width: 10rem;
+  height: 12.2rem;
+}
+
+@mixin join-logo-medium{
+  width: 6.4rem;
+  height: 7.8rem;
+}
+
+@mixin join-logo-small{
+  width: 4rem;
+  height: 4.9rem;
+}
 // INFO: Beim erstellen des buttons im HTML das icon-image mit ins button-element legen, damit flex zentriert
 @mixin button-layout($width:35.2rem, $height: 5.6rem) {
   @include d-flex($flexdir: row, $jc: center, $alit: center, $gap: 3rem);

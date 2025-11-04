@@ -1,12 +1,13 @@
 <div class="login-wrapper">
+  <div class="logo-field">
+    <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+  </div>
   <div class="login-head">
-    <div class="logo-field">
-      <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
-    </div>
     <!-- #region sign-up-field -->
     <div class="sign-up-field">
       <span>Not a Join user?</span>
-      <button class="btn" type="button">Sign up</button>
+      <!-- <button class="btn" type="button">Sign up</button> -->
+      <a href="register" class="btn">Sign up</a>
     </div>
     <!-- #endregion sign-up-field -->
   </div>
@@ -48,8 +49,18 @@
 
   <!-- #region policy & legal notice -->
   <div class="meta">
-    <a class="link" href="#">Privacy Policy</a>
-    <a class="link" href="#">Legal notice</a>
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }"
+      >Privacy Policy</a
+    >
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'legal-notice' }"
+      >Legal notice</a
+    >
   </div>
   <!-- #endregion policy & legal notice -->
 </div>

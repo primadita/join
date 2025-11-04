@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -14,5 +14,9 @@ export class LoginComponent {
 
   goToApp() {
     this.router.navigateByUrl('/main');
+  }
+
+  goToLegalAndPrivacy() {
+    this.router.navigateByUrl('/legalAndPrivacy');
   }
 }
