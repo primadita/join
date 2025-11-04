@@ -31,6 +31,9 @@ section {
                 @include all.join-logo-small;
             }
         }
+        @media (max-width: 350px) {
+            display: none;
+        }
     }
     @include all.mobile{
         height: calc(100dvh - 5rem);
@@ -44,7 +47,7 @@ section {
         width: auto;
         max-width: 59.8rem;
         height: auto;
-        max-height: 63rem;
+        max-height: 67rem;
         background: all.$white;
         border-radius: 3rem;
         box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
@@ -57,7 +60,7 @@ section {
         }
         @media (max-width: 450px) {
             max-width: 30.8rem;
-            max-height: 43rem;
+            max-height: 51rem;
             padding: 1.5rem 1rem;
         }
         .title-field {
@@ -79,6 +82,15 @@ section {
                 }
             }
         }
+        .logo-field-mobile{
+            display: none;
+            @media (max-width: 350px) {
+                display: flex;
+                position: absolute;
+                top: 1.4rem;
+                right: 2rem;
+            }
+        }
         .back-btn {
             background: transparent;
             position: absolute;
@@ -96,32 +108,41 @@ section {
         }
         // #region SIGN UP FORM
         .signup-form {
-            @include all.d-flex($rgap: 3rem);
+            @include all.d-flex($rgap: 2.5rem);
             .inputs {
                 width: 42.2rem;
-                height: 4.8rem;
+                height: 4.2rem;
                 padding: 0 2rem;
                 border: 0.1rem solid all.$iconColor;
                 border-radius: 1rem;
+                transition: border-color 80ms;
                 @include all.d-flex($flexdir: row);
                 img.lock,
-                img.visibility-off {
-                @include all.square($length: 2.4rem);
+                img.visibility-off, img.visibility-on {
+                    @include all.square($length: 2.4rem);
                 }
-                img.lock {
-                display: inline-block;
+                img.visibility-off, img.visibility-on{
+                    user-select: none;
                 }
-                img.visibility-off {
-                display: none;
-                }
+                // img.lock {
+                // display: inline-block;
+                // }
+                // img.visibility-off {
+                // display: none;
+                // }
+                // img.visibility-on {
+                // display: none;
+                // }
                 input[type="name"],
                 input[type="email"],
+                input[type="text"],
+                input[type="phone"],
                 input[type="password"] {
                     width: 100%;
-                    padding: 1.2rem 1.4rem 1.2rem 0px;
+                    padding: 0.9rem 1.4rem 0.9rem 0px;
                     border: none;
                     outline: none;
-                    cursor: pointer;
+                    cursor: text;
                     @include all.mobile {
                         padding: 0.8rem 1rem 0.8rem 0;
                     }
@@ -129,7 +150,7 @@ section {
                 .invalid-inputs{
                     color: all.$priority_urgent;
                     position: absolute;
-                    top: 5rem;
+                    top: 4rem;
                     left: 1rem;
                     
                 }
@@ -148,15 +169,18 @@ section {
             }
             .inputs:focus-within {
                 border: 0.2rem solid all.$lightblue2;
-                background: #fff;
+                background: all.$white;
 
                 /* Swap icons on focus-within */
                 img.lock {
-                display: none;
+                    display: none;
                 }
-                img.visibility-off {
-                display: inline-block;
-                }
+                // img.visibility-off {
+                //     display: inline-block;
+                // }
+                // img.visibility-on{
+                //     display: inline-block;
+                // }
             }
             .privacy-policy-check{
                 @include all.d-flex($flexdir: row, $cgap: 1rem);
@@ -187,7 +211,7 @@ section {
                 }
             }
             @include all.mobile {
-                gap: 2rem;
+                gap: 2.5rem;
                 .inputs{
                     width: 28.8rem;
                     height: 3.8rem;
