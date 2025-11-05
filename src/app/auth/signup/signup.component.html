@@ -86,7 +86,9 @@
             </div>
             <div class="privacy-policy-check">
                 <input type="checkbox" name="privacy" id="confirm" [(ngModel)]="privacyPolicyCheck" (ngModelChange)="saveInputs()" required>
-                <label for="confirm">I accept the <a href="">privacy policy</a>.</label>
+                <label for="confirm">I accept the <a class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }">privacy policy</a>.</label>
             </div>
             <button id="signup-btn" type="submit" 
                 [disabled]="signUpPage.invalid || !privacyPolicyCheck"

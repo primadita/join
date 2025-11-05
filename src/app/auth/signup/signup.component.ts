@@ -5,10 +5,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { PatternValidatorDirective } from '../../shared/directives/pattern-validator.directive';
 import { ToastMessagesService } from '../../shared/services/toast-messages.service';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
-  imports: [CommonModule, FooterComponent, ToastMessageComponent, FormsModule, PatternValidatorDirective],
+  imports: [CommonModule, FooterComponent, ToastMessageComponent, FormsModule, PatternValidatorDirective, RouterModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -28,7 +29,7 @@ export class SignupComponent {
   privacyPolicyCheck: boolean = false;
   // #endregion
 
-  constructor(private toastService: ToastMessagesService){}
+  constructor(private toastService: ToastMessagesService, router: Router){}
 
   // #region METHODS
   ngOnInit():void{
