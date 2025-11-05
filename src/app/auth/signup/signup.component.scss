@@ -13,7 +13,7 @@ section {
         img {
         @include all.join-logo-large;
         }
-        @include all.tablet{
+        @media (max-width: 860px){
             top: 3.7rem;
             left: 3.8rem;
             img{
@@ -120,6 +120,9 @@ section {
                 border-radius: 1rem;
                 transition: border-color 80ms;
                 @include all.d-flex($flexdir: row);
+                input{
+                    background: all.$white;
+                }
                 img.lock,
                 img.visibility-off, img.visibility-on {
                     @include all.square($length: 2.4rem);
@@ -158,6 +161,14 @@ section {
                     padding: 0 1rem 1rem 1.5rem;
                     .invalid-password{
                         color: all.$priority_urgent;
+                    }
+                    @include all.mobile{
+                        width: 31rem;
+                        .invalid-password{
+                            .spec-character{
+                                display: none;
+                            }
+                        }
                     }
                 }
                 &:focus-within{
@@ -210,6 +221,9 @@ section {
             @include all.tablet{
                 .inputs{
                     width: 36.4rem;
+                }
+                .password-hints{
+                    width: 35.5rem;
                 }
             }
             @include all.mobile {
