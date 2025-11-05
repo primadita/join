@@ -99,7 +99,6 @@ export class SignupComponent {
     this.authService.createUserWithEmailAndPassword(this.user.email, this.user.password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log(user);
       this.addContact();
       this.toastService.show('Sign up is successful',"success");
       ngForm.resetForm();
