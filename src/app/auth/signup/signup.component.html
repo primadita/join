@@ -19,7 +19,7 @@
         <!-- #region SIGN UP FORM -->
         <form class="signup-form" (ngSubmit)="onSubmit(signUpPage)" #signUpPage="ngForm" (submit)="$event.preventDefault()">
             <div class="inputs" [class.invalid]="name.invalid && name.touched">
-                <input #name="ngModel" [(ngModel)]="user.name" type="name" name="name" placeholder="Name" required appPatternValidator="generalName"/>
+                <input #name="ngModel" [(ngModel)]="user.name" (ngModelChange)="saveInputs()" type="name" name="name" placeholder="Name" required appPatternValidator="generalName"/>
                 <img src="assets/icons/person-gray.svg" alt="input field for name" />
                 @if(name.touched){
                     @if(name.hasError('required')){
@@ -30,7 +30,7 @@
                 }
             </div>
             <div class="inputs" [class.invalid]="email.invalid && email.touched">
-                <input #email="ngModel" [(ngModel)]="user.email" type="email" name="email" placeholder="Email" required appPatternValidator="emailFormat"/>
+                <input #email="ngModel" [(ngModel)]="user.email" (ngModelChange)="saveInputs()" type="email" name="email" placeholder="Email" required appPatternValidator="emailFormat"/>
                 <img src="assets/icons/mail.svg" alt="input field for email" />
                 @if(email.touched){
                     @if(email.hasError('required')){
@@ -41,7 +41,7 @@
                 }
             </div>
             <div class="inputs" [class.invalid]="phone.invalid && phone.touched">
-                <input #phone="ngModel" [(ngModel)]="user.phone" type="phone" name="phone" placeholder="Phone number" required appPatternValidator="phoneFormat"/>
+                <input #phone="ngModel" [(ngModel)]="user.phone" (ngModelChange)="saveInputs()" type="phone" name="phone" placeholder="Phone number" required appPatternValidator="phoneFormat"/>
                 <img src="assets/icons/phone.svg" alt="input field for phone number" />
                 @if(phone.touched){
                     @if(phone.hasError('required')){
@@ -52,7 +52,7 @@
                 }
             </div>
             <div class="inputs" [class.invalid]="password.invalid && password.touched">
-                <input #password="ngModel" [(ngModel)]="user.password" [type]="hidePasswordA ? 'password' : 'text'" name="password" appPatternValidator="password" placeholder="Password" required (focus)="passwordAFocused = true" (blur)="passwordAFocused = false" />
+                <input #password="ngModel" [(ngModel)]="user.password" (ngModelChange)="saveInputs()" [type]="hidePasswordA ? 'password' : 'text'" name="password" appPatternValidator="password" placeholder="Password" required (focus)="passwordAFocused = true" (blur)="passwordAFocused = false" />
                 <img class="lock" src="assets/icons/lock.svg" alt="input field for password" *ngIf="!passwordAFocused && !user.password"/>
                 <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible" *ngIf="user.password && hidePasswordA" (click)="togglePasswordVisibility('A')">
                 <img class="visibility-on" src="assets/icons/visibility_on.svg" alt="password is visible" *ngIf="user.password && !hidePasswordA" (mousedown)="$event.preventDefault()" (click)="togglePasswordVisibility('A')">
@@ -69,11 +69,10 @@
                             <span class="invalid-password">8 characters</span>
                         </div>
                     }
-                
-            }
+                }
             </div>
             <div class="inputs" [class.invalid]="(cPassword.invalid || !passwordsMatch) && cPassword.touched">
-                <input #cPassword="ngModel" [(ngModel)]="confirmPassword" [type]="hidePasswordB ? 'password' : 'text'" name="confirmPassword" placeholder="Confirm password" required (focus)="passwordBFocused = true" (blur)="passwordBFocused = false"  />
+                <input #cPassword="ngModel" [(ngModel)]="confirmPassword" (ngModelChange)="saveInputs()" [type]="hidePasswordB ? 'password' : 'text'" name="confirmPassword" placeholder="Confirm password" required (focus)="passwordBFocused = true" (blur)="passwordBFocused = false"  />
                 <img class="lock" src="assets/icons/lock.svg" alt="input field for password" *ngIf="!passwordBFocused && !confirmPassword"/>
                 <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible" *ngIf="confirmPassword && hidePasswordB" (click)="togglePasswordVisibility('B')">
                 <img class="visibility-on" src="assets/icons/visibility_on.svg" alt="password is visible" *ngIf="confirmPassword && !hidePasswordB" (mousedown)="$event.preventDefault()" (click)="togglePasswordVisibility('B')">
@@ -86,7 +85,7 @@
                 }
             </div>
             <div class="privacy-policy-check">
-                <input type="checkbox" name="privacy" id="confirm" [(ngModel)]="privacyPolicyCheck">
+                <input type="checkbox" name="privacy" id="confirm" [(ngModel)]="privacyPolicyCheck" (ngModelChange)="saveInputs()" required>
                 <label for="confirm">I accept the <a href="">privacy policy</a>.</label>
             </div>
             <button id="signup-btn" type="submit" 

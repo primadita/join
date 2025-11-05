@@ -31,12 +31,15 @@ export class SignupComponent {
   constructor(private toastService: ToastMessagesService){}
 
   // #region METHODS
+  ngOnInit():void{
+    this.loadInputFromSessionStorage();
+  }
+
   get passwordsMatch(): boolean {
     return this.user.password === this.confirmPassword;
   }
 
-  togglePasswordVisibility(passwordField: string):void{
-    
+  togglePasswordVisibility(passwordField: string):void{ 
     if(passwordField === 'A'){
       this.hidePasswordA = !this.hidePasswordA;
       this.passwordAFocused = true;
@@ -44,11 +47,34 @@ export class SignupComponent {
       this.hidePasswordB = !this.hidePasswordB;
       this.passwordBFocused = true;
     }
-    
   }
   
+  saveInputs(){
+    sessionStorage.setItem('signUpData',JSON.stringify(this.user));
+    sessionStorage.setItem('retypePassword', JSON.stringify(this.confirmPassword));
+    sessionStorage.setItem('privacyPolicyChecked', JSON.stringify(this.privacyPolicyCheck));
+  }
+
+  loadInputFromSessionStorage(){
+    const savedData = sessionStorage.getItem('signUpData');
+    const savedConfirmPassword = sessionStorage.getItem('retypePassword');
+    const savedPrivacy = sessionStorage.getItem('privacyPolicyChecked');
+    if(savedData){
+      this.user = JSON.parse(savedData);
+    }
+    if(savedConfirmPassword){
+      this.confirmPassword = JSON.parse(savedConfirmPassword);
+    }
+    if(savedPrivacy){
+      this.privacyPolicyCheck = JSON.parse(savedPrivacy);
+    }
+  }
+
   onSubmit(ngForm: NgForm){
     this.toastService.show('Sign up is successful',"success");
+    ngForm.resetForm();
+    sessionStorage.clear();
+    
   }
   // #endregion
 }
