@@ -6,6 +6,10 @@ import { PatternValidatorDirective } from '../../shared/directives/pattern-valid
 import { ToastMessagesService } from '../../shared/services/toast-messages.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
+import { FirebaseServiceService } from '../../shared/services/firebase.service';
+import { Contact } from '../../shared/interfaces/contact';
+import { UserProfileImageService } from '../../shared/services/user-profile-image.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +33,7 @@ export class SignupComponent {
   privacyPolicyCheck: boolean = false;
   // #endregion
 
-  constructor(private toastService: ToastMessagesService, router: Router){}
+  constructor(private toastService: ToastMessagesService,private router: Router, private authService: AuthService, private contactService: FirebaseServiceService, private userProfileService: UserProfileImageService){}
 
   // #region METHODS
   ngOnInit():void{
@@ -71,11 +75,40 @@ export class SignupComponent {
     }
   }
 
-  onSubmit(ngForm: NgForm){
-    this.toastService.show('Sign up is successful',"success");
-    ngForm.resetForm();
-    sessionStorage.clear();
-    
+  createContact(): Contact{
+    let contact: Contact = {
+      name: this.user.name,
+      mail: this.user.email,
+      phone: this.user.phone,
+      id: '',
+      bgColor: this.userProfileService.getBackgroundColor(this.contactService.getContactsLength())
+    }
+    return contact;
+  }
+
+  async addContact(){
+    const contact = this.createContact();
+    await this.contactService.addContact(contact);
+  }
+
+  goToMainPage(){
+    this.router.navigateByUrl('/main');
+  }
+
+  onSignUp(ngForm: NgForm){
+    this.authService.createUserWithEmailAndPassword(this.user.email, this.user.password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+      this.addContact();
+      this.toastService.show('Sign up is successful',"success");
+      ngForm.resetForm();
+      sessionStorage.clear();
+      this.goToMainPage();
+    })
+    .catch((error) => {
+      this.toastService.show(error.message, 'error');
+    });
   }
   // #endregion
 }

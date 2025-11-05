@@ -17,7 +17,7 @@
             <img src="assets/icons/back.svg" alt="back button">
         </a>
         <!-- #region SIGN UP FORM -->
-        <form class="signup-form" (ngSubmit)="onSubmit(signUpPage)" #signUpPage="ngForm" (submit)="$event.preventDefault()">
+        <form class="signup-form" (ngSubmit)="onSignUp(signUpPage)" #signUpPage="ngForm" (submit)="$event.preventDefault()">
             <div class="inputs" [class.invalid]="name.invalid && name.touched">
                 <input #name="ngModel" [(ngModel)]="user.name" (ngModelChange)="saveInputs()" type="name" name="name" placeholder="Name" required appPatternValidator="generalName"/>
                 <img src="assets/icons/person-gray.svg" alt="input field for name" />

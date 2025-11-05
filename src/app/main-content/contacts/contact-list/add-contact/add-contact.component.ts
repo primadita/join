@@ -9,6 +9,7 @@ import { updateDoc } from '@angular/fire/firestore';
 import { SelectContactService } from '../../../../shared/services/select-contact.service';
 import { ToastMessagesService } from '../../../../shared/services/toast-messages.service';
 import { PatternValidatorDirective } from "../../../../shared/directives/pattern-validator.directive";
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-add-contact',
@@ -117,10 +118,7 @@ export class AddContactComponent {
       mail: this.contactData.email,
       phone: this.contactData.phone,
       id: '',
-      // active: true,
-      bgColor: this.userProfileBackground.getBackgroundColor(
-        this.getContactsLength()
-      ),
+      bgColor: this.userProfileBackground.getBackgroundColor(this.contactService.getContactsLength())
     };
     return contact;
   }
@@ -166,15 +164,15 @@ export class AddContactComponent {
     }
   }
 
-  /**
-   * Returns the current number of contacts plus one.
-   * Used to determine which background color to assign to a new contact.
-   * @returns The new contact index (existing contacts + 1).
-   */
-  getContactsLength(): number {
-    const arrayLength = this.contactService.contactsList.length;
-    return arrayLength + 1;
-  }
+  // /**
+  //  * Returns the current number of contacts plus one.
+  //  * Used to determine which background color to assign to a new contact.
+  //  * @returns The new contact index (existing contacts + 1).
+  //  */
+  // getContactsLength(): number {
+  //   const arrayLength = this.contactService.contactsList.length;
+  //   return arrayLength + 1;
+  // }
 
   formatName(value: string) {
   if (!value) return;
