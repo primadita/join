@@ -1,349 +1,344 @@
-@use '../../../../public/assets/styles/all-styles.scss' as all;
+@use "../../../../public/assets/styles/all-styles.scss" as all;
 
 // #region global
 
 .b-white {
-    background-color: all.$white;
-    border-radius: 2.4rem;
-    box-shadow: 0px 0px 4px 0px rgba(51, 51, 51, 0.2);
-    height: 16rem;
-    transition: 125ms;
+  background-color: #f6f7f8;
+  border-radius: 2.4rem;
+  box-shadow: 0px 0px 4px 0px rgba(51, 51, 51, 0.2);
+  height: 16rem;
+  transition: 125ms;
 
-    @include all.mobile {
-        height: 13rem;
-    }
+  @include all.mobile {
+    height: 13rem;
+  }
 
-    @include all.desktop {
-        &:hover {
-            background-color: all.$mainColor;
-            color: all.$white;
-            transform: scale(1.08);
-        }
+  @include all.desktop {
+    &:hover {
+      background-color: all.$mainColor;
+      color: all.$white;
+      transform: scale(1.08);
     }
+  }
 }
 
 .counter-wrapper {
-    @include all.d-flex();
+  @include all.d-flex();
 }
 
 .summary-number {
-    font-weight: 600;
-    font-size: 6rem;
+  font-weight: 600;
+  font-size: 6rem;
 
-    @include all.mobile {
-        font-size: 4.7rem;
-    }
+  @include all.mobile {
+    font-size: 4.7rem;
+  }
 }
 
 .summary-task-status {
-    font-size: 2rem;
-    text-align: center;
-    width: 10rem;
+  font-size: 2rem;
+  text-align: center;
+  width: 10rem;
 
-    @include all.mobile {
-        font-size: 1.6rem;
-        width: 8rem;
-    }
+  @include all.mobile {
+    font-size: 1.6rem;
+    width: 8rem;
+  }
 }
 
 .svg-wrapper {
-    height: 5.6rem;
-    width: 5.6rem;
-    background-color: all.$mainColor;
-    @include all.d-flex();
-    border-radius: 100%;
-    @media(max-width: 370px){
-        height: 4rem;
-        width: 4rem;
-    }
+  height: 5.6rem;
+  width: 5.6rem;
+  background-color: all.$mainColor;
+  @include all.d-flex();
+  border-radius: 100%;
+  @media (max-width: 370px) {
+    height: 4rem;
+    width: 4rem;
+  }
 }
 
 // #endregion
 
-
 section {
-    background-color: all.$lightgray4;
+  background-color: #f6f7f8;
+  @include all.d-flex($alit: flex-start, $jc: flex-start);
+  gap: 4rem;
+  padding: 9.6rem;
+
+  @include all.notebook {
+    padding: 5.6rem;
+  }
+
+  @media (max-width: 800px) {
+    align-items: center;
+    justify-content: center;
+  }
+
+  > div {
     @include all.d-flex($alit: flex-start);
     gap: 4rem;
-    padding: 9.6rem;
+
+    @media (max-height: 790px) {
+      gap: 1.6rem;
+    }
+  }
+
+  .head {
+    @include all.d-flex($flexdir: row);
+    gap: 2.4rem;
 
     @include all.notebook {
-        padding: 5.6rem;
+      display: block;
     }
 
-    @media(max-width: 800px) {
-        align-items: center;
+    .blue-divide {
+      height: 6rem;
+      width: 0.2rem;
+      background-color: all.$lightblue2;
+
+      @include all.notebook {
+        display: none;
+      }
     }
 
-    >div {
-        @include all.d-flex($alit: flex-start);
-        gap: 4rem;
+    .blue-divide-mobile {
+      margin-top: 1.6rem;
+      height: 0.3rem;
+      width: 12rem;
+      background-color: all.$lightblue2;
+      border-radius: 3px;
 
-        @media(max-height: 790px) {
-            gap: 1.6rem;
+      @include all.desktop {
+        display: none;
+      }
+    }
+  }
 
+  .big-container {
+    @include all.d-flex($flexdir: row);
+    gap: 4rem;
+
+    @media (max-width: 1230px) {
+      flex-direction: column;
+    }
+
+    @media (max-height: 790px) {
+      display: block;
+      height: 450px;
+      overflow-y: auto;
+      padding: 0.4rem;
+    }
+
+    @media (max-height: 700px) {
+      height: 400px;
+    }
+
+    @media (max-height: 650px) {
+      height: 350px;
+    }
+
+    @media (max-height: 600px) {
+      height: 300px;
+    }
+
+    .summary-container {
+      width: 50rem;
+      @include all.d-flex();
+      gap: 2.4rem;
+
+      @include all.notebook {
+        width: 45rem;
+      }
+
+      @include all.mobile {
+        width: 40rem;
+        gap: 1.6rem;
+      }
+
+      @media (max-width: 430px) {
+        width: 35rem;
+      }
+      @media (max-width: 370px) {
+        width: 30rem;
+      }
+
+      .summary-top {
+        @include all.d-flex($flexdir: row, $jc: space-between);
+        width: 100%;
+        gap: 2.4rem;
+
+        @include all.mobile {
+          gap: 1.6rem;
         }
-    }
 
+        .summary-top-single {
+          flex: 1;
+          @include all.d-flex($flexdir: row);
+          gap: 1.6rem;
+          transition: 125ms;
 
-    .head {
+          @media (max-width: 430px) {
+            gap: 0;
+          }
+
+          svg {
+            height: 4rem;
+            width: 4rem;
+            fill: white;
+          }
+
+          .pen {
+            height: 2.4rem;
+            width: 2.4rem;
+          }
+
+          @include all.desktop {
+            &:hover {
+              .svg-wrapper {
+                background-color: all.$white;
+
+                svg {
+                  fill: all.$mainColor;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .summary-middle {
+        width: 100%;
+        @include all.d-flex($flexdir: row);
+        gap: 3.2rem;
+
+        @media (max-width: 430px) {
+          flex-direction: column;
+          height: auto;
+          padding: 2.4rem;
+        }
+
+        .summary-prio {
+          @include all.d-flex($flexdir: row);
+          gap: 1.6rem;
+
+          @media (max-width: 430px) {
+            gap: 0;
+          }
+
+          svg {
+            fill: all.$white;
+            width: 3.2rem;
+            height: 3.2rem;
+            @media (max-width: 370px) {
+              height: 2.5rem;
+              width: 2.5rem;
+            }
+          }
+
+          #urgent {
+            background-color: all.$priority_urgent;
+          }
+
+          #medium {
+            background-color: all.$priority_medium;
+          }
+
+          #low {
+            background-color: all.$priority_low;
+          }
+        }
+
+        .divide {
+          width: 0.2rem;
+          height: 8rem;
+          background-color: all.$lightgray3;
+
+          @media (max-width: 430px) {
+            display: none;
+          }
+        }
+        .divide-mobile {
+          height: 0.2rem;
+          width: 16rem;
+          background-color: all.$lightgray3;
+
+          @media (min-width: 430px) {
+            display: none;
+          }
+        }
+
+        .deadline {
+          @include all.d-flex($alit: flex-start);
+          gap: 0.8rem;
+
+          .deadline-date {
+            font-weight: 700;
+            font-size: 2.1rem;
+
+            @include all.mobile {
+              font-size: 1.7rem;
+            }
+          }
+        }
+
+        .no-deadline {
+          font-size: 3rem;
+          font-family: 600;
+        }
+      }
+
+      .summary-bottom {
+        width: 100%;
         @include all.d-flex($flexdir: row);
         gap: 2.4rem;
 
-        @include all.notebook {
-            display: block;
+        @include all.mobile {
+          gap: 1.6rem;
         }
 
-        .blue-divide {
-            height: 6rem;
-            width: 0.2rem;
-            background-color: all.$lightblue2;
+        @media (max-width: 380px) {
+          flex-direction: column;
+        }
 
-            @include all.notebook {
-                display: none;
+        .summary-bottom-single {
+          @include all.d-flex();
+          flex: 1;
+
+          @media (max-width: 380px) {
+            flex-direction: row;
+            padding: 0.8rem;
+            width: 100%;
+            gap: 1.6rem;
+            .summary-task-status {
+              width: 15rem;
+              text-align: left;
             }
-        }
-
-        .blue-divide-mobile {
-            margin-top: 1.6rem;
-            height: 0.3rem;
-            width: 12rem;
-            background-color: all.$lightblue2;
-            border-radius: 3px;
-
-            @include all.desktop {
-                display: none;
+            .summary-number {
+              font-size: 2.4rem;
             }
+          }
         }
+      }
     }
 
-    .big-container {
-        @include all.d-flex($flexdir: row);
-        gap: 4rem;
+    .greeting-container {
+      @include all.d-flex($alit: flex-start);
 
-        @media(max-width: 1230px) {
-            flex-direction: column;
-        }
+      @media (max-width: 1230px) {
+        display: none;
+      }
 
-        @media(max-height: 790px) {
-            display: block;
-            height: 450px;
-            overflow-y: auto;
-            padding: 0.4rem;
-        }
+      .greeting-start {
+        font-size: 4.7rem;
+        font-weight: 500;
+      }
 
-        @media(max-height: 700px) {
-            height: 400px;
-        }
-
-        @media(max-height: 650px) {
-            height: 350px;
-        }
-
-        @media(max-height: 600px) {
-            height: 300px;
-        }
-
-        .summary-container {
-            width: 50rem;
-            @include all.d-flex();
-            gap: 2.4rem;
-
-            @include all.notebook {
-                width: 45rem;
-            }
-
-            @include all.mobile {
-                width: 40rem;
-                gap: 1.6rem;
-            }
-
-            @media(max-width: 430px) {
-                width: 35rem;
-            }
-            @media(max-width: 370px){
-                width: 30rem;
-            }
-
-            .summary-top {
-                @include all.d-flex($flexdir: row, $jc: space-between);
-                width: 100%;
-                gap: 2.4rem;
-
-                @include all.mobile {
-                    gap: 1.6rem;
-                }
-
-                .summary-top-single {
-                    flex: 1;
-                    @include all.d-flex($flexdir: row);
-                    gap: 1.6rem;
-                    transition: 125ms;
-
-                    @media(max-width: 430px) {
-                        gap: 0;
-                    }
-
-                    svg {
-                        height: 4rem;
-                        width: 4rem;
-                        fill: white;
-                    }
-
-                    .pen {
-                        height: 2.4rem;
-                        width: 2.4rem;
-                    }
-
-                    @include all.desktop {
-                        &:hover {
-                            .svg-wrapper {
-                                background-color: all.$white;
-
-                                svg {
-                                    fill: all.$mainColor;
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-
-            .summary-middle {
-                width: 100%;
-                @include all.d-flex($flexdir: row);
-                gap: 3.2rem;
-
-                @media(max-width: 430px) {
-                    flex-direction: column;
-                    height: auto;
-                    padding: 2.4rem;
-                }
-
-                .summary-prio {
-                    @include all.d-flex($flexdir: row);
-                    gap: 1.6rem;
-
-                    @media(max-width: 430px) {
-                        gap: 0;
-                    }
-
-                    svg {
-                        fill: all.$white;
-                        width: 3.2rem;
-                        height: 3.2rem;
-                        @media(max-width: 370px){
-                            height: 2.5rem;
-                            width: 2.5rem;
-                        }
-                    }
-
-                    #urgent {
-                        background-color: all.$priority_urgent;
-                    }
-
-                    #medium {
-                        background-color: all.$priority_medium;
-                    }
-
-                    #low {
-                        background-color: all.$priority_low;
-                    }
-                }
-
-                .divide {
-                    width: 0.2rem;
-                    height: 8rem;
-                    background-color: all.$lightgray3;
-
-                    @media(max-width: 430px) {
-                        display: none;
-                    }
-                }
-                .divide-mobile {
-                    height: 0.2rem;
-                    width: 16rem;
-                    background-color: all.$lightgray3;
-
-                    @media(min-width: 430px) {
-                        display: none;
-                    }
-                }
-
-                .deadline {
-                    @include all.d-flex($alit: flex-start);
-                    gap: 0.8rem;
-
-                    .deadline-date {
-                        font-weight: 700;
-                        font-size: 2.1rem;
-
-                        @include all.mobile {
-                            font-size: 1.7rem;
-                        }
-                    }
-                }
-
-                .no-deadline {
-                    font-size: 3rem;
-                    font-family: 600;
-                }
-            }
-
-            .summary-bottom {
-                width: 100%;
-                @include all.d-flex($flexdir: row);
-                gap: 2.4rem;
-
-                @include all.mobile {
-                    gap: 1.6rem;
-                }
-
-                @media(max-width: 380px) {
-                    flex-direction: column;
-                }
-
-                .summary-bottom-single {
-                    @include all.d-flex();
-                    flex: 1;
-
-                    @media(max-width: 380px) {
-                        flex-direction: row;
-                        padding: 0.8rem;
-                        width: 100%;
-                        gap: 1.6rem;
-                        .summary-task-status{
-                            width: 15rem;
-                            text-align: left;
-                        }
-                        .summary-number{
-                            font-size: 2.4rem;
-                        }
-                    }
-                }
-            }
-        }
-
-        .greeting-container {
-
-            @include all.d-flex($alit: flex-start);
-
-            @media(max-width: 1230px) {
-                display: none;
-            }
-
-            .greeting-start {
-                font-size: 4.7rem;
-                font-weight: 500;
-            }
-
-            .greeting-name {
-                font-size: 6.4rem;
-                font-weight: 700;
-                color: all.$lightblue2;
-
-            }
-        }
+      .greeting-name {
+        font-size: 6.4rem;
+        font-weight: 700;
+        color: all.$lightblue2;
+      }
     }
+  }
 }
