@@ -127,6 +127,16 @@
           display: inline-block;
         }
       }
+
+      /* Error state: turn border red while authError is present */
+      .field.has-error,
+      .field.has-error:focus-within {
+        border: 0.1rem solid $priority_urgent;
+      }
+
+      .error {
+        color: $priority_urgent;
+      }
     }
   }
 
