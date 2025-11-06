@@ -1,12 +1,46 @@
-@use './../../../../../public/assets/styles/all-styles.scss' as all;
-section{
+@use '../../../../../public/assets/styles/all-styles.scss' as all;
+
+section {
     background-color: all.$lightgray;
     padding: 11rem 9.6rem;
-    height: calc(100dvh - 64px);
-    h1, h3{
+    overflow-y: auto ;
+
+    @include all.notebook{
+        padding: 8rem;
+    }
+    @include all.tablet {
+        padding: 4rem;
+    }
+
+    @include all.mobile {
+        padding: 2.2rem;
+    }
+    div{
+        width: 100%;
+        @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
+        button{
+            background: transparent;
+            border-radius: 50%;
+            @include all.d-flex();
+            &:hover{
+                background: all.$lightgray2;
+            }
+            @include all.mobile{
+                img{
+                    @include all.square($length: 2.8rem);
+                }
+            }
+        }
         padding-bottom: 3rem;
     }
-    p{
+    h3 {
+        padding-bottom: 3rem;
+    }
+
+    p {
         padding-bottom: 2.4rem;
+    }
+    .blue{
+        color: all.$lightblue2;
     }
 }

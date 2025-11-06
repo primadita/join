@@ -1,0 +1,14 @@
+<div class="category-wrapper">
+    <button type="button" class="form-field" [ngClass]="{'active-list': isListOpen()}" (focus)="onFocus()"
+        [ngStyle]="{'color': checkDefaultValue() ? '#757575' : 'black'}"><span>{{value()}}</span><button type="button" class="list-button" (click)="onFocusButton()"></button></button>
+    @if (isListOpen()){
+    <div class="selection-wrapper">
+        <ul class="category-selection">
+            <li value="User Story" (click)="setValue('User Story')">User Story</li>
+            <li value="Technical Task" (click)="setValue('Technical Task')">Technical Task</li>
+        </ul>
+    </div>
+
+    }
+
+</div>

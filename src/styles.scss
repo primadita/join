@@ -1,4 +1,20 @@
-@use './../public/assets/styles/all-styles.scss' as all;
+@use "@angular/material" as mat;
+@use "./../public/assets/styles/all-styles.scss" as all;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: "Inter",
+      density: 0,
+    )
+  );
+}
+
 // #region GENERAL
 * {
   padding: 0;
@@ -8,58 +24,168 @@
   scroll-behavior: smooth;
   list-style: none;
   border-style: none;
-}
-.content{
-    width: 100%;
-    max-width: calc(1920px - 232px);
-}
-html{
-    font-size: 62.5%;
-}
-body{
-  font-size: 16px;
   font-family: all.$font;
 }
-section{
-    width: 100%;
-    height: calc(100dvh - all.$header-height);
+
+.content {
+  width: 100%;
+  max-width: calc(1920px - 232px);
 }
-button{
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 16px;
+  font-family: all.$font;
+  background-color: #f6f7f8;
+}
+
+section {
+  width: 100%;
+  height: calc(100dvh - all.$header-height);
+  @media (max-width: 800px) {
+    height: calc(100dvh - all.$header-height - all.$navbar-height-mobile);
+  }
+}
+
+button {
   cursor: pointer;
 }
+
+a {
+  text-decoration: none;
+  color: all.$black;
+}
+
 // #endregion
 // #region FONTS
 @font-face {
-  font-family: 'Inter';
-  src: url('./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
+  font-family: "Inter";
+  // src: url("./../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+  src: url("../public/assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
 }
-h1{
+
+h1 {
   font-size: 6.1rem;
   @include all.style-bold;
+  @include all.tablet {
+    font-size: 5.6rem;
+  }
+  @include all.mobile {
+    font-size: 4rem;
+  }
 }
-h2{
+
+h2 {
   font-size: 4.7rem;
   font-weight: 500;
   font-style: medium;
+  @include all.tablet {
+    font-size: 3.2rem;
+  }
+  @include all.mobile {
+    font-size: 2.5rem;
+  }
 }
-h3{
+
+h3 {
   font-size: 2.7rem;
   @include all.style-bold;
+  @include all.tablet {
+    font-size: 2.3rem;
+  }
+  @include all.mobile {
+    font-size: 2rem;
+  }
 }
-h4{
+
+h4 {
   font-size: 2.7rem;
   @include all.style-regular;
+  @include all.tablet {
+    font-size: 2.3rem;
+  }
+  @include all.mobile {
+    font-size: 2rem;
+  }
 }
-h5, li{
+h5,
+li {
   font-size: 2.1rem;
   @include all.style-bold;
+  @include all.tablet {
+    font-size: 1.9rem;
+  }
+  @include all.mobile {
+    font-size: 1.8rem;
+  }
 }
-h6{
+
+h6 {
   font-size: 2rem;
-    @include all.style-regular;
+  @include all.style-regular;
 }
-p, span, input, button{
+
+p,
+span,
+input,
+button {
+  font-family: all.$font;
   font-size: 1.6rem;
   @include all.style-regular;
 }
+
 // #endregion
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// #region scrollbar
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e2eaf2;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #aad3f9;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: all.$lightblue2;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  background: white !important;
+  transition: none !important;
+}
+
+// html,
+// body {
+//   height: 100%;
+// }
+// body {
+//   margin: 0;
+//   font-family: Roboto, "Helvetica Neue", sans-serif;
+// }

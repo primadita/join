@@ -1,0 +1,251 @@
+@use "../../../../public/assets/styles/all-styles.scss" as all;
+
+section {
+    width: 100%;
+    background: all.$lightgray;
+    height: calc(100dvh - 7.5rem);
+    @include all.d-flex();
+    // #region LOGO
+    .logo-field {
+        position: absolute;
+        top: 8rem;
+        left: 7.7rem;
+        img {
+        @include all.join-logo-large;
+        }
+        @media (max-width: 860px){
+            top: 3.7rem;
+            left: 3.8rem;
+            img{
+                @include all.join-logo-medium;
+            }
+        }
+        @include all.mobile{
+            top: 2.5rem;
+            left: 2.6rem;
+        }
+        @media (max-width: 450px) {
+            top: 1rem;
+            left: 1rem;
+            img{
+                @include all.join-logo-small;
+            }
+        }
+        @media (max-width: 350px) {
+            display: none;
+        }
+    }
+    @include all.mobile{
+        height: calc(100dvh - 5rem);
+    }
+    @media (max-width: 450px) {
+        height: calc(100dvh - 3rem);
+    }
+    // #endregion
+    // #region SIGN UP AREA
+    .signup-field {
+        width: auto;
+        max-width: 59.8rem;
+        height: auto;
+        max-height: 67rem;
+        background: all.$white;
+        border-radius: 3rem;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
+        padding: 3.2rem;
+        @include all.d-flex($jc: space-between, $rgap: 2rem);
+        @include all.tablet{
+            max-width: 39.6rem;
+            max-height: 59.5rem;
+            padding: 2.4rem;
+        }
+        @media (max-width: 450px) {
+            max-width: 30.8rem;
+            max-height: 51rem;
+            padding: 1.5rem 1rem;
+        }
+        .title-field {
+            h1{
+                @include all.tablet{
+                    font-size: 4.7rem;
+                }
+                @media (max-width: 450px) {
+                    font-size: 3.6rem;
+                }
+            }
+            .title-line {
+                height: 1rem;
+                width: 14rem;
+                border-bottom: 0.3rem solid all.$lightblue2;
+                margin: 0 auto;
+                @include all.tablet{
+                    width: 8.8rem;
+                }
+            }
+            @media (max-width: 350px) {
+                left: 2rem; 
+            }
+        }
+        .logo-field-mobile{
+            display: none;
+            @media (max-width: 350px) {
+                display: flex;
+                position: absolute;
+                top: 2.2rem;
+                left: 7rem;
+            }
+        }
+        .back-btn {
+            background: transparent;
+            position: absolute;
+            top: 5rem;
+            left: 7rem;
+            @include all.square($length: 3.2rem);
+            @include all.tablet{
+                top: 4rem;
+                left: 3rem;
+            }
+            @media (max-width: 450px) {
+                top: 2.2rem;
+                left: 1.6rem;
+            }
+        }
+        // #region SIGN UP FORM
+        .signup-form {
+            @include all.d-flex($rgap: 2.5rem);
+            .inputs {
+                width: 42.2rem;
+                height: 4.2rem;
+                padding: 0 2rem;
+                border: 0.1rem solid all.$iconColor;
+                border-radius: 1rem;
+                transition: border-color 80ms;
+                @include all.d-flex($flexdir: row);
+                input{
+                    background: all.$white;
+                }
+                img.lock,
+                img.visibility-off, img.visibility-on {
+                    @include all.square($length: 2.4rem);
+                }
+                img.visibility-off, img.visibility-on{
+                    user-select: none;
+                }
+                input[type="name"],
+                input[type="email"],
+                input[type="text"],
+                input[type="phone"],
+                input[type="password"] {
+                    width: 100%;
+                    padding: 0.9rem 1.4rem 0.9rem 0px;
+                    border: none;
+                    outline: none;
+                    cursor: text;
+                    @include all.mobile {
+                        padding: 0.8rem 1rem 0.8rem 0;
+                    }
+                }
+                .invalid-inputs{
+                    color: all.$priority_urgent;
+                    position: absolute;
+                    top: 4rem;
+                    left: 1rem;
+                    
+                }
+                .password-hints{
+                    background: all.$white;
+                    position: absolute;
+                    top: 4.5rem;
+                    left: -0.5rem;
+                    z-index: 10;
+                    width: 43rem ;
+                    padding: 0 1rem 1rem 1.5rem;
+                    .invalid-password{
+                        color: all.$priority_urgent;
+                    }
+                    @include all.tablet{
+                        .invalid-password{
+                            .spec-character{
+                                display: none;
+                            }
+                        }
+                    }
+                    @include all.mobile{
+                        width: 31rem;
+                        
+                    }
+                }
+                &:focus-within{
+                    border: 0.2rem solid all.$lightblue2;
+                    background: all.$white;
+                    img.lock {
+                        display: none;
+                    }
+                }
+            }    
+            .inputs.invalid{
+                border: 0.2rem solid all.$priority_urgent;
+            } 
+            .privacy-policy-check{
+                @include all.d-flex($flexdir: row, $cgap: 1rem);
+                label{
+                    color: all.$iconColor;
+                    a{
+                        color: all.$lightblue2;
+                    }
+                }
+            }
+            #signup-btn{
+                border: none;
+                border-radius: 0.8rem;
+                padding: 1.5rem 2.4rem;
+                font-size: 2.1rem;
+                color: all.$white;
+                background: all.$mainColor;
+                cursor: pointer;
+                text-align: center;
+                &:hover{
+                    background-color: all.$lightblue2;
+                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                }
+                &.submit-disabled{
+                    cursor:default;
+                    background: all.$iconColor;
+                    color: all.$lightgray2;
+                    &:hover{
+                        box-shadow: none;
+                    }
+                }
+            &.submit-enabled{
+                cursor: pointer;
+                background: all.$mainColor;
+            }
+            }
+            
+            @include all.tablet{
+                .inputs{
+                    width: 36.4rem;
+                }
+                .password-hints{
+                    width: 35.5rem;
+                }
+            }
+            @include all.mobile {
+                gap: 2.5rem;
+                .inputs{
+                    width: 28.8rem;
+                    height: 3.8rem;
+                    padding: 0 1.2rem;
+                    &:focus-within{
+                        border: 0.1rem solid all.$lightblue2;
+                    }
+                }
+                .inputs.invalid{
+                    border: 0.1rem solid all.$priority_urgent;
+                }
+                #signup-btn{
+                    padding: 1rem 1.8rem;
+                }    
+            }    
+        }
+    }
+}

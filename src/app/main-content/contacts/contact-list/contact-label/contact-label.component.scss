@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  padding-bottom: 1.6rem;
 
   .key-box {
     border-bottom: 0.3rem solid all.$lightgray;
@@ -31,32 +32,43 @@
     cursor: pointer;
 
     .initials {
-      width: 3rem;
-      height: 3rem;
       border-radius: 50%;
       border: 0.2rem solid all.$white;
       padding: 1.5rem;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: all.$white;
+      @include all.square($length: 4.5rem);
+      @include all.d-flex();
     }
 
     .info {
-      display: flex;
-      flex-direction: column;
+      @include all.d-flex();
+
       .name {
         font-size: 2rem;
+        width: 25rem;
+        @media(max-width: 450px){
+          width: 16rem;
+        }
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
       }
 
       .mail {
         color: all.$lightblue;
+        width: 25rem;
+        @media(max-width: 450px){
+          width: 16rem;
+        }
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
 
-  .contact-label-box:hover {
-    background-color: all.$lightgray;
+  .contact-label-box:hover, .contact-label-box.active {
+    background-color: all.$mainColor;
+    color: all.$white;
   }
 }

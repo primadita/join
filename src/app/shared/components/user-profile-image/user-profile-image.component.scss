@@ -1,11 +1,30 @@
-@use './../../../../../public/assets/styles/all-styles.scss' as all;
+@use '../../../../../public/assets/styles/all-styles.scss' as all;
 div{
     width: 12rem;
     height: 12rem;
     border: 2px solid all.$white;
     box-shadow: all.$shadow;
-    background-color: purple;
+    background-color: #800080;
     border-radius: 50%;
     color: all.$white;
+
+    @include all.mobile{
+        width: 9rem;
+        height: 9rem;
+    }
+    @media(max-width: 400px){
+        width: 7rem;
+        height: 7rem;
+    }
     @include all.d-flex($jc: center, $alit: center);
+
+    h2{
+        @include all.tablet{
+            font-size: 4.7rem;
+        }
+        @include all.mobile{
+            font-size: 3rem;
+        }
+    }
+    
 }

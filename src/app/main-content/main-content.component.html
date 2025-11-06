@@ -1,11 +1,17 @@
-<app-nav-bar (selectedActiveComponent)="switchComponent($event)"></app-nav-bar>
+<!-- #region FIX PART -->
+<app-nav-bar (selectedActiveComponent)="switchComponent($event)" [nowOpen]="activeComponent"></app-nav-bar>
 <div class="content-wrapper">
-    <app-header (callHelpPage)="switchComponent($event)"></app-header>
+    <app-header (callHelpPage)="switchComponent($event)" ></app-header>
+<!-- #endregion -->
+    <!-- #region SWITCHABLE PART -->
     <div>
+        <app-summary *ngIf="activeComponent === 'summary'"></app-summary>
+        <app-board *ngIf="activeComponent === 'board'"></app-board>
+        <app-add-task-view *ngIf="activeComponent === 'add-task'" (switchAddTaskToBoard)="switchComponent($event)"></app-add-task-view>
         <app-contacts *ngIf="activeComponent === 'contacts'"></app-contacts>
-        <app-help *ngIf="activeComponent === 'help'"></app-help>
-        <app-legal-notice *ngIf="activeComponent === 'legal-notice'"></app-legal-notice>
-        <app-privacy-policy *ngIf="activeComponent === 'privacy-policy'"></app-privacy-policy>
+        <app-help *ngIf="activeComponent === 'help'" (back)="backToPreviousComponent()"></app-help>
+        <app-legal-notice *ngIf="activeComponent === 'legal-notice'" (back)="backToPreviousComponent()"></app-legal-notice>
+        <app-privacy-policy *ngIf="activeComponent === 'privacy-policy'" (back)="backToPreviousComponent()"></app-privacy-policy>
     </div>
-    
+    <!-- #endregion -->
 </div>
