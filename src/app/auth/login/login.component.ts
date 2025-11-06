@@ -17,6 +17,7 @@ export class LoginComponent {
   password: string = '';
   authError: string | null = null;
   isSubmitting = false;
+  hidePassword: boolean = true;
   constructor(private router: Router, private authService: AuthService) {}
 
   login() {
