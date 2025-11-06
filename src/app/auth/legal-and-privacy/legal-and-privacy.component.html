@@ -30,10 +30,10 @@
   <!-- #endregion -->
   <!-- #region SWITCHABLE PART -->
   <div>
-    <app-legal-notice
+    <app-legal-notice [context]="'login'"
       *ngIf="activeComponent === 'legal-notice'"
     ></app-legal-notice>
-    <app-privacy-policy
+    <app-privacy-policy [context]="'login'"
       *ngIf="activeComponent === 'privacy-policy'"
     ></app-privacy-policy>
   </div>
