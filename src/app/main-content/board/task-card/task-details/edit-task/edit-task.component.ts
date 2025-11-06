@@ -40,7 +40,7 @@ import { PatternValidatorDirective } from '../../../../../shared/directives/patt
     MatNativeDateModule,
     MatInputModule,
     CategoryComponent,
-    PatternValidatorDirective
+    PatternValidatorDirective,
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
@@ -65,6 +65,7 @@ export class EditTaskComponent {
   invalidSubtaskMessage: string = '';
   /**Termin als Date-Objekt für den Datepicker */
   dueDate: Date | null = null;
+  initialDueDate: Date | null = null;
   actualDate = new Date();
 
   constructor(
@@ -83,7 +84,8 @@ export class EditTaskComponent {
         (c) => index.get(c.id) ?? c
       );
 
-      this.dueDate = this.toDate(this.task?.date) ?? null;
+      this.initialDueDate = this.toDate(this.task?.date) ?? null;
+      this.dueDate = this.initialDueDate;
     }
   }
 
@@ -153,6 +155,12 @@ export class EditTaskComponent {
     return (this.localTask?.title?.length ?? 0) > 30;
   }
 
+  get dueDateChanged(): boolean {
+    const initial = this.initialDueDate?.getTime() ?? -1;
+    const current = this.dueDate?.getTime() ?? -1;
+    return initial !== current;
+  }
+
   /**
    * _____________________________________________________
    * Submit, Cancel, Delete
@@ -160,8 +168,8 @@ export class EditTaskComponent {
    */
 
   onSubmit() {
-    // solang das datum nicht in der zukunft liegt wird onSubmit nicht ausgeführt
-    if (!this.isFutureDate(this.dueDate)) {
+    // Datum nur prüfen, wenn es geändert wurde
+    if (this.dueDateChanged && !this.isFutureDate(this.dueDate)) {
       return;
     }
 
@@ -194,39 +202,54 @@ export class EditTaskComponent {
 
     this.save.emit(updated);
 
-    if(this.hasChanges()){
+    if (this.hasChanges()) {
       this.toastService.show('Task changed', 'success');
     }
-    
   }
 
   private hasChanges(): boolean {
-    if(this.task.title !== this.localTask.title) return true;
-    if(this.task.description !== this.localTask.description) return true;
-    if(this.task.category !== this.localTask.category) return true;
-    if(this.task.priority !== this.localTask.priority) return true;
+    // Prüfe einfache Text-/Wertefelder auf Änderungen
+    if (this.task.title !== this.localTask.title) return true; // Titel geändert?
+    if (this.task.description !== this.localTask.description) return true; // Beschreibung geändert?
+    if (this.task.category !== this.localTask.category) return true; // Kategorie geändert?
+    if (this.task.priority !== this.localTask.priority) return true; // Priorität geändert?
 
+    // Datum in echte Date-Objekte umwandeln und vergleichen
     const originalDate = this.toDate(this.task.date);
-    if(originalDate?.getTime() !== this.dueDate?.getTime()) return true;
+    if (originalDate?.getTime() !== this.dueDate?.getTime()) return true; // Datum geändert?
 
-    const originalAssignees = (this.task.assignedTo ?? []).map( c => c.id).sort();
-    const localAssignees = (this.localTask.assignedTo ?? []).map( c => c.id).sort();
-    if(JSON.stringify(originalAssignees) !== JSON.stringify(localAssignees)) return true;
+    // Zugewiesene Kontakte per ID vergleichen (sortiert, damit Reihenfolge egal ist)
+    const originalAssignees = (this.task.assignedTo ?? [])
+      .map((c) => c.id)
+      .sort();
+    const localAssignees = (this.localTask.assignedTo ?? [])
+      .map((c) => c.id)
+      .sort();
+    if (JSON.stringify(originalAssignees) !== JSON.stringify(localAssignees))
+      return true;
 
-    const originalSubtasks = (this.task.subtasks ?? []).map(s => ({title: s.title.trim(), done: s.done }));
-    const localSubtasks = (this.localTask.subtasks ?? []).map(s => ({title: s.title.trim(), done: s.done}));
-    if(JSON.stringify(originalSubtasks) !== JSON.stringify(localSubtasks)) return true;
+    // Subtasks in eine vergleichbare Form bringen (Titel getrimmt, nur Titel + done)
+    const originalSubtasks = (this.task.subtasks ?? []).map((s) => ({
+      title: s.title.trim(),
+      done: s.done,
+    }));
+    const localSubtasks = (this.localTask.subtasks ?? []).map((s) => ({
+      title: s.title.trim(),
+      done: s.done,
+    }));
+    if (JSON.stringify(originalSubtasks) !== JSON.stringify(localSubtasks))
+      return true; // Subtasks geändert?
 
+    // Keine Änderungen gefunden
     return false;
   }
 
   onCancel() {
-    if(this.hasChanges()){
+    if (this.hasChanges()) {
       this.toastService.show('Discard changes', 'success');
     }
-    
+
     this.close.emit();
-    
   }
 
   onDelete() {
@@ -285,21 +308,22 @@ export class EditTaskComponent {
     this.singleSubtask = '';
   }
 
-
   addSubtask(subtask: NgModel) {
     this.showInvalidSubtaskWarning = true;
     this.invalidSubtaskMessage = '';
     const trimmedSubtask = this.singleSubtask.trim();
-    const existedSubtask = this.localTask.subtasks.some(s => s.title.toLowerCase() === trimmedSubtask.toLowerCase());
+    const existedSubtask = this.localTask.subtasks.some(
+      (s) => s.title.toLowerCase() === trimmedSubtask.toLowerCase()
+    );
 
-    if(!trimmedSubtask){
-      this.invalidSubtaskMessage = "Subtask cannot be empty.";
+    if (!trimmedSubtask) {
+      this.invalidSubtaskMessage = 'Subtask cannot be empty.';
       this.showInvalidSubtaskWarning = true;
       return;
     }
-    
-    if(existedSubtask){
-      this.invalidSubtaskMessage = "Subtask already exists.";
+
+    if (existedSubtask) {
+      this.invalidSubtaskMessage = 'Subtask already exists.';
       this.showInvalidSubtaskWarning = true;
       return;
     }
@@ -311,7 +335,7 @@ export class EditTaskComponent {
       this.showInvalidSubtaskWarning = false;
     } else {
       this.showInvalidSubtaskWarning = true;
-      this.invalidSubtaskMessage = "Invalid subtask."
+      this.invalidSubtaskMessage = 'Invalid subtask.';
     }
   }
 

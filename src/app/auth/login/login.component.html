@@ -25,37 +25,60 @@
     </div>
 
     <!-- #region login-form -->
-    <form class="login-form" (ngSubmit)="login()">
-      <div class="field">
+    <form class="login-form" (ngSubmit)="login()" novalidate>
+      <div class="field" [class.has-error]="authError">
         <input
+          class="input-email"
           type="email"
           [(ngModel)]="email"
           name="email"
           placeholder="Email"
-          required
+          (ngModelChange)="clearAuthError()"
         />
         <img src="assets/icons/mail.svg" alt="" />
       </div>
 
-      <div class="field">
+      <div class="field" [class.has-error]="authError">
         <input
-          type="password"
+          class="input-pw"
+          [type]="hidePassword ? 'password' : 'text'"
           [(ngModel)]="password"
           name="password"
           placeholder="Password"
-          required
+          (ngModelChange)="clearAuthError()"
         />
-        <img class="lock" src="assets/icons/lock.svg" alt="" />
+        <img
+          class="lock"
+          src="assets/icons/lock.svg"
+          alt=""
+          *ngIf="!password"
+        />
         <img
           class="visibility-off"
           src="assets/icons/visibility_off.svg"
-          alt=""
+          alt="password is hidden"
+          *ngIf="password && hidePassword"
+          (click)="hidePassword = !hidePassword"
         />
+        <img
+          class="visibility-on"
+          src="assets/icons/visibility_on.svg"
+          alt="password is visible"
+          *ngIf="password && !hidePassword"
+          (mousedown)="$event.preventDefault()"
+          (click)="hidePassword = !hidePassword"
+        />
+      </div>
+
+      <div class="error" *ngIf="authError">
+        {{ authError }}
       </div>
 
       <div class="buttons-field">
         <button class="btn login" type="submit">Log in</button>
-        <button class="btn guest" type="button">Guest Log in</button>
+        <button class="btn guest" type="button" (click)="loginGuest()">
+          Guest Log in
+        </button>
       </div>
     </form>
     <!-- #endregion login-form -->

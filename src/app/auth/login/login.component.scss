@@ -18,7 +18,6 @@
   .login-head {
     margin-left: auto;
 
-    // #region box for sign-up with span element
     .sign-up-field {
       height: 100%;
 
@@ -95,7 +94,7 @@
       .field {
         width: 42.2rem;
         height: 4.8rem;
-        @include d-flex($flexdir: row);
+        @include d-flex($flexdir: row, $jc: space-between);
         padding: 0 2rem;
         border: 0.1rem solid $iconColor;
         border-radius: 1rem;
@@ -119,13 +118,31 @@
         border: 0.2rem solid $lightblue2;
         background: #fff;
 
-        /* Swap icons on focus-within */
         img.lock {
           display: none;
         }
         img.visibility-off {
-          display: inline-block;
+          display: block;
         }
+      }
+
+      .field.has-error,
+      .field.has-error:focus-within {
+        border: 0.1rem solid $priority_urgent;
+      }
+
+      .error {
+        color: $priority_urgent;
+      }
+
+      img.visibility-on {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+      .field img.visibility-off,
+      .field img.visibility-on {
+        display: block;
+        cursor: pointer;
       }
     }
   }
@@ -217,8 +234,8 @@
   }
 }
 
-input[type="email"],
-input[type="password"] {
+.input-email,
+.input-pw {
   width: 100%;
   padding: 0.8rem 1rem 0.8rem 0;
   border: none;

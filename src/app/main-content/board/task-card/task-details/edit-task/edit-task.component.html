@@ -46,7 +46,7 @@
         <!--#region date-input-wrapper -->
         <label class="wrapper-title">Due date</label>
         <div class="input-wrapper">
-          <div class="date-input-wrapper" [class.invalid]="(dueDate != null && dueDate < actualDate)|| dueDate === null">
+          <div class="date-input-wrapper" [class.invalid]="dueDateChanged && ((dueDate != null && dueDate < actualDate) || dueDate === null)">
             <input
               matInput
               [matDatepicker]="picker"
@@ -63,9 +63,9 @@
             <mat-datepicker #picker></mat-datepicker>
           </div>
 
-          @if (dueDate != null) { @if(dueDate < actualDate){
+          @if (dueDateChanged && dueDate != null) { @if(dueDate < actualDate){
           <span class="warning"> Date must be in the future! </span>
-          } } @else if (dueDate === null) {
+          } } @else if (dueDateChanged && dueDate === null) {
           <span class="warning">
             Invalid date format. Please use MM/DD/YYYY.
           </span>

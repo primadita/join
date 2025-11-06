@@ -1,6 +1,10 @@
 <footer>
-    <a href="">Privacy Policy</a>
-    <a href="">Legal notice</a>
+    <a class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }">Privacy Policy</a>
+    <a class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'legal-notice' }">Legal notice</a>
 </footer>
 
 

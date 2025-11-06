@@ -63,3 +63,20 @@
     from {opacity: 1;}
     to {opacity: 0;}
 }
+@keyframes slideUp {
+    0%{top: 100dvh};
+    100%{top: calc((100dvh - 7.5rem) / 2);
+        @media (max-width: 640px) {
+            top: calc((100dvh - 5rem) / 2);
+        };
+        @media (max-width: 450px) {
+            top: calc((100dvh - 3rem) / 2);
+        }
+    };
+    // @media (max-width: 640px) {
+    //     100%{top: calc((100dvh - 5rem) / 2)};
+    // }
+    // @media (max-width: 450px) {
+    //     100%{top: calc((100dvh - 3rem) / 2)};
+    // }
+}
