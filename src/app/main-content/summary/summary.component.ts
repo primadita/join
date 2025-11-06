@@ -17,7 +17,7 @@ export class SummaryComponent {
   authService = inject(AuthService);
   tasks: Task[] = [];
   private tasksSub?: Subscription;
-  userName = this.authService.actualUser?.displayName;
+  userName = this.authService.currentUser?.displayName;
 
   constructor(private taskService: TaskService) { }
 

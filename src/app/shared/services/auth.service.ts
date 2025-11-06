@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword, User, UserCredential, onAuthStateChange
 export class AuthService {
   constructor(private auth: Auth) { }
 
-  actualUser: User | null = null;
+  currentUser: User | null = null;
 
   // UserCredential sind die gesamten infos zum angemeldeten User
   login(email: string, password: string): Promise<UserCredential> {
@@ -22,7 +22,7 @@ export class AuthService {
   getCurrentUser(){
     return onAuthStateChanged(this.auth, (user) => {
     if (user) {
-      this.actualUser = user;
+      this.currentUser = user;
     }
   });
   }
