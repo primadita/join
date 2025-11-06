@@ -1,7 +1,7 @@
 <header>
     <img id="join-logo" src="assets/icons/join_logo_dark.svg" alt="Join Logo">
     <span>Kanban Project Management Tool</span>
-    <div>
+    <div [ngClass]="[context]">
         <button id="help-btn" (click)="navigateToComponent($event, 'help')">
             <img src="./assets/icons/help.svg" alt="help button">
         </button>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 
@@ -21,6 +21,7 @@ export class HeaderComponent {
    */
   navActive:boolean = false;
   
+  @Input() context: 'main' | 'login' = 'main';
   /**
    * Emits event to call help page.
    */
