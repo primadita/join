@@ -162,13 +162,16 @@ section {
                     .invalid-password{
                         color: all.$priority_urgent;
                     }
-                    @include all.mobile{
-                        width: 31rem;
+                    @include all.tablet{
                         .invalid-password{
                             .spec-character{
                                 display: none;
                             }
                         }
+                    }
+                    @include all.mobile{
+                        width: 31rem;
+                        
                     }
                 }
                 &:focus-within{

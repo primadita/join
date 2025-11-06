@@ -101,9 +101,12 @@ export class SignupComponent {
       const user = userCredential.user;
       this.addContact();
       this.toastService.show('Sign up is successful',"success");
-      ngForm.resetForm();
-      sessionStorage.clear();
-      this.goToMainPage();
+      setTimeout(() => {
+        this.goToMainPage();
+        ngForm.resetForm();
+        sessionStorage.clear();
+      } , 3000);
+      ;
     })
     .catch((error) => {
       this.toastService.show(error.message, 'error');
