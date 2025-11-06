@@ -100,6 +100,7 @@ export class SignupComponent {
     .then((userCredential) => {
       const user = userCredential.user;
       this.addContact();
+      this.authService.addProfileName(this.user.name)
       this.toastService.show('Sign up is successful',"success");
       setTimeout(() => {
         this.goToMainPage();

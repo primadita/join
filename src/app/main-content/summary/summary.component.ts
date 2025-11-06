@@ -3,6 +3,7 @@ import { TaskService } from '../../shared/services/task.service';
 import { Task, TASK_PRIORITY, TASK_STATUS } from '../../shared/interfaces/task';
 import { Subscription } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-summary',
@@ -13,9 +14,10 @@ import { Timestamp } from '@angular/fire/firestore';
 })
 export class SummaryComponent {
 
-
+  authService = inject(AuthService);
   tasks: Task[] = [];
   private tasksSub?: Subscription;
+  userName = this.authService.actualUser?.displayName;
 
   constructor(private taskService: TaskService) { }
 
@@ -23,6 +25,8 @@ export class SummaryComponent {
     this.tasksSub = this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
     });
+    this.authService.getCurrentUser();
+    console.log(this.userName);    
   }
 
   ngOnDestroy() {
