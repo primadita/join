@@ -13,4 +13,12 @@ footer{
             color: all.$lightblue2;
         }
     }
+    @include all.mobile{
+        height: 5rem;
+        gap: 5rem;
+    }
+    @media (max-width: 450px) {
+        height: 3rem;
+        // gap: 5rem;
+    }
 }

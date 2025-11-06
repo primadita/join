@@ -60,3 +60,9 @@ div{
         animation: toast-board-slideInFromRight-mobile 1s forwards;
     }
 }
+.signup{
+    left: calc((100dvw - 20rem) / 2);
+    width: 20rem;
+    height: 5rem;
+    animation: slideUp 1s forwards;
+}

@@ -14,6 +14,7 @@ import { RpSearchComponent } from './rp-search/rp-search.component';
 import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { PatternValidatorDirective } from "../../directives/pattern-validator.directive";
 
 @Component({
   selector: 'app-add-task',
@@ -29,7 +30,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     RpSearchComponent,
     CategoryComponent,
     DatePickerComponent,
-  ],
+    PatternValidatorDirective
+],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.scss',
 })
@@ -58,6 +60,8 @@ export class AddTaskComponent {
   actualDate = new Date();
   rpSearch: string = '';
   singleSubtask: string = '';
+  showInvalidSubtaskWarning: boolean = false;
+  invalidSubtaskMessage: string = '';
   editingIndex: number | null = null;
   @Output() clearTask = new EventEmitter<void>();
   @Output() createTask = new EventEmitter<Task>();
@@ -223,14 +227,35 @@ export class AddTaskComponent {
   // #endregion
   // #region METHODS of SUBTASKS
   addSubtask(subtask: NgModel) {
-    if (subtask.valid && this.singleSubtask.length >= 1) {
-      const subtaskTitle = this.singleSubtask;
+    this.showInvalidSubtaskWarning = true;
+    this.invalidSubtaskMessage = '';
+    const trimmedSubtask = this.singleSubtask.trim();
+    const existedSubtask = this.newTask.subtasks.some( s => s.title.toLowerCase() === trimmedSubtask.toLowerCase());
+    
+    if(!trimmedSubtask){
+      this.invalidSubtaskMessage = "Subtask cannot be empty.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+    
+    if(existedSubtask){
+      this.invalidSubtaskMessage = "Subtask already exists.";
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (subtask.valid) {
+      // const subtaskTitle = this.singleSubtask;
       const newSubtask: Subtask = {
-        title: subtaskTitle,
-        done: false,
+        title: this.singleSubtask,
+        done: false
       };
-      this.newTask.subtasks.push(newSubtask);
+      this.newTask.subtasks.unshift(newSubtask);
       this.singleSubtask = '';
+      this.showInvalidSubtaskWarning = false;
+    } else{
+      this.showInvalidSubtaskWarning = true;
+      this.invalidSubtaskMessage ="Invalid subtask."
     }
   }
 
@@ -248,7 +273,7 @@ export class AddTaskComponent {
     this.editingIndex = i;
   }
 
-    saveSubtaskEdit(i: number) {
+  saveSubtaskEdit(i: number) {
     const current = this.newTask.subtasks?.[i];
     if (!current) {
       this.editingIndex = null;
@@ -271,6 +296,5 @@ export class AddTaskComponent {
   isEditing(i: number): boolean {
     return this.editingIndex === i;
   }
-  // #endregion
   // #endregion
 }

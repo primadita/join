@@ -2,28 +2,27 @@
 
 .login-wrapper {
   height: 100%;
-  display: grid;
-  place-items: center;
+  @include d-flex($flexdir: column, $jc: space-between);
   background-color: $lightgray;
-  padding: 4rem 4rem;
+  padding: 8rem 7.7rem;
+
+  .logo-field {
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    img {
+      @include join-logo-large;
+    }
+  }
 
   .login-head {
-    width: 100%;
-    height: 100%;
-    @include d-flex($flexdir: row, $jc: space-between);
-    .logo-field {
-      height: 100%;
-      img {
-        @include join-logo-size;
-      }
-    }
+    margin-left: auto;
 
     // #region box for sign-up with span element
     .sign-up-field {
       height: 100%;
 
       span {
-        font-size: 2rem;
         margin-right: 4rem;
       }
     }
@@ -48,19 +47,14 @@
   }
 
   .login-card {
-    width: 100%;
-    max-width: 65.2rem;
-    height: 100%;
-    max-height: 44.9rem;
     background: #fff;
     border-radius: 3rem;
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
-    padding: 32px;
+    padding: 6rem;
     @include d-flex($jc: space-between);
-    gap: 2rem;
+    gap: 4rem;
     .title-field {
       .title {
-        font-size: 6.1rem;
         font-weight: 700;
         text-align: center;
         font-family: $font, sans-serif;
@@ -71,6 +65,9 @@
         width: 14rem;
         border-bottom: 0.3rem solid $lightblue2;
         margin: 0 auto;
+      }
+      .logo-field-mobile {
+        display: none;
       }
     }
 
@@ -130,6 +127,16 @@
           display: inline-block;
         }
       }
+
+      /* Error state: turn border red while authError is present */
+      .field.has-error,
+      .field.has-error:focus-within {
+        border: 0.1rem solid $priority_urgent;
+      }
+
+      .error {
+        color: $priority_urgent;
+      }
     }
   }
 
@@ -147,10 +154,83 @@
   }
 }
 
+@include mobile {
+  .login-wrapper {
+    padding: 4.5rem 2.7rem;
+    @include d-flex($flexdir: column, $jc: space-around);
+    gap: 2rem;
+    overflow-y: auto;
+
+    .logo-field {
+      display: none;
+    }
+
+    .login-head {
+      order: 3;
+      height: auto;
+      margin-left: 0;
+
+      .sign-up-field {
+        width: 100%;
+        height: auto;
+
+        @include d-flex($flexdir: row);
+        span {
+          margin-right: 1rem;
+        }
+
+        .btn {
+          font-size: 1.6rem;
+          padding: 1rem 1.8rem;
+        }
+      }
+    }
+
+    .login-card {
+      width: auto;
+      @include d-flex($jc: space-between);
+      gap: 2rem;
+      order: 2;
+      padding: 2.4rem;
+
+      .title-field {
+        width: 100%;
+        @include d-flex($flexdir: row, $jc: space-around);
+        .logo-field-mobile {
+          display: block;
+        }
+
+        .title-line {
+          width: 9rem;
+        }
+      }
+
+      .login-form {
+        .field {
+          width: auto;
+        }
+      }
+      .buttons-field {
+        @include d-flex($flexdir: column);
+        gap: 2rem;
+        .btn {
+          width: 100%;
+          font-size: 1.6rem;
+          padding: 1rem 1.8rem;
+        }
+      }
+    }
+
+    .meta {
+      order: 4;
+    }
+  }
+}
+
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 12px 14px;
+  padding: 0.8rem 1rem 0.8rem 0;
   border: none;
   outline: none;
   cursor: pointer;

@@ -10,40 +10,98 @@
             <h1>Sign up</h1>
             <div class="title-line"></div>
         </div>
+        <div class="logo-field-mobile">
+            <img src="assets/icons/join_logo_dark.svg" alt="join logo">
+        </div>
         <a href="login" class="back-btn">
             <img src="assets/icons/back.svg" alt="back button">
         </a>
         <!-- #region SIGN UP FORM -->
-        <form class="signup-form" (submit)="$event.preventDefault()">
-            <div class="inputs">
-                <input type="name" placeholder="Name" required />
+        <form class="signup-form" (ngSubmit)="onSignUp(signUpPage)" #signUpPage="ngForm" (submit)="$event.preventDefault()">
+            <div class="inputs" [class.invalid]="name.invalid && name.touched">
+                <input #name="ngModel" [(ngModel)]="user.name" (ngModelChange)="saveInputs()" type="name" name="name" placeholder="Name" required appPatternValidator="generalName"/>
                 <img src="assets/icons/person-gray.svg" alt="input field for name" />
+                @if(name.touched){
+                    @if(name.hasError('required')){
+                        <span class="invalid-inputs">Name is required!</span>
+                    } @else if (name.hasError('invalidPattern')) {
+                        <span class="invalid-inputs">No 0-9,,,.,#,*,!,$,%,&,\,/,_,",?,~,=,;,: </span>
+                    }
+                }
             </div>
-            <div class="inputs">
-                <input type="email" placeholder="Email" required />
+            <div class="inputs" [class.invalid]="email.invalid && email.touched">
+                <input #email="ngModel" [(ngModel)]="user.email" (ngModelChange)="saveInputs()" type="email" name="email" placeholder="Email" required appPatternValidator="emailFormat"/>
                 <img src="assets/icons/mail.svg" alt="input field for email" />
+                @if(email.touched){
+                    @if(email.hasError('required')){
+                        <span class="invalid-inputs">Email is required!</span>
+                    } @else if(email.hasError('invalidPattern')){
+                        <span class="invalid-inputs">Please enter a valid email address!</span>
+                    }
+                }
             </div>
-            <div class="inputs">
-                <input type="password" placeholder="Password" required />
-                <img class="lock" src="assets/icons/lock.svg" alt="input field for password" />
-                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt=""/>
+            <div class="inputs" [class.invalid]="phone.invalid && phone.touched">
+                <input #phone="ngModel" [(ngModel)]="user.phone" (ngModelChange)="saveInputs()" type="phone" name="phone" placeholder="Phone number" required appPatternValidator="phoneFormat"/>
+                <img src="assets/icons/phone.svg" alt="input field for phone number" />
+                @if(phone.touched){
+                    @if(phone.hasError('required')){
+                        <span class="invalid-inputs">Phone number is required!</span>
+                    } @else if(phone.hasError('invalidPattern')){
+                        <span class="invalid-inputs">Please enter a valid number!</span>
+                    }
+                }
             </div>
-            <div class="inputs">
-                <input type="password" placeholder="Confirm password" required />
-                <img class="lock" src="assets/icons/lock.svg" alt="input field for confirm password" />
-                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt=""/>
+            <div class="inputs" [class.invalid]="password.invalid && password.touched">
+                <input #password="ngModel" [(ngModel)]="user.password" (ngModelChange)="saveInputs()" [type]="hidePasswordA ? 'password' : 'text'" name="password" appPatternValidator="password" placeholder="Password" required (focus)="passwordAFocused = true" (blur)="passwordAFocused = false" />
+                <img class="lock" src="assets/icons/lock.svg" alt="input field for password" *ngIf="!passwordAFocused && !user.password"/>
+                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible" *ngIf="user.password && hidePasswordA" (click)="togglePasswordVisibility('A')">
+                <img class="visibility-on" src="assets/icons/visibility_on.svg" alt="password is visible" *ngIf="user.password && !hidePasswordA" (mousedown)="$event.preventDefault()" (click)="togglePasswordVisibility('A')">
+                @if(password.touched){
+                    @if(password.hasError('required')){
+                        <span class="invalid-inputs">Password is required!</span>
+                    } @else if(password.invalid) {
+                        <div class="password-hints">
+                            Password must contain at least: <br>
+                            <span class="invalid-password">a lowercase letter</span><br>
+                            <span class="invalid-password">a uppercase letter</span><br>
+                            <span class="invalid-password">a number</span><br>
+                            <span class="invalid-password">a special character <span class="spec-character">e.g: _,,.,#,*,/,?,!,=,&,%,$,^,",+,- </span></span><br>
+                            <span class="invalid-password">8 characters</span>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="inputs" [class.invalid]="(cPassword.invalid || !passwordsMatch) && cPassword.touched">
+                <input #cPassword="ngModel" [(ngModel)]="confirmPassword" (ngModelChange)="saveInputs()" [type]="hidePasswordB ? 'password' : 'text'" name="confirmPassword" placeholder="Confirm password" required (focus)="passwordBFocused = true" (blur)="passwordBFocused = false"  />
+                <img class="lock" src="assets/icons/lock.svg" alt="input field for password" *ngIf="!passwordBFocused && !confirmPassword"/>
+                <img class="visibility-off" src="assets/icons/visibility_off.svg" alt="password is invisible" *ngIf="confirmPassword && hidePasswordB" (click)="togglePasswordVisibility('B')">
+                <img class="visibility-on" src="assets/icons/visibility_on.svg" alt="password is visible" *ngIf="confirmPassword && !hidePasswordB" (mousedown)="$event.preventDefault()" (click)="togglePasswordVisibility('B')">
+                @if(cPassword.touched){
+                    @if(cPassword.hasError('required')){
+                        <span class="invalid-inputs">Retype password to confirm</span>
+                    } @else if(!passwordsMatch){
+                        <span class="invalid-inputs">Passwords don't match</span>
+                    }
+                }
             </div>
             <div class="privacy-policy-check">
-                <input type="checkbox" name="privacy" id="confirm">
-                <label for="confirm">I accept the <a href="">privacy policy</a>.</label>
+                <input type="checkbox" name="privacy" id="confirm" [(ngModel)]="privacyPolicyCheck" (ngModelChange)="saveInputs()" required>
+                <label for="confirm">I accept the <a class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }">privacy policy</a>.</label>
             </div>
-            <button id="signup-btn">
+            <button id="signup-btn" type="submit" 
+                [disabled]="signUpPage.invalid || !privacyPolicyCheck"
+                [ngClass]="{
+                    'submit-disabled':signUpPage.invalid || !privacyPolicyCheck,
+                    'submit-enabled':signUpPage.valid && privacyPolicyCheck
+                }">
                 <h5>Sign up</h5>
             </button>
         </form>
         <!-- #endregion -->
         </div>
         <!-- #endregion -->
-<app-toast-message></app-toast-message>
+<app-toast-message [context]="'signup'"></app-toast-message>
 </section>
 <app-footer></app-footer>

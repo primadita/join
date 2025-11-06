@@ -1,8 +1,8 @@
 <div class="login-wrapper">
+  <div class="logo-field">
+    <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+  </div>
   <div class="login-head">
-    <div class="logo-field">
-      <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
-    </div>
     <!-- #region sign-up-field -->
     <div class="sign-up-field">
       <span>Not a Join user?</span>
@@ -15,19 +15,36 @@
   <!-- #region login-card -->
   <div class="login-card">
     <div class="title-field">
-      <h2 class="title">Log in</h2>
-      <div class="title-line"></div>
+      <div class="logo-field-mobile">
+        <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+      </div>
+      <div>
+        <h2 class="title">Log in</h2>
+        <div class="title-line"></div>
+      </div>
     </div>
 
     <!-- #region login-form -->
-    <form class="login-form" (submit)="$event.preventDefault()">
-      <div class="field">
-        <input type="email" placeholder="Email" required />
+    <form class="login-form" (ngSubmit)="login()" novalidate>
+      <div class="field" [class.has-error]="authError">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Email"
+          (ngModelChange)="clearAuthError()"
+        />
         <img src="assets/icons/mail.svg" alt="" />
       </div>
 
-      <div class="field">
-        <input type="password" placeholder="Password" required />
+      <div class="field" [class.has-error]="authError">
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Password"
+          (ngModelChange)="clearAuthError()"
+        />
         <img class="lock" src="assets/icons/lock.svg" alt="" />
         <img
           class="visibility-off"
@@ -35,22 +52,36 @@
           alt=""
         />
       </div>
+
+      <div class="error" *ngIf="authError">
+        {{ authError }}
+      </div>
+
+      <div class="buttons-field">
+        <button class="btn login" type="submit">Log in</button>
+        <button class="btn guest" type="button" (click)="loginGuest()">
+          Guest Log in
+        </button>
+      </div>
     </form>
     <!-- #endregion login-form -->
-
-    <div class="buttons-field">
-      <button class="btn login" type="button" (click)="goToApp()">
-        Log in
-      </button>
-      <button class="btn guest" type="button">Guest Log in</button>
-    </div>
   </div>
   <!-- #endregion login-card -->
 
   <!-- #region policy & legal notice -->
   <div class="meta">
-    <a class="link" href="#">Privacy Policy</a>
-    <a class="link" href="#">Legal notice</a>
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }"
+      >Privacy Policy</a
+    >
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'legal-notice' }"
+      >Legal notice</a
+    >
   </div>
   <!-- #endregion policy & legal notice -->
 </div>

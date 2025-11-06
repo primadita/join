@@ -164,5 +164,15 @@ export class FirebaseServiceService {
       id: contact.id,
     };
   }
+
+  /**
+   * Returns the current number of contacts plus one.
+   * Used to determine which background color to assign to a new contact.
+   * @returns The new contact index (existing contacts + 1).
+   */
+  getContactsLength(): number {
+    const arrayLength = this.contactsList.length;
+    return arrayLength + 1;
+  }
   // #endregion
 }
