@@ -27,6 +27,7 @@ export class LoginComponent {
       .login(this.email, this.password)
       .then((userCredential) => {
         console.log('Login erfolgreich: ', userCredential.user.email);
+        this.authService.currentUser = userCredential.user;
         this.goToApp();
         this.isSubmitting = false;
       })
