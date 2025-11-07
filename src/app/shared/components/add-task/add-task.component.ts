@@ -15,6 +15,7 @@ import { CategoryComponent } from './category/category.component';
 import { ToastMessagesService } from '../../services/toast-messages.service';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { PatternValidatorDirective } from "../../directives/pattern-validator.directive";
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-task',
@@ -74,16 +75,68 @@ export class AddTaskComponent {
   constructor(private el: ElementRef, private toastService: ToastMessagesService) { }
 
   // #region METHODS
+  ngOnInit(){
+    this.loadInputsFromSessionStorage();
+  }
+
+  loadInputsFromSessionStorage(){
+    const savedData = sessionStorage.getItem('newTaskData');
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      this.newTask.title = parsed.title || '';
+      this.newTask.description = parsed.description || '';
+      const d = parsed.dueDate;
+      if (d && typeof d === 'object' && 'seconds' in d) {
+        // Firestore Timestamp-like object (nach JSON.stringify)
+        this.newTask.date = new Date(d.seconds * 1000);
+      } else {
+        // normaler String
+        this.newTask.date = d ? new Date(d) : null;
+      }
+      this.newTask.assignedTo = parsed.assignedTo || [];
+      this.newTask.category = parsed.category || TASK_CATEGORY.DEFAULT;
+      this.newTask.priority = parsed.priority || TASK_PRIORITY.MEDIUM;
+      this.newTask.subtasks = parsed.subtasks || [];
+    }
+    this.priorityFlag = {
+      urgent: this.newTask.priority === TASK_PRIORITY.URGENT,
+      medium: this.newTask.priority === TASK_PRIORITY.MEDIUM,
+      low: this.newTask.priority === TASK_PRIORITY.LOW
+    }
+  } 
+  
+  saveInputs(){
+    const date = this.newTask.date;
+    let dueDate = null;
+    if (date instanceof Date) {
+      dueDate = { seconds: Math.floor(date.getTime() / 1000), nanoseconds: 0 };
+    } else if (date instanceof Timestamp) {
+      dueDate = { seconds: date.seconds, nanoseconds: date.nanoseconds };
+    }
+    const dataToSave = {
+    title: this.newTask.title,
+    description: this.newTask.description,
+    dueDate: date,
+    assignedTo: this.newTask.assignedTo,
+    category: this.newTask.category,
+    priority: this.newTask.priority,
+    subtasks: this.newTask.subtasks
+  };
+  sessionStorage.setItem('newTaskData', JSON.stringify(dataToSave));
+  }
+
   get titleTooLong() {
     return this.newTask.title?.length > 30;
   }
   setDate(date: Date | null) {
     this.newTask.date = date;
+    this.saveInputs();
   }
 
   setCategory(value: Category) {
     this.newTask.category = value;
     this.categorySelected = true;
+    this.saveInputs();
   }
 
   sendForm(ngForm: NgForm, title: NgModel) {
@@ -145,6 +198,7 @@ export class AddTaskComponent {
       this.createTask.emit(this.newTask);
       this.toastService.show('Task added to board', 'success', './assets/icons/board.svg');
     }
+    sessionStorage.clear();
   }
   // #region METHODS of PRIORITY
   setPriorityUrgent() {
@@ -152,6 +206,7 @@ export class AddTaskComponent {
     this.priorityFlag.medium = false;
     this.priorityFlag.low = false;
     this.unsetPriority('urgent');
+    this.saveInputs();
   }
 
   setPriorityMedium() {
@@ -159,6 +214,7 @@ export class AddTaskComponent {
     this.priorityFlag.urgent = false;
     this.priorityFlag.low = false;
     this.unsetPriority('medium');
+    this.saveInputs();
   }
 
   setPriorityLow() {
@@ -166,6 +222,7 @@ export class AddTaskComponent {
     this.priorityFlag.urgent = false;
     this.priorityFlag.medium = false;
     this.unsetPriority('low');
+    this.saveInputs();
   }
 
   unsetPriority(priority: 'urgent' | 'medium' | 'low') {
@@ -184,7 +241,10 @@ export class AddTaskComponent {
     const initials = (first + last).toUpperCase();
     return initials;
   }
-
+  updateAssignedContacts(updatedContacts: Contact[]) {
+    this.newTask.assignedTo = updatedContacts;
+    this.saveInputs(); // damit sessionStorage aktualisiert wird
+  }
   /**
    * Returns an alphabetically sorted copy of the contact list.
    *
@@ -213,6 +273,7 @@ export class AddTaskComponent {
       const index = array.indexOf(contact);
       array.splice(index, 1);
     }
+    this.saveInputs();
   }
 
   getThreeRP(): Contact[] {
@@ -257,6 +318,7 @@ export class AddTaskComponent {
       this.showInvalidSubtaskWarning = true;
       this.invalidSubtaskMessage ="Invalid subtask."
     }
+    this.saveInputs();
   }
 
   clearSubtaskInput() {

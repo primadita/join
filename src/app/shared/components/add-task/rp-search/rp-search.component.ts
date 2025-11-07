@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   inject,
   Input,
+  Output,
   output,
   signal,
 } from '@angular/core';
@@ -21,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class RpSearchComponent {
   @Input() selectedContacts!: Contact[];
+  @Output() contactsChanged = new EventEmitter<Contact[]>();
   contacts = inject(FirebaseServiceService);
   sendContact = output<Contact>();
 
@@ -37,9 +40,24 @@ export class RpSearchComponent {
   }
 
   sendContactToParent(contact: Contact){
-    this.sendContact.emit(contact);
+    // this.sendContact.emit(contact);
+    const index = this.selectedContacts.findIndex(c => c.id === contact.id);
+
+    if (index === -1) {
+      // Kontakt hinzufügen
+      this.selectedContacts.push(contact);
+    } else {
+      // Kontakt entfernen
+      this.selectedContacts.splice(index, 1);
+    }
+
+    // Änderungen ans Parent senden
+    this.sendSelectedContactsToParent();
   }
 
+  sendSelectedContactsToParent() {
+    this.contactsChanged.emit(this.selectedContacts);
+  }
   /**
    * Returns an alphabetically sorted copy of the contact list.
    *
@@ -60,11 +78,12 @@ export class RpSearchComponent {
   }
 
   checkSelectedRp(contact: Contact): boolean {
-    if (this.selectedContacts.includes(contact)) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (this.selectedContacts.includes(contact)) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return this.selectedContacts.some(c => c.id === contact.id);
   }
 
   searchContact() {
