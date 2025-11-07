@@ -9,7 +9,7 @@
     <div class="rp-selection-wrapper">
         <ul id="rpSelection">
             @for (contact of searchContact(); track $index){
-            <li (click)="sendContactToParent(contact)" [ngClass]="{'active-contact': checkSelectedRp(contact)}">
+            <li (click)="sendContactToParent(contact)" [ngClass]="{'active-contact': checkSelectedRp(contact), 'selected': checkSelectedRp(contact)}">
                 <div class="item-name-box">
                     <span class="initials" [style.backgroundColor]="contact.bgColor">{{ getLetters(contact) }}</span>
                     <span class="item-name">{{ contact.name }}</span>
