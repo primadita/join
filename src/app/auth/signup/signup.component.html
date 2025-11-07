@@ -88,7 +88,7 @@
                 <input type="checkbox" name="privacy" id="confirm" [(ngModel)]="privacyPolicyCheck" (ngModelChange)="saveInputs()" required>
                 <label for="confirm">I accept the <a class="link"
       [routerLink]="['/legalAndPrivacy']"
-      [queryParams]="{ view: 'privacy-policy' }">privacy policy</a>.</label>
+      [queryParams]="{ view: 'privacy-policy' , from: 'register'}">privacy policy</a>.</label>
             </div>
             <button id="signup-btn" type="submit" 
                 [disabled]="signUpPage.invalid || !privacyPolicyCheck"
@@ -104,4 +104,4 @@
         <!-- #endregion -->
 <app-toast-message [context]="'signup'"></app-toast-message>
 </section>
-<app-footer></app-footer>
+<app-footer [context]="'register'"></app-footer>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -9,6 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class FooterComponent {
   // #region ATTRIBUTES
+  @Input() context: 'login' | 'register' = 'login';
   // #endregion
 
   constructor(private router: Router){}

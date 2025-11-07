@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
@@ -24,8 +24,9 @@ export class HeaderComponent {
 
   authService = inject(AuthService);
   userName = this.authService.currentUser?.displayName;
-  userInitials = this.getLetters()
+  userInitials = this.getLetters();
 
+  @Input() context: 'main' | 'login' = 'main';
   /**
    * Emits event to call help page.
    */
@@ -51,7 +52,8 @@ export class HeaderComponent {
   }
 
   getLetters(): string {
-    const parts = this.userName!.trim().split(' ');
+    if (!this.userName) return ''; 
+    const parts = this.userName.trim().split(' ');
     const first = parts[0]?.[0] || '';
     const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
     const initials = (first + last).toUpperCase();

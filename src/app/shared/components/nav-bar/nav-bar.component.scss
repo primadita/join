@@ -27,19 +27,17 @@ section {
       padding: 1.2rem 4rem;
       transition: 125ms;
       color: all.$lightgray2;
-
-
-
       &:hover {
         background: all.$hoverMainColor;
-
       }
-
       span{
         @media (max-width: 350px) {
           display: none;
         }
       }
+    }
+    .mobile{
+      display: none;
     }
   }
 
@@ -81,6 +79,12 @@ section {
         &:hover {
           background-color: #091931;
         }
+        .login-text-label{
+          display: none;
+        }
+      }
+      .mobile{
+        display: flex;
       }
     }
 
