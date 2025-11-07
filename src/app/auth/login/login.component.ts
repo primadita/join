@@ -18,8 +18,11 @@ export class LoginComponent {
   authError: string | null = null;
   isSubmitting = false;
   hidePassword: boolean = true;
+  showLogin: boolean = false;
+
   constructor(private router: Router, private authService: AuthService) {}
 
+  // #region______________ AUTH-HANDLING & ROUTING ______________
   login() {
     this.authError = null;
     this.isSubmitting = true;
@@ -30,16 +33,16 @@ export class LoginComponent {
         this.authService.currentUser = userCredential.user;
         this.goToApp();
         this.isSubmitting = false;
+
+        try {
+          sessionStorage.removeItem('loginPW');
+        } catch {}
       })
       .catch((error) => {
         console.error('Login fehlgeschlagen: ', error.message);
         this.authError = 'Check your email and password. Please try again.';
         this.isSubmitting = false;
       });
-  }
-
-  clearAuthError() {
-    if (this.authError) this.authError = null;
   }
 
   loginGuest() {
@@ -68,5 +71,43 @@ export class LoginComponent {
 
   goToLegalAndPrivacy() {
     this.router.navigateByUrl('/legalAndPrivacy');
+  }
+  // #endregion______________ AUTH-HANDLING & ROUTING ______________
+
+  //#region______________ SESSION-STORAGE ______________
+  ngOnInit() {
+    this.loadInputFromSessionStorage();
+  }
+
+  loadInputFromSessionStorage() {
+    const savedEmail = sessionStorage.getItem('loginEmail');
+    if (savedEmail) {
+      this.email = JSON.parse(savedEmail);
+    }
+    const savedPw = sessionStorage.getItem('loginPW');
+    if (savedPw) {
+      this.password = JSON.parse(savedPw);
+    }
+  }
+
+  onEmailChange(value: string) {
+    this.email = value;
+    sessionStorage.setItem('loginEmail', JSON.stringify(this.email));
+  }
+
+  onPasswordChange(value: string) {
+    this.password = value;
+    sessionStorage.setItem('loginPW', JSON.stringify(this.password));
+  }
+  //#endregion______________ SESSION-STORAGE ______________
+
+  //______________ ERROR-HANDLING ______________
+  clearAuthError() {
+    if (this.authError) this.authError = null;
+  }
+
+  //______________ LOGO-ANIMATION ______________
+  showLoginCardAfterAnimation(_event: AnimationEvent) {
+    this.showLogin = true;
   }
 }

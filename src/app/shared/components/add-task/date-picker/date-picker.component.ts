@@ -3,7 +3,7 @@
  * built with Angular Material components. It allows users to select a due date
  * and emits the selected value to the parent component.
  */
-import { Component, output, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnChanges, output, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule, NgModel } from '@angular/forms';
+import { Timestamp } from '@angular/fire/firestore';
 
 /**
  * A reusable, standalone component for selecting and emitting dates.
@@ -32,7 +33,7 @@ import { FormsModule, NgModel } from '@angular/forms';
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.scss'
 })
-export class DatePickerComponent {
+export class DatePickerComponent implements OnChanges{
   // #region ATTRIBUTES
   /**
    * The currently selected due date.
@@ -53,8 +54,21 @@ export class DatePickerComponent {
    * @type {EventEmitter<Date | null>}
    */
   sendDate = output<Date | null>();
+  @Input() selectedDate: Date | Timestamp | null = null;
 
   @ViewChildren(NgModel) formFields!: QueryList<NgModel>;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedDate']) {
+      const value = changes['selectedDate'].currentValue;
+      if (value instanceof Timestamp) {
+        this.dueDate = value.toDate();
+      } else if (value instanceof Date) {
+        this.dueDate = value;
+      } else {
+        this.dueDate = null;
+      }
+    }
+  }
   // #endregion
 
   // #region METHODS
@@ -65,7 +79,7 @@ export class DatePickerComponent {
   sendDateToParent() {
     this.sendDate.emit(this.dueDate);
   }
-
+  
   clearDate() {
     this.dueDate = null;
     this.formFields.forEach(field => {

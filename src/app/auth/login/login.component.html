@@ -1,8 +1,12 @@
-<div class="logo-field">
-  <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+<div class="logo-field" (animationend)="showLoginCardAfterAnimation($event)">
+  <img
+    src="assets/icons/join_logo_dark.svg"
+    alt="join-logo"
+    (animationend)="showLoginCardAfterAnimation($event)"
+  />
 </div>
 
-<div class="login-wrapper">
+<div class="login-wrapper" *ngIf="showLogin">
   <div class="login-head">
     <!-- #region sign-up-field -->
     <div class="sign-up-field">
@@ -34,7 +38,9 @@
           [(ngModel)]="email"
           name="email"
           placeholder="Email"
-          (ngModelChange)="clearAuthError()"
+          (ngModelChange)="onEmailChange($event)"
+          (input)="clearAuthError()"
+          (focus)="clearAuthError()"
         />
         <img src="assets/icons/mail.svg" alt="" />
       </div>
@@ -46,7 +52,9 @@
           [(ngModel)]="password"
           name="password"
           placeholder="Password"
-          (ngModelChange)="clearAuthError()"
+          (ngModelChange)="onPasswordChange($event)"
+          (input)="clearAuthError()"
+          (focus)="clearAuthError()"
         />
         <img
           class="lock"
