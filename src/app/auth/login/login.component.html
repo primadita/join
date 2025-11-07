@@ -39,6 +39,8 @@
           name="email"
           placeholder="Email"
           (ngModelChange)="onEmailChange($event)"
+          (input)="clearAuthError()"
+          (focus)="clearAuthError()"
         />
         <img src="assets/icons/mail.svg" alt="" />
       </div>
@@ -51,6 +53,8 @@
           name="password"
           placeholder="Password"
           (ngModelChange)="onPasswordChange($event)"
+          (input)="clearAuthError()"
+          (focus)="clearAuthError()"
         />
         <img
           class="lock"

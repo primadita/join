@@ -100,6 +100,11 @@ export class LoginComponent {
   }
   //#endregion______________ SESSION-STORAGE ______________
 
+  //______________ ERROR-HANDLING ______________
+  clearAuthError() {
+    if (this.authError) this.authError = null;
+  }
+
   //______________ LOGO-ANIMATION ______________
   showLoginCardAfterAnimation(_event: AnimationEvent) {
     this.showLogin = true;
