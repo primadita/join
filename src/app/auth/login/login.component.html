@@ -1,8 +1,12 @@
-<div class="logo-field">
-  <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+<div class="logo-field" (animationend)="showLoginCardAfterAnimation($event)">
+  <img
+    src="assets/icons/join_logo_dark.svg"
+    alt="join-logo"
+    (animationend)="showLoginCardAfterAnimation($event)"
+  />
 </div>
 
-<div class="login-wrapper">
+<div class="login-wrapper" *ngIf="showLogin">
   <div class="login-head">
     <!-- #region sign-up-field -->
     <div class="sign-up-field">

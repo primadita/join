@@ -170,6 +170,7 @@
   .meta {
     @include d-flex($flexdir: row);
     gap: 4rem;
+    z-index: 10;
 
     .link {
       font-size: 1.6rem;
@@ -184,7 +185,7 @@
 @include mobile {
   .login-wrapper {
     padding: 4.5rem 2.7rem;
-    @include d-flex($flexdir: column, $jc: space-around);
+    @include d-flex($flexdir: column, $jc: center);
     gap: 2rem;
     overflow-y: auto;
 

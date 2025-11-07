@@ -18,6 +18,7 @@ export class LoginComponent {
   authError: string | null = null;
   isSubmitting = false;
   hidePassword: boolean = true;
+  showLogin: boolean = false;
   constructor(private router: Router, private authService: AuthService) {}
 
   login() {
@@ -67,5 +68,9 @@ export class LoginComponent {
 
   goToLegalAndPrivacy() {
     this.router.navigateByUrl('/legalAndPrivacy');
+  }
+
+  showLoginCardAfterAnimation(_event: AnimationEvent) {
+    this.showLogin = true;
   }
 }
