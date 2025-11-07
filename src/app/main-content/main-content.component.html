@@ -1,5 +1,5 @@
 <!-- #region FIX PART -->
-<app-nav-bar (selectedActiveComponent)="switchComponent($event)" [nowOpen]="activeComponent"></app-nav-bar>
+<app-nav-bar [context]="'main'" (selectedActiveComponent)="switchComponent($event)" [nowOpen]="activeComponent"></app-nav-bar>
 <div class="content-wrapper">
     <app-header [context]="'main'" (callHelpPage)="switchComponent($event)" ></app-header>
 <!-- #endregion -->

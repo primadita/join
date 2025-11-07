@@ -1,5 +1,5 @@
 <!-- #region FIX PART -->
-<section>
+<!-- <section>
   <div class="head">
     <img class="logo" src="assets/icons/join_logo.svg" alt="Join logo" />
     <div class="login-btn-container">
@@ -24,7 +24,8 @@
       Legal Notice
     </button>
   </div>
-</section>
+</section> -->
+<app-nav-bar [context]="'login'" (selectedActiveComponent)="handleNavbarNavigation($event)"></app-nav-bar>
 <div class="content-wrapper">
   <app-header [context]="'login'"></app-header>
   <!-- #endregion -->

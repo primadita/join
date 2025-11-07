@@ -13,7 +13,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class NavBarComponent {
   // #region ATTRIBUTES
-  @Input()nowOpen = "";
+  @Input() nowOpen = "";
+  @Input() context: 'main' | 'login' = 'main';
   /**
    * Emits the selected active component.
    */
