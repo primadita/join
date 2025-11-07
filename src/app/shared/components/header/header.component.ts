@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
@@ -26,6 +26,7 @@ export class HeaderComponent {
   userName = this.authService.currentUser?.displayName;
   userInitials = this.getLetters()
 
+  @Input() context: 'main' | 'login' = 'main';
   /**
    * Emits event to call help page.
    */
