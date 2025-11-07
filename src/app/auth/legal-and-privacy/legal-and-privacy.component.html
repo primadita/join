@@ -25,7 +25,7 @@
     </button>
   </div>
 </section> -->
-<app-nav-bar [context]="'login'" (selectedActiveComponent)="handleNavbarNavigation($event)"></app-nav-bar>
+<app-nav-bar [context]="'login'" (selectedActiveComponent)="handleNavbarNavigation($event)" [nowOpen]="activeComponent" ></app-nav-bar>
 <div class="content-wrapper">
   <app-header [context]="'login'"></app-header>
   <!-- #endregion -->

@@ -7,7 +7,9 @@
         <button [ngStyle]="{'background': checkActiveComponent('contacts') ? '#091931b6' : ''}" type="button" (click)="navigateToComponent($event,'contacts')"><img src="assets/icons/contact.svg" alt="Contact"><span>Contacts</span></button>
     </nav>
     <nav *ngIf="context === 'login'">
-        <button [ngStyle]="{'background': checkActiveComponent('loginPage') ? '#091931b6' : ''}" type="button" (click)="navigateToComponent($event,'loginPage')"><img src="assets/icons/login.svg" alt="Login/ Signup"><span>Log in / Sign up</span></button>
+        <button [ngStyle]="{'background': checkActiveComponent('loginPage') ? '#091931b6' : ''}" type="button" (click)="navigateToComponent($event,'loginPage')"><img src="assets/icons/login.svg" alt="Login/ Signup"><span class="login-text-label">Log in / Sign up</span></button>
+        <button class="mobile" [ngStyle]="{'background': checkActiveComponent('privacy-policy') ? '#091931b6' : ''}"  (click)="navigateToComponent($event,'privacy-policy')">Privacy Policy</button>
+        <button class="mobile" [ngStyle]="{'background': checkActiveComponent('legal-notice') ? '#091931b6' : ''}"  (click)="navigateToComponent($event,'legal-notice')">Legal Notice</button>
     </nav>
     <div *ngIf="context === 'main'">
         <button [ngStyle]="{'background': checkActiveComponent('privacy-policy') ? '#091931b6' : ''}"  (click)="navigateToComponent($event,'privacy-policy')">Privacy Policy</button>
