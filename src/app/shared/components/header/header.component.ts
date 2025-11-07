@@ -24,7 +24,7 @@ export class HeaderComponent {
 
   authService = inject(AuthService);
   userName = this.authService.currentUser?.displayName;
-  userInitials = this.getLetters()
+  userInitials = this.getLetters();
 
   @Input() context: 'main' | 'login' = 'main';
   /**
@@ -52,7 +52,8 @@ export class HeaderComponent {
   }
 
   getLetters(): string {
-    const parts = this.userName!.trim().split(' ');
+    if (!this.userName) return ''; 
+    const parts = this.userName.trim().split(' ');
     const first = parts[0]?.[0] || '';
     const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
     const initials = (first + last).toUpperCase();
