@@ -25,7 +25,7 @@ header {
   }
 
   > div {
-    @include all.d-flex($flexdir: row);
+    // @include all.d-flex($flexdir: row);
     gap: 1.6rem;
     #help-btn {
       display: inline-block;
@@ -58,6 +58,12 @@ header {
         background-color: all.$lightgray;
       }
     }
+  }
+  .main{
+    @include all.d-flex($flexdir: row);
+  }
+  .login{
+    display: none;
   }
   .overlay-nav {
     position: fixed;

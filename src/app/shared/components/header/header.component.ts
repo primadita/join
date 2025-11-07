@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -19,8 +20,13 @@ export class HeaderComponent {
    * Indicates whether the navigation bar is currently active (visible).
    * @default false
    */
-  navActive:boolean = false;
-  
+  navActive: boolean = false;
+
+  authService = inject(AuthService);
+  userName = this.authService.currentUser?.displayName;
+  userInitials = this.getLetters();
+
+  @Input() context: 'main' | 'login' = 'main';
   /**
    * Emits event to call help page.
    */
@@ -31,7 +37,7 @@ export class HeaderComponent {
   /**
    * Toggles the navigation bar's active state.
    */
-  toggleNavbar():void{
+  toggleNavbar(): void {
     this.navActive = !this.navActive;
   }
 
@@ -40,9 +46,22 @@ export class HeaderComponent {
    * @param {Event} event - The click event.
    * @param {string} targetComponent - The target component name.
    */
-  navigateToComponent(event: Event, targetComponent: string){
+  navigateToComponent(event: Event, targetComponent: string) {
     event.preventDefault(); //avoid page reload
     this.callHelpPage.emit(targetComponent);
+  }
+
+  getLetters(): string {
+    if (!this.userName) return ''; 
+    const parts = this.userName.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    const initials = (first + last).toUpperCase();
+    return initials;
+  }
+
+  ngOnInit() {
+    this.authService.getCurrentUser();
   }
   // #endregion
 }

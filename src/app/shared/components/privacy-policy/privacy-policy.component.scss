@@ -24,7 +24,6 @@ section{
         button{
             background: transparent;
             border-radius: 50%;
-            @include all.d-flex();
             &:hover{
                 background: all.$lightgray2;
             }
@@ -33,7 +32,13 @@ section{
                     @include all.square($length: 2.8rem);
                 }
             }
-        } 
+        }
+        .main{
+            @include all.d-flex();
+        }
+        .login{
+            display: none;
+        }
     }
     
     h3{
@@ -50,6 +55,9 @@ section{
         padding-bottom: 2.4rem;
         font-weight: 400;
         font-size: 1.6rem;
+        a{
+            overflow-wrap: break-word;
+        }
     }
     ul{
         padding-left: 2rem;

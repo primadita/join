@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -9,5 +9,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './privacy-policy.component.scss'
 })
 export class PrivacyPolicyComponent {
-  @Output() back = new EventEmitter<void>;
+  @Input() context: 'main' | 'login' = 'login';
+  @Output() back = new EventEmitter<void>();
 }
