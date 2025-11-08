@@ -19,16 +19,29 @@ export class AuthService {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  getCurrentUser(){
+  getCurrentUser() {
     return onAuthStateChanged(this.auth, (user) => {
-    if (user) {
-      this.currentUser = user;
-    }
-  });
+      if (user) {
+        this.currentUser = user;
+      }
+    });
   }
 
-  addProfileName(userName: string){
-    return updateProfile(this.auth.currentUser!, {displayName: userName})
+  addProfileName(userName: string) {
+    return updateProfile(this.auth.currentUser!, { displayName: userName })
   }
+
+  isLoggedIn() {
+    return onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+
+        return true;
+      } else {
+        return false;
+      }
+    })
+  };
+
+  // TODO: Daten im header und summary vom currentUser müssen beim aktualisieren vorhanden sein
 
 }
