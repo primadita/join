@@ -1,0 +1,113 @@
+<div class="logo-field" (animationend)="showLoginCardAfterAnimation($event)">
+  <img
+    src="assets/icons/join_logo_dark.svg"
+    alt="join-logo"
+    (animationend)="showLoginCardAfterAnimation($event)"
+  />
+</div>
+
+<div class="login-wrapper" *ngIf="showLogin">
+  <div class="login-head">
+    <!-- #region sign-up-field -->
+    <div class="sign-up-field">
+      <span>Not a Join user?</span>
+      <!-- <button class="btn" type="button">Sign up</button> -->
+      <a href="register" class="btn">Sign up</a>
+    </div>
+    <!-- #endregion sign-up-field -->
+  </div>
+
+  <!-- #region login-card -->
+  <div class="login-card">
+    <div class="title-field">
+      <div class="logo-field-mobile">
+        <img src="assets/icons/join_logo_dark.svg" alt="join-logo" />
+      </div>
+      <div>
+        <h2 class="title">Log in</h2>
+        <div class="title-line"></div>
+      </div>
+    </div>
+
+    <!-- #region login-form -->
+    <form class="login-form" (ngSubmit)="login()" novalidate>
+      <div class="field" [class.has-error]="authError">
+        <input
+          class="input-email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Email"
+          (ngModelChange)="onEmailChange($event)"
+          (input)="clearAuthError()"
+          (focus)="clearAuthError()"
+        />
+        <img src="assets/icons/mail.svg" alt="" />
+      </div>
+
+      <div class="field" [class.has-error]="authError">
+        <input
+          class="input-pw"
+          [type]="hidePassword ? 'password' : 'text'"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Password"
+          (ngModelChange)="onPasswordChange($event)"
+          (input)="clearAuthError()"
+          (focus)="clearAuthError()"
+        />
+        <img
+          class="lock"
+          src="assets/icons/lock.svg"
+          alt=""
+          *ngIf="!password"
+        />
+        <img
+          class="visibility-off"
+          src="assets/icons/visibility_off.svg"
+          alt="password is hidden"
+          *ngIf="password && hidePassword"
+          (click)="hidePassword = !hidePassword"
+        />
+        <img
+          class="visibility-on"
+          src="assets/icons/visibility_on.svg"
+          alt="password is visible"
+          *ngIf="password && !hidePassword"
+          (mousedown)="$event.preventDefault()"
+          (click)="hidePassword = !hidePassword"
+        />
+      </div>
+
+      <div class="error" *ngIf="authError">
+        {{ authError }}
+      </div>
+
+      <div class="buttons-field">
+        <button class="btn login" type="submit">Log in</button>
+        <button class="btn guest" type="button" (click)="loginGuest()">
+          Guest Log in
+        </button>
+      </div>
+    </form>
+    <!-- #endregion login-form -->
+  </div>
+  <!-- #endregion login-card -->
+
+  <!-- #region policy & legal notice -->
+  <div class="meta">
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'privacy-policy' }"
+      >Privacy Policy</a
+    >
+    <a
+      class="link"
+      [routerLink]="['/legalAndPrivacy']"
+      [queryParams]="{ view: 'legal-notice' }"
+      >Legal notice</a
+    >
+  </div>
+  <!-- #endregion policy & legal notice -->
+</div>

@@ -1,6 +1,14 @@
-@use '../../../../public/assets/styles/all-styles.scss' as all;
+@use "../../../../public/assets/styles/all-styles.scss" as all;
 
-section{
-    @include all.d-flex();
-    background-color: all.$lightgray;
+section {
+  @include all.d-flex($alit: flex-start, $jc: flex-start);
+  background-color: all.$lightgray;
+  padding-top: 9.6rem;
+}
+
+@include all.mobile {
+  section {
+    @include all.d-flex($alit: center, $jc: space-between);
+    padding: 0;
+  }
 }

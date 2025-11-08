@@ -1,63 +1,101 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-  Category,
-  Priority,
-  Subtask,
-  Task,
-  TASK_CATEGORY,
-  TASK_PRIORITY,
-  TASK_STATUS,
-} from '../../../../../shared/interfaces/task';
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { Category, Subtask, Task } from '../../../../../shared/interfaces/task';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { RpSearchComponent } from '../../../../../shared/components/add-task/rp-search/rp-search.component';
 import { Contact } from '../../../../../shared/interfaces/contact';
 import { CommonModule } from '@angular/common';
 import { FirebaseServiceService } from '../../../../../shared/services/firebase.service';
-import { TaskService } from '../../../../../shared/services/task.service';
-import { UserProfileImageService } from '../../../../../shared/services/user-profile-image.service';
-import { FormsModule } from '@angular/forms';
+
+import { FormsModule, NgModel } from '@angular/forms';
 import { Timestamp } from '@angular/fire/firestore';
-import { MatNativeDateModule } from '@angular/material/core';
+import {
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { ToastMessagesService } from '../../../../../shared/services/toast-messages.service';
+import { ToastMessageComponent } from '../../../../../shared/components/toast-message/toast-message.component';
+import { take } from 'rxjs';
+import { CategoryComponent } from '../../../../../shared/components/add-task/category/category.component';
+import { PatternValidatorDirective } from '../../../../../shared/directives/pattern-validator.directive';
 
 @Component({
   selector: 'app-edit-task',
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+  ],
   imports: [
     MatDatepickerModule,
     RpSearchComponent,
     CommonModule,
     FormsModule,
     MatNativeDateModule,
+    MatInputModule,
+    CategoryComponent,
+    PatternValidatorDirective,
   ],
   templateUrl: './edit-task.component.html',
   styleUrl: './edit-task.component.scss',
 })
 export class EditTaskComponent {
+  // Task-Daten Original
   @Input() task!: Task;
+  // Lokale, editierbare Kopie des Tasks
+  localTask!: Task;
+  categorySelected = true;
+  //Outputs an Parent
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Task>();
   @Output() delete = new EventEmitter<string>();
 
+  //Overlay-Visibility
   isOpen: boolean = true;
 
-  priorityFlag = {
-    urgent: false,
-    medium: false,
-    low: false,
-  };
-  protected readonly TASK_PRIORITY = TASK_PRIORITY;
-
+  /** Subtask eingabe */
   singleSubtask: string = '';
+  showInvalidSubtaskWarning: boolean = false;
+  invalidSubtaskMessage: string = '';
+  /**Termin als Date-Objekt für den Datepicker */
   dueDate: Date | null = null;
+  initialDueDate: Date | null = null;
+  actualDate = new Date();
 
   constructor(
-    private taskSvc: TaskService,
     private contactsSvc: FirebaseServiceService,
-    private profilService: UserProfileImageService
+    private toastService: ToastMessagesService
   ) {}
 
-  onOverlayClick() {
-    this.isOpen = false;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['task'] && this.task) {
+      this.localTask = this.deepCloneTask(this.task);
+
+      const index = new Map(
+        this.contactsSvc.contactsList.map((c) => [c.id, c])
+      );
+      this.localTask.assignedTo = (this.localTask.assignedTo ?? []).map(
+        (c) => index.get(c.id) ?? c
+      );
+
+      this.initialDueDate = this.toDate(this.task?.date) ?? null;
+      this.dueDate = this.initialDueDate;
+    }
   }
+
+  /**
+   * _____________________________________________________
+   * UI Methoden
+   * _____________________________________________________
+   */
+
+  // Overlay clicks no longer close the dialog; only the close button does.
 
   onContentClick(ev: MouseEvent, rpSearch: RpSearchComponent) {
     const host = rpSearch?.el?.nativeElement as HTMLElement | undefined;
@@ -65,61 +103,24 @@ export class EditTaskComponent {
       ev.stopPropagation();
       return;
     }
-    rpSearch?.closeList(); // Dropdown schließen
-    ev.stopPropagation(); // Overlay NICHT schließen
+    rpSearch?.closeList();
+    ev.stopPropagation();
   }
 
-  setPriority(p: Priority) {
-    this.task = { ...this.task, priority: p };
-  }
+  /**
+   * _____________________________________________________
+   * Helper methoden
+   * _____________________________________________________
+   */
 
-  addSubtask() {
-    const title = this.singleSubtask.trim();
-    if (!title) return;
-
-    const newSubtask: Subtask = {
-      title,
-      done: false,
+  private deepCloneTask(t: Task): Task {
+    return {
+      ...t,
+      assignedTo: t.assignedTo
+        ? t.assignedTo.map((contact) => ({ ...contact }))
+        : [],
+      subtasks: t.subtasks ? t.subtasks.map((subT) => ({ ...subT })) : [],
     };
-
-    const updatedSubtasks = [...(this.task.subtasks || []), newSubtask];
-    this.task = { ...this.task, subtasks: updatedSubtasks };
-
-    this.singleSubtask = '';
-  }
-
-  clearSubtaskInput() {
-    this.singleSubtask = '';
-  }
-
-  assignedIds() {
-    const assignedId = this.task.assignedTo;
-    return assignedId.map((x) => {
-      if ('id' in x) return String(x.id);
-      return '';
-    });
-  }
-
-  get assignedToContacts(): Contact[] {
-    const ids = new Set(this.assignedIds());
-    return this.contactsSvc.contactsList.filter((c) => ids.has(c.id));
-  }
-
-  get subtasks(): Subtask[] {
-    return this.task.subtasks;
-  }
-
-  initialsOf(c: Contact) {
-    return this.profilService.createInitial(c.name);
-  }
-
-  bgColorOf(c: Contact) {
-    return c.bgColor;
-  }
-
-  ngOnChanges() {
-    // Task -> Form
-    this.dueDate = this.toDate(this.task?.date) ?? null;
   }
 
   private toDate(d: any): Date | null {
@@ -128,76 +129,264 @@ export class EditTaskComponent {
     if (typeof d?.toDate === 'function') return d.toDate();
     return new Date(d);
   }
+
   private fromDate(d: Date | null): any {
     return d ? Timestamp.fromDate(d) : null;
   }
 
-  // #region prioritySetting
-  setPriorityUrgent() {
-    this.priorityFlag.urgent = !this.priorityFlag.urgent;
-    this.priorityFlag.medium = false;
-    this.priorityFlag.low = false;
+  private isFutureDate(d: Date | null): boolean {
+    if (!d) return false;
+    const picked = new Date(d);
+    const today = new Date();
+    return picked.getTime() > today.getTime();
   }
 
-  setPriorityMedium() {
-    this.priorityFlag.medium = !this.priorityFlag.medium;
+  /**
+   * _____________________________________________________
+   * Getter Methoden für HTML
+   * _____________________________________________________
+   */
 
-    this.priorityFlag.urgent = false;
-    this.priorityFlag.low = false;
-  }
-  setPriorityLow() {
-    this.priorityFlag.low = !this.priorityFlag.low;
-
-    this.priorityFlag.urgent = false;
-    this.priorityFlag.medium = false;
+  get subtasks(): Subtask[] {
+    return this.localTask.subtasks;
   }
 
-  // #endregion
+  get titleTooLong() {
+    return (this.localTask?.title?.length ?? 0) > 30;
+  }
+
+  get dueDateChanged(): boolean {
+    const initial = this.initialDueDate?.getTime() ?? -1;
+    const current = this.dueDate?.getTime() ?? -1;
+    return initial !== current;
+  }
+
+  /**
+   * _____________________________________________________
+   * Submit, Cancel, Delete
+   * _____________________________________________________
+   */
 
   onSubmit() {
-    const updated: Task = { ...this.task, date: this.fromDate(this.dueDate) };
+    // Datum nur prüfen, wenn es geändert wurde
+    if (this.dueDateChanged && !this.isFutureDate(this.dueDate)) {
+      return;
+    }
+
+    // sauberes subtask-array ohne leere subtasks
+    const cleanedSubtasks: Subtask[] = [];
+    // alle bestehenden subtasks
+    const subtasks = this.localTask.subtasks || [];
+
+    for (const subtask of subtasks) {
+      // entferne leerzeichen am anfang und ende jeden subtasks
+      const trimmedTitle = subtask.title.trim();
+
+      // fügt nur subtasks ins saubere subtask-array hinzu wenn es nicht leer ist
+      if (trimmedTitle.length > 0) {
+        cleanedSubtasks.push({ ...subtask, title: trimmedTitle });
+      }
+    }
+
+    const updated: Task = {
+      ...this.task,
+
+      title: this.localTask.title?.trim(),
+      description: this.localTask.description?.trim(),
+      category: this.localTask.category,
+      priority: this.localTask.priority,
+      assignedTo: this.localTask.assignedTo.map((c) => ({ ...c })),
+      subtasks: cleanedSubtasks,
+      date: this.fromDate(this.dueDate),
+    };
+
     this.save.emit(updated);
+
+    if (this.hasChanges()) {
+      this.toastService.show('Task changed', 'success');
+    }
+  }
+
+  private hasChanges(): boolean {
+    // Prüfe einfache Text-/Wertefelder auf Änderungen
+    if (this.task.title !== this.localTask.title) return true; // Titel geändert?
+    if (this.task.description !== this.localTask.description) return true; // Beschreibung geändert?
+    if (this.task.category !== this.localTask.category) return true; // Kategorie geändert?
+    if (this.task.priority !== this.localTask.priority) return true; // Priorität geändert?
+
+    // Datum in echte Date-Objekte umwandeln und vergleichen
+    const originalDate = this.toDate(this.task.date);
+    if (originalDate?.getTime() !== this.dueDate?.getTime()) return true; // Datum geändert?
+
+    // Zugewiesene Kontakte per ID vergleichen (sortiert, damit Reihenfolge egal ist)
+    const originalAssignees = (this.task.assignedTo ?? [])
+      .map((c) => c.id)
+      .sort();
+    const localAssignees = (this.localTask.assignedTo ?? [])
+      .map((c) => c.id)
+      .sort();
+    if (JSON.stringify(originalAssignees) !== JSON.stringify(localAssignees))
+      return true;
+
+    // Subtasks in eine vergleichbare Form bringen (Titel getrimmt, nur Titel + done)
+    const originalSubtasks = (this.task.subtasks ?? []).map((s) => ({
+      title: s.title.trim(),
+      done: s.done,
+    }));
+    const localSubtasks = (this.localTask.subtasks ?? []).map((s) => ({
+      title: s.title.trim(),
+      done: s.done,
+    }));
+    if (JSON.stringify(originalSubtasks) !== JSON.stringify(localSubtasks))
+      return true; // Subtasks geändert?
+
+    // Keine Änderungen gefunden
+    return false;
   }
 
   onCancel() {
+    if (this.hasChanges()) {
+      this.toastService.show('Discard changes', 'success');
+    }
+
     this.close.emit();
   }
 
-  onAssignedChange(selectedContacts: Contact[]) {
-    const current = this.task.assignedTo || [];
-    const incoming = selectedContacts || [];
-
-    // Additiver Merge: alles behalten, neue hinzufügen (unique nach id)
-    const byId = new Map<string, Contact>();
-
-    // 1) bisherige behalten
-    for (const c of current) byId.set(c.id, c);
-
-    // 2) neue drüberlegen (aktualisiert oder fügt hinzu)
-    for (const c of incoming) byId.set(c.id, c);
-
-    const updatedContacts = Array.from(byId.values());
-
-    this.task = { ...this.task, assignedTo: updatedContacts };
+  onDelete() {
+    this.delete.emit(this.task.id);
   }
 
-  deleteSubtask(index: number) {
-    const updated = this.task.subtasks.filter((_, i) => i !== index);
-    this.task = { ...this.task, subtasks: updated };
-    this.editingIndex = null;
+  /**
+   * _____________________________________________________
+   * Priority
+   * _____________________________________________________
+   */
+
+  setPriority(p: Task['priority']) {
+    this.localTask.priority = p;
   }
 
-  editingIndex: number | null = null;
+  isPriority(p: Task['priority']): boolean {
+    return this.localTask?.priority === p;
+  }
+
+  /**
+   * _____________________________________________________
+   * Assigned-to vom child kommend
+   * _____________________________________________________
+   */
+
+  addRpToArray(contact: Contact) {
+    const exists = (this.localTask.assignedTo ?? []).some(
+      (c) => c.id === contact.id
+    );
+    this.localTask = {
+      ...this.localTask,
+      assignedTo: exists
+        ? this.localTask.assignedTo.filter((c) => c.id !== contact.id)
+        : [...(this.localTask.assignedTo ?? []), contact],
+    };
+  }
+
+  /**
+   * _____________________________________________________
+   * Category
+   * _____________________________________________________
+   */
+  setCategory(value: Category) {
+    this.localTask.category = value;
+    this.categorySelected = true;
+  }
+
+  /**
+   * _____________________________________________________
+   * Subtasks
+   * _____________________________________________________
+   */
+
+  clearSubtaskInput() {
+    this.singleSubtask = '';
+  }
+
+  addSubtask(subtask: NgModel) {
+    this.showInvalidSubtaskWarning = true;
+    this.invalidSubtaskMessage = '';
+    const trimmedSubtask = this.singleSubtask.trim();
+    const existedSubtask = this.localTask.subtasks.some(
+      (s) => s.title.toLowerCase() === trimmedSubtask.toLowerCase()
+    );
+
+    if (!trimmedSubtask) {
+      this.invalidSubtaskMessage = 'Subtask cannot be empty.';
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (existedSubtask) {
+      this.invalidSubtaskMessage = 'Subtask already exists.';
+      this.showInvalidSubtaskWarning = true;
+      return;
+    }
+
+    if (subtask.valid) {
+      const newSubtask = { title: trimmedSubtask, done: false };
+      this.localTask.subtasks.unshift(newSubtask);
+      this.singleSubtask = '';
+      this.showInvalidSubtaskWarning = false;
+    } else {
+      this.showInvalidSubtaskWarning = true;
+      this.invalidSubtaskMessage = 'Invalid subtask.';
+    }
+  }
 
   editSubtask(i: number) {
     this.editingIndex = i;
   }
 
+  deleteSubtask(index: number) {
+    this.localTask = {
+      ...this.localTask,
+      subtasks: this.localTask.subtasks.filter((_, i) => i !== index),
+    };
+    this.editingIndex = null;
+  }
+
+  editingIndex: number | null = null;
+
   saveSubtaskEdit(i: number) {
+    const current = this.localTask.subtasks?.[i];
+    if (!current) {
+      this.editingIndex = null;
+      return;
+    }
+    const trimmed = (current.title ?? '').trim();
+    if (!trimmed) {
+      // remove empty subtask instead of saving empty title
+      this.localTask = {
+        ...this.localTask,
+        subtasks: this.localTask.subtasks.filter((_, idx) => idx !== i),
+      };
+    } else {
+      this.localTask.subtasks[i] = { ...current, title: trimmed };
+    }
     this.editingIndex = null;
   }
 
   isEditing(i: number): boolean {
     return this.editingIndex === i;
+  }
+
+  /**
+   * _____________________________________________________
+   * UI kleinkram
+   * _____________________________________________________
+   */
+
+  getLetters(contact: Contact): string {
+    const parts = contact.name.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+    const initials = (first + last).toUpperCase();
+    return initials;
   }
 }

@@ -1,0 +1,285 @@
+@use "../../../../public/assets/styles/all-styles.scss" as *;
+
+.logo-field {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-color: #f0f0f0;
+  z-index: 1;
+  animation: backgroundMove 1.5s ease-in-out forwards;
+
+  img {
+    position: absolute;
+    width: 10rem;
+    height: 12.2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    animation: logoMove 1.5s ease-in-out forwards;
+  }
+}
+
+@include mobile {
+  .logo-field {
+    img {
+      @include join-logo-small;
+    }
+  }
+}
+
+.login-wrapper {
+  height: 100%;
+  @include d-flex($flexdir: column, $jc: space-between);
+  background-color: $lightgray;
+  padding: 8rem 7.7rem;
+
+  .login-head {
+    margin-left: auto;
+
+    .sign-up-field {
+      height: 100%;
+      z-index: 10;
+      span {
+        margin-right: 4rem;
+      }
+    }
+  }
+
+  .btn {
+    border: none;
+    border-radius: 0.8rem;
+    padding: 1.5rem 2.4rem;
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #fff;
+    font-family: $font;
+    background: $mainColor;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .btn:hover {
+    background-color: $lightblue2;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .login-card {
+    background: #fff;
+    border-radius: 3rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.06);
+    padding: 6rem;
+    @include d-flex($jc: space-between);
+    gap: 4rem;
+    z-index: 10;
+    .title-field {
+      .title {
+        font-weight: 700;
+        text-align: center;
+        font-family: $font, sans-serif;
+      }
+
+      .title-line {
+        padding-top: 1rem;
+        width: 14rem;
+        border-bottom: 0.3rem solid $lightblue2;
+        margin: 0 auto;
+      }
+      .logo-field-mobile {
+        display: none;
+      }
+    }
+
+    .buttons-field {
+      @include d-flex($flexdir: row);
+      gap: 4rem;
+
+      .guest {
+        border: 0.2rem solid $mainColor;
+        color: $mainColor;
+        background-color: #fff;
+      }
+
+      .guest:hover {
+        border-color: $lightblue2;
+        background-color: #fff;
+        color: $lightblue2;
+      }
+    }
+
+    .login-form {
+      @include d-flex();
+      gap: 3rem;
+
+      .field {
+        width: 42.2rem;
+        height: 4.8rem;
+        @include d-flex($flexdir: row, $jc: space-between);
+        padding: 0 2rem;
+        border: 0.1rem solid $iconColor;
+        border-radius: 1rem;
+        position: relative;
+
+        img.lock,
+        img.visibility-off {
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+
+        img.lock {
+          display: inline-block;
+        }
+        img.visibility-off {
+          display: none;
+        }
+      }
+
+      .field:focus-within {
+        border: 0.2rem solid $lightblue2;
+        background: #fff;
+
+        img.lock {
+          display: none;
+        }
+        img.visibility-off {
+          display: block;
+        }
+      }
+
+      .field.has-error,
+      .field.has-error:focus-within {
+        border: 0.1rem solid $priority_urgent;
+      }
+
+      .error {
+        color: $priority_urgent;
+      }
+
+      img.visibility-on {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+      .field img.visibility-off,
+      .field img.visibility-on {
+        display: block;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .meta {
+    @include d-flex($flexdir: row);
+    gap: 4rem;
+    z-index: 10;
+
+    .link {
+      font-size: 1.6rem;
+      color: $iconColor;
+    }
+    .link:hover {
+      color: $lightblue2;
+    }
+  }
+}
+
+@include mobile {
+  .login-wrapper {
+    padding: 4.5rem 2.7rem;
+    @include d-flex($flexdir: column, $jc: center);
+    gap: 2rem;
+    overflow-y: auto;
+
+    .login-head {
+      order: 3;
+      height: auto;
+      margin-left: 0;
+
+      .sign-up-field {
+        width: 100%;
+        height: auto;
+
+        @include d-flex($flexdir: row);
+        span {
+          margin-right: 1rem;
+        }
+
+        .btn {
+          font-size: 1.6rem;
+          padding: 1rem 1.8rem;
+        }
+      }
+    }
+
+    .login-card {
+      width: auto;
+      @include d-flex($jc: space-between);
+      gap: 2rem;
+      order: 2;
+      padding: 2.4rem;
+
+      .title-field {
+        width: 100%;
+        @include d-flex($flexdir: row, $jc: space-around);
+
+        .title-line {
+          width: 9rem;
+        }
+      }
+
+      .login-form {
+        .field {
+          width: auto;
+        }
+      }
+      .buttons-field {
+        @include d-flex($flexdir: column);
+        gap: 2rem;
+        .btn {
+          width: 100%;
+          font-size: 1.6rem;
+          padding: 1rem 1.8rem;
+        }
+      }
+    }
+
+    .meta {
+      order: 4;
+    }
+  }
+}
+
+.input-email,
+.input-pw {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+// animaton
+@keyframes logoMove {
+  0% {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    top: 20px;
+    left: 20px;
+  }
+}
+
+@keyframes backgroundMove {
+  0% {
+    background-color: #f0f0f0;
+    z-index: 100;
+  }
+
+  100% {
+    background-color: rgba(240, 240, 240, 0);
+    z-index: 1;
+  }
+}

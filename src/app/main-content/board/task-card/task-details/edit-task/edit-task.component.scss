@@ -1,330 +1,370 @@
 @use "../../../../../../../public/assets/styles/all-styles.scss" as all;
+
 .overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
   animation: fadeIn 0.2s ease-out forwards;
   z-index: 100;
-}
-
-.btn-wrapper {
-  margin-left: auto;
-
-  .close-btn {
-    padding: 0.25rem 0.5rem;
-    border-radius: 1rem;
-  }
+  @include all.d-flex();
 }
 
 .edit-task {
   width: 100%;
   max-width: 52.5rem;
+  height: auto;
+  max-height: calc(100dvh - 3rem);
   background: all.$white;
   border-radius: 3rem;
-  padding: 1.7rem 1.5rem;
+  padding: 4rem 3rem;
   box-shadow: all.$shadow;
+  @include all.d-flex();
+  gap: 1rem;
+
+  @include all.mobile {
+    padding: 3rem 1.5rem;
+  }
 
   form {
     width: 100%;
-    @include all.d-flex($flexdir: column, $jc: flex-start, $alit: flex-start);
-    gap: 2rem;
-
-    .input-wrapper {
-      width: 100%;
-
-      label {
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-
-      .prio-label {
+    height: auto;
+    max-height: calc(100dvh - 3rem - 3.4rem);
+    @include all.d-flex($flexdir: column, $jc: flex-start,$alit: flex-start, $rgap: 2rem);
+    .btn-wrapper {
+      margin-left: auto;
+      .close-btn {
+        font-size: 1.8rem;
         font-weight: bold;
-      }
-    }
-
-    input {
-      width: 100%;
-      border: 0.1rem solid all.$lightgray2;
-      border-radius: 0.8rem;
-      padding: 0.8rem 1.2rem;
-      cursor: pointer;
-    }
-
-    textarea {
-      height: 12rem;
-      border: solid 1px #d9d9d9;
-      padding: 0.8rem 1.2rem;
-      width: 100%;
-      border-radius: 0.8rem;
-      color: all.$black;
-      font-size: 1.6rem;
-      font-family: all.$font;
-      resize: none;
-      cursor: pointer;
-    }
-
-    .date-input-wrapper {
-      width: 100%;
-      border: 0.1rem solid all.$lightgray2;
-      border-radius: 0.8rem;
-      @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
-
-      input {
-        border: none;
-      }
-    }
-
-    // #region PRIORITY-BTNS
-    .priority-btn-wrapper {
-      width: 100%;
-      @include all.d-flex($flexdir: row, $jc: space-between, $alit: flex-start);
-
-      button {
-        @include all.d-flex($flexdir: row);
-        gap: 0.8rem;
-        width: 30%;
-        height: 4rem;
-        border-radius: 0.8rem;
-        border: solid 1px #d9d9d9;
-        background-color: all.$white;
-
+        background: transparent;
+        border-radius: 50%;
+        @include all.square($length: 3rem);
+        @include all.d-flex();
         &:hover {
-          box-shadow: all.$shadow;
-        }
-
-        svg {
-          height: 1.6rem;
-          width: 1.6rem;
-        }
-      }
-
-      .active-urgent {
-        background-color: #ff3d00;
-        color: all.$white;
-
-        path {
-          fill: all.$white;
-        }
-      }
-
-      .active-medium {
-        background-color: #ffa800;
-        color: all.$white;
-
-        path {
-          fill: all.$white;
-        }
-      }
-
-      .active-low {
-        background-color: #7ae229;
-        color: all.$white;
-
-        path {
-          fill: all.$white;
-        }
-      }
-    }
-
-    @media (max-width: 430px) {
-      .priority-btn-wrapper {
-        button {
-          @include all.d-flex($flexdir: row, $jc: space-around, $alit: center);
-          width: 30%;
-          font-size: 1.3rem;
-
-          svg {
-            height: 1.3rem;
-            width: 1.3rem;
-          }
-        }
-      }
-    }
-    // #endregion PRIORITY-BTNS
-
-    // #region ASSIGNED-TO-WRAPPER
-    #rp-wrapper {
-      width: 100%;
-
-      ul {
-        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
-        gap: 0.5rem;
-        width: 100%;
-        padding: 0.5rem 0;
-        overflow-x: auto;
-        li {
-          @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
-          gap: 2.5rem;
-          margin: 0.5rem 0;
-
-          .avatar {
-            width: 3.2rem;
-            height: 3.2rem;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            color: all.$white;
-          }
-        }
-      }
-    }
-    // #endregion ASSIGNED-TO-WRAPPER
-
-    // #region SUBTASKS-WRAPPER
-    .subtask-input-wrapper {
-      height: 4rem;
-      width: 100%;
-
-      #subtask-input {
-        padding-right: 6rem;
-      }
-
-      .subtask-btn-wrapper {
-        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: center);
-        gap: 0.4rem;
-        position: absolute;
-        top: 50%;
-        right: -1.2rem;
-        transform: translate(-50%, -50%);
-
-        .clear-btn {
-          width: 2rem;
-          height: 2rem;
-          background-image: url(../../../../../../../public/assets/icons/cancel.svg);
-          background-position: center;
-          padding: 0.25rem 0.5rem;
-          border-radius: 1rem;
-        }
-
-        .btn-divide {
-          height: 2rem;
-          width: 0.1rem;
           background-color: all.$lightgray2;
         }
-
-        .add-btn {
-          width: 2rem;
-          height: 2rem;
-          background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
-          background-position: center;
-          padding: 0.25rem 0.5rem;
-          border-radius: 1rem;
+        @include all.mobile {
+          font-size: 1.8rem;
+          @include all.square($length: 2.4rem);
+        }
+      }
+      .ok-btn {
+        @include all.d-flex($flexdir: row, $cgap: 0.5rem);
+        color: all.$white;
+        background-color: all.$mainColor;
+        padding: 1.2rem 1.4rem;
+        border-radius: 1rem;
+        font-weight: 700;
+        &:hover {
+          background-color: all.$lightblue2;
+          box-shadow: all.$shadow;
+        }
+        @include all.mobile {
+          padding: 0.8rem 1.2rem;
         }
       }
     }
-    #subtask-wrapper {
-      ul {
-        height: 100%;
-        max-height: 11rem;
-        overflow-y: auto;
+    .form-wrapper {
+      width: 100%;
+      overflow-y: auto;
+      scrollbar-gutter: stable both-edges;
+      @include all.d-flex($flexdir: column, $jc: space-between, $alit: center);
+      gap: 1.5rem;
+      padding: 0 1rem 0 0;
+      .wrapper-title {
+        width: 100%;
+        text-align: start;
+      }
+      .input-wrapper {
+        width: 100%;
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+        .prio-label {
+          font-weight: bold;
+        }
+        .warning-date {
+          color: all.$priority_urgent;
+        }
+        .warning {
+          color: all.$priority_urgent;
+          font-size: 1.6rem;
+          left: 1rem;
+        }
+        .warning-invalid-subtask {
+          color: all.$priority_urgent;
+          position: absolute;
+          top: 9.5rem;
+          margin-top: 0.4rem;
+          left: 1rem;
+          font-size: 1.6rem;
+        }
+      }
+      input {
+        width: 100%;
+        border: 0.1rem solid all.$lightgray2;
+        border-radius: 0.8rem;
+        padding: 0.8rem 1.2rem;
+        &:focus {
+          border: solid 1px all.$lightblue2;
+          outline: none;
+        }
+      }
+      // #region Description-Input-Wrapper
+      textarea {
+        width: 100%;
+        height: 12rem;
+        border: 0.1rem solid all.$lightgray2;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0.8rem;
+        color: all.$black;
+        font-size: 1.6rem;
+        font-family: all.$font;
+        resize: none;
+        line-height: 1.5;
+        &:focus {
+          border: solid 1px all.$lightblue2;
+          outline: none;
+        }
+      }
+      // #endregion
+      // #region Date-Input-Wrapper
+      .date-input-wrapper {
+        width: 100%;
+        border: 0.1rem solid all.$lightgray2;
+        border-radius: 0.8rem;
+        @include all.d-flex($flexdir: row, $jc: flex-start, $alit: flex-start);
+        > input {
+          border: none;
+        }
+        &:focus-within {
+          border: 1px solid all.$lightblue2;
+        }
+      }
+      .date-input-wrapper.invalid {
+        border: 1px solid all.$priority_urgent;
+      }
+
+      // #region Priority-Buttons-Wrapper
+      .priority-btn-wrapper {
+        width: 100%;
         @include all.d-flex(
-          $flexdir: column,
-          $jc: flex-start,
+          $flexdir: row,
+          $jc: space-between,
           $alit: flex-start
         );
-        gap: 0.5rem;
-        li {
+
+        button {
+          @include all.d-flex($flexdir: row, $cgap: 0.8rem);
+          width: 30%;
+          height: 4rem;
+          border-radius: 0.8rem;
+          border: solid 1px all.$lightgray6;
+          background-color: all.$white;
+
+          &:hover {
+            box-shadow: all.$shadow;
+          }
+
+          svg {
+            @include all.square($length: 1.6rem);
+          }
+          @media (max-width: 400px) {
+            @include all.d-flex($flexdir: row, $cgap: 0.3rem);
+            width: auto;
+            min-width: 30%;
+            max-width: 34%;
+          }
+        }
+        .active-urgent {
+          background-color: all.$priority_urgent;
+          color: all.$white;
+          path {
+            fill: all.$white;
+          }
+        }
+        .active-medium {
+          background-color: all.$priority_medium;
+          color: all.$white;
+          path {
+            fill: all.$white;
+          }
+        }
+        .active-low {
+          background-color: all.$priority_low;
+          color: all.$white;
+          path {
+            fill: all.$white;
+          }
+        }
+      }
+      // #endregion
+      // #region ASSIGNED-TO-WRAPPER
+      #rp-wrapper {
+        width: 100%;
+        .rp-selected-box {
+          @include all.d-flex($flexdir: row, $jc: flex-start);
+          margin-top: 1.6rem;
+        }
+        .initials {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          border: 0.2rem solid all.$white;
+          padding: 1.5rem;
+          font-size: 1.6rem;
+          font-weight: 300;
+          font-family: "Inter";
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: all.$white;
+          margin-right: 0.8rem;
+        }
+        span {
+          font-weight: 600;
+        }
+      }
+      // #endregion
+      // #region SUBTASKS-WRAPPER
+      #subtask-wrapper {
+        .hidden {
+          visibility: hidden;
+        }
+        ul {
+          position: absolute;
+          height: 6rem;
+          top: 3.8rem;
           width: 100%;
-          position: relative;
-          padding: 0.5rem 0;
-          border-radius: 1rem;
-          cursor: pointer;
-          .list-content {
+          overflow-y: auto;
+          gap: 0.5rem;
+          box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+          border-radius: 8px;
+          li {
             width: 100%;
-            @include all.d-flex(
-              $flexdir: row,
-              $jc: space-between,
-              $alit: center
-            );
-            gap: 2.5rem;
-
-            > span {
-              flex: 1 1 auto;
-            }
-
-            .edit-wrapper {
+            height: 3rem;
+            @include all.d-flex($flexdir: row, $jc: flex-start);
+            border-radius: 1rem;
+            cursor: pointer;
+            padding-left: 0.8rem;
+            .list-content {
               width: 100%;
+              @include all.d-flex($flexdir: row, $jc: none, $alit: center);
+              gap: 2.5rem;
+              > span {
+                width: 1000px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .edit-wrapper {
+                width: 100%;
+              }
               .edit-input {
                 width: 100%;
                 height: 3rem;
-                border-style: none;
                 border-bottom: 1px solid all.$lightblue2;
-                border-radius: 0%;
+                padding-left: 1.6rem;
+                padding-right: 6rem;
+              }
+              input:focus {
+                border: none;
+                border-bottom: 1px solid all.$lightblue2;
               }
               .edit-subtask {
+                position: absolute;
+                top: 50%;
+                right: 0.9rem;
+                transform: translateY(-50%);
                 @include all.d-flex(
                   $flexdir: row,
                   $jc: flex-start,
                   $alit: center
                 );
                 gap: 0.4rem;
-                position: absolute;
-                top: 50%;
-                right: -1.8rem;
-                transform: translate(-50%, -50%);
+                flex: 0 0 auto;
                 white-space: nowrap;
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
                 transition: opacity 0.2s ease-in-out;
-
+                @include all.notebook {
+                  opacity: 1;
+                  visibility: visible;
+                  pointer-events: all;
+                }
                 button {
                   @include all.d-flex(
                     $flexdir: row,
                     $jc: center,
                     $alit: center
                   );
-                  padding: 0.25rem 0.25rem;
-                  border-radius: 1rem;
                 }
-
                 .separator {
                   height: 2rem;
                   width: 0.1rem;
-                  background-color: all.$lightgray4;
+                  background-color: all.$lightgray2;
                 }
               }
             }
+            @include all.desktop {
+              &:hover .list-content .edit-subtask {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: all;
+              }
+            }
+            &.editing .list-content .edit-subtask,
+            .list-content .edit-subtask.force-visible {
+              opacity: 1;
+              visibility: visible;
+              pointer-events: all;
+            }
           }
-
-          &:hover .list-content .edit-wrapper .edit-subtask {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: all;
-          }
-
-          &.editing .list-content .edit-wrapper .edit-subtask,
-          .list-content .edit-subtask.force-visible {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: all;
+          li:hover {
+            background-color: all.$lightgray4;
           }
         }
-
-        li:hover {
-          background-color: all.$lightgray4;
-        }
-
-        li.editing:hover {
+        button {
+          @include all.square($length: 2rem);
           background-color: transparent;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 1.9rem;
+          border-radius: 50%;
+          &:hover {
+            background-color: all.$lightgray2;
+          }
+        }
+        .subtask-input-wrapper {
+          height: 4rem;
+          width: 100%;
+          #subtask-input {
+            padding-right: 6rem;
+          }
+          .subtask-btn-wrapper {
+            @include all.d-flex($flexdir: row);
+            gap: 0.4rem;
+            position: absolute;
+            top: 50%;
+            right: -1.6rem;
+            transform: translate(-50%, -50%);
+            .clear-btn {
+              background-image: url(../../../../../../../public/assets/icons/cancel.svg);
+            }
+            .btn-divide {
+              height: 2rem;
+              width: 0.1rem;
+              background-color: all.$lightgray2;
+            }
+            .add-btn {
+              background-image: url(../../../../../../../public/assets/icons/check_dark.svg);
+            }
+          }
         }
       }
-    }
-
-    // #endregion SUBTASKS-WRAPPER
-
-    .btn-wrapper {
-      .ok-btn {
-        @include all.d-flex($flexdir: row, $jc: center, $alit: center);
-        color: all.$white;
-        background-color: all.$mainColor;
-        padding: 1.8rem 1rem;
-        border-radius: 1rem;
-      }
+      // #endregion
     }
   }
 }

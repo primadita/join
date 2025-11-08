@@ -5,6 +5,7 @@ import { Messages } from '../../interfaces/messages';
 
 @Component({
   selector: 'app-toast-message',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './toast-message.component.html',
   styleUrl: './toast-message.component.scss'
@@ -23,7 +24,7 @@ export class ToastMessageComponent {
  * - `null` means no active message is being shown.
  */
   message: Messages | null = null;
-  @Input() context: 'contacts'|'addtask' | 'board' = 'contacts';
+  @Input() context: 'contacts'|'addtask' | 'board' | 'edittask' | 'signup' = 'board';
   // #endregion
 
   constructor(private toastService: ToastMessagesService) { }

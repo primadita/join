@@ -1,4 +1,4 @@
-@use './../../../../../public/assets/styles/all-styles.scss' as all;
+@use '../../../../../public/assets/styles/all-styles.scss' as all;
 div{
     width: 100%;
     max-width: 35rem; 
@@ -49,6 +49,7 @@ div{
 }
 .board{
     bottom: 50dvh;
+    z-index: 220;
     animation: toast-board-slideInFromRight 1s forwards;
     animation-iteration-count: 1; 
     @include all.tablet{
@@ -58,4 +59,10 @@ div{
     @include all.mobile{
         animation: toast-board-slideInFromRight-mobile 1s forwards;
     }
+}
+.signup{
+    left: calc((100dvw - 20rem) / 2);
+    width: 20rem;
+    height: 5rem;
+    animation: slideUp 1s forwards;
 }

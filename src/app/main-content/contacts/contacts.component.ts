@@ -7,6 +7,7 @@ import { ToastMessageComponent } from '../../shared/components/toast-message/toa
 
 @Component({
   selector: 'app-contacts',
+  standalone: true,
   imports: [CommonModule, ContactListComponent, ContactDetailsComponent, ToastMessageComponent],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss',

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
  * and generation of initials based on a user's name.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserProfileImageService {
   // #region ATTRIBUTES
@@ -13,26 +13,37 @@ export class UserProfileImageService {
    * Predefined list of background colors to assign to user profile images.
    */
   bgColorList: string[] = [
+    '#FF7A00',
+    '#FF5EB3',
+    '#6E52FF',
+    '#1FD7C1',
+    '#00BEE8',
+    '#9327FF',
+    '#FF745E',
+    '#FFA35E',
+    '#FC71FF',
+    '#FFC701',
+    '#0038FF',
+    '#C3FF2B',
+    '#FFBB2B',
+    '#FF4646',
+    '#FFE62B',
     '#008B8B',
-    '#8A2BE2',
+    '#AAD3F9',
     '#CD661D',
     '#696969',
     '#228B22',
     '#8B864E',
     '#FF8C00',
-    '#FFA500',
     '#FF1493',
-    '#CD0000',
     '#BA55D3',
     '#FFC125',
     '#B03060',
     '#858585',
     '#483D8B',
-    '#FF4040',
     '#BC8F8F',
     '#FFA54F',
     '#3CB371',
-    '#EE7600',
     '#FA8072',
     '#8B0000',
     '#BF3EFF',
@@ -41,9 +52,7 @@ export class UserProfileImageService {
     '#FF7F24',
     '#708090',
     '#00CD00',
-    '#FF7F50',
-    '#FF8247'
-  ]
+  ];
 
   /**
    * The initials generated from the user's name.
@@ -65,10 +74,10 @@ export class UserProfileImageService {
    * @param {string} name - The full name of the user.
    * @returns {string} The generated initials in uppercase.
    */
-  createInitial(name:string): string {
+  createInitial(name: string): string {
     const parts = name.trim().split(' ');
     const first = parts[0]?.[0];
-    const last = parts.length > 1 ? parts[parts.length - 1][0]: ''; 
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
     const initial = first + last;
     return initial.toUpperCase();
   }
@@ -80,11 +89,9 @@ export class UserProfileImageService {
    * @param {number} index - The index used to select a background color.
    * @returns {string} The selected background color in hex format.
    */
-  getBackgroundColor(index: number): string{
+  getBackgroundColor(index: number): string {
     const colorId = index % this.bgColorList.length;
-    return this.bgColor = this.bgColorList[colorId];
+    return (this.bgColor = this.bgColorList[colorId]);
   }
   // #endregion
 }
-
-

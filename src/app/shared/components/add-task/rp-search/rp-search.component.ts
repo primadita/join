@@ -2,8 +2,11 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   inject,
+  Input,
+  Output,
   output,
   signal,
 } from '@angular/core';
@@ -13,16 +16,16 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rp-search',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './rp-search.component.html',
   styleUrl: './rp-search.component.scss',
 })
 export class RpSearchComponent {
+  @Input() selectedContacts!: Contact[];
+  @Output() contactsChanged = new EventEmitter<Contact[]>();
   contacts = inject(FirebaseServiceService);
-
-  rpArray: Array<Contact> = [];
-
-  changeAssignedArray = output<Array<Contact>>();
+  sendContact = output<Contact>();
 
   searchInput: string = '';
 
@@ -36,6 +39,25 @@ export class RpSearchComponent {
     return initials;
   }
 
+  sendContactToParent(contact: Contact){
+    // this.sendContact.emit(contact);
+    const index = this.selectedContacts.findIndex(c => c.id === contact.id);
+
+    if (index === -1) {
+      // Kontakt hinzufügen
+      this.selectedContacts.push(contact);
+    } else {
+      // Kontakt entfernen
+      this.selectedContacts.splice(index, 1);
+    }
+
+    // Änderungen ans Parent senden
+    this.sendSelectedContactsToParent();
+  }
+
+  sendSelectedContactsToParent() {
+    this.contactsChanged.emit(this.selectedContacts);
+  }
   /**
    * Returns an alphabetically sorted copy of the contact list.
    *
@@ -55,24 +77,13 @@ export class RpSearchComponent {
     });
   }
 
-  addRpToArray(contact: Contact) {
-    const array = this.rpArray;
-    const test = array.includes(contact);
-    if (!test) {
-      array.push(contact);
-    } else if (test) {
-      const index = array.indexOf(contact);
-      array.splice(index, 1);
-    }
-    this.changeAssignedArray.emit(array);
-  }
-
   checkSelectedRp(contact: Contact): boolean {
-    if (this.rpArray.includes(contact)) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (this.selectedContacts.includes(contact)) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return this.selectedContacts.some(c => c.id === contact.id);
   }
 
   searchContact() {
@@ -93,6 +104,14 @@ export class RpSearchComponent {
 
   onFocus() {
     this.isListOpen.set(true);
+  }
+
+  onFocusButton(){
+    if(this.isListOpen()){
+      this.isListOpen.set(false);
+    }else{
+      this.isListOpen.set(true);
+    }
   }
 
   @HostListener('document:click', ['$event'])
