@@ -17,7 +17,8 @@ export class SummaryComponent {
   authService = inject(AuthService);
   tasks: Task[] = [];
   private tasksSub?: Subscription;
-  userName = this.authService.currentUser?.displayName;
+  userName: string | null | undefined;
+  
 
   constructor(private taskService: TaskService) { }
 
@@ -25,12 +26,15 @@ export class SummaryComponent {
     this.tasksSub = this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
     });
+    this.authService.currentUser.subscribe( (user) => {
+      this.userName = user?.displayName;
+    })
     this.authService.getCurrentUser();
-    console.log(this.userName);    
   }
 
   ngOnDestroy() {
     this.tasksSub?.unsubscribe();
+    this.authService.currentUser.unsubscribe();
   }
 
   filterTodo(status: string): number {

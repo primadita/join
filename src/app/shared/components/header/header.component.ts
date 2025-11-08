@@ -23,8 +23,8 @@ export class HeaderComponent {
   navActive: boolean = false;
 
   authService = inject(AuthService);
-  userName = this.authService.currentUser?.displayName;
-  userInitials = this.getLetters();
+  userName!: string | null | undefined;
+  userInitials!: string;
 
   @Input() context: 'main' | 'login' = 'main';
   /**
@@ -61,7 +61,10 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    this.authService.getCurrentUser();
+    this.authService.currentUser.subscribe( (user) => {
+      this.userName = user?.displayName
+      this.userInitials = this.getLetters();
+    })
   }
   // #endregion
 }
