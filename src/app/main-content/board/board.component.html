@@ -74,9 +74,17 @@
                 </div>
                 }
                 @for (task of board?.todo; track task.id){
-                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
-                    [task]="task">
-                </app-task-card>
+                    <app-task-card *ngIf="!(isMobile$ | async)" 
+                        (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                        cdkDrag appLongPressDrag [cdkDragData]="task" 
+                        [task]="task">
+                    </app-task-card>
+                    <!-- Mobile Version ohne DragDrop -->
+                    <app-task-card *ngIf="isMobile$ | async"
+                        [isMobile]="true"
+                        (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                        [task]="task">
+                    </app-task-card>
                 }
             </div>
         </div>
@@ -109,8 +117,17 @@
                 </div>
                 }
                 @for (task of board?.inprogress; track task.id){
-                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
-                    [task]="task"></app-task-card>
+                    <app-task-card *ngIf="!(isMobile$ | async)" 
+                        (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                        cdkDrag appLongPressDrag [cdkDragData]="task"
+                        [task]="task">
+                    </app-task-card>
+                    <!-- Mobile Version ohne DragDrop -->
+                    <app-task-card *ngIf="(isMobile$ | async)"
+                        [isMobile]="true"
+                        (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                        [task]="task">
+                    </app-task-card>
                 }
             </div>
         </div>
@@ -143,10 +160,20 @@
                 </div>
                 }
                 @for (task of board?.awaitfeedback; track task.id){
-                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
-                    [task]="task"></app-task-card>
+                <app-task-card *ngIf="!(isMobile$ | async)" 
+                    (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                    cdkDrag appLongPressDrag [cdkDragData]="task" 
+                    [task]="task">
+                </app-task-card>
+                <!-- Mobile Version ohne DragDrop -->
+                <app-task-card *ngIf="(isMobile$ | async)" 
+                    [isMobile]="true"
+                    (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                    [task]="task">
+                </app-task-card>
                 }
             </div>
+            
         </div>
 
         <div class="progress-container">
@@ -163,10 +190,19 @@
                 </div>
                 }
                 @for (task of board?.done; track task.id){
-                <app-task-card [isMobile]="(isMobile$ | async) ?? false" (moveTask)="moveTaskToList($event)" cdkDrag appLongPressDrag [cdkDragData]="task" (openTask)="openTask($event)"
+                <app-task-card *ngIf="!(isMobile$ | async)" 
+                    (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                    cdkDrag appLongPressDrag [cdkDragData]="task" 
                     [task]="task"></app-task-card>
+                    <!-- Mobile Version ohne DragDrop -->
+                    <app-task-card *ngIf="(isMobile$ | async)" 
+                        [isMobile]="true"
+                        (moveTask)="moveTaskToList($event)" (openTask)="openTask($event)"
+                        [task]="task">
+                    </app-task-card>
                 }
             </div>
+            
         </div>
     </div>
     <!-- #endregion -->
