@@ -10,7 +10,7 @@
       {{ getLetters(contact) }}
     </span>
     <div class="info">
-      <span class="name">{{ contact.name }}</span>
+      <span class="name">{{ contact.name }} <span *ngIf="isCurrentUser(contact)" class="name">(You)</span></span>
       <span class="mail">{{ contact.mail }}</span>
     </div>
   </div>
