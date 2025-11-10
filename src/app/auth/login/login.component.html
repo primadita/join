@@ -79,8 +79,13 @@
         />
       </div>
 
-      <div class="error" *ngIf="authError">
-        {{ authError }}
+      <div
+        class="error"
+        [class.is-visible]="authError"
+        [attr.aria-hidden]="!authError"
+        aria-live="polite"
+      >
+        {{ authError || " " }}
       </div>
 
       <div class="buttons-field">

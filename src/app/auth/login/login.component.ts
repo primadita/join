@@ -10,7 +10,13 @@ import { ToastMessagesService } from '../../shared/services/toast-messages.servi
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, A11yModule, ToastMessageComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    A11yModule,
+    ToastMessageComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -22,7 +28,11 @@ export class LoginComponent {
   hidePassword: boolean = true;
   showLogin: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService, private toastService: ToastMessagesService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastService: ToastMessagesService
+  ) {}
 
   // #region______________ AUTH-HANDLING & ROUTING ______________
   login() {
@@ -31,12 +41,8 @@ export class LoginComponent {
     this.authService
       .login(this.email, this.password)
       .then((userCredential) => {
-        // console.log('Login erfolgreich: ', userCredential.user.email);
-        this.toastService.show('Login is successful', 'success');
         // this.authService.currentUser = userCredential.user;
-        setTimeout(() => 
-          this.goToApp(), 3000
-        );
+        setTimeout(() => this.goToApp(), 3000);
         this.isSubmitting = false;
 
         try {
@@ -44,8 +50,6 @@ export class LoginComponent {
         } catch {}
       })
       .catch((error) => {
-        // console.error('Login fehlgeschlagen: ', error.message);
-        this.toastService.show('Login failed', 'error')
         this.authError = 'Check your email and password. Please try again.';
         this.isSubmitting = false;
       });
@@ -59,17 +63,11 @@ export class LoginComponent {
     this.authService
       .login(mail, pw)
       .then((userCredential) => {
-        // console.log('Login erfolgreich: ', userCredential.user.email);
-        this.toastService.show('Login is successful', 'success');
         // this.authService.currentUser = userCredential.user;
-        setTimeout(() => 
-          this.goToApp(), 3000
-        );
+        setTimeout(() => this.goToApp(), 3000);
         this.isSubmitting = false;
       })
       .catch((error) => {
-        // console.error('Login fehlgeschlagen: ', error.message);
-        this.toastService.show('Login failed','error');
         this.authError = 'Check your email and password. Please try again.';
         this.isSubmitting = false;
       });
