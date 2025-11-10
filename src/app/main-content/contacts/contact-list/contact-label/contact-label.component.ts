@@ -25,7 +25,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 export class ContactLabelComponent implements OnInit{
   // #region ATTRIBUTES
   contacts: Contact[]= [];
-  currentUserName: string | null = null;
+  currentUserName: string | null | undefined = null;
   /**
    * Service for managing and accessing contact data.
    */
@@ -128,7 +128,10 @@ export class ContactLabelComponent implements OnInit{
 
   ngOnInit(): void {
     this.authService.getCurrentUser();
-    this.currentUserName = this.authService.currentUser?.displayName || null;
+    this.authService.currentUser.subscribe( (user) => {
+      this.currentUserName = user?.displayName
+    })
+    // this.currentUserName = this.authService.currentUser?.displayName || null;
   }
 
   isCurrentUser(contact: Contact): boolean{

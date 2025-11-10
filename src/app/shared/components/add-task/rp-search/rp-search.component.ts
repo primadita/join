@@ -28,14 +28,17 @@ export class RpSearchComponent implements OnInit{
   @Output() contactsChanged = new EventEmitter<Contact[]>();
   contacts = inject(FirebaseServiceService);
   sendContact = output<Contact>();
-  currentUserName: string | null = null;
+  currentUserName: string | null | undefined = null;
   searchInput: string = '';
 
   constructor(public el: ElementRef, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.getCurrentUser();
-    this.currentUserName = this.authService.currentUser?.displayName || null;
+    this.authService.currentUser.subscribe((user) => {
+      this.currentUserName = user?.displayName;
+    })
+    // this.currentUserName = this.authService.currentUser?.displayName || null;
   }
 
   isCurrentUser(contact: Contact){
