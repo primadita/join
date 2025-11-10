@@ -52,7 +52,7 @@ export class HeaderComponent {
   }
 
   getLetters(): string {
-    if (!this.userName) return ''; 
+    if (!this.userName) return 'G'; 
     const parts = this.userName.trim().split(' ');
     const first = parts[0]?.[0] || '';
     const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
