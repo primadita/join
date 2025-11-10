@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TaskService } from '../../shared/services/task.service';
 import { Task, TASK_PRIORITY, TASK_STATUS } from '../../shared/interfaces/task';
 import { Subscription } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -12,7 +13,7 @@ import { AuthService } from '../../shared/services/auth.service';
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.scss'
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnInit{
 
   authService = inject(AuthService);
   tasks: Task[] = [];
@@ -20,21 +21,22 @@ export class SummaryComponent {
   userName: string | null | undefined;
   
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private router: Router) { }
 
   ngOnInit() {
     this.tasksSub = this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
     });
+    this.authService.getCurrentUser();
     this.authService.currentUser.subscribe( (user) => {
       this.userName = user?.displayName;
-    })
-    this.authService.getCurrentUser();
+    });
+    this.authService.isLoggedIn();
   }
 
   ngOnDestroy() {
     this.tasksSub?.unsubscribe();
-    this.authService.currentUser.unsubscribe();
+    // this.authService.currentUser.unsubscribe();
   }
 
   filterTodo(status: string): number {
