@@ -16,7 +16,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(2);
-    
+
     z-index: 2;
     animation: logoMove 1.5s ease-in-out forwards;
     animation-delay: 1s;
@@ -26,7 +26,8 @@
 @include mobile {
   .logo-field {
     img {
-      @include join-logo-small;
+      width: 3.5rem;
+      height: 4rem;
     }
   }
 }
@@ -156,6 +157,17 @@
 
       .error {
         color: $priority_urgent;
+        visibility: hidden;
+        display: block;
+        width: 100%;
+        min-height: 4rem;
+        text-align: center;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .error.is-visible {
+        visibility: visible;
       }
 
       img.visibility-on {
@@ -186,6 +198,11 @@
 }
 
 @include mobile {
+  @media (max-height: 600px) {
+    .logo-field {
+      display: none;
+    }
+  }
   .login-wrapper {
     padding: 4.5rem 2.7rem;
     @include d-flex($flexdir: column, $jc: center);
@@ -199,7 +216,7 @@
 
       .sign-up-field {
         width: 100%;
-        height: auto;
+        height: 100%;
 
         @include d-flex($flexdir: row);
         span {
@@ -214,7 +231,8 @@
     }
 
     .login-card {
-      width: auto;
+      width: 100%;
+      min-width: 0;
       @include d-flex($jc: space-between);
       gap: 2rem;
       order: 2;
@@ -230,8 +248,9 @@
       }
 
       .login-form {
+        width: 100%;
         .field {
-          width: auto;
+          width: 100%;
         }
       }
       .buttons-field {
@@ -264,7 +283,7 @@
 @keyframes logoMove {
   0% {
     transform: translate(-50%, -50%) scale(2);
-    
+
     top: 50%;
     left: 50%;
   }
