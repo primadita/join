@@ -64,5 +64,6 @@ div{
     left: calc((100dvw - 20rem) / 2);
     width: 20rem;
     height: 5rem;
+    z-index: 12;
     animation: slideUp 1s forwards;
 }
