@@ -93,6 +93,10 @@ section {
       display: block;
     }
 
+    @media(max-width:380px){
+      margin-left: 1.6rem;
+    }
+
     .blue-divide {
       height: 6rem;
       width: 0.2rem;
