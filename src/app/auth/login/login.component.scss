@@ -7,6 +7,7 @@
   background-color: #f0f0f0;
   z-index: 1;
   animation: backgroundMove 1.5s ease-in-out forwards;
+  animation-delay: 1s;
 
   img {
     position: absolute;
@@ -14,9 +15,11 @@
     height: 12.2rem;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(2);
+    
     z-index: 2;
     animation: logoMove 1.5s ease-in-out forwards;
+    animation-delay: 1s;
   }
 }
 
@@ -260,13 +263,15 @@
 // animaton
 @keyframes logoMove {
   0% {
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(2);
+    
     top: 50%;
     left: 50%;
   }
 
   100% {
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(1);
+
     top: 20px;
     left: 20px;
   }
