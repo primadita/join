@@ -162,12 +162,8 @@ section {
                     .invalid-password{
                         color: all.$priority_urgent;
                     }
-                    @include all.tablet{
-                        .invalid-password{
-                            .spec-character{
-                                display: none;
-                            }
-                        }
+                    .valid-password{
+                        color: all.$priority_low;
                     }
                     @include all.mobile{
                         width: 31rem;

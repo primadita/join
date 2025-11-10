@@ -21,10 +21,10 @@ export class PatternValidatorDirective implements Validator, OnInit{
   ngOnInit(): void {
       const presets: Record<string, string> = {
         generalName: '^\\p{L}+(?:[\'’\\- ]\\p{L}+)*$', // \p{L}: jedes Unicode Letter Zeichen, + : mindestens ein Buchstabe, (?: optional), dann ist '´- oder Leerzeichen erlaubt-
-        phoneFormat: '^\\+?[0-9 ]+$',
+        phoneFormat: '^\\+?[0-9](?:[0-9 ]*[0-9])?$',
         emailFormat: '^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$',
         generalText: '.*\\p{L}.*',
-        password: '^[a-zA-Z0-9.,_#&?!%+$*=^"\\/\\-]{8,}$'
+        password: '^[a-zA-Z0-9.,_#&?!%+$*=^"\\/\\-><:{}|]{8,}$'
       };
       this.patternString = presets[this.inputValue] || this.inputValue;
       this.regex = new RegExp(this.patternString, 'u');
@@ -34,6 +34,22 @@ export class PatternValidatorDirective implements Validator, OnInit{
 
   validate(control: AbstractControl): ValidationErrors | null {
     if(!this.regex || !control.value) return null; //ist das Eingabefeld leer? dann null. Null wird nicht als Fehler behandelt.
-    return this.regex.test(control.value) ? null : {invalidPattern: true};
+    if( this.inputValue !== 'password'){
+      return this.regex.test(control.value) ? null : {invalidPattern: true};
+    }
+
+    if (this.inputValue === 'password'){
+      const passwordInput = control.value;
+      const checkPasswordStrength = {
+        lowercase: !/[a-z]/.test(passwordInput),
+        uppercase: !/[A-Z]/.test(passwordInput),
+        number: !/[0-9]/.test(passwordInput),
+        special: !/[.,_#&?!%+$*=^"\\/\-><:{}|]/.test(passwordInput),
+        minlength: passwordInput.length < 8
+      }
+      const hasErrors = Object.values(checkPasswordStrength).some(v => v === true);
+      return hasErrors ? {passwordInvalid: checkPasswordStrength}: null;
+    }
+    return null;
   }
 }
