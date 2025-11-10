@@ -65,6 +65,7 @@ section {
   @include all.d-flex($alit: flex-start, $jc: flex-start);
   gap: 4rem;
   padding: 9.6rem;
+  padding-right: 1.6rem;
 
   @include all.notebook {
     padding: 5.6rem;
@@ -324,6 +325,10 @@ section {
 
     .greeting-container {
       @include all.d-flex($alit: flex-start);
+      flex: 1;
+      max-width: 70rem;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
 
       @media (max-width: 1230px) {
         display: none;
