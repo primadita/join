@@ -29,6 +29,7 @@ export class RpSearchComponent implements OnInit{
   contacts = inject(FirebaseServiceService);
   sendContact = output<Contact>();
   currentUserName: string | null | undefined = null;
+  currentUserMail: string | null | undefined = null;
   searchInput: string = '';
 
   constructor(public el: ElementRef, private authService: AuthService) {}
@@ -37,12 +38,13 @@ export class RpSearchComponent implements OnInit{
     this.authService.getCurrentUser();
     this.authService.currentUser.subscribe((user) => {
       this.currentUserName = user?.displayName;
+      this.currentUserMail = user?.email;
     })
     // this.currentUserName = this.authService.currentUser?.displayName || null;
   }
 
   isCurrentUser(contact: Contact){
-    return this.currentUserName === contact.name;
+    return this.currentUserName === contact.name && this.currentUserMail === contact.mail;
   }
 
   getLetters(contact: Contact): string {
