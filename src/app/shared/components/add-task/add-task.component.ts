@@ -97,6 +97,7 @@ export class AddTaskComponent {
       this.newTask.category = parsed.category || TASK_CATEGORY.DEFAULT;
       this.newTask.priority = parsed.priority || TASK_PRIORITY.MEDIUM;
       this.newTask.subtasks = parsed.subtasks || [];
+      this.singleSubtask = parsed.subtaskInput || "";
     }
     this.priorityFlag = {
       urgent: this.newTask.priority === TASK_PRIORITY.URGENT,
@@ -120,7 +121,8 @@ export class AddTaskComponent {
     assignedTo: this.newTask.assignedTo,
     category: this.newTask.category,
     priority: this.newTask.priority,
-    subtasks: this.newTask.subtasks
+    subtasks: this.newTask.subtasks,
+    subtaskInput: this.singleSubtask
   };
   sessionStorage.setItem('newTaskData', JSON.stringify(dataToSave));
   }
