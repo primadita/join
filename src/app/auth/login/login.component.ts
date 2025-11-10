@@ -33,7 +33,7 @@ export class LoginComponent {
       .then((userCredential) => {
         // console.log('Login erfolgreich: ', userCredential.user.email);
         this.toastService.show('Login is successful', 'success');
-        this.authService.currentUser = userCredential.user;
+        // this.authService.currentUser = userCredential.user;
         setTimeout(() => 
           this.goToApp(), 3000
         );
@@ -61,7 +61,7 @@ export class LoginComponent {
       .then((userCredential) => {
         // console.log('Login erfolgreich: ', userCredential.user.email);
         this.toastService.show('Login is successful', 'success');
-        this.authService.currentUser = userCredential.user;
+        // this.authService.currentUser = userCredential.user;
         setTimeout(() => 
           this.goToApp(), 3000
         );

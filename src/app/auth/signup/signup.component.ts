@@ -101,7 +101,7 @@ export class SignupComponent {
       const user = userCredential.user;
       this.addContact();
       this.authService.addProfileName(this.user.name)
-      this.authService.currentUser = userCredential.user;
+      // this.authService.currentUser = userCredential.user;
       this.toastService.show('Sign up is successful',"success");
       setTimeout(() => {
         this.goToMainPage();
