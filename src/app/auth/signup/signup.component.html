@@ -25,7 +25,7 @@
                     @if(name.hasError('required')){
                         <span class="invalid-inputs">Name is required!</span>
                     } @else if (name.hasError('invalidPattern')) {
-                        <span class="invalid-inputs">No 0-9,,,.,#,*,!,$,%,&,\,/,_,",?,~,=,;,: </span>
+                        <span class="invalid-inputs">Please enter a valid name!</span>
                     }
                 }
             </div>
@@ -65,7 +65,7 @@
                             <span class="invalid-password">a lowercase letter</span><br>
                             <span class="invalid-password">a uppercase letter</span><br>
                             <span class="invalid-password">a number</span><br>
-                            <span class="invalid-password">a special character <span class="spec-character">e.g: _,,.,#,*,/,?,!,=,&,%,$,^,",+,- </span></span><br>
+                            <span class="invalid-password">a special character</span><br>
                             <span class="invalid-password">8 characters</span>
                         </div>
                     }
