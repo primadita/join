@@ -1,8 +1,9 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FirebaseServiceService } from '../../../../shared/services/firebase.service';
 import { Contact } from '../../../../shared/interfaces/contact';
 import { CommonModule, KeyValuePipe } from '@angular/common';
 import { SelectContactService } from '../../../../shared/services/select-contact.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-contact-label',
@@ -21,8 +22,11 @@ import { SelectContactService } from '../../../../shared/services/select-contact
  * - Sorts contacts alphabetically.
  * - Generates initials for contact avatars.
  */
-export class ContactLabelComponent {
+export class ContactLabelComponent implements OnInit{
   // #region ATTRIBUTES
+  contacts: Contact[]= [];
+  currentUserName: string | null | undefined = null;
+  currentUserMail: string | null | undefined = null;
   /**
    * Service for managing and accessing contact data.
    */
@@ -43,6 +47,8 @@ export class ContactLabelComponent {
    */
   activeContactId?: string;
   // #endregion
+
+  constructor(private contactService: FirebaseServiceService, private authService: AuthService){}
 
   // #region METHODS
   /**
@@ -119,6 +125,19 @@ export class ContactLabelComponent {
    */
   selectContact(contact: Contact){
     this.selectService.selectContact(contact);
+  }
+
+  ngOnInit(): void {
+    this.authService.getCurrentUser();
+    this.authService.currentUser.subscribe( (user) => {
+      this.currentUserName = user?.displayName;
+      this.currentUserMail = user?.email;
+    })
+    // this.currentUserName = this.authService.currentUser?.displayName || null;
+  }
+
+  isCurrentUser(contact: Contact): boolean{
+    return this.currentUserName === contact.name && this.currentUserMail === contact.mail;
   }
   // #endregion
 }

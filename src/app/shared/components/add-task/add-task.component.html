@@ -6,7 +6,7 @@
         <!-- #region TITLE -->
         <div class="input-wrapper">
           <h6>Title<span class="red">*</span></h6>
-          <input #title="ngModel" class="form-field" maxlength="30" type="text" name="title" [(ngModel)]="newTask.title"
+          <input #title="ngModel" class="form-field" maxlength="30" type="text" name="title" [(ngModel)]="newTask.title" (ngModelChange)="saveInputs()"
             placeholder="Enter a title" pattern=".*[A-Za-zÄÖÜäöüß].*" required />
           @if(!title.valid && title.touched){
           <span class="warning">This field is required!</span>
@@ -18,14 +18,14 @@
         <!-- #region DESCRIPTION -->
         <div class="input-wrapper">
           <h6>Description</h6>
-          <textarea maxlength="500" name="description" id="" [(ngModel)]="newTask.description"
+          <textarea maxlength="500" name="description" id="" [(ngModel)]="newTask.description" (ngModelChange)="saveInputs()"
             placeholder="Enter a description"></textarea>
         </div>
         <!-- #endregion -->
         <!-- #region DUE DATE -->
         <div class="input-wrapper">
           <h6>Due date<span class="red">*</span></h6>
-          <app-date-picker (sendDate)="setDate($event)"></app-date-picker>
+          <app-date-picker [selectedDate]="newTask.date" (sendDate)="setDate($event)"></app-date-picker>
         </div>
         <!-- #endregion -->
       </div>
@@ -88,7 +88,7 @@
         <!-- #region ASSIGNED TO -->
         <div class="input-wrapper" id="rp-wrapper">
           <h6>Assigned to</h6>
-          <app-rp-search (sendContact)="addRpToArray($event)" [selectedContacts]="newTask.assignedTo">
+          <app-rp-search (sendContact)="addRpToArray($event)" [selectedContacts]="newTask.assignedTo" (contactsChanged)="updateAssignedContacts($event)">
           </app-rp-search>
           <div [ngClass]="{'rp-selected-box': newTask.assignedTo.length >= 1}">
             @if (newTask.assignedTo.length > 3) { @for (contact of getThreeRP();
@@ -118,7 +118,7 @@
         <div class="input-wrapper" id="subtask-wrapper">
           <h6>Subtasks</h6>
           <div class="subtask-input-wrapper">
-            <input #subtask="ngModel" class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask"
+            <input #subtask="ngModel" class="form-field" id="subtask-input" type="text" maxlength="150" [(ngModel)]="singleSubtask" (ngModelChange)="saveInputs()"
               name="subtask" placeholder="Add new subtask" appPatternValidator="generalText" (keydown.enter)="addSubtask(subtask)" />
             <div class="subtask-btn-wrapper">
               <button (click)="clearSubtaskInput()" type="button" class="clear-btn" ></button>

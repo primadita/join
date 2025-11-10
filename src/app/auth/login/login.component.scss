@@ -1,27 +1,48 @@
 @use "../../../../public/assets/styles/all-styles.scss" as *;
 
+.logo-field {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-color: #f0f0f0;
+  z-index: 1;
+  animation: backgroundMove 1.5s ease-in-out forwards;
+  animation-delay: 1s;
+
+  img {
+    position: absolute;
+    width: 10rem;
+    height: 12.2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    
+    z-index: 2;
+    animation: logoMove 1.5s ease-in-out forwards;
+    animation-delay: 1s;
+  }
+}
+
+@include mobile {
+  .logo-field {
+    img {
+      @include join-logo-small;
+    }
+  }
+}
+
 .login-wrapper {
   height: 100%;
   @include d-flex($flexdir: column, $jc: space-between);
   background-color: $lightgray;
   padding: 8rem 7.7rem;
 
-  .logo-field {
-    position: absolute;
-    left: 2rem;
-    top: 2rem;
-    img {
-      @include join-logo-large;
-    }
-  }
-
   .login-head {
     margin-left: auto;
 
-    // #region box for sign-up with span element
     .sign-up-field {
       height: 100%;
-
+      z-index: 10;
       span {
         margin-right: 4rem;
       }
@@ -53,6 +74,7 @@
     padding: 6rem;
     @include d-flex($jc: space-between);
     gap: 4rem;
+    z-index: 10;
     .title-field {
       .title {
         font-weight: 700;
@@ -95,7 +117,7 @@
       .field {
         width: 42.2rem;
         height: 4.8rem;
-        @include d-flex($flexdir: row);
+        @include d-flex($flexdir: row, $jc: space-between);
         padding: 0 2rem;
         border: 0.1rem solid $iconColor;
         border-radius: 1rem;
@@ -119,13 +141,31 @@
         border: 0.2rem solid $lightblue2;
         background: #fff;
 
-        /* Swap icons on focus-within */
         img.lock {
           display: none;
         }
         img.visibility-off {
-          display: inline-block;
+          display: block;
         }
+      }
+
+      .field.has-error,
+      .field.has-error:focus-within {
+        border: 0.1rem solid $priority_urgent;
+      }
+
+      .error {
+        color: $priority_urgent;
+      }
+
+      img.visibility-on {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+      .field img.visibility-off,
+      .field img.visibility-on {
+        display: block;
+        cursor: pointer;
       }
     }
   }
@@ -133,6 +173,7 @@
   .meta {
     @include d-flex($flexdir: row);
     gap: 4rem;
+    z-index: 10;
 
     .link {
       font-size: 1.6rem;
@@ -147,13 +188,9 @@
 @include mobile {
   .login-wrapper {
     padding: 4.5rem 2.7rem;
-    @include d-flex($flexdir: column, $jc: space-around);
+    @include d-flex($flexdir: column, $jc: center);
     gap: 2rem;
     overflow-y: auto;
-
-    .logo-field {
-      display: none;
-    }
 
     .login-head {
       order: 3;
@@ -186,9 +223,6 @@
       .title-field {
         width: 100%;
         @include d-flex($flexdir: row, $jc: space-around);
-        .logo-field-mobile {
-          display: block;
-        }
 
         .title-line {
           width: 9rem;
@@ -217,11 +251,40 @@
   }
 }
 
-input[type="email"],
-input[type="password"] {
+.input-email,
+.input-pw {
   width: 100%;
   padding: 0.8rem 1rem 0.8rem 0;
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+// animaton
+@keyframes logoMove {
+  0% {
+    transform: translate(-50%, -50%) scale(2);
+    
+    top: 50%;
+    left: 50%;
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+
+    top: 20px;
+    left: 20px;
+  }
+}
+
+@keyframes backgroundMove {
+  0% {
+    background-color: #f0f0f0;
+    z-index: 100;
+  }
+
+  100% {
+    background-color: rgba(240, 240, 240, 0);
+    z-index: 1;
+  }
 }

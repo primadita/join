@@ -2,15 +2,19 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   inject,
   Input,
+  OnInit,
+  Output,
   output,
   signal,
 } from '@angular/core';
 import { FirebaseServiceService } from '../../../services/firebase.service';
 import { Contact } from '../../../interfaces/contact';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-rp-search',
@@ -19,14 +23,29 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './rp-search.component.html',
   styleUrl: './rp-search.component.scss',
 })
-export class RpSearchComponent {
+export class RpSearchComponent implements OnInit{
   @Input() selectedContacts!: Contact[];
+  @Output() contactsChanged = new EventEmitter<Contact[]>();
   contacts = inject(FirebaseServiceService);
   sendContact = output<Contact>();
-
+  currentUserName: string | null | undefined = null;
+  currentUserMail: string | null | undefined = null;
   searchInput: string = '';
 
-  constructor(public el: ElementRef) {}
+  constructor(public el: ElementRef, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.getCurrentUser();
+    this.authService.currentUser.subscribe((user) => {
+      this.currentUserName = user?.displayName;
+      this.currentUserMail = user?.email;
+    })
+    // this.currentUserName = this.authService.currentUser?.displayName || null;
+  }
+
+  isCurrentUser(contact: Contact){
+    return this.currentUserName === contact.name && this.currentUserMail === contact.mail;
+  }
 
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -37,9 +56,24 @@ export class RpSearchComponent {
   }
 
   sendContactToParent(contact: Contact){
-    this.sendContact.emit(contact);
+    // this.sendContact.emit(contact);
+    const index = this.selectedContacts.findIndex(c => c.id === contact.id);
+
+    if (index === -1) {
+      // Kontakt hinzufügen
+      this.selectedContacts.push(contact);
+    } else {
+      // Kontakt entfernen
+      this.selectedContacts.splice(index, 1);
+    }
+
+    // Änderungen ans Parent senden
+    this.sendSelectedContactsToParent();
   }
 
+  sendSelectedContactsToParent() {
+    this.contactsChanged.emit(this.selectedContacts);
+  }
   /**
    * Returns an alphabetically sorted copy of the contact list.
    *
@@ -60,11 +94,12 @@ export class RpSearchComponent {
   }
 
   checkSelectedRp(contact: Contact): boolean {
-    if (this.selectedContacts.includes(contact)) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (this.selectedContacts.includes(contact)) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    return this.selectedContacts.some(c => c.id === contact.id);
   }
 
   searchContact() {
