@@ -60,14 +60,17 @@
                     @if(password.hasError('required')){
                         <span class="invalid-inputs">Password is required!</span>
                     } @else if(password.invalid) {
-                        <div class="password-hints">
+                        <!-- @if(password.errors?.passwordInvalid as err){ -->
+                            <div *ngIf="password.errors?.['passwordInvalid'] as err" class="password-hints">
                             Password must contain at least: <br>
-                            <span class="invalid-password">a lowercase letter</span><br>
-                            <span class="invalid-password">a uppercase letter</span><br>
-                            <span class="invalid-password">a number</span><br>
-                            <span class="invalid-password">a special character</span><br>
-                            <span class="invalid-password">8 characters</span>
+                            <span [ngClass]="err.lowercase ? 'invalid-password': 'valid-password'">a lowercase letter</span><br>
+                            <span [ngClass]="err.uppercase ? 'invalid-password': 'valid-password'">a uppercase letter</span><br>
+                            <span [ngClass]="err.number ? 'invalid-password': 'valid-password'">a number</span><br>
+                            <span [ngClass]="err.special ? 'invalid-password': 'valid-password'">a special character</span><br>
+                            <span [ngClass]="err.minlength ? 'invalid-password': 'valid-password'">8 characters</span>
                         </div>
+                        <!-- } -->
+                        
                     }
                 }
             </div>
