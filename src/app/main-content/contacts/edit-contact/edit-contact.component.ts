@@ -41,7 +41,7 @@ export class EditContactComponent {
    * Event emitted when the user chooses to delete the contact.
    * @event
    */
-  @Output() delete = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<Contact>();
 
   /**
    * The contact details provided as input for editing.
