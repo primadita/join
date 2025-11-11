@@ -9,7 +9,7 @@ export const routes: Routes = [
   // wenn im browser nur / verwendet wird, leitet dies direkt auf /login um
   { path: '', pathMatch: 'full', redirectTo: '/login' },
   // aufruf von /login rendert die Login-Seite
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
 
   // aufruf von /legalAndPrivacy rendert den Inhalt, für die policy oder legal
   { path: 'legalAndPrivacy', component: LegalAndPrivacyComponent },
@@ -18,5 +18,5 @@ export const routes: Routes = [
   // aufruf von /main rendert den Wrapper, der <app-main-content anzeigt
   { path: 'main', component: MainShellComponent, canActivate: [authGuard] },
   // jeder unbekannte pfad wird auf /login umgeleitet
-  { path: '**', redirectTo: '/login' },
+  { path: '**', pathMatch: 'full', redirectTo: '/login' },
 ];
