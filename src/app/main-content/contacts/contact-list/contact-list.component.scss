@@ -1,0 +1,64 @@
+@use "../../../../../public/assets/styles/all-styles.scss" as all;
+
+.contact-list-container {
+  background-color: all.$white;
+  width: 100%;
+
+  @include all.d-flex(
+    $flexdir: column,
+    $alit: center,
+    $jc: center,
+    $cgap: 0.5rem
+  );
+  box-shadow: all.$shadow;
+  padding: 15px 30px;
+  overflow-y: scroll;
+
+  .add-new-contact-box {
+    .add-new-contact-btn {
+      @include all.press-button-style();
+    }
+  }
+
+  .contact-list {
+    width: 100%;
+    height: calc(100dvh - 15.4rem);
+  }
+
+  .add-new-contact-box-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .contact-list-container {
+    .add-new-contact-box {
+      display: none;
+    }
+
+    .add-new-contact-box-mobile {
+      display: block;
+      position: fixed;
+      bottom: 8rem;
+      right: 10%;
+      z-index: 5;
+
+      .add-new-contact-btn {
+        background-color: #091931;
+        border-radius: 50%;
+        box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
+        transition: background-color 0.4s ease;
+        cursor: pointer;
+        @include all.square($length: 5.6rem);
+        @include all.d-flex();
+        .icon {
+          @include all.square($length: 2.6rem);
+        }
+      }
+
+      .add-new-contact-btn:focus {
+        background-color: all.$lightblue2;
+      }
+    }
+  }
+}

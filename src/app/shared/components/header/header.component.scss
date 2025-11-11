@@ -1,0 +1,115 @@
+@use "../../../../../public/assets/styles/all-styles.scss" as all;
+
+header {
+  @include all.d-flex($flexdir: row, $jc: space-between);
+  width: 100%;
+  padding: 0 3.2rem 0 10rem;
+  height: all.$header-height;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 0px 0px;
+  z-index: 5;
+
+  @media (max-width: 800px) {
+    padding: 0 3.2rem 0 3.2rem;
+  }
+
+  #join-logo {
+    @media (min-width: 800px) {
+      display: none;
+    }
+  }
+
+  span {
+    @media (max-width: 800px) {
+      display: none;
+    }
+  }
+
+  > div {
+    // @include all.d-flex($flexdir: row);
+    gap: 1.6rem;
+    #help-btn {
+      display: inline-block;
+      @include all.square($length: 2.4rem);
+      background: transparent;
+      border: 0;
+      padding: 0;
+      transition: transform 0.3s ease;
+      img {
+        @include all.square($length: 2.4rem);
+      }
+      &:hover {
+        transform: scale(1.2);
+      }
+      @include all.mobile {
+        display: none;
+      }
+    }
+    #user-btn {
+      background-color: all.$white;
+      color: all.$lightblue2;
+      font-weight: 600;
+      border: 2px solid black;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 125ms;
+      @include all.d-flex();
+      @include all.square($length: 4rem);
+      &:hover {
+        background-color: all.$lightgray;
+      }
+    }
+  }
+  .main{
+    @include all.d-flex($flexdir: row);
+  }
+  .login{
+    display: none;
+  }
+  .overlay-nav {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: 1920px;
+    height: 100dvh;
+    padding-right: 3.2rem;
+    @include all.d-flex($jc: flex-start, $alit: flex-end);
+
+    nav {
+      width: 17rem;
+      max-width: 1920px;
+      top: all.$header-height;
+      @include all.d-flex($alit: flex-start);
+      background-color: all.$mainColor;
+      padding: 2.4rem 0.8rem;
+      border-radius: 1.6rem;
+      border-top-right-radius: 0;
+      z-index: 100;
+      .nav-link {
+        text-decoration: none;
+        color: all.$lightgray;
+        text-align: left;
+        background: transparent;
+        width: 100%;
+        padding: 0.8rem 1.6rem;
+        &:hover {
+          background-color: #39475b;
+        }
+        a {
+          color: all.$lightgray;
+        }
+      }
+      .mobile {
+        display: none;
+        @include all.mobile {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  header {
+    width: 100%;
+  }
+}

@@ -1,0 +1,82 @@
+@keyframes slideInFromRight {
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)};
+    
+}
+
+@keyframes slideInFromRight-tablet{
+    0% {right: 0};
+    100% {right: calc(50dvw - 20rem)};
+}
+
+@keyframes slideInFromRight-mobile{
+    0% {right: 0};
+    100% {right: 25dvw};
+}
+
+@keyframes slideInFromRight-smartphone {
+    0% {right: 0};
+    100% {right: 12dvw};
+}
+
+@keyframes toast-addtask-slideInFromRight {
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)}
+}
+
+@keyframes toast-board-slideInFromRight {
+    0% {right: 0};
+    100% {right: calc(50dvw - 25rem)};
+}
+
+@keyframes toast-board-slideInFromRight-tablet {
+    0% {right: 0};
+    100% {right: 25dvw};
+}
+
+@keyframes toast-board-slideInFromRight-mobile {
+    0% {right: 0};
+    100% {right: 10dvw};
+}
+
+@keyframes slideInPopUp {
+    0% {transform: translateX(100%)};
+    100% {transform:translateX(0%)}
+}
+
+@keyframes slideIn {
+    from {transform: translateX(100%);}
+    to {transform: translateX(0);}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideOut {
+    from {transform: translateX(0);}
+    to {transform: translateX(100%);}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+@keyframes slideUp {
+    0%{top: 100dvh};
+    100%{top: calc((100dvh - 7.5rem) / 2);
+        @media (max-width: 640px) {
+            top: calc((100dvh - 5rem) / 2);
+        };
+        @media (max-width: 450px) {
+            top: calc((100dvh - 3rem) / 2);
+        }
+    };
+    // @media (max-width: 640px) {
+    //     100%{top: calc((100dvh - 5rem) / 2)};
+    // }
+    // @media (max-width: 450px) {
+    //     100%{top: calc((100dvh - 3rem) / 2)};
+    // }
+}

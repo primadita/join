@@ -1,0 +1,252 @@
+@use "./../../../../../public/assets/styles/all-styles.scss" as all;
+
+#normal-view {
+  background: all.$lightgray;
+  overflow-y: auto;
+
+  .content {
+    padding-top: 10rem;
+    padding-left: 5rem;
+    @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 3.5rem);
+    @include all.mobile {
+      padding-top: 3rem;
+      padding-left: 3rem;
+    }
+    .back-btn {
+      display: none;
+      @media (max-width: 1300px) {
+        display: block;
+        position: absolute;
+        top: 8rem;
+        right: 5rem;
+        cursor: pointer;
+        @include all.square($length: 5.7rem);
+        @include all.tablet {
+          right: 3rem;
+          @include all.square($length: 4.7rem);
+        }
+      }
+    }
+    #contact-details-div {
+      .contact-label-big {
+        width: 100%;
+        animation: slideInPopUp 500ms forwards;
+        animation-iteration-count: 1;
+        @include all.d-flex(
+          $flexdir: row,
+          $alit: center,
+          $cgap: 5rem,
+          $jc: flex-start
+        );
+
+        @include all.mobile {
+          gap: 3rem;
+        }
+        @media (max-width: 400px) {
+          gap: 1.6rem;
+        }
+
+        .edit-delete-option {
+          @include all.d-flex(
+            $flexdir: column,
+            $alit: flex-start,
+            $rgap: 0.5rem
+          );
+
+          h2 {
+            width: 80rem;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            @media (max-width: 1750px) {
+              width: 50rem;
+            }
+            @media (max-width: 1410px) {
+              width: 34.5rem;
+            }
+            @media (max-width: 1300px) {
+              width: 60rem;
+            }
+            @media (max-width: 1100px) {
+              width: 35rem;
+              font-weight: 500;
+            }
+            @media (max-width: 570px) {
+              width: 30rem;
+            }
+            @media (max-width: 450px) {
+              width: 25rem;
+            }
+            @media (max-width: 370px) {
+              width: 18rem;
+            }
+          }
+
+          .edit-delete-btn {
+            @include all.d-flex(
+              $flexdir: row,
+              $jc: flex-start,
+              $alit: center,
+              $cgap: 2rem
+            );
+            button {
+              color: all.$mainColor;
+              background: transparent;
+              cursor: pointer;
+              @include all.d-flex(
+                $flexdir: row,
+                $jc: flex-start,
+                $alit: center,
+                $cgap: 0.5rem
+              );
+              &:hover {
+                color: all.$lightblue;
+                font-weight: 700;
+                svg {
+                  g {
+                    path {
+                      fill: all.$lightblue;
+                    }
+                  }
+                }
+              }
+              @include all.tablet {
+                display: none;
+              }
+            }
+            .edit-btn {
+              width: 6rem;
+            }
+          }
+        }
+      }
+    }
+
+    h6 {
+      padding-top: 5rem;
+      padding-bottom: 3rem;
+      width: 100%;
+      animation: slideInPopUp 500ms forwards;
+      animation-iteration-count: 1;
+      @include all.mobile {
+        padding-top: 3rem;
+      }
+    }
+
+    .email-phone-details {
+      width: 100%;
+      animation: slideInPopUp 500ms forwards;
+      animation-iteration-count: 1;
+      @include all.d-flex($flexdir: column, $alit: flex-start, $rgap: 2.2rem);
+      @include all.mobile{
+        gap: 1.5rem;
+      }
+
+      .bold {
+        @include all.style-bold();
+      }
+
+      .blue {
+        color: all.$lightblue;
+      }
+      a {
+        width: auto;
+        max-width: 40rem;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        @media (max-width: 450px) {
+          max-width: 30rem;
+        }
+        @media (max-width: 350px) {
+          max-width: 25rem;
+        }
+      }
+    }
+  }
+}
+// #region EDIT CONTACT WINDOW
+.edit-view {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0);
+}
+// #endregion
+// #region EDIT-MOBILE-BOX
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 5;
+}
+.edit-mobile-box {
+  display: none;
+  @include all.tablet {
+    z-index: 500;
+    position: fixed;
+    background-color: all.$hoverMainColor;
+    right: 10%;
+    bottom: 8rem;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.4s ease;
+    cursor: pointer;
+    @include all.square($length: 5.6rem);
+    @include all.d-flex();
+    &:hover {
+      background-color: all.$lightblue2;
+    }
+    .edit-toggle-icon {
+      @include all.square($length: 2.5rem);
+    }
+
+    .edit-box-pop-up {
+      position: absolute;
+      right: -25%;
+      bottom: -0.5rem;
+      width: 11.6rem;
+      height: 10rem;
+      background: #fff;
+      border-radius: 20px 20px 0 20px;
+      padding: 1rem 1rem 1rem 1.5rem;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      @include all.d-flex(
+        $flexdir: column,
+        $jc: space-around,
+        $alit: flex-start
+      );
+      .edit-btn,
+      .delete-btn {
+        background-color: #fff;
+        font-size: 1.8rem;
+        @include all.d-flex($flexdir: row, $cgap: 1rem);
+        .icon {
+          @include all.square($length: 2.4rem);
+        }
+      }
+      .edit-btn:focus,
+      .delete-btn:focus {
+        color: all.$lightblue2;
+        .icon {
+          color: all.$lightblue2;
+        }
+      }
+      .edit-btn:focus .icon path,
+      .delete-btn:focus .icon path {
+        fill: all.$lightblue2;
+      }
+      &.open {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+}

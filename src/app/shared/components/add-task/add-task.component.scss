@@ -1,0 +1,478 @@
+@use "@angular/material" as mat;
+@use "../../../../../public/assets/styles/all-styles.scss" as all;
+
+.content {
+  @include all.d-flex($alit: flex-start);
+  gap: 2.5rem;
+  padding: 0 0 0 9.6rem;
+
+  form {
+    @include all.d-flex();
+    width: 100%;
+    gap: 2rem;
+
+    .form-input {
+      @include all.d-flex($flexdir: row, $alit: flex-start, $cgap: 2.4rem);
+      width: 100%;
+      padding-right: 0.5rem;
+
+      @media (max-width: 1140px) {
+        display: block;
+        height: 65dvh;
+        overflow-y: auto;
+      }
+
+      @media (max-height: 950px) {
+        height: 60dvh;
+        gap: 1.6rem;
+      }
+
+      @media (max-height: 870px) {
+        height: 55dvh;
+      }
+
+      @media (max-height: 750px) {
+        height: 50dvh;
+      }
+
+      @media (max-height: 600px) {
+        height: 40dvh;
+      }
+
+      .input-wrapper {
+        width: 40rem;
+        margin-bottom: 2.4rem;
+
+        @media (max-width: 450px) {
+          width: 35rem;
+        }
+
+        @media (max-width: 380px) {
+          width: 30rem;
+        }
+
+        h6 {
+          margin-bottom: 0.8rem;
+        }
+
+        .warning {
+          color: all.$priority_urgent;
+          position: absolute;
+          top: 7.2rem;
+          left: 1rem;
+          font-size: 1.6rem;
+        }
+
+        .warning-invalid-subtask {
+          color: all.$priority_urgent;
+          position: absolute;
+          top: 12.8rem;
+          margin-top: 0.4rem;
+          left: 1rem;
+          font-size: 1.6rem;
+        }
+
+        // #region TITLE
+        .form-field {
+          height: 4rem;
+          border: solid 1px all.$lightgray6;
+          padding-left: 1.2rem;
+          padding-right: 3.6rem;
+          width: 100%;
+          border-radius: 0.8rem;
+          color: all.$black;
+          font-size: 1.6rem;
+          font-family: all.$font;
+
+          &:focus {
+            border: solid 1px all.$lightblue2;
+            outline: none;
+          }
+        }
+
+        // #endregion
+        // #region DESCRIPTION
+        textarea {
+          height: 12rem;
+          border: solid 1px all.$lightgray6;
+          padding: 0.8rem 1.2rem;
+          width: 100%;
+          border-radius: 0.8rem;
+          color: all.$black;
+          font-size: 1.6rem;
+          font-family: all.$font;
+          resize: none;
+
+          &:focus {
+            border: solid 1px all.$lightblue2;
+            outline: none;
+          }
+        }
+
+        // #endregion
+        // #region PRIORITY
+        .priority-btn-wrapper {
+          width: 100%;
+          @include all.d-flex($flexdir: row, $jc: space-between);
+
+          button {
+            @include all.d-flex($flexdir: row);
+            gap: 0.8rem;
+            width: 30%;
+            height: 4rem;
+            border-radius: 0.8rem;
+            border: solid 1px all.$lightgray6;
+            background-color: all.$white;
+            transition: 125ms;
+
+            &:hover {
+              box-shadow: all.$shadow;
+            }
+
+            svg {
+              @include all.square($length: 1.6rem);
+            }
+          }
+
+          .active-urgent {
+            background-color: all.$priority_urgent;
+            color: all.$white;
+
+            path {
+              fill: all.$white;
+            }
+          }
+
+          .active-medium {
+            background-color: all.$priority_medium;
+            color: all.$white;
+
+            path {
+              fill: all.$white;
+            }
+          }
+
+          .active-low {
+            background-color: all.$priority_low;
+            color: all.$white;
+
+            path {
+              fill: all.$white;
+            }
+          }
+        }
+      }
+      // #endregion
+      // #region SUBTASK-WRAPPER
+      #subtask-wrapper {
+        .hidden {
+          visibility: hidden;
+        }
+
+        // #region von Henry
+
+        ul {
+          height: 6rem;
+          overflow-y: auto;
+          gap: 0.5rem;
+          box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+          border-radius: 8px;
+
+          li {
+            width: 100%;
+            height: 3rem;
+            @include all.d-flex($flexdir: row, $jc: flex-start);
+            border-radius: 1rem;
+            cursor: pointer;
+            padding-left: 0.8rem;
+
+            .list-content {
+              width: 100%;
+              @include all.d-flex($flexdir: row, $jc: none, $alit: center);
+              gap: 2.5rem;
+
+              > span {
+                width: 1000px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+
+              .edit-wrapper {
+                width: 100%;
+              }
+
+              .edit-input {
+                width: 100%;
+                height: 3rem;
+                border-bottom: 1px solid all.$lightblue2;
+                padding-left: 1.6rem;
+                padding-right: 6rem;
+              }
+
+              input:focus {
+                border: none;
+                border-bottom: 1px solid all.$lightblue2;
+              }
+
+              .edit-subtask {
+                position: absolute;
+                top: 50%;
+                right: 0.9rem;
+                transform: translateY(-50%);
+                @include all.d-flex(
+                  $flexdir: row,
+                  $jc: flex-start,
+                  $alit: center
+                );
+                gap: 0.4rem;
+                flex: 0 0 auto;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.2s ease-in-out;
+
+                @include all.notebook {
+                  opacity: 1;
+                  visibility: visible;
+                  pointer-events: all;
+                }
+
+                button {
+                  @include all.d-flex(
+                    $flexdir: row,
+                    $jc: center,
+                    $alit: center
+                  );
+                }
+
+                .separator {
+                  height: 2rem;
+                  width: 0.1rem;
+                  background-color: all.$lightgray2;
+                }
+              }
+            }
+
+            @include all.desktop {
+              &:hover .list-content .edit-subtask {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: all;
+              }
+            }
+
+            &.editing .list-content .edit-subtask,
+            .list-content .edit-subtask.force-visible {
+              opacity: 1;
+              visibility: visible;
+              pointer-events: all;
+            }
+          }
+
+          li:hover {
+            background-color: all.$lightgray4;
+          }
+        }
+
+        // #endregion
+
+        button {
+          height: 2rem;
+          width: 2rem;
+          background-color: transparent;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 1.9rem;
+          border-radius: 50%;
+
+          &:hover {
+            background-color: all.$lightgray2;
+          }
+        }
+
+        .subtask-input-wrapper {
+          height: 4rem;
+          width: 100%;
+
+          #subtask-input {
+            padding-right: 6rem;
+          }
+
+          .subtask-btn-wrapper {
+            @include all.d-flex($flexdir: row);
+            gap: 0.4rem;
+            position: absolute;
+            top: 50%;
+            right: -1.6rem;
+            transform: translate(-50%, -50%);
+
+            .clear-btn {
+              background-image: url(../../../../../public/assets/icons/cancel.svg);
+            }
+
+            .btn-divide {
+              height: 2rem;
+              width: 0.1rem;
+              background-color: all.$lightgray2;
+            }
+
+            .add-btn {
+              background-image: url(../../../../../public/assets/icons/check_dark.svg);
+            }
+          }
+        }
+      }
+      // #endregion
+      // #region ASSIGNED TO
+
+      #rp-wrapper {
+        height: 12rem;
+
+        .rp-selected-box {
+          @include all.d-flex($flexdir: row, $jc: flex-start);
+          margin-top: 1.6rem;
+          box-shadow: inset 0 0 8px 1px rgba(0, 0, 0, 0.15);
+          border-radius: 0.8rem;
+          height: 5rem;
+          padding-left: 0.8rem;
+        }
+
+        .initials {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          border: 0.2rem solid all.$white;
+          padding: 1.5rem;
+          font-size: 1.6rem;
+          font-weight: 300;
+          font-family: "Inter";
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: all.$white;
+          margin-right: 0.8rem;
+        }
+
+        span {
+          font-weight: 600;
+        }
+      }
+
+      .dividing-line {
+        width: 1px;
+        height: 35rem;
+        background-color: #d9d9d9;
+
+        @media (max-width: 1140px) {
+          display: none;
+        }
+      }
+    }
+
+    .form-submit {
+      @include all.d-flex($flexdir: row, $jc: space-between, $alit: flex-end);
+
+      @media (max-width: 1140px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.6rem;
+        justify-content: flex-start;
+      }
+
+      width: 100%;
+
+      .btn-wrapper {
+        @include all.d-flex($flexdir: row, $jc: flex-start);
+        gap: 1.6rem;
+
+        @media (max-width: 1140px) {
+          width: 100%;
+          justify-content: center;
+        }
+
+        button {
+          height: 5rem;
+          background: all.$white;
+          border: 2px solid black;
+          @include all.d-flex($flexdir: row);
+          gap: 0.8rem;
+          padding: 0 1.6rem;
+          border-radius: 0.8rem;
+          transition: 125ms;
+
+          @include all.desktop {
+            &:hover {
+              border: 2px solid all.$lightblue2;
+              color: all.$lightblue2;
+              box-shadow: all.$shadow;
+
+              .cancel-icon {
+                stroke: all.$lightblue2;
+              }
+            }
+          }
+
+          .cancel-icon {
+            width: 20px;
+            height: 20px;
+            stroke: all.$black;
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.2s ease;
+          }
+        }
+
+        .submit-wrapper {
+          input {
+            height: 5rem;
+            background-color: all.$mainColor;
+            color: all.$white;
+            padding-left: 0.8rem;
+            padding-right: 4rem;
+            font-size: 1.6rem;
+            font-family: all.$font;
+            border-radius: 0.8rem;
+            transition: 125ms;
+            cursor: pointer;
+
+            @include all.desktop {
+              &:hover {
+                background-color: all.$lightblue2;
+                box-shadow: all.$shadow;
+              }
+            }
+          }
+
+          img {
+            position: absolute;
+            top: 50%;
+            right: 0.8rem;
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+  }
+
+  .red {
+    color: red;
+  }
+}
+
+@include all.mobile {
+  .content {
+    padding: 0;
+  }
+}
+
+.load-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.158);
+  z-index: 1000;
+}

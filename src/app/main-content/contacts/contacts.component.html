@@ -1,0 +1,21 @@
+<div>
+  <!-- #region VIEW: contact-list + contact-details -->
+  @if(breakPoint()){
+    <app-contact-list (contactSelected)="selectService.selectContact($event)">
+    </app-contact-list>
+    <app-contact-details [contact]="selectService.selectedContact()" (back)="selectService.backToContactsList()">
+    </app-contact-details>
+  <!-- #endregion -->
+  } @else {
+  <!-- #region VIEW: either contact-list or contact-details -->
+    @if (!selectService.selectedContact()){
+      <app-contact-list (contactSelected)="selectService.selectContact($event)">
+      </app-contact-list>
+    } @else {
+      <app-contact-details [contact]="selectService.selectedContact()" (back)="selectService.backToContactsList()">
+      </app-contact-details>
+    }   
+  }
+  <!-- #endregion -->
+  <app-toast-message [context]="'contacts'"></app-toast-message>
+</div>

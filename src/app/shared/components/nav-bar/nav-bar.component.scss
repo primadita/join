@@ -1,0 +1,99 @@
+@use "../../../../../public/assets/styles/all-styles.scss" as all;
+
+section {
+  height: 100dvh;
+  width: 23.2rem;
+  background: all.$mainColor;
+
+  @include all.d-flex($jc: space-between);
+  padding: 4rem 0;
+
+  button {
+    color: all.$lightgray2;
+    background: transparent;
+    text-decoration: none;
+  }
+
+  nav {
+    @include all.d-flex($alit: flex-start);
+    gap: 1rem;
+    width: 100%;
+
+    button {
+      @include all.d-flex($flexdir: row, $jc: flex-start);
+      background: all.$mainColor;
+      width: 100%;
+      gap: 0.8rem;
+      padding: 1.2rem 4rem;
+      transition: 125ms;
+      color: all.$lightgray2;
+      &:hover {
+        background: all.$hoverMainColor;
+      }
+      span{
+        @media (max-width: 350px) {
+          display: none;
+        }
+      }
+    }
+    .mobile{
+      display: none;
+    }
+  }
+
+  >div {
+    @include all.d-flex($alit: flex-start);
+    gap: 1rem;
+    width: 100%;
+
+    button {
+      width: 100%;
+      padding: 1.2rem 4rem;
+
+      &:hover {
+        background: all.$hoverMainColor;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  section {
+    width: 100%;
+    height: all.$navbar-height-mobile;
+    @include all.d-flex($flexdir: row);
+    flex-shrink: 0;
+    padding: 0 1rem;
+
+    nav {
+      @include all.d-flex($flexdir: row, $jc: space-around);
+
+      button {
+        width: 100%;
+        height: all.$navbar-height-mobile;
+        max-width: 12rem;
+        border-radius: 1.6rem;
+        padding: 0.4rem;
+        @include all.d-flex($flexdir:column, $rgap: 0.8rem);
+
+        &:hover {
+          background-color: #091931;
+        }
+        .login-text-label{
+          display: none;
+        }
+      }
+      .mobile{
+        display: flex;
+      }
+    }
+
+    >img {
+      display: none;
+    }
+
+    div {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@use "../styles/variables.scss" as var;
+
+@mixin style-bold{
+  font-weight: 700;
+  font-style: bold;
+}
+
+@mixin style-regular{
+  font-weight: 400;
+  font-style: regular;
+}
+
+@mixin d-flex($jc: center, $alit: center, $flexdir: column, $gap: 0, $rgap: 0, $cgap: 0) {
+  display: flex;
+  flex-direction: $flexdir;
+  justify-content: $jc;
+  align-items: $alit;
+  gap: $gap;
+  row-gap: $rgap;
+  column-gap: $cgap;
+}
+
+@mixin square($length){
+  width: $length;
+  height: $length;
+}
+
+@mixin join-logo-large{
+  width: 10rem;
+  height: 12.2rem;
+}
+
+@mixin join-logo-medium{
+  width: 6.4rem;
+  height: 7.8rem;
+}
+
+@mixin join-logo-small{
+  width: 4rem;
+  height: 4.9rem;
+}
+// INFO: Beim erstellen des buttons im HTML das icon-image mit ins button-element legen, damit flex zentriert
+@mixin button-layout($width:35.2rem, $height: 5.6rem) {
+  @include d-flex($flexdir: row, $jc: center, $alit: center, $gap: 3rem);
+  box-shadow: var.$shadow;
+  width: $width;
+  height: $height;
+  background-color: var.$mainColor;
+  color: var.$white;
+  font-weight: bold;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+@mixin press-button-style() {
+  @include button-layout();
+  &:hover {
+    background-color: var.$lightblue;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.4);
+  }
+}

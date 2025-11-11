@@ -1,0 +1,69 @@
+@use '../../../../../public/assets/styles/all-styles.scss' as all;
+section{
+    background-color: all.$lightgray;
+    padding: 11rem 9.6rem;
+    overflow-y: auto;
+    @include all.notebook{
+        padding: 8rem;
+    }
+    @include all.tablet{
+        padding: 4rem;
+    }
+    @include all.mobile{
+        padding: 2.2rem;
+    }
+    div{
+        width: 100%;
+        padding-bottom: 3rem;
+        @include all.d-flex($flexdir: row, $jc: space-between, $alit: center);
+        @include all.mobile{
+            h1{
+                font-size: 3.4rem;
+            }
+        }
+        button{
+            background: transparent;
+            border-radius: 50%;
+            &:hover{
+                background: all.$lightgray2;
+            }
+            @include all.mobile{
+                img{
+                    @include all.square($length: 2.8rem);
+                }
+            }
+        }
+        .main{
+            @include all.d-flex();
+        }
+        .login{
+            display: none;
+        }
+    }
+    
+    h3{
+        padding-bottom: 3rem;
+    }
+    h5{
+        padding-bottom: 1.8rem;
+    }
+    h6{
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+    p, li{
+        padding-bottom: 2.4rem;
+        font-weight: 400;
+        font-size: 1.6rem;
+        a{
+            overflow-wrap: break-word;
+        }
+    }
+    ul{
+        padding-left: 2rem;
+        li{
+            list-style-type: disc;
+            padding-left: 2rem;
+        }
+    }
+}

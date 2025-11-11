@@ -1,0 +1,74 @@
+@use "../../../../../../public/assets/styles/all-styles.scss" as all;
+
+.contacts-label-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.6rem;
+
+  .key-box {
+    border-bottom: 0.3rem solid all.$lightgray;
+    width: 100%;
+    max-width: 35.2rem;
+    padding: 1.5rem 2.5rem;
+
+    span {
+      font-size: 2rem;
+    }
+  }
+
+  .contact-label-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 35.2rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    .initials {
+      border-radius: 50%;
+      border: 0.2rem solid all.$white;
+      padding: 1.5rem;
+      color: all.$white;
+      @include all.square($length: 4.5rem);
+      @include all.d-flex();
+    }
+
+    .info {
+      @include all.d-flex();
+
+      .name {
+        font-size: 2rem;
+        width: 25rem;
+        @media(max-width: 450px){
+          width: 16rem;
+        }
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .mail {
+        color: all.$lightblue;
+        width: 25rem;
+        @media(max-width: 450px){
+          width: 16rem;
+        }
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .contact-label-box:hover, .contact-label-box.active {
+    background-color: all.$mainColor;
+    color: all.$white;
+  }
+}

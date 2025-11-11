@@ -1,0 +1,69 @@
+@use '../../../../../public/assets/styles/all-styles.scss' as all;
+div{
+    width: 100%;
+    max-width: 35rem; 
+    text-align: center;
+    position: fixed;
+    bottom: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 1.95px 1.95px 2.6px;
+    padding: 1.6rem;
+    border-radius: 2rem;
+    @include all.d-flex($flexdir: row, $cgap: 1rem);
+    img{
+        @include all.square($length: 2.4rem);
+    }
+}
+.success{
+    background: all.$mainColor;
+    color: all.$white;
+}
+.error{
+    background: all.$lightgray;
+    color: red;
+}
+.contacts{
+    bottom: 3rem;
+    animation: slideInFromRight 1s forwards;
+    animation-iteration-count: 1; 
+    @include all.tablet{
+        bottom: 10rem;
+        animation: slideInFromRight-tablet 1s forwards;
+    }   
+    @include all.mobile{
+        animation:slideInFromRight-mobile 1s forwards;
+        padding: 1.6rem;
+        width: auto;
+    }
+    @media (max-width: 400px) {
+        animation:slideInFromRight-smartphone 1s forwards;
+    }
+}
+.addtask{
+    bottom: 50dvh;
+    animation: toast-addtask-slideInFromRight 1s forwards;
+    animation-iteration-count: 1; 
+    @include all.tablet{
+        width: 80%;
+    }
+    
+}
+.board{
+    bottom: 50dvh;
+    z-index: 220;
+    animation: toast-board-slideInFromRight 1s forwards;
+    animation-iteration-count: 1; 
+    @include all.tablet{
+        width: 80%;
+        animation: toast-board-slideInFromRight-tablet 1s forwards;
+    }
+    @include all.mobile{
+        animation: toast-board-slideInFromRight-mobile 1s forwards;
+    }
+}
+.signup{
+    left: calc((100dvw - 20rem) / 2);
+    width: 20rem;
+    height: 5rem;
+    z-index: 12;
+    animation: slideUp 1s forwards;
+}
