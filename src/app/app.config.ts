@@ -15,12 +15,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withEnabledBlockingInitialNavigation()),
     provideFirebaseApp(() =>
       initializeApp({
-        projectId: 'join-31985',
-        appId: '1:997540181895:web:7591281d620c285b234522',
-        storageBucket: 'join-31985.firebasestorage.app',
-        apiKey: 'AIzaSyCIwGpsfD-CQdm2g9n-Mod2yyzuGWZO9Z8',
-        authDomain: 'join-31985.firebaseapp.com',
-        messagingSenderId: '997540181895',
+        apiKey: "AIzaSyCS0H9SKamQdXdXWeZt5mUCAOczdic2N1I",
+        authDomain: "join-cf69e.firebaseapp.com",
+        projectId: "join-cf69e",
+        storageBucket: "join-cf69e.firebasestorage.app",
+        messagingSenderId: "55651645151",
+        appId: "1:55651645151:web:d6baa447571573a6ae1b6a"
       })
     ),
     provideAuth(() => getAuth()),
