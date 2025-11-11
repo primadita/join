@@ -20,24 +20,32 @@ import { Messages } from '../../interfaces/messages';
 export class ToastMessageComponent {
   // #region ATTRIBUTES
   /**
- * The current toast message to display.
- * - `null` means no active message is being shown.
- */
+   * The current toast message to display.
+   * - `null` means no active message is being shown.
+   */
   message: Messages | null = null;
-  @Input() context: 'contacts'|'addtask' | 'board' | 'edittask' | 'signup' = 'board';
+
+  /**
+   * Input that specifies the context/page where the toast is shown.
+   * Used to apply context-specific styling or behavior.
+   * @default 'board'
+   */
+  @Input() context: 'contacts' | 'addtask' | 'board' | 'edittask' | 'signup' = 'board';
   // #endregion
 
   constructor(private toastService: ToastMessagesService) { }
 
   // #region METHODS
   /**
- * Lifecycle hook that initializes the component.
- * 
- * Subscribes to the `toastStatus` observable from `ToastMessagesService`
- * and updates the displayed message accordingly.  
- * Each message automatically disappears after 3 seconds.
- */
-  ngOnInit() {
+   * Component init lifecycle hook.
+   *
+   * Subscribes to the `toastStatus` observable from `ToastMessagesService`
+   * and updates the displayed message accordingly.
+   * Each message automatically disappears after 3 seconds.
+   *
+   * @returns {void}
+   */
+  ngOnInit(): void {
     this.toastService.toastStatus.subscribe(msg => {
       this.message = msg;
       setTimeout(() => this.message = null, 3000);

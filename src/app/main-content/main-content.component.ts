@@ -29,16 +29,33 @@ import { SummaryComponent } from './summary/summary.component';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
+/**
+ * MainContentComponent
+ *
+ * The primary container for the main app views. Manages navigation between
+ * Summary, Board, Contacts, and other sub-components. Also displays modal
+ * overlays for legal/privacy/help content.
+ */
 export class MainContentComponent {
   // #region ATTRIBUTES
   /**
-   * Currently active component name.
-   * @default 'contacts'
+   * The name of the currently active component shown in the main area.
+   * Examples: 'summary', 'board', 'contacts', 'addtask'.
+   * @default 'summary'
    */
-  activeComponent: string = 'summary'; //default
+  activeComponent: string = 'summary';
+
+  /**
+   * EventEmitter that signals when the user wants to switch from Add Task
+   * view to the Board view.
+   */
   @Output() SwitchAddTaskToBoard = new EventEmitter<string>();
 
-  private componentHistory: string = 'summary'; //default;
+  /**
+   * Tracks the previously active component for back navigation.
+   * @default 'summary'
+   */
+  private componentHistory: string = 'summary';
   // #endregion
 
   constructor(private selectService: SelectContactService) {}
@@ -48,9 +65,11 @@ export class MainContentComponent {
    * Switches the active component in the main content area.
    * If switching to 'contacts', resets the contact selection.
    * Uses a microtask to ensure proper re-rendering when switching away from 'contacts'.
-   * @param component The name of the component to activate.
+   *
+   * @param {string} component - The name of the component to activate
+   * @returns {void}
    */
-  switchComponent(component: string) {
+  switchComponent(component: string): void {
     this.componentHistory = this.activeComponent;
 
     if (component === 'contacts') {
@@ -65,7 +84,13 @@ export class MainContentComponent {
     }
   }
 
-  backToPreviousComponent() {
+  /**
+   * Navigates back to the previously active component.
+   * Defaults to 'summary' if no previous component is recorded.
+   *
+   * @returns {void}
+   */
+  backToPreviousComponent(): void {
     if (this.componentHistory) {
       this.activeComponent = this.componentHistory;
     } else {

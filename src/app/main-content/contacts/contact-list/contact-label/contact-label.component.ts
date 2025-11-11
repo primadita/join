@@ -14,6 +14,8 @@ import { AuthService } from '../../../../shared/services/auth.service';
 })
 
 /**
+ * ContactLabelComponent
+ *
  * Component for rendering and managing the list of contact labels.
  *
  * Features:
@@ -22,11 +24,23 @@ import { AuthService } from '../../../../shared/services/auth.service';
  * - Sorts contacts alphabetically.
  * - Generates initials for contact avatars.
  */
-export class ContactLabelComponent implements OnInit{
+export class ContactLabelComponent implements OnInit {
   // #region ATTRIBUTES
-  contacts: Contact[]= [];
+  /**
+   * List of all contacts from the service.
+   */
+  contacts: Contact[] = [];
+
+  /**
+   * Display name of the currently logged-in user.
+   */
   currentUserName: string | null | undefined = null;
+
+  /**
+   * Email of the currently logged-in user.
+   */
   currentUserMail: string | null | undefined = null;
+
   /**
    * Service for managing and accessing contact data.
    */
@@ -48,14 +62,31 @@ export class ContactLabelComponent implements OnInit{
   activeContactId?: string;
   // #endregion
 
-  constructor(private contactService: FirebaseServiceService, private authService: AuthService){}
+  constructor(private contactService: FirebaseServiceService, private authService: AuthService) { }
 
   // #region METHODS
   /**
-   * Sets the given contact as active and emits a select event.
-   * @param contact The contact to set as active.
+   * Component init lifecycle hook.
+   *
+   * Subscribes to auth state to identify the current user.
+   *
+   * @returns {void}
    */
-  activeContact(contact: Contact) {
+  ngOnInit(): void {
+    this.authService.getCurrentUser();
+    this.authService.currentUser.subscribe((user) => {
+      this.currentUserName = user?.displayName;
+      this.currentUserMail = user?.email;
+    });
+  }
+
+  /**
+   * Sets the given contact as active and emits a select event.
+   *
+   * @param {Contact} contact - The contact to set as active
+   * @returns {void}
+   */
+  activeContact(contact: Contact): void {
     this.activeContactId = contact.id;
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
@@ -63,10 +94,11 @@ export class ContactLabelComponent implements OnInit{
 
   /**
    * Groups contacts by the first letter of their name.
-   * @returns An object where each key is a letter and each value is an array of contacts.
+   *
+   * @returns {Object} An object where each key is a letter and each value is an array of contacts
    */
-  groupedContacts() {
-    const groups: any = {};
+  groupedContacts(): { [key: string]: Contact[] } {
+    const groups: { [key: string]: Contact[] } = {};
 
     for (let contact of this.sortedContacts()) {
       const letter = contact.name[0].toUpperCase();
@@ -80,7 +112,8 @@ export class ContactLabelComponent implements OnInit{
 
   /**
    * Returns a copy of the contact list sorted alphabetically by name (case-insensitive).
-   * @returns Array of contacts sorted by name.
+   *
+   * @returns {Contact[]} Array of contacts sorted by name
    */
   sortedContacts(): Contact[] {
     return this.contactList.contactsList.slice().sort((a, b) => {
@@ -98,8 +131,9 @@ export class ContactLabelComponent implements OnInit{
    * Examples:
    * - "Anna Müller" → "AM"
    * - "Jean-Paul Sartre" → "JS"
-   * @param contact The contact whose initials are generated.
-   * @returns The initials in uppercase.
+   *
+   * @param {Contact} contact - The contact whose initials are generated
+   * @returns {string} The initials in uppercase
    */
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
@@ -112,31 +146,32 @@ export class ContactLabelComponent implements OnInit{
   /**
    * Marks a contact as active and emits a select event.
    * Alias for activeContact().
-   * @param contact The contact to activate and emit.
+   *
+   * @param {Contact} contact - The contact to activate and emit
+   * @returns {void}
    */
-  onActice(contact: Contact) {
+  onActive(contact: Contact): void {
     this.contactList.setActiveContact(contact.id);
     this.select.emit(contact);
   }
 
   /**
    * Selects a contact using the selection service.
-   * @param contact The contact to select.
+   *
+   * @param {Contact} contact - The contact to select
+   * @returns {void}
    */
-  selectContact(contact: Contact){
+  selectContact(contact: Contact): void {
     this.selectService.selectContact(contact);
   }
 
-  ngOnInit(): void {
-    this.authService.getCurrentUser();
-    this.authService.currentUser.subscribe( (user) => {
-      this.currentUserName = user?.displayName;
-      this.currentUserMail = user?.email;
-    })
-    // this.currentUserName = this.authService.currentUser?.displayName || null;
-  }
-
-  isCurrentUser(contact: Contact): boolean{
+  /**
+   * Determines if a contact is the currently logged-in user.
+   *
+   * @param {Contact} contact - The contact to check
+   * @returns {boolean} true if the contact matches the current user
+   */
+  isCurrentUser(contact: Contact): boolean {
     return this.currentUserName === contact.name && this.currentUserMail === contact.mail;
   }
   // #endregion

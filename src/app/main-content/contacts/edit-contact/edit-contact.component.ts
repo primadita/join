@@ -15,6 +15,8 @@ import { PatternValidatorDirective } from '../../../shared/directives/pattern-va
 })
 
 /**
+ * EditContactComponent
+ *
  * Component that handles editing an existing contact.
  * 
  * Provides form functionality for updating, deleting, or closing
@@ -23,102 +25,116 @@ import { PatternValidatorDirective } from '../../../shared/directives/pattern-va
 export class EditContactComponent {
   // #region ATTRIBUTES
   /**
- * Event emitted when the edit window should be closed.
- * @event
- */
+   * Event emitted when the edit window should be closed.
+   * @event
+   */
   @Output() close = new EventEmitter<boolean>();
 
   /**
- * Event emitted when the user saves changes to a contact.
- * Emits a partial `Contact` object containing updated data.
- * @event
- */
+   * Event emitted when the user saves changes to a contact.
+   * Emits a partial `Contact` object containing updated data.
+   * @event
+   */
   @Output() save = new EventEmitter<Partial<Contact>>();
 
   /**
- * Event emitted when the user chooses to delete the contact.
- * @event
- */
-  @Output() delete = new EventEmitter();
+   * Event emitted when the user chooses to delete the contact.
+   * @event
+   */
+  @Output() delete = new EventEmitter<void>();
 
   /**
- * The contact details provided as input for editing.
- */
-  // @Input() contactDetails: Contact | null = null;
+   * The contact details provided as input for editing.
+   */
   @Input() contact!: Contact;
 
   /**
- * Service injected to handle Firestore contact operations.
- */
+   * Service injected to handle Firestore contact operations.
+   */
   contactService = inject(FirebaseServiceService);
 
   /**
- * Object holding the editable contact data (bound to the form).
- */
+   * Object holding the editable contact data (bound to the form).
+   */
   contactData = {
     name: "",
     mail: "",
     phone: ""
-  }
+  };
   // #endregion
 
   // #region METHODS
   /**
- * Lifecycle hook that initializes the component.
- * 
- * Pre-fills the form fields with the provided contact details (if available).
- */
-  ngOnInit() {
+   * Component init lifecycle hook.
+   *
+   * Pre-fills the form fields with the provided contact details (if available).
+   *
+   * @returns {void}
+   */
+  ngOnInit(): void {
     if (this.contact) {
       this.contactData = {
         name: this.contact.name,
         mail: this.contact.mail,
         phone: this.contact.phone
-      }
+      };
     }
   }
 
   /**
- * Closes the edit window and emits the `close` event.
- */
-  closeEditWindow() {
+   * Closes the edit window and emits the `close` event.
+   *
+   * @returns {void}
+   */
+  closeEditWindow(): void {
     this.close.emit();
   }
 
-
   /**
    * Emits the `save` event with the updated contact data.
+   *
+   * @returns {void}
    */
-  sendSaveInput() {
+  sendSaveInput(): void {
     this.save.emit(this.contactData);
   }
 
   /**
- * Emits the `delete` event to notify that the contact should be removed.
- */
-  sendDeleteInput() {
-    this.delete.emit(this.contactData);
+   * Emits the `delete` event to notify that the contact should be removed.
+   *
+   * @returns {void}
+   */
+  sendDeleteInput(): void {
+    this.delete.emit();
   }
 
   /**
- * Handles form submission.
- * 
- * When the form is valid and submitted, emits the `save` event.
- * 
- * @param {NgForm} ngForm - The Angular form reference.
- */
-  onSubmit(ngForm: NgForm) {
+   * Handles form submission.
+   *
+   * When the form is valid and submitted, emits the `save` event.
+   *
+   * @param {NgForm} ngForm - The Angular form reference.
+   * @returns {void}
+   */
+  onSubmit(ngForm: NgForm): void {
     if (ngForm.form.valid && ngForm.submitted) {
       this.sendSaveInput();
     }
   }
-  
-  formatName(value: string) {
+
+  /**
+   * Formats the contact name: converts to lowercase and then capitalizes
+   * the first letter after spaces, hyphens, and apostrophes.
+   *
+   * @param {string} value - The raw name input
+   * @returns {void}
+   */
+  formatName(value: string): void {
     if (!value) return;
 
     this.contactData.name = value
       .toLowerCase()
-      .replace(/(^\w|[-'\s]\w)/g, c => c.toUpperCase()); // \w ist für Wortzeichen oder Wortzeichen nach dem Strich oder Apostroph oder Leerzeichen to upper case
+      .replace(/(^\w|[-'\s]\w)/g, c => c.toUpperCase());
   }
   // #endregion
 }

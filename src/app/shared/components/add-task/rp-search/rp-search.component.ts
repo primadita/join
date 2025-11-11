@@ -23,30 +23,93 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './rp-search.component.html',
   styleUrl: './rp-search.component.scss',
 })
-export class RpSearchComponent implements OnInit{
+/**
+ * RpSearchComponent (Responsible Party Search)
+ *
+ * Provides a searchable dropdown for selecting contacts to assign to tasks.
+ * Supports multi-select, filters out the current user, and emits changes
+ * to the parent component.
+ */
+export class RpSearchComponent implements OnInit {
+  // #region ATTRIBUTES
+  /**
+   * Array of currently selected contacts for task assignment.
+   * Received from parent component.
+   */
   @Input() selectedContacts!: Contact[];
+
+  /**
+   * Emits when the selected contacts list changes.
+   */
   @Output() contactsChanged = new EventEmitter<Contact[]>();
+
+  /**
+   * Service for accessing all available contacts from Firestore.
+   */
   contacts = inject(FirebaseServiceService);
+
+  /**
+   * Output that emits a single contact when selected/toggled.
+   */
   sendContact = output<Contact>();
+
+  /**
+   * Display name of the currently logged-in user.
+   */
   currentUserName: string | null | undefined = null;
+
+  /**
+   * Email of the currently logged-in user.
+   */
   currentUserMail: string | null | undefined = null;
+
+  /**
+   * The search input value for filtering contacts.
+   */
   searchInput: string = '';
+
+  /**
+   * Signal that controls dropdown visibility.
+   * @type {Signal<boolean>}
+   */
+  isListOpen = signal(false);
+  // #endregion
 
   constructor(public el: ElementRef, private authService: AuthService) {}
 
+  // #region METHODS
+  /**
+   * Component init lifecycle hook.
+   *
+   * Subscribes to auth state to identify the current user and exclude
+   * them from the contact list.
+   *
+   * @returns {void}
+   */
   ngOnInit(): void {
     this.authService.getCurrentUser();
     this.authService.currentUser.subscribe((user) => {
       this.currentUserName = user?.displayName;
       this.currentUserMail = user?.email;
-    })
-    // this.currentUserName = this.authService.currentUser?.displayName || null;
+    });
   }
 
-  isCurrentUser(contact: Contact){
+  /**
+   * Determines if a contact is the currently logged-in user.
+   *
+   * @param {Contact} contact - The contact to check
+   * @returns {boolean} true if the contact matches the current user
+   */
+  isCurrentUser(contact: Contact): boolean {
     return this.currentUserName === contact.name && this.currentUserMail === contact.mail;
   }
 
+  /**
+   * Generates initials from a contact's full name for avatar display.
+   *
+   * @param {Contact} contact - The contact whose initials are needed
+   * @returns {string} Two-letter initials in uppercase
+   */
   getLetters(contact: Contact): string {
     const parts = contact.name.trim().split(' ');
     const first = parts[0]?.[0] || '';
@@ -55,25 +118,37 @@ export class RpSearchComponent implements OnInit{
     return initials;
   }
 
-  sendContactToParent(contact: Contact){
-    // this.sendContact.emit(contact);
+  /**
+   * Toggles a contact's selection state and emits changes to parent.
+   * If selected, adds to array; if already selected, removes from array.
+   *
+   * @param {Contact} contact - The contact to toggle
+   * @returns {void}
+   */
+  sendContactToParent(contact: Contact): void {
     const index = this.selectedContacts.findIndex(c => c.id === contact.id);
 
     if (index === -1) {
-      // Kontakt hinzufügen
+      // Add contact
       this.selectedContacts.push(contact);
     } else {
-      // Kontakt entfernen
+      // Remove contact
       this.selectedContacts.splice(index, 1);
     }
 
-    // Änderungen ans Parent senden
+    // Emit changes to parent
     this.sendSelectedContactsToParent();
   }
 
-  sendSelectedContactsToParent() {
+  /**
+   * Emits the current selection to the parent component.
+   *
+   * @returns {void}
+   */
+  sendSelectedContactsToParent(): void {
     this.contactsChanged.emit(this.selectedContacts);
   }
+
   /**
    * Returns an alphabetically sorted copy of the contact list.
    *
@@ -93,16 +168,22 @@ export class RpSearchComponent implements OnInit{
     });
   }
 
+  /**
+   * Checks whether a contact is in the currently selected array.
+   *
+   * @param {Contact} contact - The contact to check
+   * @returns {boolean} true if selected
+   */
   checkSelectedRp(contact: Contact): boolean {
-    // if (this.selectedContacts.includes(contact)) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
     return this.selectedContacts.some(c => c.id === contact.id);
   }
 
-  searchContact() {
+  /**
+   * Filters the sorted contact list by the current search input.
+   *
+   * @returns {Contact[]} Contacts whose names include the search term (case-insensitive)
+   */
+  searchContact(): Contact[] {
     const lowerSearch = this.searchInput.toLowerCase();
     const foundContacts = this.sortedContacts().filter((contact) =>
       contact.name.toLowerCase().includes(lowerSearch)
@@ -110,30 +191,48 @@ export class RpSearchComponent implements OnInit{
     return foundContacts;
   }
 
-  // #region Input-Signal
-
-  isListOpen = signal(false);
-
-  closeList() {
+  /**
+   * Close the dropdown list.
+   *
+   * @returns {void}
+   */
+  closeList(): void {
     this.isListOpen.set(false);
   }
 
-  onFocus() {
+  /**
+   * Open the dropdown list when focus is received.
+   *
+   * @returns {void}
+   */
+  onFocus(): void {
     this.isListOpen.set(true);
   }
 
-  onFocusButton(){
-    if(this.isListOpen()){
+  /**
+   * Toggle the dropdown list visibility when a button is focused.
+   *
+   * @returns {void}
+   */
+  onFocusButton(): void {
+    if (this.isListOpen()) {
       this.isListOpen.set(false);
-    }else{
+    } else {
       this.isListOpen.set(true);
     }
   }
 
+  /**
+   * Close the dropdown when clicking outside the component.
+   *
+   * @param {MouseEvent} event - The click event
+   * @returns {void}
+   */
   @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent) {
+  handleClickOutside(event: MouseEvent): void {
     if (!this.el.nativeElement.contains(event.target)) {
       this.isListOpen.set(false);
     }
   }
+  // #endregion
 }

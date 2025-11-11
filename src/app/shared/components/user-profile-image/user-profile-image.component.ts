@@ -12,10 +12,27 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user-profile-image.component.html',
   styleUrl: './user-profile-image.component.scss'
 })
+/**
+ * UserProfileImageComponent
+ *
+ * Displays a user or contact profile image with initials.
+ * Receives contact data and renders an avatar using the UserProfileImageService.
+ */
 export class UserProfileImageComponent {
   // #region ATTRIBUTES
+  /**
+   * Service that manages user profile image rendering and styling.
+   */
   userProfImgService = inject(UserProfileImageService);
+
+  /**
+   * Service for accessing and managing contact data from Firestore.
+   */
   contactService = inject(FirebaseServiceService);
-  @Input() contact!:Contact;
+
+  /**
+   * The contact object to display. Contains name, email, phone, and styling info.
+   */
+  @Input() contact!: Contact;
   // #endregion
 }

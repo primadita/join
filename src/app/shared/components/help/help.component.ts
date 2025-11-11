@@ -9,6 +9,15 @@ import { OutletContext } from '@angular/router';
   templateUrl: './help.component.html',
   styleUrl: './help.component.scss'
 })
+/**
+ * HelpComponent
+ *
+ * Displays help/support content for users. Emits an event when the user
+ * wants to navigate back.
+ */
 export class HelpComponent {
-  @Output() back = new EventEmitter<void>;
+  /**
+   * Emits when the user wants to navigate back (close this help view).
+   */
+  @Output() back = new EventEmitter<void>();
 }
