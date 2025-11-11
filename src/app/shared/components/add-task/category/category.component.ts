@@ -14,19 +14,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './category.component.scss'
 })
 export class CategoryComponent {
-
-  value = input<"Select category" | Category>()
-
+  // #region ATTRIBUTES
+  value = input<"Select category" | Category>();
+  isListOpen = signal(false);
   sendCategory = output<Category>();
-
+  // #endregion
 
   constructor(private el: ElementRef) { }
 
+  // #region METHODS
   checkDefaultValue() {
     return this.value() === "Select category";
   }
 
-  isListOpen = signal(false)
 
   setValue(_value: Category) {
     this.sendCategory.emit(_value);
@@ -51,5 +51,5 @@ export class CategoryComponent {
       this.isListOpen.set(false);
     }
   }
-
+  // #endregion
 }

@@ -33,10 +33,10 @@ import { Timestamp } from '@angular/fire/firestore';
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.scss'
 })
-export class DatePickerComponent implements OnChanges{
+export class DatePickerComponent implements OnChanges {
   // #region ATTRIBUTES
   /**
-   * The currently selected due date.
+   * The currently selected due date. Initialized from selectedDate input.
    * @type {Date | null}
    */
   dueDate: Date | null = null;
@@ -54,10 +54,62 @@ export class DatePickerComponent implements OnChanges{
    * @type {EventEmitter<Date | null>}
    */
   sendDate = output<Date | null>();
+
+  /**
+   * Input that allows parent to initialize or update the selected date.
+   * Accepts Date, Timestamp (from Firestore), or null.
+   */
   @Input() selectedDate: Date | Timestamp | null = null;
 
+  /**
+   * QueryList of form field references used for resetting/marking touched state.
+   */
   @ViewChildren(NgModel) formFields!: QueryList<NgModel>;
-  ngOnChanges(changes: SimpleChanges) {
+  // #endregion
+
+  // #region METHODS
+  /**
+   * Emits the currently selected date to the parent component.
+   * This method is typically called when the user confirms a date selection.
+   *
+   * @returns {void}
+   */
+  sendDateToParent(): void {
+    this.sendDate.emit(this.dueDate);
+  }
+
+  /**
+   * Clears the selected date and resets form field states to pristine/untouched.
+   *
+   * @returns {void}
+   */
+  clearDate(): void {
+    this.dueDate = null;
+    this.formFields.forEach(field => {
+      field.control.markAsPristine();
+      field.control.markAsUntouched();
+    });
+  }
+
+  /**
+   * Marks all form fields as touched (used for validation display).
+   *
+   * @returns {void}
+   */
+  markDateAsTouched(): void {
+    this.formFields.forEach(field => {
+      field.control.markAsTouched();
+    });
+  }
+
+  /**
+   * Detects changes to the selectedDate input and updates dueDate accordingly.
+   * Handles conversion from Firestore Timestamp to JavaScript Date.
+   *
+   * @param {SimpleChanges} changes - Angular change detection object
+   * @returns {void}
+   */
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedDate']) {
       const value = changes['selectedDate'].currentValue;
       if (value instanceof Timestamp) {
@@ -68,30 +120,6 @@ export class DatePickerComponent implements OnChanges{
         this.dueDate = null;
       }
     }
-  }
-  // #endregion
-
-  // #region METHODS
-  /**
-   * Emits the currently selected date to the parent component.
-   * This method is typically called when the user confirms a date selection.
-   */
-  sendDateToParent() {
-    this.sendDate.emit(this.dueDate);
-  }
-  
-  clearDate() {
-    this.dueDate = null;
-    this.formFields.forEach(field => {
-      field.control.markAsPristine();
-      field.control.markAsUntouched();
-    });
-  }
-
-  markDateAsTouched() {
-    this.formFields.forEach(field => {
-      field.control.markAsTouched();
-    });
   }
   // #endregion
 }

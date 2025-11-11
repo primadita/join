@@ -10,9 +10,13 @@ import { ToastMessageComponent } from '../../shared/components/toast-message/toa
   styleUrl: './add-task-view.component.scss',
 })
 export class AddTaskViewComponent {
+  // #region ATTRIBUTES
   @Output() switchAddTaskToBoard = new EventEmitter<string>();
+  // #endregion
 
+  // #region METHODS
   onTaskCreated(){
     this.switchAddTaskToBoard.emit('board');
   }
+  // #endregion
 }

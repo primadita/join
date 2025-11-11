@@ -112,10 +112,20 @@ export class BoardComponent {
     } as BoardColumns))// hiermit hat das Objekt exakt die Felder todo, inprogress usw. exakt dem Interface BoardColumns
   );
   
+
+  /**
+   * Breakpoint observer injected from CDK Layout. Used to detect
+   * viewport changes (mobile vs desktop) and adapt the UI.
+   */
   mobileObserver = inject(BreakpointObserver);
 
+  /**
+   * Emits true when the viewport matches the mobile breakpoint.
+   * Used to toggle mobile-specific layout and behavior.
+   * @type {Observable<boolean>}
+   */
   isMobile$ = this.mobileObserver.observe([`(max-width: 640px)`]).pipe(
-    map(result => result.matches), shareReplay(1)
+    map((result) => result.matches), shareReplay(1)
   );
 
   /** The currently selected task for viewing details. */
@@ -131,13 +141,24 @@ export class BoardComponent {
   showNoResult$ = combineLatest([this.searchInput$, this.filteredTasks]).pipe(
     map(([i, t]) => i.trim().length > 0 && t.length === 0));
   
-  /** Flag indicating whether the "Add Task" popup is open. */
-    addTaskWindow: boolean = false; 
-  
-  /** The currently selected list for adding a new task. */
-  currentList:Status = TASK_STATUS.TO_DO;
+  /**
+   * Flag indicating whether the "Add Task" popup is open.
+   * When true the popup component is rendered and receives focus.
+   * @default false
+   */
+  addTaskWindow: boolean = false;
 
-  /** Optional input to initialize a board column. */
+  /**
+   * The currently selected list status used when creating a new task.
+   * Defaults to the 'to do' status.
+   */
+  currentList: Status = TASK_STATUS.TO_DO;
+
+  /**
+   * Optional input (string) that can be used to initialize the active
+   * board column from a parent component. The component maps this value
+   * to internal `currentList` when opening the Add Task dialog.
+   */
   @Input() initialList: string = '';
   // #endregion
 
@@ -207,14 +228,25 @@ export class BoardComponent {
   /**
    * Closes the Add Task popup.
    */
-  onClosePopUp(){
+  /**
+   * Closes the Add Task popup and clears any transient UI state.
+   *
+   * @returns {void}
+   */
+  onClosePopUp(): void {
     this.addTaskWindow = false;
   }
 
   /**
    * Opens the Add Task popup, typically after clearing input fields.
    */
-  clearInputTask(){
+  /**
+   * Open the Add Task popup. Typically used after clearing inputs so the
+   * user can enter a new task.
+   *
+   * @returns {void}
+   */
+  clearInputTask(): void {
     this.addTaskWindow = true;
   }
   
@@ -222,7 +254,14 @@ export class BoardComponent {
    * Creates a new task and adds it to Firestore.
    * @param {Task} newTask - The new task object to create.
    */
-  createNewTask(newTask: Task){
+  /**
+   * Creates a new task, assigns the currently selected list status and
+   * persists it via the TaskService.
+   *
+   * @param {Task} newTask - The new task object to create.
+   * @returns {void}
+   */
+  createNewTask(newTask: Task): void {
     this.addTaskWindow = false;
     newTask.status = this.currentList;
     this.taskService.addTask(newTask);
@@ -255,10 +294,18 @@ export class BoardComponent {
     this.drop(event);
   }
 
-  moveTaskToList(event: {task:Task, status: Status}){
-    const {task, status} = event;
-    if(task.status === status) return;
-    const updated = {...task, status};
+  /**
+   * Move a task to a new status programmatically (not via drag-and-drop).
+   * The method avoids unnecessary updates when the task already has the
+   * target status.
+   *
+   * @param {{task: Task, status: Status}} event - object containing the task and target status
+   * @returns {void}
+   */
+  moveTaskToList(event: { task: Task; status: Status }): void {
+    const { task, status } = event;
+    if (task.status === status) return;
+    const updated = { ...task, status };
     this.taskService.updateTask(updated);
   }
   // #endregion
