@@ -124,7 +124,7 @@ export class AuthService {
   logOut(): Promise<void> {
     return signOut(this.auth)
       .then(() => {
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/signIn');
       })
       .catch((error) => {
         console.error(error);

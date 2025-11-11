@@ -59,7 +59,7 @@ export class LegalAndPrivacyComponent implements OnInit {
       if (view === 'privacy-policy' || view === 'legal-notice') {
         this.activeComponent = view;
       }
-      if (from === 'login' || from === 'register' ){
+      if (from === 'signIn' || from === 'register' ){
         this.componentHistory = from;
       }
     });
@@ -83,7 +83,7 @@ export class LegalAndPrivacyComponent implements OnInit {
    * Navigate directly to the login page.
    */
   goToLogin() {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/signIn');
   }
 
   /**
@@ -91,12 +91,12 @@ export class LegalAndPrivacyComponent implements OnInit {
    * where the user came from. Falls back to '/login' if unknown.
    */
   backToLoginOrSignup(){
-    if (this.componentHistory === 'login') {
-      this.router.navigateByUrl('/login');
+    if (this.componentHistory === 'signIn') {
+      this.router.navigateByUrl('/signIn');
     } else if (this.componentHistory === 'register') {
       this.router.navigateByUrl('/register');
     } else {
-      this.router.navigateByUrl('/login'); // default fallback
+      this.router.navigateByUrl('/signIn'); // default fallback
     }
   }
 

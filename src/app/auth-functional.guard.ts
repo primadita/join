@@ -22,6 +22,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
     return true;
   } else {
     // Umleitung zur Login-Seite, wenn nicht eingeloggt
-    return router.createUrlTree(['login']);
+    return router.createUrlTree(['signIn']);
   }
 };
